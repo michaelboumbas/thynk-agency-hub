@@ -102,15 +102,9 @@ export function ComingSoon() {
                 )}
               >
                 <img
-                  src="/avatar/muse-hero.jpg"
+                  src="/avatar/muse-hero.png"
                   alt="Μούσα · Thynk AI"
                   className="w-full object-contain"
-                  style={{
-                    maskImage:
-                      "radial-gradient(ellipse 62% 68% at 50% 42%, black 60%, transparent 100%)",
-                    WebkitMaskImage:
-                      "radial-gradient(ellipse 62% 68% at 50% 42%, black 60%, transparent 100%)",
-                  }}
                 />
               </div>
 
