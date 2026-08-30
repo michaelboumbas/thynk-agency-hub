@@ -119,7 +119,7 @@ export function ComingSoon() {
                 className="mt-4 text-xs font-semibold uppercase tracking-widest"
                 style={{ color: C.muted, fontFamily: "'Open Sans', sans-serif" }}
               >
-                Μούσα · Thynk AI
+                {"\n"}
               </span>
             </div>
           </div>
