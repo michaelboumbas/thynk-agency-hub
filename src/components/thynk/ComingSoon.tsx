@@ -1,4 +1,16 @@
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
+
+const C = {
+  bg: "linear-gradient(160deg, #FFFFFF 0%, #F3F8FE 45%, #E6F1FC 100%)",
+  text: "#141821",
+  muted: "#667085",
+  accent: "#FF6B29",
+  pillBorder: "rgba(20,24,33,0.12)",
+  pillBg: "#FFFFFF",
+  bloom: "radial-gradient(circle at 50% 40%, rgba(140,190,255,0.35), transparent 65%)",
+  floorGlow: "radial-gradient(ellipse 50% 60% at center, rgba(20,24,33,0.12), transparent 70%)",
+};
 
 function FacebookIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -30,10 +42,7 @@ function SocialPill({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-hairline px-4 py-2 text-sm font-medium text-foreground transition-all duration-300",
-        "hover:glow-soft hover:border-accent/30 hover:text-accent"
-      )}
+      className="cs-pill inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300"
     >
       <span className="h-4 w-4">{icon}</span>
       {label}
@@ -42,20 +51,82 @@ function SocialPill({
 }
 
 export function ComingSoon() {
+  const reducedMotion = useReducedMotion();
+
   return (
-    <div className="relative flex min-h-dvh flex-col overflow-hidden bg-background">
+    <div
+      className="relative flex min-h-dvh flex-col overflow-hidden"
+      style={{ background: C.bg }}
+    >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            .cs-pill {
+              background-color: ${C.pillBg};
+              color: ${C.text};
+              border: 1px solid ${C.pillBorder};
+            }
+            .cs-pill:hover {
+              border-color: ${C.accent};
+              color: ${C.accent};
+              box-shadow: 0 0 18px rgba(255, 107, 41, 0.25);
+            }
+            @keyframes cs-float {
+              0%, 100% { transform: translateY(0); }
+              50% { transform: translateY(-6px); }
+            }
+            .cs-float {
+              animation: cs-float 5.5s ease-in-out infinite;
+            }
+          `,
+        }}
+      />
+
       <main className="flex flex-1 items-center justify-center px-5 py-12 sm:px-8">
         <div className="mx-auto grid w-full max-w-[1100px] grid-cols-1 items-center gap-10 lg:grid-cols-2">
-          {/* Right column (persona card) comes first on mobile, second on desktop */}
+          {/* Right column (Musa visual) comes first on mobile, second on desktop */}
           <div className="order-1 flex justify-center lg:order-2">
-            <div className="panel grid-texture relative flex aspect-[4/5] w-full max-w-[420px] flex-col items-center justify-center rounded-3xl p-6 sm:p-8">
-              
-              <img
-                src="/avatar/muse-hero.jpg"
-                alt="Μούσα · Thynk AI"
-                className="glow-accent w-[72%] rounded-xl object-cover"
+            <div className="relative flex aspect-[4/5] w-full max-w-[420px] flex-col items-center justify-center">
+              {/* Atmospheric bloom behind Musa */}
+              <div
+                className="pointer-events-none absolute inset-0 -z-10"
+                style={{ background: C.bloom }}
+                aria-hidden="true"
               />
-              <span className="mono-label mt-5 text-muted-foreground">Μούσα · Thynk AI</span>
+
+              {/* Musa image with soft edge mask and gentle float */}
+              <div
+                className={cn(
+                  "relative flex w-[78%] items-center justify-center",
+                  !reducedMotion && "cs-float"
+                )}
+              >
+                <img
+                  src="/avatar/muse-hero.jpg"
+                  alt="Μούσα · Thynk AI"
+                  className="w-full object-contain"
+                  style={{
+                    maskImage:
+                      "radial-gradient(ellipse 62% 68% at 50% 42%, black 60%, transparent 100%)",
+                    WebkitMaskImage:
+                      "radial-gradient(ellipse 62% 68% at 50% 42%, black 60%, transparent 100%)",
+                  }}
+                />
+              </div>
+
+              {/* Floor glow / shadow under Musa */}
+              <div
+                className="pointer-events-none absolute bottom-[12%] left-1/2 h-16 w-[55%] -translate-x-1/2 blur-md"
+                style={{ background: C.floorGlow }}
+                aria-hidden="true"
+              />
+
+              <span
+                className="mt-4 text-xs font-semibold uppercase tracking-widest"
+                style={{ color: C.muted, fontFamily: "'Open Sans', sans-serif" }}
+              >
+                Μούσα · Thynk AI
+              </span>
             </div>
           </div>
 
@@ -63,38 +134,53 @@ export function ComingSoon() {
           <div className="order-2 flex flex-col items-center text-center lg:order-1 lg:items-start lg:text-left">
             <span
               className="mb-8 text-2xl font-extrabold tracking-tight"
-              style={{ fontFamily: "'Anton', sans-serif" }}
+              style={{ fontFamily: "'Anton', sans-serif", color: C.text }}
             >
-              THYNK<span className="text-glow">.</span>
+              THYNK<span style={{ color: C.accent }}>.</span>
             </span>
 
-            <div className="mono-label mb-6 inline-flex items-center gap-2 text-muted-foreground">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_oklch(0.735_0.176_52_/_70%)]" />
+            <div
+              className="mb-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest"
+              style={{ color: C.muted, fontFamily: "'Open Sans', sans-serif" }}
+            >
+              <span
+                className="inline-block h-1.5 w-1.5 rounded-full"
+                style={{
+                  backgroundColor: C.accent,
+                  boxShadow: "0 0 10px rgba(255,107,41,0.55)",
+                }}
+              />
               Established 2026 · Ιωάννινα
             </div>
 
             <h1
-              className="text-foreground"
               style={{
                 fontFamily: "'Noto Sans', sans-serif",
                 fontWeight: 900,
                 fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
                 lineHeight: 1.05,
                 letterSpacing: "-0.02em",
+                color: C.text,
               }}
             >
               Κάτι ωραίο
               <br />
-              <span className="text-glow">έρχεται.</span>
+              <span style={{ color: C.accent }}>έρχεται.</span>
             </h1>
 
-            <p className="mt-5 max-w-md text-[1.05rem] leading-relaxed text-muted-foreground">
+            <p
+              className="mt-5 max-w-md text-[1.05rem] leading-relaxed"
+              style={{ color: C.muted, fontFamily: "'Open Sans', sans-serif" }}
+            >
               Χτίζουμε το site μας — με την ίδια σκέψη που βάζουμε σε ό,τι
               φτιάχνουμε για τους πελάτες μας. Άξιζε να περιμένεις λίγο
               παραπάνω για να γίνει σωστά.
             </p>
 
-            <span className="mono-label mt-8 text-muted-foreground">
+            <span
+              className="mt-8 text-xs font-semibold uppercase tracking-widest"
+              style={{ color: C.muted, fontFamily: "'Open Sans', sans-serif" }}
+            >
               Ακολούθησέ μας στο μεταξύ
             </span>
 
@@ -114,7 +200,10 @@ export function ComingSoon() {
         </div>
       </main>
 
-      <footer className="mono-label py-5 text-center text-muted-foreground">
+      <footer
+        className="py-5 text-center text-xs font-semibold uppercase tracking-widest"
+        style={{ color: C.muted, fontFamily: "'Open Sans', sans-serif" }}
+      >
         © 2026 THYNK DIGITAL AGENCY · ΙΩΑΝΝΙΝΑ
       </footer>
     </div>
