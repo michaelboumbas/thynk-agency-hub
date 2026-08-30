@@ -49,7 +49,7 @@ export function ComingSoon() {
           {/* Right column (persona card) comes first on mobile, second on desktop */}
           <div className="order-1 flex justify-center lg:order-2">
             <div className="panel grid-texture relative flex aspect-[4/5] w-full max-w-[420px] flex-col items-center justify-center rounded-3xl p-6 sm:p-8">
-              {/* TODO: replace src with /avatar/muse-hero.jpg once the asset is uploaded to public/avatar/ */}
+              
               <img
                 src="/avatar/muse-hero.jpg"
                 alt="Μούσα · Thynk AI"
