@@ -47,19 +47,22 @@ export function PersonaVisual({ className }: { className?: string }) {
 
       for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
-          const dx = pts[i].px - pts[j].px;
-          const dy = pts[i].py - pts[j].py;
+          const a = pts[i]!;
+          const b = pts[j]!;
+          const dx = a.px - b.px;
+          const dy = a.py - b.py;
           const dist = Math.hypot(dx, dy);
           const max = Math.min(width, height) * 0.34;
           if (dist < max) {
             ctx.strokeStyle = `rgba(255, 150, 60, ${0.24 * (1 - dist / max)})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.moveTo(pts[i].px, pts[i].py);
-            ctx.lineTo(pts[j].px, pts[j].py);
+            ctx.moveTo(a.px, a.py);
+            ctx.lineTo(b.px, b.py);
             ctx.stroke();
           }
         }
+
       }
 
       ctx.shadowColor = "rgba(255, 145, 50, 0.9)";
