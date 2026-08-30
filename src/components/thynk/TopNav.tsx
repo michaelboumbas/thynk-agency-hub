@@ -59,7 +59,10 @@ export function TopNav({
           className="flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Thynk — αρχική"
         >
-          <span className="text-lg font-extrabold tracking-tight">
+          <span
+            className="text-lg font-extrabold tracking-tight"
+            style={{ fontFamily: "'Anton', sans-serif" }}
+          >
             THYNK<span className="text-glow">.</span>
           </span>
         </button>
