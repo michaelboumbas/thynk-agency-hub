@@ -36,7 +36,10 @@ export function Splash({ onDone }: { onDone: () => void }) {
       />
 
       <div className="relative flex flex-col items-center gap-5 px-6 text-center">
-        <p className="text-4xl font-extrabold tracking-tight sm:text-6xl">
+        <p
+          className="text-4xl font-extrabold tracking-tight sm:text-6xl"
+          style={{ fontFamily: "'Anton', sans-serif" }}
+        >
           THYNK<span className="text-glow">.</span>
         </p>
         <p className="text-sm text-muted-foreground sm:text-base">

@@ -61,11 +61,12 @@ export function ComingSoon() {
 
           {/* Left column (copy) comes second on mobile, first on desktop */}
           <div className="order-2 flex flex-col items-center text-center lg:order-1 lg:items-start lg:text-left">
-            <img
-              src="/Logos/logo 1.1 wb.png"
-              alt="Thynk"
-              className="mb-8 h-8 w-auto object-contain"
-            />
+            <span
+              className="mb-8 text-2xl font-extrabold tracking-tight"
+              style={{ fontFamily: "'Anton', sans-serif" }}
+            >
+              THYNK<span className="text-glow">.</span>
+            </span>
 
             <div className="mono-label mb-6 inline-flex items-center gap-2 text-muted-foreground">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_oklch(0.735_0.176_52_/_70%)]" />
@@ -75,7 +76,8 @@ export function ComingSoon() {
             <h1
               className="text-foreground"
               style={{
-                fontFamily: "Anton, sans-serif",
+                fontFamily: "'Noto Sans', sans-serif",
+                fontWeight: 900,
                 fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
                 lineHeight: 1.05,
                 letterSpacing: "-0.02em",
