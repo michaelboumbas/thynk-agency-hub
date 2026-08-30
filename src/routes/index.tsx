@@ -10,6 +10,9 @@ import { AboutView } from "@/components/thynk/AboutView";
 import { SolutionsView } from "@/components/thynk/SolutionsView";
 import { WorkView } from "@/components/thynk/WorkView";
 import { ContactView } from "@/components/thynk/ContactView";
+import { ComingSoon } from "@/components/thynk/ComingSoon";
+
+const SHOW_COMING_SOON = true;
 
 const title = "Thynk Digital Agency — Σκέψη πίσω από κάθε κίνηση";
 const description =
@@ -30,6 +33,10 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  if (SHOW_COMING_SOON) {
+    return <ComingSoon />;
+  }
+
   const [splashDone, setSplashDone] = useState(false);
   const [view, setView] = useState<ViewId>("home");
   const [entering, setEntering] = useState(true);
