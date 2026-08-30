@@ -59,7 +59,7 @@ export function TopNav({
           className="flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Thynk — αρχική"
         >
-          <img src="/Logos/logo%201.1%20wb.png" alt="" className="h-7 w-auto" aria-hidden="true" />
+          <img src="/Logos/logo%201.1%20bw.png" alt="" className="h-7 w-auto" aria-hidden="true" />
           <span className="text-lg font-extrabold tracking-tight">
             THYNK<span className="text-glow">.</span>
           </span>

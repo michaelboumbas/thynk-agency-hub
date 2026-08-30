@@ -37,7 +37,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
 
       <div className="relative flex flex-col items-center gap-5 px-6 text-center">
         <img
-          src="/Logos/logo%201.1%20wb.png"
+          src="/Logos/logo%201.1%20bw.png"
           alt="Thynk Digital Agency"
           className="h-24 w-auto drop-shadow-[0_0_36px_oklch(0.735_0.176_52/35%)] sm:h-32"
         />
