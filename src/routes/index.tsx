@@ -1,18 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-import type { ViewId } from "@/content/site";
-import { Splash } from "@/components/thynk/Splash";
-import { TopNav } from "@/components/thynk/TopNav";
-import { PersonaVisual } from "@/components/thynk/PersonaVisual";
-import { HomeView, KnowHowCard } from "@/components/thynk/HomeView";
-import { AboutView } from "@/components/thynk/AboutView";
-import { SolutionsView } from "@/components/thynk/SolutionsView";
-import { WorkView } from "@/components/thynk/WorkView";
-import { ContactView } from "@/components/thynk/ContactView";
+import { useEffect, useState } from "react";
 import { ComingSoon } from "@/components/thynk/ComingSoon";
+import { ThynkSite } from "@/components/thynk5/ThynkSite";
 
-const SHOW_COMING_SOON = true;
 
 const title = "Thynk Digital Agency — Σκέψη πίσω από κάθε κίνηση";
 const description =
@@ -32,94 +22,32 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-function Index() {
-  if (SHOW_COMING_SOON) {
-    return <ComingSoon />;
-  }
-
-  const [splashDone, setSplashDone] = useState(false);
-  const [view, setView] = useState<ViewId>("home");
-  const [entering, setEntering] = useState(true);
-
-  const isHome = view === "home";
-
-  const navigate = useCallback(
-    (next: ViewId) => {
-      if (next === view) return;
-      setEntering(false);
-      setView(next);
-    },
-    [view],
-  );
-
-  useEffect(() => {
-    const t = setTimeout(() => setEntering(true), 20);
-    return () => clearTimeout(t);
-  }, [view]);
-
+/**
+ * Which face to show.
+ * - Public/published site: the Coming Soon page, until the founders decide to launch.
+ * - Lovable editor preview (id-preview--*.lovable.app, *.lovableproject.com) and localhost: the v5 site.
+ * Overrides for any host: ?site=1 shows the v5 site, ?soon=1 shows Coming Soon.
+ */
+function shouldShowSite(): boolean {
+  const { hostname, search } = window.location;
+  const q = new URLSearchParams(search);
+  if (q.has("soon")) return false;
+  if (q.has("site")) return true;
   return (
-    <div className="flex h-dvh flex-col overflow-hidden bg-background">
-      {!splashDone && <Splash onDone={() => setSplashDone(true)} />}
-
-      <TopNav view={view} onNavigate={navigate} />
-
-      <main className="relative min-h-0 flex-1">
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(70% 55% at 78% 20%, oklch(0.735 0.176 52 / 7%), transparent 70%)",
-          }}
-          aria-hidden="true"
-        />
-
-        <div
-          className={cn(
-            "mx-auto grid h-full w-full max-w-[1400px] min-h-0 gap-8 px-5 py-6 sm:px-8",
-            isHome
-              ? "lg:grid-cols-[1.05fr_0.95fr]"
-              : "lg:grid-cols-[minmax(280px,0.62fr)_1.38fr]",
-          )}
-        >
-          {/* Left column: home copy, or the pinned persona visual on inner views */}
-          <div className="relative min-h-0 overflow-hidden">
-            {isHome ? (
-              <div className="scroll-slim h-full overflow-y-auto pr-1">
-                <HomeView onNavigate={navigate} />
-              </div>
-            ) : (
-              <div className="hidden h-full flex-col justify-center gap-5 lg:flex">
-                <PersonaVisual className="h-[min(52vh,420px)] w-full" />
-                <KnowHowCard />
-              </div>
-            )}
-          </div>
-
-          {/* Right column: persona visual on home, content panel on inner views */}
-          <div className="relative min-h-0">
-            {isHome ? (
-              <div className="hidden h-full flex-col items-center justify-center gap-5 lg:flex">
-                <PersonaVisual className="h-[min(58vh,520px)] w-full" />
-                <KnowHowCard />
-                {/* Stats card slot — intentionally reserved/empty. */}
-              </div>
-            ) : (
-              <section
-                key={view}
-                className={cn(
-                  "panel scroll-slim h-full overflow-y-auto rounded-3xl p-6 transition-all duration-500 ease-out sm:p-8",
-                  entering ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
-                )}
-              >
-                {view === "about" && <AboutView />}
-                {view === "solutions" && <SolutionsView />}
-                {view === "work" && <WorkView />}
-                {view === "contact" && <ContactView />}
-              </section>
-            )}
-          </div>
-        </div>
-      </main>
-    </div>
+    hostname.startsWith("id-preview--") ||
+    hostname.endsWith(".lovableproject.com") ||
+    hostname === "localhost" ||
+    hostname === "127.0.0.1"
   );
+}
+
+function Index() {
+  // Server render + first paint = Coming Soon (safe default for the public site);
+  // the editor preview switches to the v5 site right after mount.
+  const [showSite, setShowSite] = useState(false);
+  useEffect(() => {
+    setShowSite(shouldShowSite());
+  }, []);
+
+  return showSite ? <ThynkSite /> : <ComingSoon />;
 }
