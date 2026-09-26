@@ -11,8 +11,8 @@ export const brand = {
 export const hero = {
   headline: "Σκέψη πίσω από κάθε κίνηση.",
   subheadline:
-    "Marketing και Digital Transformation για επιχειρήσεις της Ηπείρου — χωρίς φαντάρες, με σκέψη πίσω από κάθε κίνηση. Πρώτα κάνουμε audit, μετά σου λέμε τι πραγματικά χρειάζεσαι.",
-  altLine: "Ιωάννινα. Τεχνογνωσία αθηναϊκού επιπέδου. Μηδέν παπάτζα.",
+    "Marketing και Digital Transformation για επιχειρήσεις της Ηπείρου, με σκέψη πίσω από κάθε κίνηση. Πρώτα κάνουμε audit, μετά σου λέμε τι πραγματικά χρειάζεσαι.",
+  altLine: "Ιωάννινα. Τεχνογνωσία αθηναϊκού επιπέδου.",
   ctaPrimary: "Κλείσε Demo",
   ctaSecondary: "Δες τι κάνουμε",
 };
@@ -46,7 +46,7 @@ export const about = {
       bio: "Founder του Anadelta Education (Ιωάννινα), background σε Μαθηματικά & Οικονομικά, στατιστική, growth hacking & digital business transformation.",
     },
   ],
-  tagline: "Ιωάννινα. Ήπειρος. Χωρίς παπάτζα.",
+  tagline: "Ιωάννινα. Ήπειρος.",
 };
 
 export const pillars = [

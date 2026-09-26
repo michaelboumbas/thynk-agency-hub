@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thynk Website v5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0B0C0E;
+  --surface:#121317;
+  --surface-2:#181A1F;
+  --line:#24262C;
+  --line-2:#30333A;
+  --text:#F2EEE8;
+  --muted:#9C978F;
+  --faint:#6B6862;
+  --accent:#FF6A1A;
+  --accent-soft:rgba(255,106,26,.14);
+  --glow:0 0 18px rgba(255,106,26,.55), 0 0 2px rgba(255,140,70,.9);
+  --sans:"Open Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --ease:cubic-bezier(.22,.8,.24,1);
+  --r:12px;
+}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6;overflow:hidden;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.mono{font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;font-size:11.5px}
+
+/* ---------- Splash ---------- */
+#splash{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+#splash.out{opacity:0;transform:scale(1.04);pointer-events:none}
+.splash-inner{display:grid;justify-items:center;gap:22px;padding-inline:16px}
+.splash-inner img.wm{width:min(340px,70vw);animation:rise .9s var(--ease) both}
+.splash-inner .tag{color:var(--muted);animation:rise .9s .25s var(--ease) both}
+.splash-bar{width:120px;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
+.splash-bar i{display:block;height:100%;width:100%;background:var(--accent);box-shadow:var(--glow);transform-origin:left;animation:load 1.5s .2s linear both}
+#skip{position:absolute;bottom:calc(24px + env(safe-area-inset-bottom,0px));right:24px;background:none;border:1px solid var(--line-2);border-radius:99px;padding:6px 14px;color:var(--muted);cursor:pointer;font-size:13px}
+#skip:hover{color:var(--text);border-color:var(--muted)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes load{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ---------- App shell ---------- */
+.app{height:100%;display:grid;grid-template-rows:auto 1fr;padding-inline:clamp(16px,3vw,40px)}
+header.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px;position:relative;z-index:10}
+.brand{display:flex;align-items:center;gap:12px;background:none;border:0;padding:0;cursor:pointer}
+.brand img{height:22px;width:auto;display:block}
+.brand small{color:var(--faint);border-left:1px solid var(--line-2);padding-left:12px}
+.tabs{position:relative;display:flex;gap:2px;padding:4px;border:1px solid var(--line);border-radius:99px;background:rgba(18,19,23,.7);backdrop-filter:blur(8px)}
+.tabs button{position:relative;z-index:1;background:none;border:0;padding:7px 14px;border-radius:99px;cursor:pointer;color:var(--muted);transition:color .25s}
+.tabs button:hover{color:var(--text)}
+.tabs button[aria-current="true"]{color:var(--text)}
+.pill{position:absolute;top:4px;bottom:4px;left:0;width:0;border-radius:99px;background:var(--surface-2);border:1px solid var(--line-2);transition:transform .38s var(--ease),width .38s var(--ease),opacity .25s;opacity:0}
+.pill::after{content:"";position:absolute;left:50%;bottom:-1px;width:14px;height:2px;margin-left:-7px;border-radius:2px;background:var(--accent);box-shadow:var(--glow)}
+.cta{display:inline-flex;align-items:center;gap:12px;padding:7px 7px 7px 18px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line-2);color:var(--text);font-weight:600;cursor:pointer;text-decoration:none;transition:border-color .25s,box-shadow .25s,transform .25s;white-space:nowrap}
+.cta .dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#1a0b02;box-shadow:var(--glow);font-size:14px;transition:transform .3s var(--ease)}
+.cta:hover{border-color:rgba(255,106,26,.55);box-shadow:0 0 0 4px var(--accent-soft)}
+.cta:hover .dot{transform:translateX(2px) rotate(-45deg)}
+.ghost{background:none;border:0;color:var(--muted);cursor:pointer;padding:8px 4px;font-weight:600;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.ghost:hover{color:var(--text);border-color:var(--accent)}
+#menuBtn{display:none;background:var(--surface);border:1px solid var(--line-2);border-radius:10px;width:40px;height:40px;cursor:pointer;place-items:center}
+#menuBtn span,#menuBtn span::before,#menuBtn span::after{display:block;width:16px;height:1.5px;background:var(--text);position:relative;content:"";transition:transform .3s}
+#menuBtn span::before{position:absolute;top:-5px}
+#menuBtn span::after{position:absolute;top:5px}
+.menu-open #menuBtn span{background:transparent}
+.menu-open #menuBtn span::before{transform:translateY(5px) rotate(45deg)}
+.menu-open #menuBtn span::after{transform:translateY(-5px) rotate(-45deg)}
+
+/* ---------- Stage ---------- */
+.stage{position:relative;min-height:0;padding-bottom:clamp(16px,3vh,32px)}
+.visual{position:absolute;top:0;bottom:clamp(16px,3vh,32px);left:52%;right:0;transition:left .7s var(--ease),right .7s var(--ease),top .7s var(--ease),bottom .7s var(--ease)}
+.inner .visual{left:0;right:66%;top:4%;bottom:12%}
+.panel-bg{position:absolute;inset:0;border-radius:18px;border:1px solid var(--line);background:
+  radial-gradient(ellipse at 60% 40%,rgba(255,106,26,.10),transparent 60%),
+  var(--surface);overflow:hidden}
+.panel-bg::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:32px 32px;opacity:.35;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
+canvas#net{position:absolute;inset:0;width:100%;height:100%}
+.muse-wrap{position:absolute;inset:0;display:grid;place-items:center;perspective:900px}
+.muse{position:relative;width:min(62%,380px);aspect-ratio:720/964;max-width:100%;border-radius:14px;overflow:hidden;background:#EDEDEF;border:1px solid rgba(255,106,26,.45);box-shadow:0 0 0 1px rgba(255,106,26,.12),0 0 40px rgba(255,106,26,.22),0 30px 60px rgba(0,0,0,.55);transform-style:preserve-3d;transition:transform .5s var(--ease),width .7s var(--ease)}
+.inner .muse{width:min(78%,300px)}
+.muse img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;display:block;transition:opacity .5s}
+.muse figcaption{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:8px;padding:5px 10px;border-radius:99px;background:rgba(11,12,14,.78);backdrop-filter:blur(6px);color:var(--text)}
+.live{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:var(--glow)}
+.knows{position:absolute;left:-6%;bottom:9%;width:min(330px,62%);padding:14px 16px;border-radius:12px;background:rgba(18,19,23,.9);backdrop-filter:blur(10px);border:1px solid var(--line-2);box-shadow:0 20px 40px rgba(0,0,0,.4);transition:opacity .4s,transform .6s var(--ease)}
+.knows .k-head{display:flex;justify-content:space-between;align-items:center;color:var(--muted);margin-bottom:6px}
+.knows .k-head b{font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:13px;color:var(--accent)}
+.knows p{margin:0;font-size:14px;line-height:1.45;min-height:3em;transition:opacity .35s,transform .35s}
+.knows p.swap{opacity:0;transform:translateY(6px)}
+.inner .knows{opacity:0;transform:translateY(16px);pointer-events:none}
+
+/* home copy */
+.home{position:absolute;inset:0 50% 0 0;display:flex;flex-direction:column;justify-content:center;gap:26px;padding-right:clamp(16px,4vw,64px);transition:opacity .45s var(--ease),transform .55s var(--ease)}
+.inner .home{opacity:0;transform:translateX(-24px);pointer-events:none}
+.eyebrow{display:flex;align-items:center;gap:10px;color:var(--muted)}
+h1{max-width:11ch;font-size:clamp(38px,5vw,72px);line-height:1.02;font-weight:800;letter-spacing:-.025em;margin:0;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent);text-shadow:0 0 28px rgba(255,106,26,.35)}
+.lead{font-size:clamp(15px,1.25vw,18px);color:#CFCAC2;max-width:34em;margin:0}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--faint);font-size:13px}
+.trust span{display:flex;align-items:center;gap:8px}
+.trust span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--line-2)}
+
+/* inner content */
+.content{position:absolute;top:0;bottom:clamp(16px,3vh,32px);left:37%;right:0;opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .45s var(--ease),transform .5s var(--ease)}
+.inner .content{opacity:1;transform:none;pointer-events:auto}
+.scroller{height:100%;overflow-y:auto;padding-right:clamp(4px,2vw,24px);scrollbar-width:thin;scrollbar-color:var(--line-2) transparent}
+.view{display:none;padding-block:4vh 40px;max-width:760px}
+.view.on{display:block;animation:fadein .5s var(--ease) both}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.view > .mono{color:var(--accent);display:block;margin-bottom:14px}
+h2{font-size:clamp(28px,3vw,42px);line-height:1.1;letter-spacing:-.02em;font-weight:800;margin:0 0 18px;text-wrap:balance}
+h3{font-size:17px;font-weight:700;margin:0 0 6px}
+.view p{color:#CFCAC2;max-width:62ch}
+.hr{height:1px;background:var(--line);margin-block:32px}
+.card{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:20px;transition:border-color .25s,box-shadow .25s}
+.card:hover{border-color:var(--line-2);box-shadow:0 0 0 4px rgba(255,255,255,.015)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+
+/* about */
+.founder{display:flex;gap:14px;align-items:flex-start}
+.mono-av{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--surface-2);border:1px solid var(--line-2);color:var(--accent)}
+.founder p{margin:0;font-size:14px;color:var(--muted)}
+.signoff{color:var(--muted);font-weight:600}
+
+/* solutions */
+.pillar{border:1px solid var(--line);border-radius:14px;background:var(--surface);margin-bottom:14px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.pillar.open{border-color:rgba(255,106,26,.4);box-shadow:0 0 30px rgba(255,106,26,.08)}
+.pillar > button{width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;text-align:left;background:none;border:0;padding:22px;cursor:pointer}
+.pdot{width:10px;height:10px;border-radius:50%;background:var(--line-2);transition:background .3s,box-shadow .3s}
+.pillar.open .pdot{background:var(--accent);box-shadow:var(--glow)}
+.pillar .ptitle{display:grid;gap:4px}
+.pillar .ptitle strong{font-size:20px;font-weight:800;letter-spacing:-.01em}
+.pillar .ptitle span{color:var(--muted);font-size:14px}
+.chev{width:28px;height:28px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;transition:transform .35s var(--ease)}
+.pillar.open .chev{transform:rotate(45deg);border-color:var(--accent);color:var(--accent)}
+.pbody{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+.pillar.open .pbody{grid-template-rows:1fr}
+.pbody > div{overflow:hidden}
+.pgroups{padding:0 22px 22px 48px;display:grid;gap:22px}
+.pgroups .mono{color:var(--muted);margin-bottom:8px;display:block}
+.pgroups ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.pgroups li{position:relative;padding-left:18px;font-size:14.5px;color:#D9D4CC}
+.pgroups li::before{content:"";position:absolute;left:0;top:.72em;width:8px;height:1px;background:var(--accent)}
+.pgroups li.no{color:var(--muted)}
+.pgroups li.no::before{background:var(--faint)}
+
+/* method */
+.steps{display:grid;gap:12px;counter-reset:s}
+.step{display:grid;grid-template-columns:48px 1fr;gap:16px}
+.step .n{font-family:var(--mono);font-size:12px;color:var(--accent);border:1px solid rgba(255,106,26,.35);border-radius:10px;height:34px;display:grid;place-items:center}
+.step p{margin:0;font-size:14.5px}
+.step .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{font-size:12px;padding:3px 10px;border-radius:99px;border:1px solid var(--line-2);color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.rules .card p{margin:0;font-size:14px;color:var(--muted)}
+details{border-bottom:1px solid var(--line);padding-block:4px}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;padding-block:14px;font-weight:600}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--muted);font-weight:400;transition:transform .3s}
+details[open] summary::after{transform:rotate(45deg);color:var(--accent)}
+details p{margin:0 0 16px;font-size:14.5px}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+.field{display:grid;gap:8px;margin-bottom:18px}
+.field label,.field .lbl{font-size:13px;font-weight:600;color:#D9D4CC;display:flex;justify-content:space-between}
+.field output{font-family:var(--mono);color:var(--accent);font-weight:500;font-variant-numeric:tabular-nums}
+select,input[type=email],input[type=text],textarea{width:100%;background:var(--surface-2);border:1px solid var(--line-2);border-radius:10px;padding:10px 12px;font-size:14px}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--accent) var(--p,50%),var(--line-2) var(--p,50%));cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--text);border:3px solid var(--accent);box-shadow:var(--glow)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--text);border:3px solid var(--accent)}
+.tasks{display:flex;flex-wrap:wrap;gap:8px}
+.tasks label{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:99px;border:1px solid var(--line-2);font-size:13px;cursor:pointer;transition:border-color .2s,background .2s,color .2s;color:var(--muted)}
+.tasks input{position:absolute;opacity:0;pointer-events:none}
+.tasks label:has(input:checked){border-color:var(--accent);color:var(--text);background:var(--accent-soft)}
+.tasks label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.result{position:sticky;top:0;border:1px solid rgba(255,106,26,.35);background:linear-gradient(180deg,rgba(255,106,26,.07),transparent 50%),var(--surface);border-radius:14px;padding:20px;box-shadow:0 0 40px rgba(255,106,26,.06)}
+.result .mono{color:var(--muted)}
+.big{font-size:clamp(34px,3.4vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums;margin:6px 0 2px}
+.big small{font-size:.42em;font-weight:600;color:var(--muted);letter-spacing:0}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-block:16px}
+.kpi{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.kpi b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;color:var(--muted)}
+.opps{list-style:none;padding:0;margin:8px 0 16px;display:grid;gap:8px}
+.opps li{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:13.5px;padding:8px 10px;border-radius:8px;background:var(--surface-2)}
+.opps li span:last-child{font-family:var(--mono);color:var(--accent);font-size:12px}
+.how{font-size:12px;color:var(--faint);margin:0}
+.sendrow{display:flex;gap:8px;margin-top:14px}
+.sendrow input{flex:1;min-width:0}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#1a0b02;font-weight:700;border-radius:10px;padding:10px 14px;cursor:pointer;box-shadow:0 0 18px rgba(255,106,26,.35);white-space:nowrap}
+.btn:hover{filter:brightness(1.08)}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px;min-height:1.2em}
+.note.ok{color:var(--accent)}
+
+/* contact */
+.contact-list{display:grid;gap:8px;margin-bottom:24px}
+.crow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.crow span{user-select:all;font-family:var(--mono);font-size:13.5px;letter-spacing:.02em}
+.crow small{color:var(--muted);display:block;font-size:12px}
+.copy{background:none;border:1px solid var(--line-2);border-radius:8px;padding:5px 10px;color:var(--muted);cursor:pointer;font-size:12px}
+.copy:hover{color:var(--text);border-color:var(--muted)}
+form.demo{display:grid;gap:12px}
+form.demo .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+textarea{resize:vertical;min-height:84px}
+.foot{color:var(--faint);font-size:12.5px;margin-top:28px}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1100px){.brand small{display:none}.tabs button{padding:7px 10px}}
+@media (max-width:980px){
+  .tabs,.nav > .cta{display:none}
+  #menuBtn{display:grid}
+  .app{padding-inline:16px}
+  .drawer{position:absolute;top:100%;left:0;right:0;display:grid;gap:4px;padding:10px;border:1px solid var(--line-2);border-radius:14px;background:var(--surface);box-shadow:0 20px 40px rgba(0,0,0,.5);opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .25s,transform .25s}
+  .menu-open .drawer{opacity:1;transform:none;pointer-events:auto}
+  .drawer button{text-align:left;background:none;border:0;padding:12px;border-radius:10px;cursor:pointer;color:var(--muted);font-weight:600}
+  .drawer button[aria-current="true"]{color:var(--text);background:var(--surface-2)}
+  .drawer .cta{justify-self:start;margin:6px 0 4px 6px}
+  .stage{overflow:hidden}
+  .visual{left:0;right:0;top:0;bottom:auto;height:38%}
+  .inner .visual{left:0;right:auto;width:64px;height:64px;top:4px;bottom:auto}
+  .inner .panel-bg{border-radius:50%}
+  .inner .panel-bg::before,.inner canvas#net{display:none}
+  .muse{width:auto;height:88%;aspect-ratio:720/964}
+  .inner .muse{width:100%;height:100%;border-radius:50%;aspect-ratio:1}
+  .inner .muse figcaption{display:none}
+  .muse figcaption{display:none}
+  .inner .panel-bg{background:none;border:0}
+  .knows{left:auto;right:8px;bottom:8px;width:min(260px,58%);padding:10px 12px}
+  .knows p{font-size:12.5px;min-height:2.9em}
+  .home{inset:40% 0 0 0;padding-right:0;justify-content:flex-start;gap:16px;overflow-y:auto;padding-top:16px}
+  h1{font-size:clamp(32px,9vw,46px)}
+  .content{left:0;top:84px}
+  .view{padding-top:0}
+  .calc{grid-template-columns:1fr}
+  .result{position:static}
+  form.demo .two{grid-template-columns:1fr}
+}
+@media (min-width:981px){.drawer{display:none}}
+@media (max-height:640px) and (min-width:981px){h1{font-size:44px}.home{gap:16px}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+
+<div id="splash" role="presentation">
+  <div class="splash-inner">
+    <img class="wm" src="wordmark-light.png" alt="Thynk.">
+    <div class="tag mono">Digital Agency · Ioannina · Est. 2026</div>
+    <div class="splash-bar"><i></i></div>
+  </div>
+  <button id="skip" type="button">Παράλειψη</button>
+</div>
+
+<div class="app" id="app">
+  <header class="nav">
+    <button class="brand" type="button" data-go="home" aria-label="Thynk, αρχική">
+      <img src="wordmark-light.png" alt="Thynk.">
+      <small class="mono">Digital Agency</small>
+    </button>
+    <nav class="tabs" id="tabs" aria-label="Κύρια πλοήγηση">
+      <span class="pill" id="pill" aria-hidden="true"></span>
+      <button type="button" class="mono" data-go="about">About</button>
+      <button type="button" class="mono" data-go="solutions">Solutions</button>
+      <button type="button" class="mono" data-go="method">Method</button>
+      <button type="button" class="mono" data-go="calculator">Calculator</button>
+      <button type="button" class="mono" data-go="contact">Contact</button>
+    </nav>
+    <button class="cta" type="button" data-go="contact" data-focus="demo">Κλείσε Demo <span class="dot">→</span></button>
+    <button id="menuBtn" type="button" aria-label="Μενού" aria-expanded="false"><span></span></button>
+    <div class="drawer" id="drawer">
+      <button type="button" data-go="home">Αρχική</button>
+      <button type="button" data-go="about">About</button>
+      <button type="button" data-go="solutions">Solutions</button>
+      <button type="button" data-go="method">Method</button>
+      <button type="button" data-go="calculator">Calculator</button>
+      <button type="button" data-go="contact">Contact</button>
+      <button class="cta" type="button" data-go="contact" data-focus="demo">Κλείσε Demo <span class="dot">→</span></button>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+    <!-- HOME COPY -->
+    <section class="home" id="home" aria-label="Αρχική">
+      <div class="eyebrow"><span class="live"></span><span class="mono">Est. 2026 · Ioannina</span></div>
+      <h1>Σκέψη πίσω από κάθε <em>κίνηση.</em></h1>
+      <p class="lead">Marketing και AI αυτοματισμοί για επιχειρήσεις της Ηπείρου. Πρώτα βλέπουμε πού χάνεις χρόνο και πελάτες, μετά σου λέμε τι πραγματικά χρειάζεσαι.</p>
+      <div class="actions">
+        <button class="cta" type="button" data-go="contact" data-focus="demo">Κλείσε Demo <span class="dot">→</span></button>
+        <button class="ghost" type="button" data-go="calculator">Υπολόγισε τι χάνεις σε αγγαρείες</button>
+      </div>
+      <div class="trust"><span>Οι λογαριασμοί μένουν δικοί σου</span><span>Άνθρωπος εγκρίνει πριν το AI</span><span>Αν δεν αποδίδει, στο λέμε πρώτοι</span></div>
+    </section>
+
+    <!-- VISUAL (pinned muse) -->
+    <div class="visual" id="visual" aria-hidden="true">
+      <div class="panel-bg"><canvas id="net"></canvas></div>
+      <div class="muse-wrap" id="museWrap">
+        <figure class="muse" id="muse" style="margin:0">
+          <img id="museImg" src="muse-hero.jpg" alt="">
+          <figcaption class="mono"><span class="live"></span>Muse · online</figcaption>
+        </figure>
+      </div>
+      <div class="knows" id="knows">
+        <div class="k-head"><span class="mono">Muse</span><b>Ξέρω να…</b></div>
+        <p id="knowsText">φτιάξω AI βοηθό που απαντάει και κλείνει ραντεβού, 24/7.</p>
+      </div>
+    </div>
+
+    <!-- INNER CONTENT -->
+    <section class="content" id="content">
+      <div class="scroller" id="scroller">
+
+        <article class="view" id="v-about" aria-labelledby="h-about">
+          <span class="mono">About</span>
+          <h2 id="h-about">Γιατί υπάρχει η Thynk</h2>
+          <p>Στα Γιάννενα υπάρχει ένα κενό. Οι τοπικές επιχειρήσεις δεν έχουν εύκολη πρόσβαση στο επίπεδο τεχνογνωσίας που κυκλοφορεί στην Αθήνα. Η Thynk γεννήθηκε για να το καλύψει, φέρνοντας μαζί digital marketing αθηναϊκού επιπέδου και το business/data κομμάτι.</p>
+          <p>Δεν μπαίνουμε με κατάλογο να διαλέξεις. Κάνουμε audit, βρίσκουμε τι χρειάζεσαι και προχωράμε κλιμακωτά: πρώτα το πιο κρίσιμο, μετά τα υπόλοιπα. Αν κάτι δεν πρόκειται να δουλέψει, θα στο πούμε εμείς πρώτοι.</p>
+          <div class="hr"></div>
+          <div class="grid2">
+            <div class="card founder"><div class="mono-av">MB</div><div><h3>Mike Boumpas</h3><p>Digital, marketing &amp; creative. Agency εμπειρία από την Αθήνα σε e-commerce, CRO και data, place branding με το myMetsovo.gr.</p></div></div>
+            <div class="card founder"><div class="mono-av">ΔΧ</div><div><h3>Δημήτρης Χρυσοχόου</h3><p>Business &amp; data. Founder του Anadelta Education, Μαθηματικά &amp; Οικονομικά, στατιστική, growth και digital transformation.</p></div></div>
+          </div>
+          <p class="signoff" style="margin-top:28px">Ιωάννινα. Ήπειρος.</p>
+        </article>
+
+        <article class="view" id="v-solutions" aria-labelledby="h-sol">
+          <span class="mono">Solutions</span>
+          <h2 id="h-sol">Δύο πόρτες. Εσύ διαλέγεις από πού μπαίνεις.</h2>
+          <p>Πάτα έναν πυλώνα για να δεις τι κάνουμε μέσα του. Στην πράξη ξεκινάμε από αυτό που βγάζει το audit ως πιο επείγον.</p>
+
+          <div class="pillar open" data-pillar>
+            <button type="button" aria-expanded="true"><span class="pdot"></span><span class="ptitle"><span class="mono">Marketing</span><strong>Φέρνουμε πελάτες και το μετράμε</strong><span>Ads, content, email. Δεμένα μεταξύ τους, όχι σκόρπια.</span></span><span class="chev">+</span></button>
+            <div class="pbody"><div><div class="pgroups">
+              <div><span class="mono">Performance Marketing</span><ul>
+                <li>Google Ads (Search, Shopping, Performance Max) που φέρνουν πελάτες, όχι απλά κλικ.</li>
+                <li>Τα προϊόντα σου στο Google Shopping με φωτογραφία και τιμή.</li>
+                <li>TikTok Ads για κοινό που το Google και η Meta δεν πιάνουν.</li>
+                <li>Σχέδιο καμπάνιας πριν το πρώτο ευρώ: στόχος, budget, κοινό.</li>
+                <li>A/B testing σε κείμενα, εικόνες, CTA. Αποφασίζουμε με δεδομένα.</li>
+                <li>Αναφορές που καταλαβαίνεις με μια ματιά.</li></ul></div>
+              <div><span class="mono">Social, Content &amp; Creative</span><ul>
+                <li>Content calendar και στρατηγική πάνω στο δικό σου brand.</li>
+                <li>Διαχείριση Facebook, Instagram, TikTok, LinkedIn χωρίς αναπάντητα μηνύματα.</li>
+                <li>Κείμενα για site, ads, email και blog που πείθουν.</li>
+                <li>Graphic design με συνέπεια στην ταυτότητά σου.</li>
+                <li>UGC και short-form video για Reels, TikTok, Shorts.</li>
+                <li>AI «πρόσωπα» brand, αν ταιριάζουν στη στρατηγική σου.</li></ul></div>
+              <div><span class="mono">Email, SMS &amp; Automation</span><ul>
+                <li>Αυτόματα μηνύματα για εγκαταλειμμένο καλάθι, upsell, επαναγορά.</li>
+                <li>Klaviyo flows και Mailchimp newsletters που ανοίγονται.</li>
+                <li>SMS campaigns για προσφορές που δεν περιμένουν.</li>
+                <li>Οργάνωση επαφών σε HubSpot ή Brevo, ώστε κάθε μήνυμα να είναι σχετικό.</li></ul></div>
+            </div></div></div>
+          </div>
+
+          <div class="pillar" data-pillar>
+            <button type="button" aria-expanded="false"><span class="pdot"></span><span class="ptitle"><span class="mono">Digital Transformation</span><strong>Συστήματα που δουλεύουν μόνα τους</strong><span>AI αυτοματισμοί, δεδομένα, στρατηγική, landing pages.</span></span><span class="chev">+</span></button>
+            <div class="pbody"><div><div class="pgroups">
+              <div><span class="mono">AI Automation &amp; Data</span><ul>
+                <li>AI chatbot που απαντάει και κλείνει ραντεβού από το site ή τα social.</li>
+                <li>Φωνητικό βοηθό που σηκώνει το τηλέφωνο εκτός ωραρίου.</li>
+                <li>Σύνδεση των εργαλείων σου ώστε οι επαναλαμβανόμενες δουλειές να τρέχουν μόνες τους.</li>
+                <li>Custom AI agents και GPTs πάνω στα δικά σου δεδομένα.</li>
+                <li>GEO: να σε προτείνουν το ChatGPT και τα Google AI Overviews.</li>
+                <li>GA4, GTM και Looker Studio dashboards με σωστά νούμερα.</li></ul></div>
+              <div><span class="mono">Consulting &amp; Growth</span><ul>
+                <li>Roadmap από τις χειροκίνητες διαδικασίες στα αυτοματοποιημένα συστήματα.</li>
+                <li>Audit που δείχνει πού χάνεις χρόνο και χρήμα.</li>
+                <li>Workshops για να δουλεύει η ομάδα σου με AI κάθε μέρα.</li>
+                <li>Growth session από το οποίο φεύγεις με συγκεκριμένο πλάνο.</li></ul></div>
+              <div><span class="mono">Web &amp; Landing Pages</span><ul>
+                <li>Landing page ή μικρό site που κάνει τους επισκέπτες πελάτες.</li>
+                <li class="no">E-shops από το μηδέν δεν χτίζουμε. Αν έχεις ήδη κατάστημα, δουλεύουμε πάνω του.</li></ul></div>
+            </div></div></div>
+          </div>
+        </article>
+
+        <article class="view" id="v-method" aria-labelledby="h-method">
+          <span class="mono">Method</span>
+          <h2 id="h-method">Πρώτα κοιτάμε. Μετά δοκιμάζουμε. Μετά μεγαλώνουμε.</h2>
+          <p>Δεν σου πουλάμε πακέτο. Κάθε βήμα έχει δική του καθαρή τιμή και δικό του σημείο όπου αποφασίζεις αν συνεχίζουμε.</p>
+          <div class="steps">
+            <div class="card step"><div class="n">01</div><div><h3>Audit</h3><p>Σκανάρουμε παρουσία και διαδικασίες. Φεύγεις με λίστα: τι χάνεις σήμερα, τι φτιάχνεται πρώτο, τι μπορεί να περιμένει.</p><div class="meta"><span class="chip">Μικρό, πληρωμένο</span><span class="chip">Λίστα προτεραιοτήτων</span></div></div></div>
+            <div class="card step"><div class="n">02</div><div><h3>Πιλοτικό</h3><p>Μία ροή, η πιο κρίσιμη. Τρέχει πρώτα παράλληλα με την ομάδα σου, για να δούμε σε νούμερα ότι δουλεύει πριν της δώσουμε το τιμόνι.</p><div class="meta"><span class="chip">Μία ροή</span><span class="chip">Παράλληλη δοκιμή</span><span class="chip">Μετράμε πριν και μετά</span></div></div></div>
+            <div class="card step"><div class="n">03</div><div><h3>Κλιμάκωση</h3><p>Προσθέτουμε υπηρεσίες μία-μία, όσο αποδεικνύουν ότι αξίζουν. Με το Thynk Care έχεις διαθεσιμότητα, support και σειρά προτεραιότητας.</p><div class="meta"><span class="chip">Μία υπηρεσία τη φορά</span><span class="chip">Thynk Care</span></div></div></div>
+          </div>
+          <div class="hr"></div>
+          <h3 style="font-size:20px;margin-bottom:14px">Οι κανόνες μας για το AI</h3>
+          <div class="rules">
+            <div class="card"><h3>Τα κλειδιά είναι δικά σου</h3><p>Λογαριασμοί, API keys και δεδομένα στο όνομά σου. Αν φύγεις, φεύγουν μαζί σου.</p></div>
+            <div class="card"><h3>Άνθρωπος στη μέση</h3><p>Ό,τι είναι ευαίσθητο ή αρνητικό, το AI το ετοιμάζει ως πρόχειρο και το εγκρίνει άνθρωπος.</p></div>
+            <div class="card"><h3>Διακόπτης στο χέρι σου</h3><p>Όρια, λίστες εγκρίσεων και ένα κουμπί που σταματάει τα πάντα.</p></div>
+          </div>
+          <div class="hr"></div>
+          <h3 style="font-size:20px;margin-bottom:4px">Συχνές ερωτήσεις</h3>
+          <details><summary>Πόσο κοστίζει;</summary><p>Κάθε υπηρεσία έχει δική της τιμή, ανάλογα με την επιχείρηση και τον όγκο. Τη μαθαίνεις μετά το audit, γραμμένη ανά γραμμή. Πακέτα «όλα μαζί» δεν έχουμε.</p></details>
+          <details><summary>Γιατί το audit δεν είναι δωρεάν;</summary><p>Γιατί είναι πραγματική δουλειά και φεύγεις με κάτι που χρησιμοποιείς ακόμα κι αν δεν συνεχίσουμε μαζί. Αν θες μια πρώτη ιδέα χωρίς κόστος, δοκίμασε τον υπολογιστή.</p></details>
+          <details><summary>Πρέπει να αλλάξω τα προγράμματα που ήδη έχω;</summary><p>Συνήθως όχι. Συνδεόμαστε με ό,τι ήδη δουλεύεις: ημερολόγιο, email, λογιστικό, CRM. Αλλαγή προτείνουμε μόνο όταν το εργαλείο σε κρατάει πίσω.</p></details>
+          <details><summary>Φτιάχνετε e-shop;</summary><p>Όχι από το μηδέν. Αν έχεις ήδη κατάστημα, τρέχουμε πάνω του Shopping ads, Klaviyo flows και cart recovery.</p></details>
+          <details><summary>Πού είναι τα case studies;</summary><p>Είμαστε νέοι και δεν δημοσιεύουμε πελάτη χωρίς τη ρητή άδειά του. Τα πρώτα έρχονται μόλις κλείσουν τα πρώτα πιλοτικά.</p></details>
+        </article>
+
+        <article class="view" id="v-calculator" aria-labelledby="h-calc">
+          <span class="mono">Calculator</span>
+          <h2 id="h-calc">Πόσο σου κοστίζουν οι αγγαρείες;</h2>
+          <p>Βάλε τα νούμερα της ομάδας σου. Η εκτίμηση βγαίνει αμέσως. Είναι ενδεικτική και δεν αντικαθιστά το audit.</p>
+          <div class="calc">
+            <form id="calcForm" autocomplete="off">
+              <div class="field"><label for="c-ind">Κλάδος</label>
+                <select id="c-ind">
+                  <option value="clinic">Ιατρείο / κλινική</option>
+                  <option value="office">Λογιστικό / νομικό γραφείο</option>
+                  <option value="hosp" selected>Ξενοδοχείο / εστίαση</option>
+                  <option value="retail">Λιανική / e-shop</option>
+                  <option value="build">Κατασκευές / τεχνικές υπηρεσίες</option>
+                  <option value="other">Κάτι άλλο</option>
+                </select></div>
+              <div class="field"><label for="c-team">Άτομα στην ομάδα <output id="o-team">6</output></label><input type="range" id="c-team" min="1" max="40" value="6"></div>
+              <div class="field"><label for="c-hours">Ώρες την εβδομάδα ανά άτομο σε επαναλαμβανόμενες δουλειές <output id="o-hours">6</output></label><input type="range" id="c-hours" min="1" max="25" value="6"></div>
+              <div class="field"><label for="c-rate">Κόστος ώρας εργασίας <output id="o-rate">€9</output></label><input type="range" id="c-rate" min="5" max="40" value="9"></div>
+              <div class="field"><span class="lbl">Τι σου τρώει χρόνο;</span>
+                <div class="tasks">
+                  <label><input type="checkbox" value="phone" checked>Τηλέφωνα &amp; ραντεβού</label>
+                  <label><input type="checkbox" value="msg" checked>Email &amp; μηνύματα</label>
+                  <label><input type="checkbox" value="docs">Τιμολόγια &amp; παραστατικά</label>
+                  <label><input type="checkbox" value="reports">Αναφορές &amp; Excel</label>
+                  <label><input type="checkbox" value="social" checked>Social media</label>
+                  <label><input type="checkbox" value="quotes">Προσφορές &amp; follow-up</label>
+                </div></div>
+            </form>
+            <aside class="result" aria-live="polite">
+              <span class="mono">Σε αγγαρείες, κάθε χρόνο</span>
+              <div class="big" id="r-cost">€0</div>
+              <div class="kpis">
+                <div class="kpi"><b id="r-hours">0</b><span>ώρες τον μήνα</span></div>
+                <div class="kpi"><b id="r-save">0</b><span>ώρες/μήνα που μπορούν να φύγουν</span></div>
+              </div>
+              <span class="mono">Από πού θα ξεκινούσαμε</span>
+              <ol class="opps" id="r-opps"></ol>
+              <p class="how" id="r-how"></p>
+              <form class="sendrow" id="sendForm" novalidate>
+                <label for="c-email" class="sr" style="position:absolute;left:-9999px">Email</label>
+                <input type="email" id="c-email" placeholder="το email σου" required>
+                <button class="btn" type="submit">Στείλε μου την αναφορά</button>
+              </form>
+              <div class="note" id="sendNote">Θα λάβεις αναλυτική αναφορά και πλάνο 90 ημερών.</div>
+            </aside>
+          </div>
+        </article>
+
+        <article class="view" id="v-contact" aria-labelledby="h-contact">
+          <span class="mono">Contact</span>
+          <h2 id="h-contact">Πες μας τι σε τρώει. Σου λέμε αν μπορούμε να το λύσουμε.</h2>
+          <div class="contact-list">
+            <div class="crow"><div><small>Γενικά</small><span>hello@thynkagency.gr</span></div><button class="copy" type="button" data-copy="hello@thynkagency.gr">Αντιγραφή</button></div>
+            <div class="crow"><div><small>Mike · marketing &amp; creative</small><span>mike@thynkagency.gr</span></div><button class="copy" type="button" data-copy="mike@thynkagency.gr">Αντιγραφή</button></div>
+            <div class="crow"><div><small>Δημήτρης · business &amp; data</small><span>dimitris@thynkagency.gr</span></div><button class="copy" type="button" data-copy="dimitris@thynkagency.gr">Αντιγραφή</button></div>
+          </div>
+          <form class="demo card" id="demoForm" novalidate>
+            <h3>Κλείσε Demo</h3>
+            <p style="margin:0 0 4px;font-size:14px;color:var(--muted)">30 λεπτά. Μας δείχνεις πώς δουλεύεις, σου δείχνουμε τι θα κοιτάζαμε στο audit.</p>
+            <div class="two">
+              <div class="field" style="margin:0"><label for="d-name">Όνομα</label><input type="text" id="d-name" placeholder="Γιώργος Παπαδόπουλος"></div>
+              <div class="field" style="margin:0"><label for="d-biz">Επιχείρηση</label><input type="text" id="d-biz" placeholder="π.χ. Ξενοδοχείο στο Μέτσοβο"></div>
+            </div>
+            <div class="field" style="margin:0"><label for="d-email">Email</label><input type="email" id="d-email" placeholder="you@business.gr"></div>
+            <div class="field" style="margin:0"><label for="d-msg">Τι θα ήθελες να σταματήσεις να κάνεις με το χέρι;</label><textarea id="d-msg" placeholder="π.χ. απαντάω σε ίδιες ερωτήσεις για διαθεσιμότητα όλη μέρα"></textarea></div>
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><button class="cta" type="submit">Στείλε αίτημα <span class="dot">→</span></button><span class="note" id="demoNote"></span></div>
+          </form>
+          <p class="foot">© 2026 Thynk Digital Agency · Με σκέψη, από τα Γιάννενα.</p>
+        </article>
+
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const app = document.getElementById('app');
+  const stage = document.getElementById('stage');
+
+  /* ---------- Splash (once per session) ---------- */
+  const splash = document.getElementById('splash');
+  let seen = false;
+  try { seen = sessionStorage.getItem('thynk-splash') === '1'; } catch(e){}
+  function endSplash(){ splash.classList.add('out'); setTimeout(()=>splash.hidden=true,650); try{sessionStorage.setItem('thynk-splash','1')}catch(e){} }
+  if (seen || reduce) { splash.hidden = true; } else { setTimeout(endSplash, 1800); }
+  document.getElementById('skip').addEventListener('click', endSplash);
+
+  /* ---------- Views ---------- */
+  const tabs = document.getElementById('tabs');
+  const pill = document.getElementById('pill');
+  const museImg = document.getElementById('museImg');
+  const scroller = document.getElementById('scroller');
+  const poses = { home:'muse-hero.jpg', about:'muse-hero.jpg', solutions:'muse-ipad.jpg', method:'muse-thoughts.jpg', calculator:'muse-ipad.jpg', contact:'muse-hero.jpg' };
+  let current = 'home';
+
+  function movePill(){
+    const btn = tabs.querySelector('[aria-current="true"]');
+    if(!btn){ pill.style.opacity = 0; return; }
+    pill.style.opacity = 1;
+    pill.style.width = btn.offsetWidth + 'px';
+    pill.style.transform = 'translateX(' + btn.offsetLeft + 'px)';
+  }
+  function setPose(src){
+    if (museImg.getAttribute('src') === src) return;
+    museImg.style.opacity = 0;
+    setTimeout(()=>{ museImg.src = src; museImg.onload = ()=> museImg.style.opacity = 1; }, reduce?0:250);
+  }
+  function go(view, focusId){
+    current = view;
+    document.body.classList.remove('menu-open');
+    document.getElementById('menuBtn').setAttribute('aria-expanded','false');
+    stage.classList.toggle('inner', view !== 'home');
+    document.querySelectorAll('[data-go]').forEach(b=>{
+      if (b.classList.contains('cta') || b.classList.contains('brand') || b.classList.contains('ghost')) return;
+      b.setAttribute('aria-current', b.dataset.go === view ? 'true' : 'false');
+    });
+    document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on', v.id === 'v-' + view));
+    scroller.scrollTop = 0;
+    setPose(poses[view]);
+    movePill();
+    if (focusId) setTimeout(()=>{ const el = document.getElementById(focusId==='demo'?'demoForm':focusId); if(el){ el.scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'}); const f = el.querySelector('input'); f && f.focus({preventScroll:true}); } }, 520);
+    try{ history.replaceState(null,'', view==='home' ? location.pathname : '#'+view); }catch(e){}
+  }
+  document.addEventListener('click', e=>{
+    const b = e.target.closest('[data-go]');
+    if (b){ e.preventDefault(); go(b.dataset.go, b.dataset.focus); }
+  });
+  document.getElementById('menuBtn').addEventListener('click', function(){
+    const open = document.body.classList.toggle('menu-open');
+    this.setAttribute('aria-expanded', open ? 'true':'false');
+  });
+  addEventListener('resize', movePill);
+  document.fonts && document.fonts.ready.then(movePill);
+  const start = (location.hash||'').slice(1);
+  go(['about','solutions','method','calculator','contact'].includes(start) ? start : 'home');
+
+  /* ---------- "Ξέρω να…" ticker ---------- */
+  const lines = [
+    'φτιάξω AI βοηθό που απαντάει και κλείνει ραντεβού, 24/7.',
+    'τρέξω Google Ads που φέρνουν πελάτες, όχι απλά κλικ.',
+    'σηκώσω το τηλέφωνο όταν εσύ έχεις κλείσει.',
+    'συνδέσω τα εργαλεία σου ώστε οι αγγαρείες να τρέχουν μόνες τους.',
+    'σε κάνω να σε προτείνει το ChatGPT.',
+    'γράψω κείμενα που πείθουν, όχι απλά περιγράφουν.',
+    'σου δώσω αναφορά που καταλαβαίνεις με μια ματιά.'
+  ];
+  const kt = document.getElementById('knowsText'); let li = 0;
+  if (!reduce) setInterval(()=>{
+    if (current !== 'home') return;
+    kt.classList.add('swap');
+    setTimeout(()=>{ li = (li+1)%lines.length; kt.textContent = lines[li]; kt.classList.remove('swap'); }, 350);
+  }, 3200);
+
+  /* ---------- Tilt ---------- */
+  const muse = document.getElementById('muse'), wrap = document.getElementById('museWrap');
+  if (!reduce && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    wrap.parentElement.style.pointerEvents = 'auto';
+    document.getElementById('visual').addEventListener('mousemove', e=>{
+      const r = wrap.getBoundingClientRect();
+      const x = (e.clientX - r.left)/r.width - .5, y = (e.clientY - r.top)/r.height - .5;
+      muse.style.transform = `rotateY(${x*7}deg) rotateX(${-y*6}deg)`;
+    });
+    document.getElementById('visual').addEventListener('mouseleave', ()=> muse.style.transform = '');
+  }
+
+  /* ---------- Network canvas ---------- */
+  const cv = document.getElementById('net'), cx = cv.getContext('2d');
+  let W=0,H=0,nodes=[];
+  function size(){
+    const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio||1,2);
+    W = r.width; H = r.height; cv.width = W*d; cv.height = H*d; cx.setTransform(d,0,0,d,0,0);
+    const n = Math.round(Math.max(14, Math.min(46, W*H/14000)));
+    nodes = Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*1.6+.8}));
+  }
+  function draw(){
+    cx.clearRect(0,0,W,H);
+    for (let i=0;i<nodes.length;i++){
+      const a = nodes[i];
+      for (let j=i+1;j<nodes.length;j++){
+        const b = nodes[j], dx=a.x-b.x, dy=a.y-b.y, d = Math.hypot(dx,dy);
+        if (d < 120){ cx.strokeStyle = `rgba(255,106,26,${(1-d/120)*.22})`; cx.lineWidth = 1; cx.beginPath(); cx.moveTo(a.x,a.y); cx.lineTo(b.x,b.y); cx.stroke(); }
+      }
+    }
+    for (const a of nodes){
+      cx.shadowColor = 'rgba(255,106,26,.9)'; cx.shadowBlur = 8;
+      cx.fillStyle = 'rgba(255,140,70,.85)'; cx.beginPath(); cx.arc(a.x,a.y,a.r,0,Math.PI*2); cx.fill();
+    }
+    cx.shadowBlur = 0;
+  }
+  function tick(){
+    for (const a of nodes){ a.x+=a.vx; a.y+=a.vy; if(a.x<0||a.x>W) a.vx*=-1; if(a.y<0||a.y>H) a.vy*=-1; }
+    draw(); requestAnimationFrame(tick);
+  }
+  size(); draw();
+  new ResizeObserver(()=>{ size(); draw(); }).observe(cv);
+  if (!reduce) requestAnimationFrame(tick);
+
+  /* ---------- Calculator ---------- */
+  // Εκτιμώμενο ποσοστό που αυτοματοποιείται ρεαλιστικά, ανά τύπο δουλειάς (υπόθεση, όχι μέτρηση)
+  const TASKS = {
+    phone:  {name:'AI βοηθός για τηλέφωνα & ραντεβού', share:.45},
+    msg:    {name:'Αυτόματη διαλογή email & μηνυμάτων', share:.40},
+    docs:   {name:'Εξαγωγή στοιχείων από τιμολόγια', share:.55},
+    reports:{name:'Αναφορές που βγαίνουν μόνες τους', share:.55},
+    social: {name:'Ροή παραγωγής & δημοσίευσης content', share:.30},
+    quotes: {name:'Προσφορές & αυτόματο follow-up', share:.40}
+  };
+  // Ποιες δουλειές βαραίνουν περισσότερο ανά κλάδο (για την ιεράρχηση)
+  const IND = {
+    clinic:{phone:1.5,msg:1.1,docs:1,reports:.8,social:.7,quotes:.6},
+    office:{docs:1.5,msg:1.2,reports:1.2,phone:1,quotes:.9,social:.6},
+    hosp:{msg:1.4,phone:1.3,social:1.1,reports:.8,docs:.8,quotes:.7},
+    retail:{msg:1.3,social:1.3,reports:1,docs:.9,quotes:.7,phone:.8},
+    build:{quotes:1.5,docs:1.2,phone:1.1,reports:1,msg:.9,social:.5},
+    other:{phone:1,msg:1,docs:1,reports:1,social:1,quotes:1}
+  };
+  const $ = id => document.getElementById(id);
+  const fmtE = n => '€' + Math.round(n).toLocaleString('el-GR');
+  const fmt = n => Math.round(n).toLocaleString('el-GR');
+  function paint(r){ r.style.setProperty('--p', ((r.value-r.min)/(r.max-r.min)*100)+'%'); }
+  function calc(){
+    const team = +$('c-team').value, hrs = +$('c-hours').value, rate = +$('c-rate').value, ind = $('c-ind').value;
+    ['team','hours','rate'].forEach(k=>paint($('c-'+k)));
+    $('o-team').textContent = team; $('o-hours').textContent = hrs; $('o-rate').textContent = '€'+rate;
+    let picked = [...document.querySelectorAll('.tasks input:checked')].map(i=>i.value);
+    if (!picked.length) picked = Object.keys(TASKS);
+    const monthHours = team * hrs * 4.33;
+    const share = picked.reduce((s,k)=>s+TASKS[k].share,0)/picked.length;
+    const save = monthHours * share;
+    $('r-cost').innerHTML = fmtE(monthHours*12*rate) + ' <small>/ έτος</small>';
+    $('r-hours').textContent = fmt(monthHours);
+    $('r-save').textContent = '~' + fmt(save);
+    const ranked = picked.map(k=>({k, score: TASKS[k].share * (IND[ind][k]||1)})).sort((a,b)=>b.score-a.score).slice(0,3);
+    const tot = ranked.reduce((s,o)=>s+o.score,0);
+    $('r-opps').innerHTML = ranked.map(o=>`<li><span>${TASKS[o.k].name}</span><span>~${fmt(save*o.score/tot)} ώρ.</span></li>`).join('');
+    $('r-how').textContent = `${team} άτομα × ${hrs} ώρες × 4,33 εβδομάδες × €${rate}. Υποθέτουμε ότι φεύγει περίπου το ${Math.round(share*100)}% των δουλειών που διάλεξες. Το audit το μετράει στην πράξη.`;
+  }
+  $('calcForm').addEventListener('input', calc);
+  calc();
+  $('sendForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const em = $('c-email'), note = $('sendNote');
+    if (!em.value || !em.checkValidity()){ note.className='note'; note.textContent = 'Γράψε ένα έγκυρο email, π.χ. you@business.gr'; em.focus(); return; }
+    note.className = 'note ok';
+    note.textContent = 'Prototype: εδώ θα ξεκινάει η ροή n8n που φτιάχνει και στέλνει το PDF.';
+  });
+
+  /* ---------- Contact ---------- */
+  document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click', ()=>{
+    const t = b.dataset.copy, done = ()=>{ b.textContent='Αντιγράφηκε'; setTimeout(()=>b.textContent='Αντιγραφή',1600); };
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(done).catch(()=>{ const s=getSelection(), r=document.createRange(); r.selectNodeContents(b.previousElementSibling.querySelector('span')); s.removeAllRanges(); s.addRange(r); });
+  }));
+  $('demoForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const em = $('d-email'), note = $('demoNote');
+    if (!em.value || !em.checkValidity()){ note.className='note'; note.textContent='Χρειαζόμαστε ένα έγκυρο email για να σου απαντήσουμε.'; em.focus(); return; }
+    note.className='note ok'; note.textContent='Prototype: εδώ το αίτημα θα πηγαίνει στο inbox και στο CRM.';
+  });
+
+  /* ---------- Solutions accordion ---------- */
+  document.querySelectorAll('[data-pillar] > button').forEach(btn=>btn.addEventListener('click', ()=>{
+    const p = btn.parentElement, open = !p.classList.contains('open');
+    p.classList.toggle('open', open); btn.setAttribute('aria-expanded', open);
+  }));
+})();
+</script>
+</body>
+</html>
