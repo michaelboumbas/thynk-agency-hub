@@ -2,6 +2,7 @@
 @source "../src";
 @import "tw-animate-css";
 @import "./components/thynk5/thynk5.css";
+@import "./components/thynk6/thynk6.css";
 
 @custom-variant dark (&:is(.dark *));
 
