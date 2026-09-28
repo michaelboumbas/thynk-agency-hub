@@ -42,15 +42,16 @@ async function loadCloud(src: string, max: number): Promise<Cloud> {
     misc[i * 3 + 1] = Math.random();
     misc[i * 3 + 2] = Math.random() * Math.PI * 2;
     const ang = Math.random() * Math.PI * 2;
-    const rad = 1400 + Math.random() * 3200;
+    const rad = 900 + Math.random() * 2100;
     start[i * 3] = Math.cos(ang) * rad;
-    start[i * 3 + 1] = (Math.random() - 0.5) * 3600;
+    start[i * 3 + 1] = (Math.random() - 0.5) * 3000;
     start[i * 3 + 2] = Math.sin(ang) * rad;
   }
   return { n, h, target, start, color, misc };
 }
 
 const VS = `
+#define PIVOT -160.0
 attribute vec3 aTarget;
 attribute vec3 aStart;
 attribute vec4 aColor;
@@ -66,13 +67,16 @@ void main() {
   p.x += sin(uT * 0.7 + aMisc.z) * drift;
   p.y += cos(uT * 0.6 + aMisc.z) * drift;
   float cy = cos(uRotY), sy = sin(uRotY), cx = cos(uRotX), sx = sin(uRotX);
+  p.z -= PIVOT; // turn around the middle of the bust, not its front surface
   vec3 q = vec3(p.x * cy + p.z * sy, p.y, -p.x * sy + p.z * cy);
   q = vec3(q.x, q.y * cx - q.z * sx, q.y * sx + q.z * cx);
-  float f = uF / (uF + q.z);
+  q.z += PIVOT;
+  float f = uF / max(uF + q.z, uF * 0.3);
   vec2 px = uCenter + q.xy * uScale * f;
   gl_Position = vec4(px.x / uRes.x * 2.0 - 1.0, 1.0 - px.y / uRes.y * 2.0, 0.0, 1.0);
   gl_PointSize = max(1.0, aMisc.x * f * uDpr * (0.85 + uScale * 1.4));
-  vColor = vec4(aColor.rgb, aColor.a * (0.22 + 0.78 * k) * clamp(f, 0.45, 1.35));
+  float light = clamp(0.72 + 0.5 * (-q.z / 600.0), 0.3, 1.35); // surfaces facing the viewer glow more
+  vColor = vec4(aColor.rgb, aColor.a * (0.22 + 0.78 * k) * clamp(f, 0.45, 1.35) * mix(1.0, light, k));
 }`;
 
 const FS = `
@@ -126,7 +130,7 @@ export function ParticleMuse({
 
     const small = window.innerWidth < 700;
     const gl = cv.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true });
-    const max = gl ? (small ? 32000 : 60000) : small ? 5000 : 9000;
+    const max = gl ? (small ? 36000 : 90000) : small ? 5000 : 9000;
     let ro: ResizeObserver | null = null;
 
     const view = (h: number) => {
@@ -138,8 +142,9 @@ export function ParticleMuse({
         scale: (H * 0.86) / h,
         cx: W / 2,
         cy: H / 2 + H * 0.03,
-        rotY: (1 - ease(p)) * 1.1 + mouse.x * 0.28,
-        rotX: mouse.y * 0.14,
+        // turn on scroll-in, follow the pointer, and sway gently once formed so the volume reads as 3D
+        rotY: (1 - ease(p)) * 1.1 + mouse.x * 0.42 + (reduced ? 0 : Math.sin(performance.now() * 0.00035) * 0.26 * ease(p)),
+        rotX: mouse.y * 0.16,
       };
     };
 
@@ -206,7 +211,7 @@ export function ParticleMuse({
               gl.uniform1f(U.rotY, v.rotY);
               gl.uniform1f(U.rotX, v.rotX);
               gl.uniform1f(U.dpr, dpr);
-              gl.uniform1f(U.f, 5200);
+              gl.uniform1f(U.f, 2800);
               gl.uniform2f(U.res, W, H);
               gl.uniform2f(U.center, v.cx, v.cy);
               gl.drawArrays(gl.POINTS, 0, c.n);
@@ -240,10 +245,10 @@ export function ParticleMuse({
             const ph = c.misc[i * 3 + 2];
             const x = c.start[i * 3] + (c.target[i * 3] - c.start[i * 3]) * k + Math.sin(t * 0.7 + ph) * drift;
             const y = c.start[i * 3 + 1] + (c.target[i * 3 + 1] - c.start[i * 3 + 1]) * k + Math.cos(t * 0.6 + ph) * drift;
-            const z = c.start[i * 3 + 2] + (c.target[i * 3 + 2] - c.start[i * 3 + 2]) * k;
+            const z = c.start[i * 3 + 2] + (c.target[i * 3 + 2] - c.start[i * 3 + 2]) * k + 160;
             const qx = x * cy + z * sy;
-            const qz = -x * sy + z * cy;
-            const f = 5200 / (5200 + qz);
+            const qz = -x * sy + z * cy - 160;
+            const f = 2800 / Math.max(2800 + qz, 840);
             const px = v.cx + qx * v.scale * f;
             const py = v.cy + y * v.scale * f;
             const a = c.color[i * 4 + 3] * (0.22 + 0.78 * k);
