@@ -90,7 +90,6 @@ export function ThynkSiteV7() {
   const inkRef = useRef(1); // the ink Muse is already drawn when the lights come on
   const runwayRef = useRef<HTMLDivElement>(null);
   const heroTextRef = useRef<HTMLDivElement>(null);
-  const curtainRef = useRef<HTMLDivElement>(null);
   const spotRef = useRef<HTMLDivElement>(null);
   const camRef = useRef({ rot: 0, zoom: 1, shift: 0.17, lift: 0 });
 
@@ -136,10 +135,9 @@ export function ThynkSiteV7() {
           t.style.opacity = String(Math.max(0, 1 - sp * 2.2));
           t.style.transform = `translateY(${-sp * 90}px)`;
         }
-        const c = curtainRef.current;
-        const k = Math.min(1, Math.max(0, (sp - 0.7) / 0.3));
-        if (c) c.style.transform = `translateY(${(1 - k) * 100}%)`;
-        setOnDark(y < rw.offsetHeight - 70);
+        // the light page itself slides up over the pinned dark stage (no empty white screen)
+        const ask = document.getElementById("ask");
+        setOnDark(ask ? ask.getBoundingClientRect().top > 60 : y < rw.offsetHeight - 70);
       });
     };
     on();
@@ -273,7 +271,6 @@ export function ThynkSiteV7() {
               <span>scroll</span>
               <i />
             </div>
-            <div className="t7-curtain" ref={curtainRef} aria-hidden="true" />
           </div>
         </div>
 
@@ -535,7 +532,7 @@ function Imagine({ reduced, first }: { reduced: boolean; first: number | null })
     <section
       ref={ref}
       className={`t7-pin t7-imagine${reduced ? " static" : ""}`}
-      style={reduced ? undefined : { height: `${100 + n * 40}vh` }}
+      style={reduced ? undefined : { height: `${100 + n * 24}vh` }}
       aria-label={pinnedV6.knowHow.title}
     >
       <div className="t7-pin-stage">
@@ -577,7 +574,7 @@ function Method({ reduced }: { reduced: boolean }) {
       ref={ref}
       className={`t7-pin t7-method${reduced ? " static" : ""}`}
       id="method"
-      style={reduced ? undefined : { height: `${100 + n * 80}vh` }}
+      style={reduced ? undefined : { height: `${100 + n * 50}vh` }}
     >
       <div className="t7-pin-stage">
         <div className="t7-method-grid">

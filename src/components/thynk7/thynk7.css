@@ -94,7 +94,7 @@
 .t7-eyebrow {
   display: inline-block;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--orange-ink);
@@ -107,7 +107,7 @@
 }
 .t7-mono {
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 12.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
@@ -156,7 +156,8 @@
 .t7-link {
   border: 0;
   background: none;
-  padding: 0;
+  padding: 12px 0;
+  min-height: 44px;
   font-weight: 700;
   color: var(--orange-ink);
 }
@@ -198,7 +199,8 @@
 .t7-brand {
   border: 0;
   background: none;
-  padding: 0;
+  padding: 7px 0;
+  min-height: 44px;
   margin-right: auto;
 }
 .t7-word {
@@ -219,7 +221,8 @@
 .t7-nav button {
   border: 0;
   background: none;
-  padding: 8px 12px;
+  padding: 11px 12px;
+  min-height: 44px;
   border-radius: 999px;
   font-size: 14px;
   font-weight: 600;
@@ -419,7 +422,7 @@
 /* ---------- dark 3D stage (the lights come on at the end) ---------- */
 .t7-runway {
   position: relative;
-  height: 260vh;
+  height: 230vh;
   background: #070708;
 }
 .t7-stage {
@@ -592,10 +595,19 @@
 
 /* the question, first light section */
 .t7-ask-sec {
+  /* slides up over the last screen of the pinned dark stage, like a sheet of paper */
+  position: relative;
+  z-index: 5;
+  margin-top: -70vh;
+  background: var(--paper);
+  border-radius: clamp(24px, 4vw, 48px) clamp(24px, 4vw, 48px) 0 0;
+  box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.35);
+  padding: clamp(56px, 7vw, 90px) 0 40px;
+  scroll-margin-top: 0;
+}
+.t7-ask-sec > .t7-ask-wrap {
   width: var(--wrap);
   margin: 0 auto;
-  padding: 90px 0 40px;
-  scroll-margin-top: 40px;
 }
 .t7-ask-wrap {
   display: grid;
@@ -943,7 +955,7 @@
 .t7-tag {
   display: inline-block;
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 12.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--orange-ink);
@@ -1206,7 +1218,7 @@
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .t7-runway {
-    height: 190vh;
+    height: 180vh;
   }
   .t7-stage-text {
     top: auto;
@@ -1304,4 +1316,10 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* v5 components inside v7: comfortable touch targets */
+.t7 .t5-embed button,
+.t7 .t5-embed select {
+  min-height: 44px;
 }
