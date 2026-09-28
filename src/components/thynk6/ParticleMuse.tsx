@@ -67,7 +67,7 @@ attribute vec3 aStart;
 attribute vec4 aColor;
 attribute vec3 aMisc;
 attribute vec3 aNormal;
-uniform float uP, uT, uScale, uRotY, uRotX, uDpr, uF, uPass;
+uniform float uP, uT, uScale, uRotY, uRotX, uDpr, uF, uPass, uInk;
 uniform vec2 uRes, uCenter;
 varying vec4 vColor;
 void main() {
@@ -101,6 +101,14 @@ void main() {
   float key = max(dot(nq, normalize(vec3(-0.45, -0.5, -0.75))), 0.0);
   float light = 0.45 + 0.85 * key;
   vColor = vec4(aColor.rgb, aColor.a * (0.22 + 0.78 * k) * clamp(f, 0.45, 1.35) * mix(1.0, light * vis, k));
+  if (uInk > 0.5) {
+    // ink on paper: dark points where the texture is dark, highlights stay paper, circuitry stays orange
+    bool glow = aColor.g < 0.72 && aColor.r > 0.9;
+    float lumn = clamp((aColor.r - 0.78) / 0.22, 0.0, 1.0);
+    float a = glow ? 0.95 : (0.2 + 0.8 * (1.0 - lumn)) * (1.3 - 0.5 * key);
+    vec3 c = glow ? vec3(1.0, 0.39, 0.08) : vec3(0.07, 0.07, 0.08);
+    vColor = vec4(c, a * (0.3 + 0.7 * k) * mix(1.0, vis, k));
+  }
 }`;
 
 const FS = `
@@ -130,10 +138,16 @@ export function ParticleMuse({
   src,
   progressRef,
   reduced,
+  ink = false,
+  box = false,
 }: {
   src: string;
   progressRef: MutableRefObject<number>;
   reduced: boolean;
+  /** dark ink on a light page instead of glowing light on a dark one */
+  ink?: boolean;
+  /** the canvas is a box in the layout (fit fully inside), not a full-screen stage */
+  box?: boolean;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -168,9 +182,9 @@ export function ParticleMuse({
       return {
         p,
         // auto-fit: largest size that fits both height and width of the stage, whatever the screen shape
-        scale: Math.min((H * 0.84) / h, (W * (W < 700 ? 1.4 : 0.8)) / w),
+        scale: box ? Math.min((H * 0.94) / h, (W * 0.98) / w) : Math.min((H * 0.84) / h, (W * (W < 700 ? 1.4 : 0.8)) / w),
         cx: W / 2,
-        cy: H / 2 + H * 0.03,
+        cy: box ? H / 2 : H / 2 + H * 0.03,
         // turn on scroll-in, follow the pointer, and sway gently once formed so the volume reads as 3D
         // a full turn while forming (so you see her all around), then follow the pointer + gentle sway
         rotY:
@@ -228,11 +242,14 @@ export function ParticleMuse({
               dpr: u("uDpr"),
               f: u("uF"),
               pass: u("uPass"),
+              ink: u("uInk"),
               res: u("uRes"),
               center: u("uCenter"),
             };
             gl.enable(gl.BLEND);
-            gl.blendFunc(gl.ONE, gl.ONE); // additive glow
+            // additive glow on dark; normal "over" compositing for ink on paper
+            if (ink) gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+            else gl.blendFunc(gl.ONE, gl.ONE);
             gl.depthFunc(gl.LEQUAL);
             gl.clearColor(0, 0, 0, 0);
             gl.clearDepth(1);
@@ -253,6 +270,7 @@ export function ParticleMuse({
               gl.uniform1f(U.rotX, v.rotX);
               gl.uniform1f(U.dpr, dpr);
               gl.uniform1f(U.f, CAM);
+              gl.uniform1f(U.ink, ink ? 1 : 0);
               gl.uniform2f(U.res, W, H);
               gl.uniform2f(U.center, v.cx, v.cy);
               // pass 0: depth only
@@ -292,7 +310,7 @@ export function ParticleMuse({
           const v = view(c.w, c.h);
           cx2.setTransform(dpr, 0, 0, dpr, 0, 0);
           cx2.clearRect(0, 0, W, H);
-          cx2.globalCompositeOperation = "lighter";
+          cx2.globalCompositeOperation = ink ? "source-over" : "lighter";
           const t = reduced ? 0 : time * 0.001;
           const cy = Math.cos(v.rotY);
           const sy = Math.sin(v.rotY);
@@ -311,7 +329,12 @@ export function ParticleMuse({
             const nz = -c.normal[i * 3] * sy + c.normal[i * 3 + 2] * cy;
             const vis = 0.06 + 0.94 * clamp((-nz + 0.2) / 0.55);
             const a = c.color[i * 4 + 3] * (0.22 + 0.78 * k) * (1 - k + k * vis);
-            cx2.fillStyle = `rgba(${(c.color[i * 4] * 255) | 0},${(c.color[i * 4 + 1] * 255) | 0},${(c.color[i * 4 + 2] * 255) | 0},${a.toFixed(2)})`;
+            if (ink) {
+              const glow = c.color[i * 4 + 1] < 0.72 && c.color[i * 4] > 0.9;
+              const ia = glow ? 0.95 : (0.2 + 0.8 * (1 - clamp((c.color[i * 4] - 0.78) / 0.22))) * (0.3 + 0.7 * k) * (1 - k + k * vis);
+              cx2.fillStyle = glow ? `rgba(255,100,20,${ia.toFixed(2)})` : `rgba(18,18,20,${ia.toFixed(2)})`;
+            } else
+              cx2.fillStyle = `rgba(${(c.color[i * 4] * 255) | 0},${(c.color[i * 4 + 1] * 255) | 0},${(c.color[i * 4 + 2] * 255) | 0},${a.toFixed(2)})`;
             const s = Math.max(1, c.misc[i * 3] * f);
             cx2.fillRect(px, py, s, s);
           }
@@ -334,7 +357,7 @@ export function ParticleMuse({
       io.disconnect();
       window.removeEventListener("pointermove", onMove);
     };
-  }, [src, progressRef, reduced]);
+  }, [src, progressRef, reduced, ink, box]);
 
   return <canvas ref={ref} className="t6-particles" aria-hidden="true" />;
 }

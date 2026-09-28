@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ComingSoon } from "@/components/thynk/ComingSoon";
 import { ThynkSite } from "@/components/thynk5/ThynkSite";
 import { ThynkSiteV6 } from "@/components/thynk6/ThynkSiteV6";
+import { ThynkSiteV7 } from "@/components/thynk7/ThynkSiteV7";
 
 
 const title = "Thynk Digital Agency — Σκέψη πίσω από κάθε κίνηση";
@@ -27,7 +28,7 @@ export const Route = createFileRoute("/")({
  * Which face to show.
  * - Public/published site: the Coming Soon page, until the founders decide to launch.
  * - Lovable editor preview (id-preview--*.lovable.app, *.lovableproject.com) and localhost: the v5 site.
- * Overrides for any host: ?site=1 shows the site, ?soon=1 shows Coming Soon, ?v=5 picks the older v5.
+ * Overrides for any host: ?site=1 shows the site, ?soon=1 shows Coming Soon, ?v=5 / ?v=7 pick a version.
  */
 function shouldShowSite(): boolean {
   const { hostname, search } = window.location;
@@ -45,13 +46,15 @@ function shouldShowSite(): boolean {
 function Index() {
   // Server render + first paint = Coming Soon (safe default for the public site);
   // the editor preview switches to the v5 site right after mount.
-  const [face, setFace] = useState<"soon" | "v5" | "v6">("soon");
+  const [face, setFace] = useState<"soon" | "v5" | "v6" | "v7">("soon");
   useEffect(() => {
     if (!shouldShowSite()) return;
-    // v6 (long scroll, particle Muse) is the current direction; ?v=5 shows the fixed-viewport v5.
-    setFace(new URLSearchParams(window.location.search).get("v") === "5" ? "v5" : "v6");
+    // v6 (dark long scroll) is the default for now; ?v=7 = the light "thinks with you" proposal, ?v=5 = the old v5.
+    const v = new URLSearchParams(window.location.search).get("v");
+    setFace(v === "5" ? "v5" : v === "7" ? "v7" : "v6");
   }, []);
 
+  if (face === "v7") return <ThynkSiteV7 />;
   if (face === "v6") return <ThynkSiteV6 />;
   if (face === "v5") return <ThynkSite />;
   return <ComingSoon />;

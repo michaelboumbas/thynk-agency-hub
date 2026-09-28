@@ -7,7 +7,7 @@ import { AuditCard, ChatCard, TerminalCard } from "./Mocks";
  * the heading never moves, and scrolling only changes which item is active.
  * Section height = one screen + `per` viewport-heights for every item.
  */
-function usePinnedIndex(n: number, reduced: boolean) {
+export function usePinnedIndex(n: number, reduced: boolean) {
   const ref = useRef<HTMLElement>(null);
   const [state, setState] = useState({ i: 0, end: false });
   useEffect(() => {

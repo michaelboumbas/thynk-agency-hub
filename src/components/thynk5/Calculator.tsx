@@ -42,12 +42,13 @@ function Range({
   );
 }
 
-export function Calculator() {
+/** `initialTasks` pre-selects what eats the visitor's time (v7 passes the pain picked in the hero). */
+export function Calculator({ initialTasks }: { initialTasks?: string[] } = {}) {
   const [industry, setIndustry] = useState(C.defaultIndustry);
   const [team, setTeam] = useState(6);
   const [hours, setHours] = useState(6);
   const [rate, setRate] = useState(9);
-  const [tasks, setTasks] = useState<TaskId[]>(C.defaultTasks as TaskId[]);
+  const [tasks, setTasks] = useState<TaskId[]>((initialTasks?.length ? initialTasks : C.defaultTasks) as TaskId[]);
   const [email, setEmail] = useState("");
   const [note, setNote] = useState<{ text: string; ok: boolean }>({ text: C.sendNote, ok: false });
 
