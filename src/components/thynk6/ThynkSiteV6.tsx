@@ -24,7 +24,8 @@ function scrollToId(id: string, reduced: boolean) {
   document.getElementById(id)?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
 }
 
-/** Adds .in to every [data-reveal] element as it enters the viewport. */
+/** Marks every [data-reveal] element with data-in once it enters the viewport.
+ * (A data attribute, not a class: React rewrites className on re-render, which would hide it again.) */
 function useReveal(root: RefObject<HTMLElement | null>) {
   useEffect(() => {
     const els = root.current?.querySelectorAll<HTMLElement>("[data-reveal]");
@@ -33,7 +34,7 @@ function useReveal(root: RefObject<HTMLElement | null>) {
       (entries) =>
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            e.target.classList.add("in");
+            (e.target as HTMLElement).dataset.in = "1";
             io.unobserve(e.target);
           }
         }),
