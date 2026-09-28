@@ -2,8 +2,9 @@ import { useEffect, useRef, type MutableRefObject } from "react";
 
 /**
  * The Muse as a cloud of warm particles (WebGL points, canvas-2D fallback).
- * Points come pre-baked from scripts/build-muse-points.py (public/v6/muse-points.bin):
- * shoulders extended past the photo frame, a depth map for a real 3D feel, detail-weighted sampling.
+ * Points come pre-baked from a real 3D model of the Muse (Higgsfield / Hunyuan3D GLB) by
+ * scripts/glb-to-muse-points.py (public/v6/muse-points.bin): surface samples with texture colour
+ * and normals, so she reads correctly from every angle.
  * `progressRef.current` (0..1, driven by scroll): 0 = scattered dust, 1 = fully formed bust.
  */
 
@@ -14,7 +15,8 @@ type Cloud = {
   target: Float32Array; // x,y,z
   start: Float32Array; // x,y,z
   color: Float32Array; // r,g,b,a (0..1)
-  misc: Float32Array; // size, delay, phase, side (-1 front half, +1 back half)
+  misc: Float32Array; // size, delay, phase
+  normal: Float32Array; // surface normal (x, y down, z toward the back)
 };
 
 // Camera distance. Far enough that the nose/face aren't magnified against the body (no fish-eye bulge).
@@ -33,9 +35,10 @@ async function loadCloud(src: string, max: number): Promise<Cloud> {
   const target = new Float32Array(n * 3);
   const start = new Float32Array(n * 3);
   const color = new Float32Array(n * 4);
-  const misc = new Float32Array(n * 4);
+  const misc = new Float32Array(n * 3);
+  const normal = new Float32Array(n * 3);
   let o = 12;
-  for (let i = 0; i < n; i++, o += 11) {
+  for (let i = 0; i < n; i++, o += 14) {
     target[i * 3] = dv.getInt16(o, true);
     target[i * 3 + 1] = dv.getInt16(o + 2, true);
     target[i * 3 + 2] = dv.getInt16(o + 4, true);
@@ -43,26 +46,28 @@ async function loadCloud(src: string, max: number): Promise<Cloud> {
     color[i * 4 + 1] = dv.getUint8(o + 7) / 255;
     color[i * 4 + 2] = dv.getUint8(o + 8) / 255;
     color[i * 4 + 3] = dv.getUint8(o + 9) / 255;
-    const sb = dv.getUint8(o + 10);
-    misc[i * 4] = (sb & 127) / 20;
-    misc[i * 4 + 1] = Math.random();
-    misc[i * 4 + 2] = Math.random() * Math.PI * 2;
-    misc[i * 4 + 3] = sb & 128 ? 1 : -1;
+    misc[i * 3] = dv.getUint8(o + 10) / 20;
+    misc[i * 3 + 1] = Math.random();
+    misc[i * 3 + 2] = Math.random() * Math.PI * 2;
+    normal[i * 3] = dv.getInt8(o + 11) / 127;
+    normal[i * 3 + 1] = dv.getInt8(o + 12) / 127;
+    normal[i * 3 + 2] = dv.getInt8(o + 13) / 127;
     const ang = Math.random() * Math.PI * 2;
     const rad = 900 + Math.random() * 2100;
     start[i * 3] = Math.cos(ang) * rad;
     start[i * 3 + 1] = (Math.random() - 0.5) * 3000;
     start[i * 3 + 2] = Math.sin(ang) * rad;
   }
-  return { n, w, h, target, start, color, misc };
+  return { n, w, h, target, start, color, misc, normal };
 }
 
 const VS = `
 attribute vec3 aTarget;
 attribute vec3 aStart;
 attribute vec4 aColor;
-attribute vec4 aMisc;
-uniform float uP, uT, uScale, uRotY, uRotX, uDpr, uF;
+attribute vec3 aMisc;
+attribute vec3 aNormal;
+uniform float uP, uT, uScale, uRotY, uRotX, uDpr, uF, uPass;
 uniform vec2 uRes, uCenter;
 varying vec4 vColor;
 void main() {
@@ -75,14 +80,26 @@ void main() {
   float cy = cos(uRotY), sy = sin(uRotY), cx = cos(uRotX), sx = sin(uRotX);
   vec3 q = vec3(p.x * cy + p.z * sy, p.y, -p.x * sy + p.z * cy);
   q = vec3(q.x, q.y * cx - q.z * sx, q.y * sx + q.z * cx);
+  vec3 nq = vec3(aNormal.x * cy + aNormal.z * sy, aNormal.y, -aNormal.x * sy + aNormal.z * cy);
+  nq = vec3(nq.x, nq.y * cx - nq.z * sx, nq.y * sx + nq.z * cx);
   float f = uF / max(uF + q.z, uF * 0.3);
   vec2 px = uCenter + q.xy * uScale * f;
-  gl_Position = vec4(px.x / uRes.x * 2.0 - 1.0, 1.0 - px.y / uRes.y * 2.0, 0.0, 1.0);
-  gl_PointSize = max(1.0, aMisc.x * f * uDpr * (0.85 + uScale * 1.4));
-  float light = clamp(0.72 + 0.5 * (-q.z / 600.0), 0.3, 1.35); // surfaces facing the viewer glow more
-  // hide the half that faces away (the bust is see-through otherwise: the face would show from behind)
-  float facing = -aMisc.w * cy * cx;
-  float vis = mix(0.1, 1.0, smoothstep(-0.45, 0.35, facing));
+  // two passes: (0) formed points write depth as fat, slightly pushed-back occluders; (1) colour
+  // pass with depth test, so whatever sits behind the head/neck is hidden like a real solid
+  float zn = clamp(q.z / 2500.0, -0.98, 0.98);
+  float size = max(1.0, aMisc.x * f * uDpr * (0.85 + uScale * 1.4));
+  if (uPass < 0.5) {
+    zn = k > 0.97 ? zn + 0.03 : 0.999;
+    size = max(3.0 * uDpr, size * 2.6);
+  }
+  gl_Position = vec4(px.x / uRes.x * 2.0 - 1.0, 1.0 - px.y / uRes.y * 2.0, zn, 1.0);
+  gl_PointSize = size;
+  // real surface normals: the side facing away fades (no see-through face), a soft key light
+  // from the upper left models the volume
+  float facing = -nq.z;
+  float vis = mix(0.06, 1.0, smoothstep(-0.2, 0.35, facing));
+  float key = max(dot(nq, normalize(vec3(-0.45, -0.5, -0.75))), 0.0);
+  float light = 0.45 + 0.85 * key;
   vColor = vec4(aColor.rgb, aColor.a * (0.22 + 0.78 * k) * clamp(f, 0.45, 1.35) * mix(1.0, light * vis, k));
 }`;
 
@@ -136,8 +153,8 @@ export function ParticleMuse({
     window.addEventListener("pointermove", onMove, { passive: true });
 
     const small = window.innerWidth < 700;
-    const gl = cv.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true });
-    const max = gl ? (small ? 48000 : 110000) : small ? 5000 : 9000;
+    const gl = cv.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true, depth: true });
+    const max = gl ? (small ? 55000 : 110000) : small ? 5000 : 9000;
     let ro: ResizeObserver | null = null;
 
     const view = (w: number, h: number) => {
@@ -195,7 +212,8 @@ export function ParticleMuse({
             attr("aTarget", c.target, 3);
             attr("aStart", c.start, 3);
             attr("aColor", c.color, 4);
-            attr("aMisc", c.misc, 4);
+            attr("aMisc", c.misc, 3);
+            attr("aNormal", c.normal, 3);
             const u = (n: string) => gl.getUniformLocation(prog, n);
             const U = {
               p: u("uP"),
@@ -205,18 +223,21 @@ export function ParticleMuse({
               rotX: u("uRotX"),
               dpr: u("uDpr"),
               f: u("uF"),
+              pass: u("uPass"),
               res: u("uRes"),
               center: u("uCenter"),
             };
             gl.enable(gl.BLEND);
             gl.blendFunc(gl.ONE, gl.ONE); // additive glow
+            gl.depthFunc(gl.LEQUAL);
             gl.clearColor(0, 0, 0, 0);
+            gl.clearDepth(1);
 
             const frame = (time: number) => {
               if (!alive) return;
               const v = view(c.w, c.h);
               gl.viewport(0, 0, cv.width, cv.height);
-              gl.clear(gl.COLOR_BUFFER_BIT);
+              gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
               gl.uniform1f(U.p, v.p);
               gl.uniform1f(U.t, reduced ? 0 : time * 0.001);
               gl.uniform1f(U.scale, v.scale);
@@ -226,6 +247,18 @@ export function ParticleMuse({
               gl.uniform1f(U.f, CAM);
               gl.uniform2f(U.res, W, H);
               gl.uniform2f(U.center, v.cx, v.cy);
+              // pass 0: depth only
+              gl.enable(gl.DEPTH_TEST);
+              gl.disable(gl.BLEND);
+              gl.colorMask(false, false, false, false);
+              gl.depthMask(true);
+              gl.uniform1f(U.pass, 0);
+              gl.drawArrays(gl.POINTS, 0, c.n);
+              // pass 1: glowing points, hidden where something is in front
+              gl.enable(gl.BLEND);
+              gl.colorMask(true, true, true, true);
+              gl.depthMask(false);
+              gl.uniform1f(U.pass, 1);
               gl.drawArrays(gl.POINTS, 0, c.n);
               if (!reduced) raf = requestAnimationFrame(frame);
             };
@@ -252,9 +285,9 @@ export function ParticleMuse({
           const cy = Math.cos(v.rotY);
           const sy = Math.sin(v.rotY);
           for (let i = 0; i < c.n; i++) {
-            const k = ease(clamp(v.p * 1.35 - c.misc[i * 4 + 1] * 0.35));
+            const k = ease(clamp(v.p * 1.35 - c.misc[i * 3 + 1] * 0.35));
             const drift = (1 - k * 0.9) * 22;
-            const ph = c.misc[i * 4 + 2];
+            const ph = c.misc[i * 3 + 2];
             const x = c.start[i * 3] + (c.target[i * 3] - c.start[i * 3]) * k + Math.sin(t * 0.7 + ph) * drift;
             const y = c.start[i * 3 + 1] + (c.target[i * 3 + 1] - c.start[i * 3 + 1]) * k + Math.cos(t * 0.6 + ph) * drift;
             const z = c.start[i * 3 + 2] + (c.target[i * 3 + 2] - c.start[i * 3 + 2]) * k;
@@ -263,10 +296,11 @@ export function ParticleMuse({
             const f = CAM / Math.max(CAM + qz, CAM * 0.3);
             const px = v.cx + qx * v.scale * f;
             const py = v.cy + y * v.scale * f;
-            const vis = 0.1 + 0.9 * clamp((-c.misc[i * 4 + 3] * cy + 0.45) / 0.8);
+            const nz = -c.normal[i * 3] * sy + c.normal[i * 3 + 2] * cy;
+            const vis = 0.06 + 0.94 * clamp((-nz + 0.2) / 0.55);
             const a = c.color[i * 4 + 3] * (0.22 + 0.78 * k) * (1 - k + k * vis);
             cx2.fillStyle = `rgba(${(c.color[i * 4] * 255) | 0},${(c.color[i * 4 + 1] * 255) | 0},${(c.color[i * 4 + 2] * 255) | 0},${a.toFixed(2)})`;
-            const s = Math.max(1, c.misc[i * 4] * f);
+            const s = Math.max(1, c.misc[i * 3] * f);
             cx2.fillRect(px, py, s, s);
           }
           cx2.globalCompositeOperation = "source-over";
