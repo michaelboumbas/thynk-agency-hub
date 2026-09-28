@@ -51,7 +51,7 @@ export const knowHow = [
 export const about = {
   headline: "Γιατί υπάρχει η Thynk",
   body: [
-    "Στα Γιάννενα υπάρχει ένα κενό. Οι τοπικές επιχειρήσεις δεν έχουν εύκολη πρόσβαση στο επίπεδο τεχνογνωσίας που κυκλοφορεί στην Αθήνα. Η Thynk γεννήθηκε για να το καλύψει, φέρνοντας μαζί digital marketing αθηναϊκού επιπέδου και το business/data κομμάτι.",
+    "Δεν χρειάζεται να ψάξεις στην Αθήνα για σοβαρό marketing και αυτοματισμούς. Η Thynk τα φέρνει εδώ, από δύο ανθρώπους που θα συναντήσεις στα Γιάννενα: ο ένας με χρόνια σε agency της Αθήνας, ο άλλος με μυαλό για business και νούμερα.",
     "Δεν μπαίνουμε με κατάλογο να διαλέξεις. Κάνουμε audit, βρίσκουμε τι χρειάζεσαι και προχωράμε κλιμακωτά: πρώτα το πιο κρίσιμο, μετά τα υπόλοιπα. Αν κάτι δεν πρόκειται να δουλέψει, θα στο πούμε εμείς πρώτοι.",
   ],
   founders: [
@@ -76,12 +76,12 @@ export const solutions = {
   pillars: [
     {
       id: "marketing",
-      tag: "Marketing",
+      tag: "Περισσότεροι πελάτες",
       title: "Φέρνουμε πελάτες και το μετράμε",
       sub: "Ads, content, email. Δεμένα μεταξύ τους, όχι σκόρπια.",
       groups: [
         {
-          title: "Performance Marketing",
+          title: "Διαφήμιση που μετριέται",
           items: [
             "Google Ads (Search, Shopping, Performance Max) που φέρνουν πελάτες, όχι απλά κλικ.",
             "Τα προϊόντα σου στο Google Shopping με φωτογραφία και τιμή.",
@@ -92,7 +92,7 @@ export const solutions = {
           ],
         },
         {
-          title: "Social, Content & Creative",
+          title: "Social & περιεχόμενο",
           items: [
             "Content calendar και στρατηγική πάνω στο δικό σου brand.",
             "Διαχείριση Facebook, Instagram, TikTok, LinkedIn χωρίς αναπάντητα μηνύματα.",
@@ -103,7 +103,7 @@ export const solutions = {
           ],
         },
         {
-          title: "Email, SMS & Automation",
+          title: "Email, SMS & αυτόματα μηνύματα",
           items: [
             "Αυτόματα μηνύματα για εγκαταλειμμένο καλάθι, upsell, επαναγορά.",
             "Klaviyo flows και Mailchimp newsletters που ανοίγονται.",
@@ -115,12 +115,12 @@ export const solutions = {
     },
     {
       id: "transformation",
-      tag: "Digital Transformation",
+      tag: "Λιγότερη χειρωνακτική δουλειά",
       title: "Συστήματα που δουλεύουν μόνα τους",
       sub: "AI αυτοματισμοί, δεδομένα, στρατηγική, landing pages.",
       groups: [
         {
-          title: "AI Automation & Data",
+          title: "AI αυτοματισμοί & δεδομένα",
           items: [
             "AI chatbot που απαντάει και κλείνει ραντεβού από το site ή τα social.",
             "Φωνητικό βοηθό που σηκώνει το τηλέφωνο εκτός ωραρίου.",
@@ -131,7 +131,7 @@ export const solutions = {
           ],
         },
         {
-          title: "Consulting & Growth",
+          title: "Συμβουλευτική & ανάπτυξη",
           items: [
             "Roadmap από τις χειροκίνητες διαδικασίες στα αυτοματοποιημένα συστήματα.",
             "Audit που δείχνει πού χάνεις χρόνο και χρήμα.",
@@ -140,7 +140,7 @@ export const solutions = {
           ],
         },
         {
-          title: "Web & Landing Pages",
+          title: "Site & landing pages",
           items: [
             "Landing page ή μικρό site που κάνει τους επισκέπτες πελάτες.",
           ],

@@ -31,7 +31,8 @@ export const heroV6 = {
   videoChip: "Η Μούσα · το πρόσωπο της Thynk",
   videoCaption: "Ιωάννινα · Est. 2026",
   ctaPrimary: "Κλείσε Demo",
-  ctaSecondary: "Δες πώς δουλεύουμε",
+  ctaSecondary: "Υπολόγισε τι χάνεις σε αγγαρείες",
+  founders: "Μιλάς απευθείας με τους ιδρυτές, τον Mike και τον Δημήτρη. Εδώ, στα Γιάννενα.",
 };
 
 export const processV6 = {
@@ -79,9 +80,19 @@ export const teamV6 = {
 // Pinned scroll sections (heading stays put; scrolling lights up one item at a time).
 export const pinnedV6 = {
   knowHow: {
-    eyebrow: "Η Μούσα",
-    title: "Ξέρω να…",
-    lastLabel: "…και πάνω απ' όλα, να",
+    eyebrow: "Φαντάσου",
+    title: "Τη δουλειά σου, όταν…",
+    lastLabel: "…και πάνω απ' όλα",
+    // outcomes for the reader, not a list of our capabilities (each maps to a real service)
+    items: [
+      "το τηλέφωνο απαντιέται και στις 11 το βράδυ.",
+      "τα ραντεβού κλείνουν χωρίς να σηκώσεις ακουστικό.",
+      "ξέρεις τι σου φέρνει κάθε ευρώ στις διαφημίσεις.",
+      "κανένα μήνυμα στα social δεν μένει αναπάντητο.",
+      "σε προτείνει το ChatGPT όταν κάποιος ψάχνει αυτό που κάνεις.",
+      "βλέπεις με μια ματιά τι πάει καλά και τι όχι.",
+      "έχεις ξανά χρόνο για τη δουλειά που αγαπάς.",
+    ],
     backgrounds: ["/v5/muse-hero.jpg", "/v5/muse-ipad.jpg", "/v5/muse-thoughts.jpg"],
   },
 };

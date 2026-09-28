@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { knowHow, method, pinnedV6, processV6 } from "@/content/site-v6";
+import { method, pinnedV6, processV6 } from "@/content/site-v6";
 import { AuditCard, ChatCard, TerminalCard } from "./Mocks";
 
 /**
@@ -38,9 +38,10 @@ function usePinnedIndex(n: number, reduced: boolean) {
   return [ref, state.i, state.end] as const;
 }
 
-/** "Ξέρω να…" — the heading stays, one capability lights up at a time, the Muse changes behind. */
+/** "Φαντάσου τη δουλειά σου, όταν…" — the heading stays, one outcome lights up at a time, the Muse changes behind. */
 export function PinnedKnowHow({ reduced }: { reduced: boolean }) {
-  const n = knowHow.length;
+  const items = pinnedV6.knowHow.items;
+  const n = items.length;
   const [ref, idx] = usePinnedIndex(n, reduced);
   const bgs = pinnedV6.knowHow.backgrounds;
   return (
@@ -60,7 +61,7 @@ export function PinnedKnowHow({ reduced }: { reduced: boolean }) {
           <span className="t6-eyebrow">{pinnedV6.knowHow.eyebrow}</span>
           <h2 className="t6-pin-title">{pinnedV6.knowHow.title}</h2>
           <ol className="t6-know-list">
-            {knowHow.map((t, k) => {
+            {items.map((t, k) => {
               const last = k === n - 1;
               const cls = reduced || k === idx ? "on" : k < idx ? "past" : "";
               return (

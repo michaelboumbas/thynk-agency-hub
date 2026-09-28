@@ -419,6 +419,12 @@
   background-clip: text;
   color: transparent;
 }
+.t6-hero-founders {
+  color: var(--accent-2);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 !important;
+}
 .t6-hero-sub {
   max-width: 38em;
   color: var(--body);
@@ -1330,7 +1336,7 @@
     margin: 6px;
   }
   .t6-runway {
-    height: 240vh;
+    height: 190vh;
   }
   .t6-slogan-l {
     top: auto;

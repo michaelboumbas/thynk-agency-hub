@@ -247,6 +247,9 @@ export function ThynkSiteV6() {
           <p className="t6-hero-sub" data-reveal>
             {heroV6.sub}
           </p>
+          <p className="t6-hero-founders" data-reveal>
+            {heroV6.founders}
+          </p>
           <div className="t6-video" data-reveal>
             <span className="t6-bar l" aria-hidden="true" />
             <span className="t6-bar r" aria-hidden="true" />
@@ -258,13 +261,13 @@ export function ThynkSiteV6() {
             <button type="button" className="t6-btn-glow" onClick={() => go("contact")}>
               {heroV6.ctaPrimary} <span aria-hidden="true">→</span>
             </button>
-            <button type="button" className="t6-btn-ghost" onClick={() => go("method")}>
+            <button type="button" className="t6-btn-ghost" onClick={() => go("calculator")}>
               {heroV6.ctaSecondary} <span aria-hidden="true">↓</span>
             </button>
           </div>
         </section>
 
-        {/* ---------- Pinned: "Ξέρω να…" ---------- */}
+        {/* ---------- Pinned: "Φαντάσου τη δουλειά σου, όταν…" ---------- */}
         <PinnedKnowHow reduced={reduced} />
 
         {/* ---------- About ---------- */}
