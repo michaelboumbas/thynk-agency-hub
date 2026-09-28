@@ -12,7 +12,7 @@
   --orange: #ff6a1a;
   --orange-ink: #c84706; /* orange for small text on white (AA) */
   --orange-soft: #fff0e6;
-  --display: "Anton", "Sofia Sans Extra Condensed", "Open Sans", sans-serif;
+  --display: "Sofia Sans Extra Condensed", "Anton", "Open Sans", sans-serif; /* one face for Greek + Latin; Anton only in the wordmark */
   --sans: "Open Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
@@ -76,7 +76,7 @@
 /* type */
 .t7-display {
   font-family: var(--display);
-  font-weight: 400;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.005em;
   line-height: 0.95;
@@ -84,7 +84,7 @@
 }
 .t7-h2 {
   font-family: var(--display);
-  font-weight: 400;
+  font-weight: 900;
   text-transform: uppercase;
   line-height: 1;
   font-size: clamp(34px, 4.4vw, 60px);
@@ -483,7 +483,7 @@
   color: #fff;
   font-family: var(--display);
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 900;
   font-size: clamp(26px, 3.3vw, 46px);
   line-height: 1.02;
   padding: 10px 0;
