@@ -27,7 +27,7 @@ export const heroV7 = {
   museLabel: "Η Μούσα",
   ctaCalc: "Δες πόσο σου κοστίζει",
   ctaTalk: "Πες μας γι' αυτό",
-  founders: "Μιλάς απευθείας με τους ιδρυτές, τον Mike και τον Δημήτρη. Εδώ, στα Γιάννενα.",
+  founders: "Μιλάς απευθείας με τους ιδρυτές, τον Δημήτρη και τον Mike. Εδώ, στα Γιάννενα.",
 };
 
 /**
@@ -125,6 +125,7 @@ export const epirus = {
   ],
 };
 
+// Founders (Δημήτρης first, then Mike): initials are placeholders until photos + final bios arrive.
 export const teamV7 = {
   eyebrow: "Ποιοι είμαστε",
   note: "Είμαστε δύο. Όποιον από τους δύο πάρεις τηλέφωνο, μιλάς με ιδρυτή.",

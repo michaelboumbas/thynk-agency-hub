@@ -27,8 +27,8 @@ export const Route = createFileRoute("/")({
 /**
  * Which face to show.
  * - Public/published site: the Coming Soon page, until the founders decide to launch.
- * - Lovable editor preview (id-preview--*.lovable.app, *.lovableproject.com) and localhost: the v5 site.
- * Overrides for any host: ?site=1 shows the site, ?soon=1 shows Coming Soon, ?v=5 / ?v=7 pick a version.
+ * - Lovable editor preview (id-preview--*.lovable.app, *.lovableproject.com) and localhost: the v7 site.
+ * Overrides for any host: ?site=1 shows the site, ?soon=1 shows Coming Soon, ?v=5 / ?v=6 pick an older version.
  */
 function shouldShowSite(): boolean {
   const { hostname, search } = window.location;
@@ -49,9 +49,9 @@ function Index() {
   const [face, setFace] = useState<"soon" | "v5" | "v6" | "v7">("soon");
   useEffect(() => {
     if (!shouldShowSite()) return;
-    // v6 (dark long scroll) is the default for now; ?v=7 = the light "thinks with you" proposal, ?v=5 = the old v5.
+    // v7 ("Thynk Light", approved 28/09/2026) is the site; ?v=6 = the dark long scroll, ?v=5 = the old v5.
     const v = new URLSearchParams(window.location.search).get("v");
-    setFace(v === "5" ? "v5" : v === "7" ? "v7" : "v6");
+    setFace(v === "5" ? "v5" : v === "6" ? "v6" : "v7");
   }, []);
 
   if (face === "v7") return <ThynkSiteV7 />;

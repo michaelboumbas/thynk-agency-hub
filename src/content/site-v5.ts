@@ -51,19 +51,19 @@ export const knowHow = [
 export const about = {
   headline: "Γιατί υπάρχει η Thynk",
   body: [
-    "Δεν χρειάζεται να ψάξεις στην Αθήνα για σοβαρό marketing και αυτοματισμούς. Η Thynk τα φέρνει εδώ, από δύο ανθρώπους που θα συναντήσεις στα Γιάννενα: ο ένας με χρόνια σε agency της Αθήνας, ο άλλος με μυαλό για business και νούμερα.",
+    "Δεν χρειάζεται να ψάξεις στην Αθήνα για σοβαρό marketing και αυτοματισμούς. Η Thynk τα φέρνει εδώ, από δύο ανθρώπους που θα συναντήσεις στα Γιάννενα: ο ένας με μυαλό για business και νούμερα, ο άλλος με χρόνια σε agency της Αθήνας.",
     "Δεν μπαίνουμε με κατάλογο να διαλέξεις. Κάνουμε audit, βρίσκουμε τι χρειάζεσαι και προχωράμε κλιμακωτά: πρώτα το πιο κρίσιμο, μετά τα υπόλοιπα. Αν κάτι δεν πρόκειται να δουλέψει, θα στο πούμε εμείς πρώτοι.",
   ],
   founders: [
     {
-      initials: "MB",
-      name: "Mike Boumpas",
-      bio: "Digital, marketing & creative. Agency εμπειρία από την Αθήνα σε e-commerce, CRO και data, place branding με το myMetsovo.gr.",
-    },
-    {
       initials: "ΔΧ",
       name: "Δημήτρης Χρυσοχόου",
       bio: "Business & data. Founder του Anadelta Education, Μαθηματικά & Οικονομικά, στατιστική, growth και digital transformation.",
+    },
+    {
+      initials: "MB",
+      name: "Mike Boumpas",
+      bio: "Digital, marketing & creative. Agency εμπειρία από την Αθήνα σε e-commerce, CRO και data, place branding με το myMetsovo.gr.",
     },
   ],
   signoff: "Ιωάννινα. Ήπειρος.",
@@ -256,8 +256,8 @@ export const contact = {
   headline: "Πες μας τι σε τρώει. Σου λέμε αν μπορούμε να το λύσουμε.",
   emails: [
     { label: "Γενικά", email: "hello@thynkagency.gr" },
-    { label: "Mike · marketing & creative", email: "mike@thynkagency.gr" },
     { label: "Δημήτρης · business & data", email: "dimitris@thynkagency.gr" },
+    { label: "Mike · marketing & creative", email: "mike@thynkagency.gr" },
   ],
   demoTitle: "Κλείσε Demo",
   demoIntro:
