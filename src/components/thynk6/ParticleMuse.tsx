@@ -9,12 +9,16 @@ import { useEffect, useRef, type MutableRefObject } from "react";
 
 type Cloud = {
   n: number;
+  w: number; // source canvas width (px)
   h: number; // source canvas height (px)
   target: Float32Array; // x,y,z
   start: Float32Array; // x,y,z
   color: Float32Array; // r,g,b,a (0..1)
   misc: Float32Array; // size, delay, phase
 };
+
+// Camera distance. Far enough that the nose/face aren't magnified against the body (no fish-eye bulge).
+const CAM = 7000;
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -23,6 +27,7 @@ async function loadCloud(src: string, max: number): Promise<Cloud> {
   const buf = await (await fetch(src)).arrayBuffer();
   const dv = new DataView(buf);
   const total = dv.getUint32(4, true);
+  const w = dv.getUint16(8, true);
   const h = dv.getUint16(10, true);
   const n = Math.min(total, max);
   const target = new Float32Array(n * 3);
@@ -47,7 +52,7 @@ async function loadCloud(src: string, max: number): Promise<Cloud> {
     start[i * 3 + 1] = (Math.random() - 0.5) * 3000;
     start[i * 3 + 2] = Math.sin(ang) * rad;
   }
-  return { n, h, target, start, color, misc };
+  return { n, w, h, target, start, color, misc };
 }
 
 const VS = `
@@ -133,13 +138,14 @@ export function ParticleMuse({
     const max = gl ? (small ? 36000 : 90000) : small ? 5000 : 9000;
     let ro: ResizeObserver | null = null;
 
-    const view = (h: number) => {
+    const view = (w: number, h: number) => {
       const p = reduced ? 1 : clamp(progressRef.current);
       mouse.x += (mouse.tx - mouse.x) * 0.05;
       mouse.y += (mouse.ty - mouse.y) * 0.05;
       return {
         p,
-        scale: (H * 0.86) / h,
+        // auto-fit: largest size that fits both height and width of the stage, whatever the screen shape
+        scale: Math.min((H * 0.84) / h, (W * (W < 700 ? 1.4 : 0.8)) / w),
         cx: W / 2,
         cy: H / 2 + H * 0.03,
         // turn on scroll-in, follow the pointer, and sway gently once formed so the volume reads as 3D
@@ -202,7 +208,7 @@ export function ParticleMuse({
 
             const frame = (time: number) => {
               if (!alive) return;
-              const v = view(c.h);
+              const v = view(c.w, c.h);
               gl.viewport(0, 0, cv.width, cv.height);
               gl.clear(gl.COLOR_BUFFER_BIT);
               gl.uniform1f(U.p, v.p);
@@ -211,7 +217,7 @@ export function ParticleMuse({
               gl.uniform1f(U.rotY, v.rotY);
               gl.uniform1f(U.rotX, v.rotX);
               gl.uniform1f(U.dpr, dpr);
-              gl.uniform1f(U.f, 2800);
+              gl.uniform1f(U.f, CAM);
               gl.uniform2f(U.res, W, H);
               gl.uniform2f(U.center, v.cx, v.cy);
               gl.drawArrays(gl.POINTS, 0, c.n);
@@ -232,7 +238,7 @@ export function ParticleMuse({
         if (!cx2) return;
         const frame2 = (time: number) => {
           if (!alive) return;
-          const v = view(c.h);
+          const v = view(c.w, c.h);
           cx2.setTransform(dpr, 0, 0, dpr, 0, 0);
           cx2.clearRect(0, 0, W, H);
           cx2.globalCompositeOperation = "lighter";
@@ -248,7 +254,7 @@ export function ParticleMuse({
             const z = c.start[i * 3 + 2] + (c.target[i * 3 + 2] - c.start[i * 3 + 2]) * k + 160;
             const qx = x * cy + z * sy;
             const qz = -x * sy + z * cy - 160;
-            const f = 2800 / Math.max(2800 + qz, 840);
+            const f = CAM / Math.max(CAM + qz, CAM * 0.3);
             const px = v.cx + qx * v.scale * f;
             const py = v.cy + y * v.scale * f;
             const a = c.color[i * 4 + 3] * (0.22 + 0.78 * k);
