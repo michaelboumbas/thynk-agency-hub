@@ -12,7 +12,7 @@ export const v6Nav = [
 
 export const v6Assets = {
   wordmark: "/v5/wordmark-light.png",
-  points: "/v6/muse-points.png",
+  points: "/v6/muse-points.bin",
   video: "/v6/muse-loop.mp4",
   poster: "/v6/muse-loop-poster.jpg",
 };

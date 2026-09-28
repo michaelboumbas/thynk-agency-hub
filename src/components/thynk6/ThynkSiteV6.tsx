@@ -226,7 +226,6 @@ export function ThynkSiteV6() {
       <div className="t6-runway" ref={runwayRef}>
         <div className="t6-stage">
           <ParticleMuse src={v6Assets.points} progressRef={progressRef} reduced={reduced} />
-          <div className="t6-core" aria-hidden="true" />
           <p className={`t6-slogan-l${sloganIn ? " in" : ""}`}>{intro.left}</p>
           <p className={`t6-slogan-r${sloganIn ? " in" : ""}`}>{intro.right}</p>
           <div className={`t6-hint${introP > 0.05 ? " gone" : ""}`} aria-hidden="true">
