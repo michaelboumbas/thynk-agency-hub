@@ -14,7 +14,7 @@ type Cloud = {
   target: Float32Array; // x,y,z
   start: Float32Array; // x,y,z
   color: Float32Array; // r,g,b,a (0..1)
-  misc: Float32Array; // size, delay, phase
+  misc: Float32Array; // size, delay, phase, side (-1 front half, +1 back half)
 };
 
 // Camera distance. Far enough that the nose/face aren't magnified against the body (no fish-eye bulge).
@@ -33,7 +33,7 @@ async function loadCloud(src: string, max: number): Promise<Cloud> {
   const target = new Float32Array(n * 3);
   const start = new Float32Array(n * 3);
   const color = new Float32Array(n * 4);
-  const misc = new Float32Array(n * 3);
+  const misc = new Float32Array(n * 4);
   let o = 12;
   for (let i = 0; i < n; i++, o += 11) {
     target[i * 3] = dv.getInt16(o, true);
@@ -43,9 +43,11 @@ async function loadCloud(src: string, max: number): Promise<Cloud> {
     color[i * 4 + 1] = dv.getUint8(o + 7) / 255;
     color[i * 4 + 2] = dv.getUint8(o + 8) / 255;
     color[i * 4 + 3] = dv.getUint8(o + 9) / 255;
-    misc[i * 3] = dv.getUint8(o + 10) / 20;
-    misc[i * 3 + 1] = Math.random();
-    misc[i * 3 + 2] = Math.random() * Math.PI * 2;
+    const sb = dv.getUint8(o + 10);
+    misc[i * 4] = (sb & 127) / 20;
+    misc[i * 4 + 1] = Math.random();
+    misc[i * 4 + 2] = Math.random() * Math.PI * 2;
+    misc[i * 4 + 3] = sb & 128 ? 1 : -1;
     const ang = Math.random() * Math.PI * 2;
     const rad = 900 + Math.random() * 2100;
     start[i * 3] = Math.cos(ang) * rad;
@@ -56,11 +58,10 @@ async function loadCloud(src: string, max: number): Promise<Cloud> {
 }
 
 const VS = `
-#define PIVOT -160.0
 attribute vec3 aTarget;
 attribute vec3 aStart;
 attribute vec4 aColor;
-attribute vec3 aMisc;
+attribute vec4 aMisc;
 uniform float uP, uT, uScale, uRotY, uRotX, uDpr, uF;
 uniform vec2 uRes, uCenter;
 varying vec4 vColor;
@@ -72,16 +73,17 @@ void main() {
   p.x += sin(uT * 0.7 + aMisc.z) * drift;
   p.y += cos(uT * 0.6 + aMisc.z) * drift;
   float cy = cos(uRotY), sy = sin(uRotY), cx = cos(uRotX), sx = sin(uRotX);
-  p.z -= PIVOT; // turn around the middle of the bust, not its front surface
   vec3 q = vec3(p.x * cy + p.z * sy, p.y, -p.x * sy + p.z * cy);
   q = vec3(q.x, q.y * cx - q.z * sx, q.y * sx + q.z * cx);
-  q.z += PIVOT;
   float f = uF / max(uF + q.z, uF * 0.3);
   vec2 px = uCenter + q.xy * uScale * f;
   gl_Position = vec4(px.x / uRes.x * 2.0 - 1.0, 1.0 - px.y / uRes.y * 2.0, 0.0, 1.0);
   gl_PointSize = max(1.0, aMisc.x * f * uDpr * (0.85 + uScale * 1.4));
   float light = clamp(0.72 + 0.5 * (-q.z / 600.0), 0.3, 1.35); // surfaces facing the viewer glow more
-  vColor = vec4(aColor.rgb, aColor.a * (0.22 + 0.78 * k) * clamp(f, 0.45, 1.35) * mix(1.0, light, k));
+  // hide the half that faces away (the bust is see-through otherwise: the face would show from behind)
+  float facing = -aMisc.w * cy * cx;
+  float vis = mix(0.1, 1.0, smoothstep(-0.45, 0.35, facing));
+  vColor = vec4(aColor.rgb, aColor.a * (0.22 + 0.78 * k) * clamp(f, 0.45, 1.35) * mix(1.0, light * vis, k));
 }`;
 
 const FS = `
@@ -135,7 +137,7 @@ export function ParticleMuse({
 
     const small = window.innerWidth < 700;
     const gl = cv.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true });
-    const max = gl ? (small ? 36000 : 90000) : small ? 5000 : 9000;
+    const max = gl ? (small ? 48000 : 110000) : small ? 5000 : 9000;
     let ro: ResizeObserver | null = null;
 
     const view = (w: number, h: number) => {
@@ -149,8 +151,12 @@ export function ParticleMuse({
         cx: W / 2,
         cy: H / 2 + H * 0.03,
         // turn on scroll-in, follow the pointer, and sway gently once formed so the volume reads as 3D
-        rotY: (1 - ease(p)) * 1.1 + mouse.x * 0.42 + (reduced ? 0 : Math.sin(performance.now() * 0.00035) * 0.26 * ease(p)),
-        rotX: mouse.y * 0.16,
+        // a full turn while forming (so you see her all around), then follow the pointer + gentle sway
+        rotY:
+          (1 - ease(p)) * Math.PI * 2 +
+          mouse.x * 1.1 +
+          (reduced ? 0 : Math.sin(performance.now() * 0.0003) * 0.5 * ease(p)),
+        rotX: mouse.y * 0.18,
       };
     };
 
@@ -189,7 +195,7 @@ export function ParticleMuse({
             attr("aTarget", c.target, 3);
             attr("aStart", c.start, 3);
             attr("aColor", c.color, 4);
-            attr("aMisc", c.misc, 3);
+            attr("aMisc", c.misc, 4);
             const u = (n: string) => gl.getUniformLocation(prog, n);
             const U = {
               p: u("uP"),
@@ -246,20 +252,21 @@ export function ParticleMuse({
           const cy = Math.cos(v.rotY);
           const sy = Math.sin(v.rotY);
           for (let i = 0; i < c.n; i++) {
-            const k = ease(clamp(v.p * 1.35 - c.misc[i * 3 + 1] * 0.35));
+            const k = ease(clamp(v.p * 1.35 - c.misc[i * 4 + 1] * 0.35));
             const drift = (1 - k * 0.9) * 22;
-            const ph = c.misc[i * 3 + 2];
+            const ph = c.misc[i * 4 + 2];
             const x = c.start[i * 3] + (c.target[i * 3] - c.start[i * 3]) * k + Math.sin(t * 0.7 + ph) * drift;
             const y = c.start[i * 3 + 1] + (c.target[i * 3 + 1] - c.start[i * 3 + 1]) * k + Math.cos(t * 0.6 + ph) * drift;
-            const z = c.start[i * 3 + 2] + (c.target[i * 3 + 2] - c.start[i * 3 + 2]) * k + 160;
+            const z = c.start[i * 3 + 2] + (c.target[i * 3 + 2] - c.start[i * 3 + 2]) * k;
             const qx = x * cy + z * sy;
-            const qz = -x * sy + z * cy - 160;
+            const qz = -x * sy + z * cy;
             const f = CAM / Math.max(CAM + qz, CAM * 0.3);
             const px = v.cx + qx * v.scale * f;
             const py = v.cy + y * v.scale * f;
-            const a = c.color[i * 4 + 3] * (0.22 + 0.78 * k);
+            const vis = 0.1 + 0.9 * clamp((-c.misc[i * 4 + 3] * cy + 0.45) / 0.8);
+            const a = c.color[i * 4 + 3] * (0.22 + 0.78 * k) * (1 - k + k * vis);
             cx2.fillStyle = `rgba(${(c.color[i * 4] * 255) | 0},${(c.color[i * 4 + 1] * 255) | 0},${(c.color[i * 4 + 2] * 255) | 0},${a.toFixed(2)})`;
-            const s = Math.max(1, c.misc[i * 3] * f);
+            const s = Math.max(1, c.misc[i * 4] * f);
             cx2.fillRect(px, py, s, s);
           }
           cx2.globalCompositeOperation = "source-over";
