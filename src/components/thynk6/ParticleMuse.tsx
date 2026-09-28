@@ -151,6 +151,10 @@ export function ParticleMuse({
       mouse.ty = (e.clientY / window.innerHeight - 0.5) * 2;
     };
     window.addEventListener("pointermove", onMove, { passive: true });
+    // don't spend GPU time while the stage is scrolled out of view
+    let visible = true;
+    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
+    io.observe(cv);
 
     const small = window.innerWidth < 700;
     const gl = cv.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true, depth: true });
@@ -235,6 +239,10 @@ export function ParticleMuse({
 
             const frame = (time: number) => {
               if (!alive) return;
+              if (!visible && !reduced) {
+                raf = requestAnimationFrame(frame);
+                return;
+              }
               const v = view(c.w, c.h);
               gl.viewport(0, 0, cv.width, cv.height);
               gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -277,6 +285,10 @@ export function ParticleMuse({
         if (!cx2) return;
         const frame2 = (time: number) => {
           if (!alive) return;
+          if (!visible && !reduced) {
+            raf = requestAnimationFrame(frame2);
+            return;
+          }
           const v = view(c.w, c.h);
           cx2.setTransform(dpr, 0, 0, dpr, 0, 0);
           cx2.clearRect(0, 0, W, H);
@@ -319,6 +331,7 @@ export function ParticleMuse({
       alive = false;
       cancelAnimationFrame(raf);
       ro?.disconnect();
+      io.disconnect();
       window.removeEventListener("pointermove", onMove);
     };
   }, [src, progressRef, reduced]);

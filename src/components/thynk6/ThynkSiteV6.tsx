@@ -4,9 +4,7 @@ import {
   advantage,
   heroV6,
   intro,
-  knowHow,
   method,
-  processV6,
   solutions,
   sticky,
   v6Assets,
@@ -16,7 +14,7 @@ import {
 } from "@/content/site-v6";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { ParticleMuse } from "./ParticleMuse";
-import { AuditCard, ChatCard, TerminalCard } from "./Mocks";
+import { PinnedKnowHow, PinnedMethod } from "./Pinned";
 import { Calculator } from "@/components/thynk5/Calculator";
 import { ContactView } from "@/components/thynk5/Views";
 
@@ -266,16 +264,8 @@ export function ThynkSiteV6() {
           </div>
         </section>
 
-        {/* ---------- Marquee ---------- */}
-        <div className="t6-marquee" aria-label="Τι ξέρουμε να κάνουμε">
-          <div className="t6-marquee-track">
-            {[...knowHow, ...knowHow].map((l, i) => (
-              <span key={i} aria-hidden={i >= knowHow.length}>
-                <b>Ξέρω να</b> {l}
-              </span>
-            ))}
-          </div>
-        </div>
+        {/* ---------- Pinned: "Ξέρω να…" ---------- */}
+        <PinnedKnowHow reduced={reduced} />
 
         {/* ---------- About ---------- */}
         <section className="t6-section t6-about" id="about">
@@ -336,40 +326,8 @@ export function ThynkSiteV6() {
           </div>
         </section>
 
-        {/* ---------- Process ---------- */}
-        <section className="t6-section" id="method">
-          <span className="t6-eyebrow" data-reveal>
-            {processV6.eyebrow}
-          </span>
-          <h2 data-reveal>
-            {processV6.titleTop}
-            <br />
-            <span className="t6-dim">{processV6.titleBottom}</span>
-          </h2>
-          <div className="t6-steps">
-            {method.steps.map((s, i) => (
-              <div key={s.n} className={`t6-step${i % 2 ? " flip" : ""}`} data-reveal>
-                <div className="t6-step-text">
-                  <span className="t6-step-n">{i + 1}</span>
-                  <div>
-                    <h3>{s.title}</h3>
-                    <p>{s.text}</p>
-                    <div className="t6-chips">
-                      {s.chips.map((c) => (
-                        <span key={c}>{c}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="t6-step-mock">
-                  {i === 0 && <AuditCard reduced={reduced} />}
-                  {i === 1 && <TerminalCard reduced={reduced} />}
-                  {i === 2 && <ChatCard reduced={reduced} />}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* ---------- Process (pinned) ---------- */}
+        <PinnedMethod reduced={reduced} />
 
         {/* ---------- Advantage / rules ---------- */}
         <section className="t6-section t6-center">

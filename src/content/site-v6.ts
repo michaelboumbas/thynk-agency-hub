@@ -75,3 +75,13 @@ export const teamV6 = {
   title: "Ποιοι είμαστε",
   note: "Είμαστε δύο. Όποιον από τους δύο πάρεις τηλέφωνο, μιλάς με ιδρυτή.",
 };
+
+// Pinned scroll sections (heading stays put; scrolling lights up one item at a time).
+export const pinnedV6 = {
+  knowHow: {
+    eyebrow: "Η Μούσα",
+    title: "Ξέρω να…",
+    lastLabel: "…και πάνω απ' όλα, να",
+    backgrounds: ["/v5/muse-hero.jpg", "/v5/muse-ipad.jpg", "/v5/muse-thoughts.jpg"],
+  },
+};
