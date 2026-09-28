@@ -82,10 +82,17 @@ export function ThynkSiteV7() {
   const rootRef = useRef<HTMLDivElement>(null);
   const [pain, setPain] = useState<PainId | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [onDark, setOnDark] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openPillar, setOpenPillar] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const formRef = useRef(0);
+  const inkRef = useRef(1); // the ink Muse is already drawn when the lights come on
+  const runwayRef = useRef<HTMLDivElement>(null);
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const curtainRef = useRef<HTMLDivElement>(null);
+  const spotRef = useRef<HTMLDivElement>(null);
+  const camRef = useRef({ rot: 0, zoom: 1, shift: 0.17, lift: 0 });
 
   useReveal(rootRef, pain);
 
@@ -95,17 +102,69 @@ export function ThynkSiteV7() {
     const prev = els.map((e) => e.style.overflow);
     els.forEach((e) => (e.style.overflow = "visible"));
     document.documentElement.style.overflowY = "auto";
-    const on = () => setScrolled(window.scrollY > 24);
-    on();
-    window.addEventListener("scroll", on, { passive: true });
     return () => {
       els.forEach((e, i) => (e.style.overflow = prev[i]));
       document.documentElement.style.overflowY = "";
-      window.removeEventListener("scroll", on);
     };
   }, []);
 
-  // the ink Muse draws herself on load (no scroll-jacked intro: the promise is readable at once)
+  // Dark 3D stage: scroll moves a camera (closer, turning to profile, drifting to centre), the
+  // headline steps back, and at the end a sheet of paper rises: the lights come on.
+  useEffect(() => {
+    let raf = 0;
+    const on = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const rw = runwayRef.current;
+        const vh = window.innerHeight;
+        const y = window.scrollY;
+        setScrolled(y > 24);
+        if (!rw) return;
+        const total = rw.offsetHeight - vh;
+        const sp = total > 0 ? Math.min(1, Math.max(0, y / total)) : 1;
+        const small = window.innerWidth < 900;
+        const e = sp * sp * (3 - 2 * sp);
+        camRef.current = {
+          rot: reduced ? 0 : e * 1.05,
+          zoom: 1 + (reduced ? 0 : e * 0.32),
+          shift: small ? 0 : 0.17 * (1 - e),
+          // as the camera closes in, lower her so the head (not the shoulders) stays in frame
+          lift: (small ? 0.03 : 0) + (reduced ? 0 : e * 0.13),
+        };
+        const t = heroTextRef.current;
+        if (t && !reduced) {
+          t.style.opacity = String(Math.max(0, 1 - sp * 2.2));
+          t.style.transform = `translateY(${-sp * 90}px)`;
+        }
+        const c = curtainRef.current;
+        const k = Math.min(1, Math.max(0, (sp - 0.7) / 0.3));
+        if (c) c.style.transform = `translateY(${(1 - k) * 100}%)`;
+        setOnDark(y < rw.offsetHeight - 70);
+      });
+    };
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    window.addEventListener("resize", on);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", on);
+      window.removeEventListener("resize", on);
+    };
+  }, [reduced]);
+
+  // cursor light on the dark stage (fine pointers only): reveals the Muse like a torch
+  useEffect(() => {
+    const el = spotRef.current;
+    if (!el || reduced || !window.matchMedia("(pointer: fine)").matches) return;
+    const move = (e: PointerEvent) => {
+      el.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      el.style.opacity = "1";
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    return () => window.removeEventListener("pointermove", move);
+  }, [reduced]);
+
+  // the Muse draws herself on load (no scroll-gated intro: the promise is readable at once)
   useEffect(() => {
     if (reduced) {
       formRef.current = 1;
@@ -135,7 +194,7 @@ export function ThynkSiteV7() {
       </a>
 
       {/* ---------- Header ---------- */}
-      <header className={`t7-header${scrolled ? " scrolled" : ""}`}>
+      <header className={`t7-header${scrolled ? " scrolled" : ""}${onDark ? " on-dark" : ""}`}>
         <button type="button" className="t7-brand" onClick={() => scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" })}>
           <Wordmark />
         </button>
@@ -174,18 +233,55 @@ export function ThynkSiteV7() {
       )}
 
       <main id="main">
-        {/* ---------- Hero: a question, not a presentation ---------- */}
-        <section className="t7-hero" id="top">
-          <div className="t7-hero-text">
-            <span className="t7-eyebrow">{heroV7.eyebrow}</span>
-            <h1 className="t7-display">
-              {heroV7.headlineTop}
-              <br />
-              <span className="t7-under">{heroV7.headlineBottom}</span>
-            </h1>
-            <p className="t7-lead">{heroV7.sub}</p>
+        {/* ---------- Dark 3D stage: the glowing Muse, a cursor torch, a camera on scroll ---------- */}
+        <div className="t7-runway" ref={runwayRef} id="top">
+          <div className="t7-stage">
+            <div className="t7-stage-glow" aria-hidden="true" />
+            <ParticleMuse src={v7Assets.points} progressRef={formRef} reduced={reduced} camRef={camRef} />
+            <div className="t7-torch" ref={spotRef} aria-hidden="true">
+              <i />
+            </div>
+            <div className="t7-stage-text" ref={heroTextRef}>
+              <span className="t7-eyebrow">{heroV7.eyebrow}</span>
+              <h1 className="t7-display t7-stage-h1">
+                {heroV7.headlineTop.split(" ").map((w, i) => (
+                  <span key={`a${i}`} className="t7-word-in" style={{ animationDelay: `${0.15 + i * 0.12}s` }}>
+                    {w}{" "}
+                  </span>
+                ))}
+                <br />
+                <span className="t7-under-glow">
+                  {heroV7.headlineBottom.split(" ").map((w, i) => (
+                    <span key={`b${i}`} className="t7-word-in" style={{ animationDelay: `${0.45 + i * 0.12}s` }}>
+                      {w}{" "}
+                    </span>
+                  ))}
+                </span>
+              </h1>
+              <p className="t7-stage-sub">{heroV7.sub}</p>
+              <div className="t7-stage-ctas">
+                <button type="button" className="t7-btn" onClick={() => go("contact")}>
+                  Κλείσε Demo <span aria-hidden="true">→</span>
+                </button>
+                <button type="button" className="t7-btn t7-btn-dark" onClick={() => go("ask")}>
+                  {heroV7.question.replace(" πιο πολύ αυτή την εβδομάδα", "")} <span aria-hidden="true">↓</span>
+                </button>
+              </div>
+              <p className="t7-stage-founders">{heroV7.founders}</p>
+            </div>
+            <div className="t7-scrollcue" aria-hidden="true">
+              <span>scroll</span>
+              <i />
+            </div>
+            <div className="t7-curtain" ref={curtainRef} aria-hidden="true" />
+          </div>
+        </div>
 
+        {/* ---------- The question: the page thinks with you ---------- */}
+        <section className="t7-ask-sec" id="ask">
+          <div className="t7-ask-wrap">
             <div className="t7-ask">
+              <span className="t7-eyebrow">Ας ξεκινήσουμε από σένα</span>
               <h2 className="t7-ask-q">{heroV7.question}</h2>
               <p className="t7-ask-hint">{heroV7.questionHint}</p>
               <div className="t7-chips" role="group" aria-label={heroV7.question}>
@@ -221,10 +317,9 @@ export function ThynkSiteV7() {
                 </div>
               )}
             </div>
-            <p className="t7-founders-line">{heroV7.founders}</p>
-          </div>
-          <div className="t7-hero-muse" aria-hidden="true">
-            <ParticleMuse src={v7Assets.points} progressRef={formRef} reduced={reduced} ink box />
+            <div className="t7-ask-muse" aria-hidden="true">
+              <ParticleMuse src={v7Assets.points} progressRef={inkRef} reduced={reduced} ink box />
+            </div>
           </div>
         </section>
 

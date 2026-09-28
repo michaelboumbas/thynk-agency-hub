@@ -61,8 +61,8 @@ export const about = {
       bio: "Business & data. Founder του Anadelta Education, Μαθηματικά & Οικονομικά, στατιστική, growth και digital transformation.",
     },
     {
-      initials: "MB",
-      name: "Mike Boumpas",
+      initials: "ΜΜ",
+      name: "Μιχαήλ Μπούμπας",
       bio: "Digital, marketing & creative. Agency εμπειρία από την Αθήνα σε e-commerce, CRO και data, place branding με το myMetsovo.gr.",
     },
   ],
@@ -257,7 +257,7 @@ export const contact = {
   emails: [
     { label: "Γενικά", email: "hello@thynkagency.gr" },
     { label: "Δημήτρης · business & data", email: "dimitris@thynkagency.gr" },
-    { label: "Mike · marketing & creative", email: "mike@thynkagency.gr" },
+    { label: "Μιχαήλ · marketing & creative", email: "mike@thynkagency.gr" },
   ],
   demoTitle: "Κλείσε Demo",
   demoIntro:

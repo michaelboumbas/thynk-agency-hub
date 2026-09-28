@@ -140,6 +140,7 @@ export function ParticleMuse({
   reduced,
   ink = false,
   box = false,
+  camRef,
 }: {
   src: string;
   progressRef: MutableRefObject<number>;
@@ -148,6 +149,8 @@ export function ParticleMuse({
   ink?: boolean;
   /** the canvas is a box in the layout (fit fully inside), not a full-screen stage */
   box?: boolean;
+  /** optional scroll-driven camera: extra turn (rad), zoom (×), horizontal shift and lift (fractions of the stage) */
+  camRef?: MutableRefObject<{ rot: number; zoom: number; shift: number; lift: number }>;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -179,16 +182,20 @@ export function ParticleMuse({
       const p = reduced ? 1 : clamp(progressRef.current);
       mouse.x += (mouse.tx - mouse.x) * 0.05;
       mouse.y += (mouse.ty - mouse.y) * 0.05;
+      const cam = camRef?.current ?? { rot: 0, zoom: 1, shift: 0, lift: 0 };
       return {
         p,
         // auto-fit: largest size that fits both height and width of the stage, whatever the screen shape
-        scale: box ? Math.min((H * 0.94) / h, (W * 0.98) / w) : Math.min((H * 0.84) / h, (W * (W < 700 ? 1.4 : 0.8)) / w),
-        cx: W / 2,
-        cy: box ? H / 2 : H / 2 + H * 0.03,
+        scale:
+          cam.zoom *
+          (box ? Math.min((H * 0.94) / h, (W * 0.98) / w) : Math.min((H * 0.84) / h, (W * (W < 700 ? 1.4 : 0.8)) / w)),
+        cx: W / 2 + cam.shift * W,
+        cy: (box ? H / 2 : H / 2 + H * 0.03) + cam.lift * H,
         // turn on scroll-in, follow the pointer, and sway gently once formed so the volume reads as 3D
         // a full turn while forming (so you see her all around), then follow the pointer + gentle sway
         rotY:
           (1 - ease(p)) * Math.PI * 2 +
+          cam.rot +
           mouse.x * 1.1 +
           (reduced ? 0 : Math.sin(performance.now() * 0.0003) * 0.5 * ease(p)),
         rotX: mouse.y * 0.18,
@@ -357,7 +364,7 @@ export function ParticleMuse({
       io.disconnect();
       window.removeEventListener("pointermove", onMove);
     };
-  }, [src, progressRef, reduced, ink, box]);
+  }, [src, progressRef, reduced, ink, box, camRef]);
 
   return <canvas ref={ref} className="t6-particles" aria-hidden="true" />;
 }

@@ -32,7 +32,7 @@ export const heroV6 = {
   videoCaption: "Ιωάννινα · Est. 2026",
   ctaPrimary: "Κλείσε Demo",
   ctaSecondary: "Υπολόγισε τι χάνεις σε αγγαρείες",
-  founders: "Μιλάς απευθείας με τους ιδρυτές, τον Δημήτρη και τον Mike. Εδώ, στα Γιάννενα.",
+  founders: "Μιλάς απευθείας με τους ιδρυτές, τον Δημήτρη και τον Μιχαήλ. Εδώ, στα Γιάννενα.",
 };
 
 export const processV6 = {

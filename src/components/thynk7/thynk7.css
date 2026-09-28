@@ -415,6 +415,223 @@
   }
 }
 
+
+/* ---------- dark 3D stage (the lights come on at the end) ---------- */
+.t7-runway {
+  position: relative;
+  height: 260vh;
+  background: #070708;
+}
+.t7-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: #070708;
+  color: #fff;
+}
+.t7-stage-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 55% at 68% 42%, rgba(255, 106, 26, 0.16) 0%, rgba(255, 106, 26, 0) 60%),
+    radial-gradient(40% 40% at 15% 90%, rgba(255, 106, 26, 0.07) 0%, rgba(255, 106, 26, 0) 70%);
+}
+.t7-stage .t6-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.t7-torch {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.t7-torch i {
+  position: absolute;
+  left: -220px;
+  top: -220px;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 120, 40, 0.22) 0%, rgba(255, 106, 26, 0.07) 38%, transparent 70%);
+  mix-blend-mode: screen;
+}
+.t7-stage-text {
+  position: absolute;
+  z-index: 4;
+  left: max(16px, calc((100vw - 1160px) / 2));
+  top: 50%;
+  translate: 0 -46%;
+  max-width: min(620px, 52vw);
+  will-change: opacity, transform;
+}
+.t7-stage .t7-eyebrow {
+  color: var(--orange);
+}
+.t7-stage-h1 {
+  color: #fff;
+  font-size: clamp(46px, 6vw, 96px);
+}
+.t7-word-in {
+  display: inline-block;
+  animation: t7-word 0.9s var(--ease) both;
+}
+@keyframes t7-word {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em) rotate(2deg);
+    filter: blur(8px);
+  }
+}
+.t7-under-glow {
+  color: var(--orange);
+  text-shadow: 0 0 28px rgba(255, 106, 26, 0.45);
+}
+.t7-stage-sub {
+  margin-top: 22px !important;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(16px, 1.25vw, 18px);
+  max-width: 34em;
+}
+.t7-stage-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+.t7-stage .t7-btn {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 transparent, 0 10px 40px rgba(255, 106, 26, 0.35);
+}
+.t7-stage .t7-btn:hover {
+  box-shadow: 0 12px 50px rgba(255, 106, 26, 0.5);
+}
+.t7-btn-dark {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(6px);
+}
+.t7-stage-founders {
+  margin-top: 18px !important;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+}
+.t7-scrollcue {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 26px;
+  translate: -50% 0;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.t7-scrollcue i {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(var(--orange), transparent);
+  animation: t7-cue 1.8s ease-in-out infinite;
+  transform-origin: top;
+}
+@keyframes t7-cue {
+  0% {
+    transform: scaleY(0);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+}
+.t7-curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background: var(--paper);
+  transform: translateY(100%);
+  border-radius: 40px 40px 0 0;
+  will-change: transform;
+}
+
+/* header over the dark stage */
+.t7-header.on-dark .t7-word,
+.t7-header.on-dark .t7-nav button,
+.t7-header.on-dark .t7-burger i {
+  color: #fff;
+}
+.t7-header.on-dark .t7-burger {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.t7-header.on-dark .t7-burger i {
+  background: #fff;
+}
+.t7-header.on-dark .t7-nav button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.t7-header.on-dark.scrolled {
+  background: rgba(7, 7, 8, 0.55);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+/* the question, first light section */
+.t7-ask-sec {
+  width: var(--wrap);
+  margin: 0 auto;
+  padding: 90px 0 40px;
+  scroll-margin-top: 40px;
+}
+.t7-ask-wrap {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+  align-items: center;
+}
+.t7-ask-sec .t7-ask {
+  max-width: none;
+  margin-top: 0;
+  padding: clamp(22px, 3vw, 36px);
+}
+.t7-ask-sec .t7-ask-q {
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(32px, 3.6vw, 52px);
+  line-height: 1;
+}
+.t7-ask-muse {
+  position: relative;
+  height: min(70vh, 640px);
+  min-height: 380px;
+}
+.t7-ask-muse::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  width: 62%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--orange-soft) 0%, rgba(255, 240, 230, 0) 70%);
+}
+
 /* ---------- sections ---------- */
 .t7-section {
   width: var(--wrap);
@@ -988,6 +1205,41 @@
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
+  .t7-runway {
+    height: 190vh;
+  }
+  .t7-stage-text {
+    top: auto;
+    bottom: 70px;
+    translate: none;
+    right: 16px;
+    max-width: none;
+  }
+  .t7-stage-h1 {
+    font-size: clamp(40px, 11vw, 60px);
+  }
+  .t7-stage-sub {
+    font-size: 15px;
+    margin-top: 12px !important;
+  }
+  .t7-stage-text::before {
+    content: "";
+    position: absolute;
+    inset: -60px -16px -80px;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(7, 7, 8, 0) 0%, rgba(7, 7, 8, 0.85) 35%, #070708 100%);
+  }
+  .t7-scrollcue {
+    display: none;
+  }
+  .t7-ask-wrap {
+    grid-template-columns: 1fr;
+  }
+  .t7-ask-muse {
+    order: -1;
+    height: 40vh;
+    min-height: 260px;
+  }
   .t7-nav,
   .t7-header > .t7-btn {
     display: none;
