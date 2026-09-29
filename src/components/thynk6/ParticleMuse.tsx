@@ -90,7 +90,7 @@ void main() {
   float size = max(1.0, aMisc.x * f * uDpr * (0.6 + uScale * 1.1));
   if (uPass < 0.5) {
     zn = k > 0.97 ? zn + 0.03 : 0.999;
-    size = max(3.0 * uDpr, size * 2.6);
+    size = max(2.0 * uDpr, size * 1.9);
   }
   gl_Position = vec4(px.x / uRes.x * 2.0 - 1.0, 1.0 - px.y / uRes.y * 2.0, zn, 1.0);
   gl_PointSize = size;
@@ -182,7 +182,7 @@ export function ParticleMuse({
 
     const small = window.innerWidth < 700;
     const gl = cv.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true, depth: true });
-    const max = gl ? (small ? 90000 : 260000) : small ? 5000 : 9000;
+    const max = gl ? (small ? 90000 : 170000) : small ? 5000 : 9000;
     let ro: ResizeObserver | null = null;
 
     const view = (w: number, h: number) => {
@@ -216,7 +216,7 @@ export function ParticleMuse({
 
         const resize = () => {
           const r = cv.getBoundingClientRect();
-          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          dpr = Math.min(window.devicePixelRatio || 1, 1.5); // retina at 2× quadruples the fill cost for little gain on dust
           W = r.width;
           H = r.height;
           cv.width = Math.round(W * dpr);
