@@ -12,7 +12,7 @@ export const v7Nav = [
 ] as const;
 
 export const v7Assets = {
-  points: "/v6/muse-points.bin?v=5",
+  points: "/v6/muse-points.bin?v=6",
 };
 
 export type PainId = "phone" | "msg" | "social" | "clients" | "docs" | "quotes";

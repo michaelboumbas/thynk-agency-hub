@@ -87,7 +87,7 @@ void main() {
   // two passes: (0) formed points write depth as fat, slightly pushed-back occluders; (1) colour
   // pass with depth test, so whatever sits behind the head/neck is hidden like a real solid
   float zn = clamp(q.z / 2500.0, -0.98, 0.98);
-  float size = max(1.0, aMisc.x * f * uDpr * (0.85 + uScale * 1.4));
+  float size = max(1.0, aMisc.x * f * uDpr * (0.6 + uScale * 1.1));
   if (uPass < 0.5) {
     zn = k > 0.97 ? zn + 0.03 : 0.999;
     size = max(3.0 * uDpr, size * 2.6);
@@ -100,7 +100,14 @@ void main() {
   float vis = mix(0.06, 1.0, smoothstep(-0.2, 0.35, facing));
   float key = max(dot(nq, normalize(vec3(-0.45, -0.5, -0.75))), 0.0);
   float light = 0.45 + 0.85 * key;
-  vColor = vec4(aColor.rgb, aColor.a * (0.22 + 0.78 * k) * clamp(f, 0.45, 1.35) * mix(1.0, light * vis, k));
+  // "light sculpture": fine dust, surfaces facing the viewer stay faint, the outline (rim) glows,
+  // so the form and the face read like a figure drawn in light
+  bool glowPt = aColor.g < 0.72 && aColor.r > 0.9;
+  float lumn0 = clamp((aColor.r - 0.78) / 0.22, 0.0, 1.0);
+  float rim = 1.0 - abs(nq.z);
+  float formed = glowPt ? 0.9 : (0.07 + 0.2 * lumn0 + 0.8 * rim * rim) * (0.75 + 0.5 * key);
+  vec3 warm = glowPt ? vec3(1.0, 0.45, 0.1) : vec3(1.0, 0.93, 0.86);
+  vColor = vec4(mix(aColor.rgb, warm, k), mix(aColor.a * 0.5, formed * vis, k) * (0.3 + 0.7 * k) * clamp(f, 0.45, 1.35));
   if (uInk > 0.5) {
     // ink on paper: dark points where the texture is dark, highlights stay paper, circuitry stays orange
     bool glow = aColor.g < 0.72 && aColor.r > 0.9;
@@ -175,7 +182,7 @@ export function ParticleMuse({
 
     const small = window.innerWidth < 700;
     const gl = cv.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true, depth: true });
-    const max = gl ? (small ? 55000 : 110000) : small ? 5000 : 9000;
+    const max = gl ? (small ? 90000 : 260000) : small ? 5000 : 9000;
     let ro: ResizeObserver | null = null;
 
     const view = (w: number, h: number) => {
@@ -202,7 +209,8 @@ export function ParticleMuse({
       };
     };
 
-    loadCloud(src, max)
+    // phones get a lighter cloud file (same shape, fewer points)
+    loadCloud(small && gl ? src.replace(".bin", "-m.bin") : src, max)
       .then((c) => {
         if (!alive) return;
 

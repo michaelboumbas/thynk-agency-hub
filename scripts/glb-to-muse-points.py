@@ -21,6 +21,8 @@ from PIL import Image
 
 SRC = sys.argv[1]
 N = int(sys.argv[2]) if len(sys.argv) > 2 else 110000
+# some generators face the model along X: turn it (degrees about the vertical axis) so she faces the camera
+YAW = float(sys.argv[3]) if len(sys.argv) > 3 else 0.0
 OUT = "public/v6/muse-points.bin"
 rng = np.random.default_rng(7)
 
@@ -99,6 +101,10 @@ def node_mats():
 
 
 mats = node_mats()
+if YAW:
+    t = np.radians(YAW)
+    Ry = np.array([[np.cos(t), 0, np.sin(t), 0], [0, 1, 0, 0], [-np.sin(t), 0, np.cos(t), 0], [0, 0, 0, 1]])
+    mats = {k: Ry @ v for k, v in mats.items()}
 Vs, Fs, UVs, TEX, NVs = [], [], [], [], []
 base = 0
 for mi, mesh in enumerate(gltf["meshes"]):
@@ -152,6 +158,8 @@ nn = nrm[t].copy()
 
 # colour
 col = np.zeros((N, 3), np.float32)
+glowdiff = np.zeros(N, np.float32)   # brightness above the local average: the circuitry glows
+from scipy import ndimage as _nd
 Foff = np.cumsum([0] + [len(f) for f in Fs])
 for k in range(len(Fs)):
     sel = np.where(owner[t] == k)[0]
@@ -171,6 +179,9 @@ for k in range(len(Fs)):
         u = np.clip((uv[:, 0] % 1) * (tw - 1), 0, tw - 1).astype(int)
         v = np.clip((uv[:, 1] % 1) * (th - 1), 0, th - 1).astype(int)   # glTF UV origin top-left
         col[sel] = img[v, u]
+        lumimg = img.mean(-1)
+        blur = _nd.uniform_filter(lumimg[::4, ::4], 9)
+        glowdiff[sel] = (lumimg[v, u] - blur[v // 4, u // 4]) / 255
 
 # smooth normals from the vertex attribute
 for k in range(len(Fs)):
@@ -186,7 +197,8 @@ R, G, B = col[:, 0], col[:, 1], col[:, 2]
 mx, mn = col.max(1), col.min(1)
 sat = (mx - mn) / (mx + 1)
 hue = 60 * (G - B) / (R - mn + 1e-6)
-orange = (hue > 12) & (hue < 48) & (sat > 0.5) & (R > 190) & (G > 60) & (B < 120)
+orange = ((hue > 12) & (hue < 48) & (sat > 0.5) & (R > 190) & (G > 60) & (B < 120)) | (
+    (hue > 8) & (hue < 50) & (sat > 0.2) & (R > 170) & (glowdiff > 0.045))
 lum = (0.299 * R + 0.587 * G + 0.114 * B) / 255
 # local contrast boost so eyes / lips / brows read in particles
 lum_n = np.clip((lum - np.percentile(lum, 3)) / (np.percentile(lum, 97) - np.percentile(lum, 3) + 1e-6), 0, 1)
