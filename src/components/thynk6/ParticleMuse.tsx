@@ -90,14 +90,14 @@ void main() {
   float size = max(1.0, aMisc.x * f * uDpr * (0.6 + uScale * 1.1));
   if (uPass < 0.5) {
     zn = k > 0.97 ? zn + 0.03 : 0.999;
-    size = max(2.0 * uDpr, size * 1.9);
+    size = max(3.5 * uDpr, size * 3.2); // wide enough to leave no gaps: nothing behind her shows through
   }
   gl_Position = vec4(px.x / uRes.x * 2.0 - 1.0, 1.0 - px.y / uRes.y * 2.0, zn, 1.0);
   gl_PointSize = size;
   // real surface normals: the side facing away fades (no see-through face), a soft key light
   // from the upper left models the volume
   float facing = -nq.z;
-  float vis = mix(0.06, 1.0, smoothstep(-0.2, 0.35, facing));
+  float vis = smoothstep(-0.15, 0.12, facing); // surfaces turned away are fully hidden, not just dimmed
   float key = max(dot(nq, normalize(vec3(-0.45, -0.5, -0.75))), 0.0);
   float light = 0.45 + 0.85 * key;
   // "light sculpture": fine dust, surfaces facing the viewer stay faint, the outline (rim) glows,
@@ -105,7 +105,7 @@ void main() {
   bool glowPt = aColor.g < 0.72 && aColor.r > 0.9;
   float lumn0 = clamp((aColor.r - 0.78) / 0.22, 0.0, 1.0);
   float rim = 1.0 - abs(nq.z);
-  float formed = glowPt ? 0.9 : (0.07 + 0.2 * lumn0 + 0.8 * rim * rim) * (0.75 + 0.5 * key);
+  float formed = glowPt ? 0.9 : (0.2 + 0.35 * lumn0 + 0.6 * rim * rim) * (0.75 + 0.5 * key); // a solid, readable surface + a glowing outline
   vec3 warm = glowPt ? vec3(1.0, 0.45, 0.1) : vec3(1.0, 0.93, 0.86);
   vColor = vec4(mix(aColor.rgb, warm, k), mix(aColor.a * 0.5, formed * vis, k) * (0.3 + 0.7 * k) * clamp(f, 0.45, 1.35));
   if (uInk > 0.5) {
