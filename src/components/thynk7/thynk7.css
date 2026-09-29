@@ -423,6 +423,7 @@
 .t7-runway {
   position: relative;
   height: 230vh;
+  height: 230svh;
   background: #070708;
 }
 .t7-stage {
@@ -599,6 +600,7 @@
   position: relative;
   z-index: 5;
   margin-top: -70vh;
+  margin-top: -70svh;
   background: var(--paper);
   border-radius: clamp(24px, 4vw, 48px) clamp(24px, 4vw, 48px) 0 0;
   box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.35);
@@ -696,37 +698,65 @@
 }
 .t7-imagine-list li {
   position: relative;
-  color: rgba(255, 255, 255, 0.32);
-  font-size: clamp(15px, 1.35vw, 19px);
+  color: rgba(255, 255, 255, 0.34);
+  font-size: clamp(15px, 1.3vw, 18px);
   font-weight: 600;
   line-height: 1.3;
-  padding: 5px 0;
+  padding: 4px 0;
+  /* only colour and a small slide change: no reflow, the list never jumps */
   transition:
-    color 0.4s var(--ease),
-    font-size 0.4s var(--ease);
+    color 0.35s var(--ease),
+    transform 0.35s var(--ease);
 }
 .t7-imagine-list li.past {
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.58);
 }
 .t7-imagine-list li.on {
   color: #fff;
-  font-family: var(--display);
-  text-transform: uppercase;
-  font-weight: 900;
-  font-size: clamp(26px, 3.3vw, 46px);
-  line-height: 1.02;
-  padding: 10px 0;
+  transform: translateX(6px);
 }
 .t7-imagine-list li.on::before {
   content: "";
   position: absolute;
-  left: clamp(-34px, -3vw, -22px);
-  top: 50%;
-  width: 14px;
-  height: 14px;
-  margin-top: -7px;
+  left: clamp(-30px, -2.6vw, -20px);
+  top: 0.62em;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--orange);
+}
+.t7-spot {
+  position: relative;
+  height: calc(2 * 1.05 * clamp(28px, 3.6vw, 52px) + 30px);
+  margin-bottom: 18px;
+  padding-left: clamp(22px, 4vw, 56px);
+  overflow: hidden;
+}
+.t7-spot-line {
+  margin: 0 !important;
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(28px, 3.6vw, 52px);
+  line-height: 1.05;
+  color: #fff;
+  max-width: 20em;
+  animation: t7-spot-in 0.45s var(--ease) both;
+}
+.t7-spot-line small {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--orange);
+  margin-bottom: 4px;
+}
+@keyframes t7-spot-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
 }
 .t7-imagine-list small {
   display: block;
@@ -738,10 +768,7 @@
   margin-bottom: 4px;
 }
 .t7-pin.static .t7-imagine-list li.on {
-  font-family: var(--sans);
-  text-transform: none;
-  font-size: clamp(16px, 1.5vw, 20px);
-  padding: 5px 0;
+  transform: none;
 }
 .t7-pin.static .t7-imagine-list li.on::before {
   display: none;
@@ -793,6 +820,7 @@
 .t7-step {
   animation: t7-in 0.55s var(--ease) both;
   margin-bottom: 18px;
+  min-height: 15.5em; /* same height for every step: the title above never moves */
 }
 .t7-step-n {
   display: block;
@@ -832,6 +860,8 @@
 .t7-method-mock {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 340px;
   animation: t7-in 0.6s var(--ease) both;
 }
 /* shared v6 mock cards, re-dressed for paper */
@@ -1219,6 +1249,13 @@
 @media (max-width: 900px) {
   .t7-runway {
     height: 180vh;
+    height: 180svh;
+  }
+  .t7-spot {
+    height: calc(3 * 1.05 * clamp(28px, 3.6vw, 52px) + 26px);
+  }
+  .t7-imagine-title {
+    margin-bottom: 14px !important;
   }
   .t7-stage-text {
     top: auto;
@@ -1295,7 +1332,16 @@
   .t7-method-mock {
     transform: scale(0.8);
     transform-origin: top center;
-    max-height: 30vh;
+    height: 30vh;
+    align-items: flex-start;
+  }
+  .t7-step {
+    min-height: 13.5em;
+  }
+  /* phones: pin the method block to the top so its title never shifts with step length */
+  .t7-method .t7-pin-stage {
+    align-items: flex-start;
+    padding-top: 78px;
   }
   .t7-notdo-list li {
     grid-template-columns: 1fr;

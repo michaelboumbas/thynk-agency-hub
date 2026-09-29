@@ -148,6 +148,8 @@ export function ParticleMuse({
   ink = false,
   box = false,
   camRef,
+  pausedRef,
+  maxPoints,
 }: {
   src: string;
   progressRef: MutableRefObject<number>;
@@ -158,6 +160,10 @@ export function ParticleMuse({
   box?: boolean;
   /** optional scroll-driven camera: extra turn (rad), zoom (×), horizontal shift and lift (fractions of the stage) */
   camRef?: MutableRefObject<{ rot: number; zoom: number; shift: number; lift: number }>;
+  /** true = skip drawing (e.g. the stage is covered by the next section, though still "in view") */
+  pausedRef?: MutableRefObject<boolean>;
+  /** cap the point count (small boxes don't need the full cloud) */
+  maxPoints?: number;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -182,7 +188,7 @@ export function ParticleMuse({
 
     const small = window.innerWidth < 700;
     const gl = cv.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true, depth: true });
-    const max = gl ? (small ? 90000 : 170000) : small ? 5000 : 9000;
+    const max = Math.min(maxPoints ?? Infinity, gl ? (small ? 90000 : 170000) : small ? 5000 : 9000);
     let ro: ResizeObserver | null = null;
 
     const view = (w: number, h: number) => {
@@ -271,7 +277,7 @@ export function ParticleMuse({
 
             const frame = (time: number) => {
               if (!alive) return;
-              if (!visible && !reduced) {
+              if ((!visible || pausedRef?.current) && !reduced) {
                 raf = requestAnimationFrame(frame);
                 return;
               }
@@ -318,7 +324,7 @@ export function ParticleMuse({
         if (!cx2) return;
         const frame2 = (time: number) => {
           if (!alive) return;
-          if (!visible && !reduced) {
+          if ((!visible || pausedRef?.current) && !reduced) {
             raf = requestAnimationFrame(frame2);
             return;
           }
@@ -372,7 +378,7 @@ export function ParticleMuse({
       io.disconnect();
       window.removeEventListener("pointermove", onMove);
     };
-  }, [src, progressRef, reduced, ink, box, camRef]);
+  }, [src, progressRef, reduced, ink, box, camRef, pausedRef, maxPoints]);
 
   return <canvas ref={ref} className="t6-particles" aria-hidden="true" />;
 }

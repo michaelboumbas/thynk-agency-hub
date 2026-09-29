@@ -92,6 +92,7 @@ export function ThynkSiteV7() {
   const heroTextRef = useRef<HTMLDivElement>(null);
   const spotRef = useRef<HTMLDivElement>(null);
   const camRef = useRef({ rot: 0, zoom: 1, shift: 0.17, lift: 0 });
+  const stagePausedRef = useRef(false);
 
   useReveal(rootRef, pain);
 
@@ -137,7 +138,10 @@ export function ThynkSiteV7() {
         }
         // the light page itself slides up over the pinned dark stage (no empty white screen)
         const ask = document.getElementById("ask");
-        setOnDark(ask ? ask.getBoundingClientRect().top > 60 : y < rw.offsetHeight - 70);
+        const askTop = ask ? ask.getBoundingClientRect().top : Infinity;
+        setOnDark(ask ? askTop > 60 : y < rw.offsetHeight - 70);
+        // once the paper sheet covers the stage, stop drawing the glowing Muse behind it
+        stagePausedRef.current = askTop <= 0;
       });
     };
     on();
@@ -235,7 +239,7 @@ export function ThynkSiteV7() {
         <div className="t7-runway" ref={runwayRef} id="top">
           <div className="t7-stage">
             <div className="t7-stage-glow" aria-hidden="true" />
-            <ParticleMuse src={v7Assets.points} progressRef={formRef} reduced={reduced} camRef={camRef} />
+            <ParticleMuse src={v7Assets.points} progressRef={formRef} reduced={reduced} camRef={camRef} pausedRef={stagePausedRef} />
             <div className="t7-torch" ref={spotRef} aria-hidden="true">
               <i />
             </div>
@@ -315,7 +319,7 @@ export function ThynkSiteV7() {
               )}
             </div>
             <div className="t7-ask-muse" aria-hidden="true">
-              <ParticleMuse src={v7Assets.points} progressRef={inkRef} reduced={reduced} ink box />
+              <ParticleMuse src={v7Assets.points} progressRef={inkRef} reduced={reduced} ink box maxPoints={70000} />
             </div>
           </div>
         </section>
@@ -532,13 +536,22 @@ function Imagine({ reduced, first }: { reduced: boolean; first: number | null })
     <section
       ref={ref}
       className={`t7-pin t7-imagine${reduced ? " static" : ""}`}
-      style={reduced ? undefined : { height: `${100 + n * 24}vh` }}
+      style={reduced ? undefined : { height: `${100 + n * 24}svh` }}
       aria-label={pinnedV6.knowHow.title}
     >
       <div className="t7-pin-stage">
         <div className="t7-pin-inner">
           <span className="t7-eyebrow">{pinnedV6.knowHow.eyebrow}</span>
           <h2 className="t7-display t7-imagine-title">{pinnedV6.knowHow.title}</h2>
+          {/* the active line, big, in a fixed-height frame: nothing below it moves when it changes */}
+          {!reduced && (
+            <div className="t7-spot" aria-hidden="true">
+              <p key={active} className="t7-spot-line">
+                {active === n - 1 ? <small>{pinnedV6.knowHow.lastLabel}</small> : null}
+                {items[active]}
+              </p>
+            </div>
+          )}
           <ol className="t7-imagine-list">
             {items.map((t, k) => {
               const cls = reduced || k === active ? "on" : k < active ? "past" : "";
@@ -574,7 +587,7 @@ function Method({ reduced }: { reduced: boolean }) {
       ref={ref}
       className={`t7-pin t7-method${reduced ? " static" : ""}`}
       id="method"
-      style={reduced ? undefined : { height: `${100 + n * 50}vh` }}
+      style={reduced ? undefined : { height: `${100 + n * 50}svh` }}
     >
       <div className="t7-pin-stage">
         <div className="t7-method-grid">
