@@ -31,12 +31,13 @@
    Width 58vw: at rest the tips are ~20vw apart, at the end of the hero scroll they touch at the
    centre. translateX stays ≤ 0 (left) / ≥ 0 (right), so the cut elbow never comes into view. */
 .t10-hero {
-  --arms-y: 68%;
+  --arms-y: 69%;
+  --tilt: 9deg;
 }
 .t10-hand {
   position: absolute;
   top: var(--arms-y);
-  width: 58vw;
+  width: 62vw;
   z-index: 1;
   pointer-events: none;
   opacity: 0;
@@ -48,23 +49,27 @@
   aspect-ratio: 1344 / 752;
   filter: drop-shadow(0 24px 30px rgba(40, 46, 60, 0.12));
 }
+/* Creation-of-Adam diagonal: each arm turns around its own fingertip, so the tips still meet.
+   Human comes down from the upper left, robot up from the lower right. */
 .t10-hand-l {
   left: 0;
-  transform: translate(-60%, -40.5%);
+  transform-origin: 87.5% 40.5%;
+  transform: translate(-60%, -40.5%) rotate(var(--tilt));
 }
 .t10-hand-r {
   right: 0;
-  transform: translate(60%, -40.5%);
+  transform-origin: 5.4% 40.5%;
+  transform: translate(60%, -40.5%) rotate(var(--tilt));
 }
 .t10-hero.in .t10-hand {
   opacity: 1;
   transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease;
 }
 .t10-hero.in .t10-hand-l {
-  transform: translate(calc(-18.5% + var(--p) * 16.5%), -40.5%);
+  transform: translate(calc(-23.8% + var(--p) * 16%), calc(-40.5% - 0.5vw)) rotate(var(--tilt));
 }
 .t10-hero.in .t10-hand-r {
-  transform: translate(calc(25.7% - var(--p) * 16.6%), -40.5%);
+  transform: translate(calc(30.9% - var(--p) * 16%), calc(-40.5% + 0.5vw)) rotate(var(--tilt));
 }
 .t10-hero.in.scrolling .t10-hand {
   transition: opacity 1.2s ease; /* follow the scroll 1:1 once the entrance is done */
@@ -217,13 +222,13 @@
   }
   /* phones: 70vw arms, same idea (tips from ~24vw apart to touching) */
   .t10-hand {
-    width: 70vw;
+    width: 72vw;
   }
   .t10-hero.in .t10-hand-l {
-    transform: translate(calc(-33.2% + var(--p) * 16.6%), -40.5%);
+    transform: translate(calc(-34.7% + var(--p) * 16%), calc(-40.5% - 0.6vw)) rotate(var(--tilt));
   }
   .t10-hero.in .t10-hand-r {
-    transform: translate(calc(40.4% - var(--p) * 16.6%), -40.5%);
+    transform: translate(calc(41.9% - var(--p) * 16%), calc(-40.5% + 0.6vw)) rotate(var(--tilt));
   }
   .t10-contact {
     width: 90px;

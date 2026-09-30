@@ -61,12 +61,12 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
     for (let k = 0; k < N; k++) {
       const i = order[k];
       const band = rnd();
-      const r = 2.1 + band * band * 2.3 + (rnd() - 0.5) * 0.35;
+      const r = 2.6 + band * band * 2.9 + (rnd() - 0.5) * 0.4;
       const a = rnd() * Math.PI * 2;
       SX[1][i] = Math.cos(a) * r;
       SZ[1][i] = Math.sin(a) * r * 0.9;
       SY[1][i] = Math.sin(a) * r * 0.22 + (rnd() - 0.5) * 0.28 * (1 + band);
-      SH[1][i] = Math.max(0, 1 - (r - 2.1) / 1.4);
+      SH[1][i] = Math.max(0, 1 - (r - 2.6) / 1.6);
     }
     // 2 sphere (fibonacci)
     const golden = Math.PI * (3 - Math.sqrt(5));
@@ -75,7 +75,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       const y = 1 - (k / (N - 1)) * 2;
       const rr = Math.sqrt(1 - y * y);
       const th = golden * k;
-      const R = 2.7 + (rnd() - 0.5) * 0.06;
+      const R = 3.4 + (rnd() - 0.5) * 0.07;
       SX[2][i] = Math.cos(th) * rr * R;
       SY[2][i] = y * R;
       SZ[2][i] = Math.sin(th) * rr * R;
@@ -87,8 +87,8 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       const u = rnd() * 2 - 1;
       const a = rnd() * Math.PI * 2;
       const rr = Math.sqrt(1 - u * u);
-      const R = 1.4 + rnd() * 1.5;
-      nodes.push([Math.cos(a) * rr * R * 1.25, u * R * 0.85, Math.sin(a) * rr * R]);
+      const R = 1.9 + rnd() * 1.9;
+      nodes.push([Math.cos(a) * rr * R * 1.35, u * R * 0.9, Math.sin(a) * rr * R]);
     }
     const edges: [number, number][] = [];
     nodes.forEach((p, a) => {
@@ -121,7 +121,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       }
     }
     // 4 cube: edges + a few face dots, hot corners
-    const C = 2.0;
+    const C = 2.6;
     const cubeEdges: [number[], number[]][] = [];
     const corners = [-1, 1].flatMap((x) => [-1, 1].flatMap((y) => [-1, 1].map((z) => [x, y, z])));
     corners.forEach((p, a) =>
@@ -177,7 +177,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       for (let y = 0; y < th; y += 2) for (let x = 0; x < tw; x += 2) if (data[(y * tw + x) * 4 + 3] > 128) px.push(x, y);
       const count = px.length / 2;
       if (!count) return;
-      const half = Math.min(4.3, ((5 * W) / H) * 0.82);
+      const half = Math.min(5.4, ((5 * W) / H) * 0.9);
       const scale = (half * 2) / ww;
       for (let k = 0; k < N; k++) {
         const i = order[k];
@@ -199,6 +199,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       const a = 0.42 + t * 0.35;
       return `rgba(${r},${g},${b},${a})`;
     });
+    COLORS.push("rgba(58,64,78,0.82)"); // 6 = ink, used for the THYNK. letters
     const bx = COLORS.map(() => new Float32Array(N));
     const by = COLORS.map(() => new Float32Array(N));
     const bs = COLORS.map(() => new Float32Array(N));
@@ -243,7 +244,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       let x = SX[st][i];
       let y = SY[st][i];
       let z = SZ[st][i];
-      const fit = W / H < 0.8 ? 0.62 : 1; // phones: shapes a bit smaller
+      const fit = W / H < 0.8 ? 0.6 : 1; // phones: shapes a bit smaller
       if (st !== 5) {
         const a = t * (st === 1 ? 0.06 : 0.16);
         const ca = Math.cos(a);
@@ -322,8 +323,10 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
         const sx = W / 2 + (X * f) / Z;
         const sy = H * 0.47 - (Y * f) / Z;
         if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
-        const k = Math.min(5, Math.floor(hot * 6));
-        const size = Math.max(0.9, Math.min(2.4, (10 / Z) * (small ? 1.1 : 1)));
+        // wordmark weight: how far we are into the last shape
+        const word = a === STAGES - 2 ? m : 0;
+        const k = word > 0.5 && hot < 0.5 ? 6 : Math.min(5, Math.floor(hot * 6));
+        const size = Math.max(0.9, Math.min(2.4, (10 / Z) * (small ? 1.1 : 1))) * (1 + word * 0.7);
         const n = bn[k]++;
         bx[k][n] = sx;
         by[k][n] = sy;
