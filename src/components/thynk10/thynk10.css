@@ -1,0 +1,242 @@
+/* Thynk v10 — the "hands" hero on top of v9. Root: `.t8.t9.t10`. */
+
+.t10-hero {
+  --p: 0; /* scroll progress 0 → 1, set from JS */
+  position: relative;
+  min-height: calc(100svh - 64px);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(60% 55% at 50% 46%, #ffffff 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, #f3f4f7 0%, #f6f7f9 100%);
+}
+
+/* ---------- glass orb ---------- */
+.t10-orb {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: min(460px, 70vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(calc(0.92 + var(--p) * 0.16));
+  z-index: 0;
+  pointer-events: none;
+}
+.t10-orb i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+.t10-orb-core {
+  background:
+    radial-gradient(circle at 36% 30%, #ffffff 0%, rgba(255, 255, 255, 0.85) 22%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(circle at 60% 70%, rgba(214, 220, 236, 0.55) 0%, rgba(214, 220, 236, 0) 62%);
+  box-shadow:
+    inset 0 0 60px rgba(255, 255, 255, 0.9),
+    0 30px 80px -30px rgba(120, 130, 160, 0.35);
+}
+.t10-orb-ring {
+  inset: 6%;
+  background: conic-gradient(from 0deg, #ffd5bf, #dcd6ff, #c8ecff, #fff0c2, #ffc9ae, #ffd5bf);
+  -webkit-mask: radial-gradient(circle, transparent 54%, #000 60%, #000 66%, transparent 74%);
+  mask: radial-gradient(circle, transparent 54%, #000 60%, #000 66%, transparent 74%);
+  filter: blur(14px);
+  opacity: calc(0.55 + var(--p) * 0.4);
+  animation: t10-spin 18s linear infinite;
+}
+.t10-orb-spark {
+  inset: 42%;
+  background: radial-gradient(circle, rgba(255, 106, 26, 0.9) 0%, rgba(255, 106, 26, 0.35) 40%, rgba(255, 106, 26, 0) 70%);
+  filter: blur(6px);
+  opacity: calc(var(--p) * var(--p));
+  transform: scale(calc(0.6 + var(--p) * 1.4));
+}
+
+/* ---------- hands ---------- */
+.t10-hand {
+  position: absolute;
+  top: 50%;
+  width: min(47vw, 760px);
+  z-index: 1;
+  pointer-events: none;
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease;
+  opacity: 0;
+}
+.t10-hand img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1024 / 688;
+  filter: drop-shadow(0 24px 30px rgba(40, 46, 60, 0.12));
+}
+.t10-hand-l {
+  left: 0;
+  transform: translate(-38%, -50%);
+}
+.t10-hand-r {
+  right: 0;
+  transform: translate(38%, -50%);
+}
+.t10-hero.in .t10-hand {
+  opacity: 1;
+}
+/* resting position after load, then scroll closes the gap */
+/* images are 1024×688 with the fingertip at ~83% (human) / ~15% (robot) of the width:
+   at rest the tips sit ~20vw apart, scrolling brings them to ~8vw ("almost touching") */
+.t10-hero.in .t10-hand-l {
+  transform: translate(calc(-8% + var(--p) * 22%), calc(-50% + var(--p) * -3%));
+}
+.t10-hero.in .t10-hand-r {
+  transform: translate(calc(8% - var(--p) * 22%), calc(-50% + var(--p) * -3%));
+}
+.t10-hero.in .t10-hand {
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease;
+}
+
+/* ---------- text ---------- */
+.t10-center {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  padding: 72px 16px 0;
+}
+.t10-eyebrow {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--orange-ink);
+  padding: 6px 14px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+}
+.t10-title {
+  margin-top: 18px !important;
+  font-size: clamp(36px, 5.4vw, 80px);
+  line-height: 1.06;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+.t10-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.t10-line:nth-child(1) {
+  transition-delay: 0.45s;
+}
+.t10-line:nth-child(2) {
+  transition-delay: 0.65s;
+}
+.t10-soft {
+  color: #aeb3bd;
+}
+.t10-hero.in .t10-line,
+.t10-hero.in .t10-eyebrow,
+.t10-hero.in .t10-bottom {
+  opacity: 1;
+  transform: none;
+}
+
+.t10-bottom {
+  position: relative;
+  z-index: 2;
+  width: var(--wrap);
+  margin: 0 auto;
+  padding: 24px 0 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px 40px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.9s ease 0.9s, transform 0.9s ease 0.9s;
+}
+.t10-intro {
+  max-width: 440px;
+}
+.t10-kicker {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.t10-intro p {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--body);
+}
+.t10-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.t10 .t10-ask-sec {
+  padding-top: clamp(32px, 5vw, 56px);
+}
+.t10 .t10-ask-sec .t8-ask {
+  margin-top: 0;
+}
+
+@keyframes t10-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t10-hand,
+  .t10-line,
+  .t10-eyebrow,
+  .t10-bottom {
+    transition: none !important;
+  }
+  .t10-orb-ring {
+    animation: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .t10-hero {
+    min-height: calc(100svh - 60px);
+  }
+  .t10-hand {
+    top: 30%;
+    width: 64vw;
+  }
+  .t10-hero.in .t10-hand-l {
+    transform: translate(calc(-14% + var(--p) * 14%), -50%);
+  }
+  .t10-hero.in .t10-hand-r {
+    transform: translate(calc(14% - var(--p) * 14%), -50%);
+  }
+  .t10-orb {
+    top: 30%;
+  }
+  .t10-center {
+    align-self: end;
+    padding-top: 42vh;
+  }
+  .t10-bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .t10-ctas .t8-btn {
+    flex: 1 1 100%;
+  }
+}

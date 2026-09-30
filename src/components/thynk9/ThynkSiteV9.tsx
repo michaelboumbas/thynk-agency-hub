@@ -24,6 +24,7 @@ import {
 } from "@/content/site-v9";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { Calculator } from "@/components/thynk5/Calculator";
+import { HandsHero } from "@/components/thynk10/HandsHero";
 
 /**
  * v9 — "Thynk Clear" + the service presentation of liberators.ai (UX only, none of their copy).
@@ -785,7 +786,7 @@ function AuditForm({ pain }: { pain: PainId | null }) {
 /* ------------------------------------------------------------------ */
 const SERIF_HREF = "https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@1,500;1,600&display=swap";
 
-export function ThynkSiteV9() {
+export function ThynkSiteV9({ handsHero = false }: { handsHero?: boolean } = {}) {
   const reduced = useReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
   const [pain, setPain] = useState<PainId | null>(null);
@@ -856,8 +857,42 @@ export function ThynkSiteV9() {
     go(to);
   };
 
+  const askBlock = (
+          <div className="t8-ask">
+            <p className="t8-ask-q">
+              <strong>{hero.question}</strong> <span>{hero.questionHint}</span>
+            </p>
+            <div className="t8-chips" role="group" aria-label={hero.question}>
+              {pains.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  className={`t8-chip${pain === p.id ? " on" : ""}`}
+                  aria-pressed={pain === p.id}
+                  onClick={() => setPain(pain === p.id ? null : p.id)}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+            {picked && (
+              <div className="t8-reply" role="status">
+                <p>{picked.reply}</p>
+                <div className="t8-reply-actions">
+                  <button type="button" className="t8-link" onClick={book}>
+                    {hero.replyAudit} <Arrow />
+                  </button>
+                  <button type="button" className="t8-link t8-link-muted" onClick={() => go("calculator")}>
+                    {hero.replyCalc}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+  );
+
   return (
-    <div className="t8 t9" ref={rootRef} lang="el">
+    <div className={`t8 t9${handsHero ? " t10" : ""}`} ref={rootRef} lang="el">
       <a className="t8-skip" href="#main">
         Μετάβαση στο περιεχόμενο
       </a>
@@ -912,6 +947,12 @@ export function ThynkSiteV9() {
 
       <main id="main">
         {/* ---------- 1. Hero ---------- */}
+        {handsHero ? (
+          <>
+            <HandsHero reduced={reduced} onBook={book} onExamples={() => go("examples")} />
+            <section className="t8-section t10-ask-sec">{askBlock}</section>
+          </>
+        ) : (
         <section className="t8-hero" id="top">
           <div className="t8-blob t8-blob-a" aria-hidden="true" />
           <div className="t8-blob t8-blob-b" aria-hidden="true" />
@@ -938,38 +979,9 @@ export function ThynkSiteV9() {
             <Muse reduced={reduced} />
           </div>
 
-          <div className="t8-ask">
-            <p className="t8-ask-q">
-              <strong>{hero.question}</strong> <span>{hero.questionHint}</span>
-            </p>
-            <div className="t8-chips" role="group" aria-label={hero.question}>
-              {pains.map((p) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  className={`t8-chip${pain === p.id ? " on" : ""}`}
-                  aria-pressed={pain === p.id}
-                  onClick={() => setPain(pain === p.id ? null : p.id)}
-                >
-                  {p.label}
-                </button>
-              ))}
-            </div>
-            {picked && (
-              <div className="t8-reply" role="status">
-                <p>{picked.reply}</p>
-                <div className="t8-reply-actions">
-                  <button type="button" className="t8-link" onClick={book}>
-                    {hero.replyAudit} <Arrow />
-                  </button>
-                  <button type="button" className="t8-link t8-link-muted" onClick={() => go("calculator")}>
-                    {hero.replyCalc}
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
+          {askBlock}
         </section>
+        )}
 
         {/* ---------- 2. Who it's for ---------- */}
         <section className="t8-section t8-who">
