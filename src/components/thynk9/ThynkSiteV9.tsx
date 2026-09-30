@@ -571,6 +571,30 @@ function DiagramCare() {
   );
 }
 
+function DiagramPlan() {
+  const d = servicesSteps.diagrams.plan;
+  return (
+    <div className="t9-dia t9-dia-care t9-dia-plan">
+      <div className="t9-care-head">
+        <span className="t9-pulse" />
+        <strong>{d.head}</strong>
+      </div>
+      <ul>
+        {d.rows.map((r, i) => (
+          <li key={r.t} className={r.s === "Πρώτο" ? "first" : r.s === "Μετά" ? "later" : "no"} style={{ ["--d" as string]: `${0.2 + i * 0.22}s` }}>
+            <span>{r.t}</span>
+            <em>{r.s}</em>
+          </li>
+        ))}
+      </ul>
+      <span className="t9-dia-label">
+        <i />
+        {caps(d.label)}
+      </span>
+    </div>
+  );
+}
+
 function StepPanel({
   s,
   i,
@@ -608,6 +632,7 @@ function StepPanel({
       </div>
       <div className="t9-panel-visual">
         {s.diagram === "map" && <DiagramMap />}
+        {s.diagram === "plan" && <DiagramPlan />}
         {s.diagram === "branch" && <DiagramBranch />}
         {s.diagram === "care" && <DiagramCare />}
       </div>
