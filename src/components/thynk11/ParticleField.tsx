@@ -156,6 +156,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
     let dpr = 1;
 
     // 5 wordmark "THYNK." sampled from text, the dot in orange
+    let wordHalfPx = H * 0.1;
     const buildWord = () => {
       const tw = 900;
       const th = 220;
@@ -174,18 +175,35 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       const dotX = x0 + o.measureText(word).width;
       const data = o.getImageData(0, 0, tw, th).data;
       const px: number[] = [];
-      for (let y = 0; y < th; y += 2) for (let x = 0; x < tw; x += 2) if (data[(y * tw + x) * 4 + 3] > 128) px.push(x, y);
+      let gy0 = th;
+      let gy1 = 0;
+      let gx0 = tw;
+      let gx1 = 0;
+      for (let y = 0; y < th; y += 2)
+        for (let x = 0; x < tw; x += 2)
+          if (data[(y * tw + x) * 4 + 3] > 128) {
+            px.push(x, y);
+            if (y < gy0) gy0 = y;
+            if (y > gy1) gy1 = y;
+            if (x < gx0) gx0 = x;
+            if (x > gx1) gx1 = x;
+          }
       const count = px.length / 2;
       if (!count) return;
       const half = Math.min(5.4, ((5 * W) / H) * 0.9);
-      const scale = (half * 2) / ww;
+      // fit the width, but never taller than ~28% of the screen (fonts differ: Anton is tall)
+      const maxWorldH = (0.28 * H * 9) / (H * 0.9);
+      const scale = Math.min((half * 2) / Math.max(1, gx1 - gx0), maxWorldH / Math.max(1, gy1 - gy0));
+      const cx = (gx0 + gx1) / 2;
+      const cy = (gy0 + gy1) / 2;
+      wordHalfPx = (((gy1 - gy0) * scale) / 2) * (H * 0.9) / 9;
       for (let k = 0; k < N; k++) {
         const i = order[k];
         const p = Math.floor(rnd() * count);
         const x = px[p * 2];
         const y = px[p * 2 + 1];
-        SX[5][i] = (x - tw / 2) * scale + (rnd() - 0.5) * scale * 2;
-        SY[5][i] = -(y - th / 2) * scale + (rnd() - 0.5) * scale * 2;
+        SX[5][i] = (x - cx) * scale + (rnd() - 0.5) * scale * 2;
+        SY[5][i] = -(y - cy) * scale + (rnd() - 0.5) * scale * 2;
         SZ[5][i] = (rnd() - 0.5) * 0.25;
         SH[5][i] = x >= dotX ? 1 : 0;
       }
@@ -274,6 +292,25 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       out.h = SH[st][i];
     };
 
+    // pointer: the dots around the cursor turn Thynk orange and make room (desktop only)
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    let px = -9999;
+    let py = -9999;
+    let pr = 0; // radius eases in/out
+    let pTarget = 0;
+    const onMove = (e: PointerEvent) => {
+      px = e.clientX;
+      py = e.clientY;
+      pTarget = 1;
+    };
+    const onLeave = () => {
+      pTarget = 0;
+    };
+    if (fine && !reduced) {
+      window.addEventListener("pointermove", onMove, { passive: true });
+      document.addEventListener("pointerleave", onLeave);
+    }
+
     let raf = 0;
     let running = true;
     const start = performance.now();
@@ -289,7 +326,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       if (outro) {
         const r = outro.getBoundingClientRect();
         // the letters settle just above the footer's glowing line
-        const settle = r.bottom - Math.min(150, H * 0.17);
+        const settle = r.bottom - wordHalfPx - Math.max(40, H * 0.06);
         end = Math.min(maxS, window.scrollY + settle - H * 0.47);
         outroY = settle;
       }
@@ -304,6 +341,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       // the last transition runs linearly with the outro; the others hold, then glide
       const m = a === STAGES - 2 && sy0 >= endA ? smoothstep(g - a) : plateau(g - a);
       const f = H * 0.9;
+      pr += (pTarget - pr) * 0.08;
       bn.fill(0);
 
       for (let i = 0; i < N; i++) {
@@ -328,16 +366,33 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
         // the wordmark rides with the outro space, so it never sits behind the footer
         const lift = a === STAGES - 2 ? m * (outroY - H * 0.47) : 0;
         const sy = H * 0.47 + lift - (Y * f) / Z;
-        if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
+        let qx = sx;
+        let qy = sy;
+        let glow = 0;
+        if (pr > 0.01) {
+          const dx = sx - px;
+          const dy = sy - py;
+          const d2 = dx * dx + dy * dy;
+          const R = 130 * pr;
+          if (d2 < R * R) {
+            const d = Math.sqrt(d2) || 1;
+            const k0 = 1 - d / R;
+            glow = k0;
+            qx += (dx / d) * k0 * 16;
+            qy += (dy / d) * k0 * 16;
+          }
+        }
+        if (qx < -4 || qx > W + 4 || qy < -4 || qy > H + 4) continue;
         // wordmark weight: how far we are into the last shape
         const word = a === STAGES - 2 ? m : 0;
-        const k = word > 0.15 && hot < 0.5 ? 6 : Math.min(5, Math.floor(hot * 6));
+        const heat = Math.max(hot, glow * 1.4);
+        const k = word > 0.15 && heat < 0.5 ? 6 : Math.min(5, Math.floor(heat * 6));
         const base = Math.max(0.9, Math.min(2.4, (10 / Z) * (small ? 1.1 : 1)));
         // the THYNK. letters: dark and chunky so the word reads clearly
-        const size = base + word * (small ? 1.6 : 2.2);
+        const size = base + word * (small ? 1.6 : 2.2) + glow * 1.3;
         const n = bn[k]++;
-        bx[k][n] = sx;
-        by[k][n] = sy;
+        bx[k][n] = qx;
+        by[k][n] = qy;
         bs[k][n] = size;
       }
 
@@ -375,6 +430,8 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerleave", onLeave);
     };
   }, [reduced]);
 

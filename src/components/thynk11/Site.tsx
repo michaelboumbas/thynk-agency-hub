@@ -131,6 +131,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: string }
   return (
     <div className="t8 t9 t10 t11" ref={rootRef} lang="el">
       <ParticleField reduced={reduced} />
+      <CursorGlow reduced={reduced} />
       <a className="t8-skip" href="#main">
         Μετάβαση στο περιεχόμενο
       </a>
@@ -243,6 +244,53 @@ function CircuitTraces() {
   );
 }
 
+/* A soft Thynk-orange light that follows the cursor behind the content (desktop only).
+   The background dots near the cursor also light up and make room (see ParticleField). */
+function CursorGlow({ reduced }: { reduced: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || reduced || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    let x = -500;
+    let y = -500;
+    let tx = x;
+    let ty = y;
+    let raf = 0;
+    const tick = () => {
+      x += (tx - x) * 0.14;
+      y += (ty - y) * 0.14;
+      el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 ? requestAnimationFrame(tick) : 0;
+    };
+    const on = (e: PointerEvent) => {
+      tx = e.clientX;
+      ty = e.clientY;
+      el.style.opacity = "1";
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    const off = () => {
+      el.style.opacity = "0";
+    };
+    window.addEventListener("pointermove", on, { passive: true });
+    document.addEventListener("pointerleave", off);
+    return () => {
+      window.removeEventListener("pointermove", on);
+      document.removeEventListener("pointerleave", off);
+      cancelAnimationFrame(raf);
+    };
+  }, [reduced]);
+  return (
+    <div className="t11-cursor" ref={ref} aria-hidden="true">
+      <i />
+    </div>
+  );
+}
+
+/** Glowing horizon line between sections (same as the footer's). */
+function HLine() {
+  return <div className="t11-hline" aria-hidden="true" />;
+}
+
 /* ---------------- shared blocks ---------------- */
 function PageHero({ p }: { p: { eyebrow: string; titleStart: string; titleAccent: string; titleEnd: string; lead: string } }) {
   return (
@@ -289,7 +337,7 @@ function Faq({ items, title, id }: { items: { q: string; a: string }[]; title: s
 
 function FinalBand() {
   return (
-    <section className="t8-section">
+    <section className="t8-section t11-final">
       <div className="t11-band" data-reveal>
         <div>
           <h2>{finalBand.title}</h2>
@@ -448,6 +496,7 @@ function HomePage() {
         </ul>
       </section>
 
+      <HLine />
       <Examples reduced={reduced} />
       <div className="t11-more-link">
         <Link to={routes.examples} className="t8-link">
@@ -455,9 +504,11 @@ function HomePage() {
         </Link>
       </div>
 
+      <HLine />
       <ServicesSteps reduced={reduced} onGo={stepGo} />
       <div className="t9-thread" aria-hidden="true" />
       <AllServices highlight={picked?.pillar} />
+      <HLine />
 
       {/* ---- rebuilt lower half (30/09) ---- */}
       <section className="t8-section">
@@ -515,6 +566,7 @@ function HomePage() {
         </div>
       </section>
 
+      <HLine />
       <Faq items={homeFaq} title="Ό,τι μας ρωτάνε συνήθως" id="faq" />
       <FinalBand />
     </>
@@ -527,6 +579,7 @@ function ServicesPage() {
   return (
     <>
       <PageHero p={pages.services} />
+      <HLine />
       <ServicesSteps reduced={reduced} onGo={stepGo} />
       <div className="t9-thread" aria-hidden="true" />
       <AllServices />
@@ -540,6 +593,7 @@ function ExamplesPage() {
   return (
     <>
       <PageHero p={pages.examples} />
+      <HLine />
       <Examples reduced={reduced} />
       <section className="t8-section">
         <div className="t8-head" data-reveal>
@@ -580,6 +634,7 @@ function AuditPage() {
   return (
     <>
       <PageHero p={pages.audit} />
+      <HLine />
       <section className="t8-section t11-first">
         <div className="t8-audit">
           <div className="t8-audit-main">
@@ -670,6 +725,7 @@ function AboutPage() {
   return (
     <>
       <PageHero p={pages.about} />
+      <HLine />
       <section className="t8-section t11-first">
         <div className="t8-people t11-people">
           {team.founders.map((f) => (

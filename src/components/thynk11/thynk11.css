@@ -27,6 +27,44 @@
   box-shadow: inset 0 0 0 1px var(--line);
 }
 
+/* ---------- cursor light + horizon lines ---------- */
+.t11-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.t11-cursor i {
+  position: absolute;
+  left: -210px;
+  top: -210px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 106, 26, 0.16) 0%, rgba(255, 106, 26, 0.07) 35%, rgba(255, 106, 26, 0) 70%);
+}
+.t11-hline {
+  position: relative;
+  z-index: 1;
+  width: var(--wrap);
+  height: 2px;
+  margin: clamp(56px, 8vw, 96px) auto 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255, 106, 26, 0) 0%, rgba(255, 106, 26, 0.85) 50%, rgba(255, 106, 26, 0) 100%);
+  box-shadow: 0 0 16px 1px rgba(255, 106, 26, 0.35), 0 0 50px 6px rgba(255, 106, 26, 0.12);
+}
+.t11 .t11-hline + .t8-section,
+.t11 .t11-hline + .t9-ex,
+.t11 .t11-hline + .t9-svc {
+  padding-top: clamp(40px, 6vw, 72px);
+  margin-top: 0;
+}
+
 /* ---------- page hero (inner pages) ---------- */
 .t11-phero {
   width: var(--wrap);
