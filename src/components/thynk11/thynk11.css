@@ -283,10 +283,26 @@
   font-size: 15px;
 }
 
+/* ---------- outro: empty stage for the dot wordmark ---------- */
+.t11-outro {
+  position: relative;
+  z-index: 1;
+  height: 78vh;
+  pointer-events: none;
+}
+/* light cards let the moving dots show through a little */
+.t11 .t8-acc-item,
+.t11 .t8-faq-item,
+.t11 .t8-rules,
+.t11 .t8-ask,
+.t11 .t8-person {
+  background: rgba(255, 255, 255, 0.84);
+}
+
 /* ---------- footer ---------- */
 .t11-footer {
   width: var(--wrap);
-  margin: clamp(64px, 9vw, 110px) auto 0;
+  margin: 0 auto;
   padding: 36px 0 40px;
   border-top: 1px solid var(--line);
 }

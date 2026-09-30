@@ -164,6 +164,9 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: string }
         {children}
       </main>
 
+      {/* open space at the end of every page: the background dots form the THYNK. wordmark here */}
+      <div className="t11-outro" aria-hidden="true" />
+
       <footer className="t11-footer">
         <div className="t11-footer-top">
           <div>

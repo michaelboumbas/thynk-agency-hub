@@ -58,7 +58,7 @@
 .t10-hand {
   position: absolute;
   top: 50%;
-  width: min(47vw, 760px);
+  width: 62vw; /* big enough that the cropped forearms always run off the screen edges */
   z-index: 1;
   pointer-events: none;
   transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease;
@@ -73,11 +73,11 @@
 }
 .t10-hand-l {
   left: 0;
-  transform: translate(-38%, -50%);
+  transform: translate(-60%, -50%);
 }
 .t10-hand-r {
   right: 0;
-  transform: translate(38%, -50%);
+  transform: translate(60%, -50%);
 }
 .t10-hero.in .t10-hand {
   opacity: 1;
@@ -85,11 +85,13 @@
 /* resting position after load, then scroll closes the gap */
 /* images are 1024×688 with the fingertip at ~83% (human) / ~15% (robot) of the width:
    at rest the tips sit ~20vw apart, scrolling brings them to ~8vw ("almost touching") */
+/* translateX stays negative (left) / positive (right) so the cut edge of each forearm never
+   comes into view; scrolling brings the fingertips from ~22vw apart to ~5vw apart */
 .t10-hero.in .t10-hand-l {
-  transform: translate(calc(-8% + var(--p) * 22%), calc(-50% + var(--p) * -3%));
+  transform: translate(calc(-22% + var(--p) * 14%), calc(-50% + var(--p) * -3%));
 }
 .t10-hero.in .t10-hand-r {
-  transform: translate(calc(8% - var(--p) * 22%), calc(-50% + var(--p) * -3%));
+  transform: translate(calc(22% - var(--p) * 14%), calc(-50% + var(--p) * -3%));
 }
 .t10-hero.in .t10-hand {
   transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease;
@@ -217,13 +219,13 @@
   }
   .t10-hand {
     top: 30%;
-    width: 64vw;
+    width: 80vw;
   }
   .t10-hero.in .t10-hand-l {
-    transform: translate(calc(-14% + var(--p) * 14%), -50%);
+    transform: translate(calc(-30% + var(--p) * 6%), -50%);
   }
   .t10-hero.in .t10-hand-r {
-    transform: translate(calc(14% - var(--p) * 14%), -50%);
+    transform: translate(calc(30% - var(--p) * 6%), -50%);
   }
   .t10-orb {
     top: 30%;
