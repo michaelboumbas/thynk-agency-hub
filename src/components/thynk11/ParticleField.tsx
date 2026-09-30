@@ -199,7 +199,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       const a = 0.42 + t * 0.35;
       return `rgba(${r},${g},${b},${a})`;
     });
-    COLORS.push("rgba(58,64,78,0.82)"); // 6 = ink, used for the THYNK. letters
+    COLORS.push("rgba(34,38,48,0.92)"); // 6 = ink, used for the THYNK. letters
     const bx = COLORS.map(() => new Float32Array(N));
     const by = COLORS.map(() => new Float32Array(N));
     const bs = COLORS.map(() => new Float32Array(N));
@@ -325,8 +325,10 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
         if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
         // wordmark weight: how far we are into the last shape
         const word = a === STAGES - 2 ? m : 0;
-        const k = word > 0.5 && hot < 0.5 ? 6 : Math.min(5, Math.floor(hot * 6));
-        const size = Math.max(0.9, Math.min(2.4, (10 / Z) * (small ? 1.1 : 1))) * (1 + word * 0.7);
+        const k = word > 0.15 && hot < 0.5 ? 6 : Math.min(5, Math.floor(hot * 6));
+        const base = Math.max(0.9, Math.min(2.4, (10 / Z) * (small ? 1.1 : 1)));
+        // the THYNK. letters: dark and chunky so the word reads clearly
+        const size = base + word * (small ? 1.6 : 2.2);
         const n = bn[k]++;
         bx[k][n] = sx;
         by[k][n] = sy;
