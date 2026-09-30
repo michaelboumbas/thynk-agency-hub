@@ -5,7 +5,8 @@ import { handsHero as H } from "@/content/site-v10";
 /**
  * v10 hero — "άνθρωπος + AI". A human hand (left) and a robotic hand with Thynk-orange circuits (right)
  * reach for each other over a soft iridescent glass orb, like the Creation of Adam.
- * Load: the hands slide in. Scroll (first ~60% of the hero): they close the gap and the orb lights up.
+ * Load: the arms slide in. Scroll (first ~60% of the hero): the fingertips close the gap and touch,
+ * and a small orange spark lights up at the contact point.
  * The headline says the idea in words: the AI does the work, people decide (our "human in the loop" rule).
  * Inspired by a UI8 concept shot the founders liked (layout/motion only; copy and assets are ours).
  */
@@ -20,10 +21,16 @@ export function HandsHero({
 }) {
   const ref = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
+  const [settled, setSettled] = useState(false);
 
   useEffect(() => {
     const t = window.setTimeout(() => setInView(true), 60);
-    return () => window.clearTimeout(t);
+    // after the entrance, the arms follow the scroll 1:1 (no easing lag)
+    const t2 = window.setTimeout(() => setSettled(true), 1700);
+    return () => {
+      window.clearTimeout(t);
+      window.clearTimeout(t2);
+    };
   }, []);
 
   useEffect(() => {
@@ -32,7 +39,7 @@ export function HandsHero({
     let raf = 0;
     const calc = () => {
       raf = 0;
-      const span = Math.max(1, el.offsetHeight * 0.6);
+      const span = Math.max(1, el.offsetHeight * (window.innerWidth <= 860 ? 0.1 : 0.32)); // the fingertips touch after a short scroll, while still on screen
       const p = Math.min(1, Math.max(0, window.scrollY / span));
       el.style.setProperty("--p", p.toFixed(4));
     };
@@ -50,18 +57,20 @@ export function HandsHero({
   }, [reduced]);
 
   return (
-    <section className={`t10-hero${inView ? " in" : ""}`} id="top" ref={ref} aria-labelledby="t10-title">
-      <div className="t10-orb" aria-hidden="true">
-        <i className="t10-orb-ring" />
-        <i className="t10-orb-core" />
-        <i className="t10-orb-spark" />
-      </div>
+    <section className={`t10-hero${inView ? " in" : ""}${settled ? " scrolling" : ""}`} id="top" ref={ref} aria-labelledby="t10-title">
+      {/* soft light behind the headline (keeps it readable over the dots) */}
+      <div className="t10-halo" aria-hidden="true" />
 
       <div className="t10-hand t10-hand-l" aria-hidden="true">
-        <img src={H.human} alt="" width={1024} height={688} decoding="async" fetchPriority="high" />
+        <img src={H.human} alt="" width={1344} height={752} decoding="async" fetchPriority="high" />
       </div>
       <div className="t10-hand t10-hand-r" aria-hidden="true">
-        <img src={H.robot} alt="" width={1024} height={688} decoding="async" fetchPriority="high" />
+        <img src={H.robot} alt="" width={1344} height={752} decoding="async" fetchPriority="high" />
+      </div>
+
+      {/* the spark where the two fingertips meet (grows as they touch) */}
+      <div className="t10-contact" aria-hidden="true">
+        <i />
       </div>
 
       <div className="t10-center">

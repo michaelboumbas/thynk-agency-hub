@@ -13,88 +13,81 @@
     linear-gradient(180deg, #f3f4f7 0%, #f6f7f9 100%);
 }
 
-/* ---------- glass orb ---------- */
-.t10-orb {
+/* ---------- halo behind the headline ---------- */
+.t10-halo {
   position: absolute;
   left: 50%;
-  top: 46%;
-  width: min(460px, 70vw);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%) scale(calc(0.92 + var(--p) * 0.16));
+  top: 40%;
+  width: min(1100px, 92vw);
+  height: 46vh;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
   z-index: 0;
   pointer-events: none;
 }
-.t10-orb i {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-}
-.t10-orb-core {
-  background:
-    radial-gradient(circle at 36% 30%, #ffffff 0%, rgba(255, 255, 255, 0.85) 22%, rgba(255, 255, 255, 0) 58%),
-    radial-gradient(circle at 60% 70%, rgba(214, 220, 236, 0.55) 0%, rgba(214, 220, 236, 0) 62%);
-  box-shadow:
-    inset 0 0 60px rgba(255, 255, 255, 0.9),
-    0 30px 80px -30px rgba(120, 130, 160, 0.35);
-}
-.t10-orb-ring {
-  inset: 6%;
-  background: conic-gradient(from 0deg, #ffd5bf, #dcd6ff, #c8ecff, #fff0c2, #ffc9ae, #ffd5bf);
-  -webkit-mask: radial-gradient(circle, transparent 54%, #000 60%, #000 66%, transparent 74%);
-  mask: radial-gradient(circle, transparent 54%, #000 60%, #000 66%, transparent 74%);
-  filter: blur(14px);
-  opacity: calc(0.55 + var(--p) * 0.4);
-  animation: t10-spin 18s linear infinite;
-}
-.t10-orb-spark {
-  inset: 42%;
-  background: radial-gradient(circle, rgba(255, 106, 26, 0.9) 0%, rgba(255, 106, 26, 0.35) 40%, rgba(255, 106, 26, 0) 70%);
-  filter: blur(6px);
-  opacity: calc(var(--p) * var(--p) * 0.75);
-  transform: scale(calc(0.6 + var(--p) * 0.8));
-}
 
-/* ---------- hands ---------- */
+/* ---------- arms (elbow → fingertip) ----------
+   Images 1344×752, transparent. Fingertips: human x 87.5%, robot x 5.4%, both at y ≈ 40.5%.
+   Width 58vw: at rest the tips are ~20vw apart, at the end of the hero scroll they touch at the
+   centre. translateX stays ≤ 0 (left) / ≥ 0 (right), so the cut elbow never comes into view. */
+.t10-hero {
+  --arms-y: 68%;
+}
 .t10-hand {
   position: absolute;
-  top: 50%;
-  width: 62vw; /* big enough that the cropped forearms always run off the screen edges */
+  top: var(--arms-y);
+  width: 58vw;
   z-index: 1;
   pointer-events: none;
-  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease;
   opacity: 0;
 }
 .t10-hand img {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1024 / 688;
+  aspect-ratio: 1344 / 752;
   filter: drop-shadow(0 24px 30px rgba(40, 46, 60, 0.12));
 }
 .t10-hand-l {
   left: 0;
-  transform: translate(-60%, -50%);
+  transform: translate(-60%, -40.5%);
 }
 .t10-hand-r {
   right: 0;
-  transform: translate(60%, -50%);
+  transform: translate(60%, -40.5%);
 }
 .t10-hero.in .t10-hand {
   opacity: 1;
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease;
 }
-/* resting position after load, then scroll closes the gap */
-/* images are 1024×688 with the fingertip at ~83% (human) / ~15% (robot) of the width:
-   at rest the tips sit ~20vw apart, scrolling brings them to ~8vw ("almost touching") */
-/* translateX stays negative (left) / positive (right) so the cut edge of each forearm never
-   comes into view; scrolling brings the fingertips from ~22vw apart to ~5vw apart */
 .t10-hero.in .t10-hand-l {
-  transform: translate(calc(-22% + var(--p) * 14%), calc(-50% + var(--p) * -3%));
+  transform: translate(calc(-18.5% + var(--p) * 16.5%), -40.5%);
 }
 .t10-hero.in .t10-hand-r {
-  transform: translate(calc(22% - var(--p) * 14%), calc(-50% + var(--p) * -3%));
+  transform: translate(calc(25.7% - var(--p) * 16.6%), -40.5%);
 }
-.t10-hero.in .t10-hand {
-  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.2s ease;
+.t10-hero.in.scrolling .t10-hand {
+  transition: opacity 1.2s ease; /* follow the scroll 1:1 once the entrance is done */
+}
+
+/* ---------- the spark at the contact point ---------- */
+.t10-contact {
+  position: absolute;
+  left: 50%;
+  top: var(--arms-y);
+  width: 140px;
+  height: 140px;
+  transform: translate(-50%, -50%) scale(calc(0.4 + var(--p) * 0.8));
+  z-index: 2;
+  pointer-events: none;
+  opacity: clamp(0, calc((var(--p) - 0.75) * 4), 1);
+}
+.t10-contact i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 150, 80, 0.75) 16%, rgba(255, 106, 26, 0.3) 38%, rgba(255, 106, 26, 0) 70%);
+  animation: t10-pulse 1.6s ease-in-out infinite;
 }
 
 /* ---------- text ---------- */
@@ -195,9 +188,13 @@
   margin-top: 0;
 }
 
-@keyframes t10-spin {
-  to {
-    transform: rotate(360deg);
+@keyframes t10-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
   }
 }
 
@@ -208,7 +205,7 @@
   .t10-bottom {
     transition: none !important;
   }
-  .t10-orb-ring {
+  .t10-contact i {
     animation: none;
   }
 }
@@ -216,19 +213,21 @@
 @media (max-width: 860px) {
   .t10-hero {
     min-height: calc(100svh - 60px);
+    --arms-y: 27%;
   }
+  /* phones: 70vw arms, same idea (tips from ~24vw apart to touching) */
   .t10-hand {
-    top: 30%;
-    width: 80vw;
+    width: 70vw;
   }
   .t10-hero.in .t10-hand-l {
-    transform: translate(calc(-30% + var(--p) * 6%), -50%);
+    transform: translate(calc(-33.2% + var(--p) * 16.6%), -40.5%);
   }
   .t10-hero.in .t10-hand-r {
-    transform: translate(calc(30% - var(--p) * 6%), -50%);
+    transform: translate(calc(40.4% - var(--p) * 16.6%), -40.5%);
   }
-  .t10-orb {
-    top: 30%;
+  .t10-contact {
+    width: 90px;
+    height: 90px;
   }
   .t10-center {
     align-self: end;

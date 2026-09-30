@@ -216,6 +216,10 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
     };
     resize();
 
+    const smoothstep = (x: number) => {
+      const t = Math.min(1, Math.max(0, x));
+      return t * t * (3 - 2 * t);
+    };
     const plateau = (x: number) => {
       const t = Math.min(1, Math.max(0, (x - 0.3) / 0.4));
       return t * t * (3 - 2 * t);
@@ -275,10 +279,25 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
 
     const frame = (now: number) => {
       const t = reduced ? 8 : (now - start) / 1000;
-      const doc = Math.max(1, document.documentElement.scrollHeight - H);
-      const g = reduced ? 0 : Math.min(1, window.scrollY / doc) * (STAGES - 1);
+      // shapes 0..4 spread over the page; the last one (THYNK.) forms exactly while the empty
+      // outro space before the footer is on screen, so no content card hides it
+      const maxS = Math.max(1, document.documentElement.scrollHeight - H);
+      const outro = document.querySelector<HTMLElement>(".t11-outro");
+      let end = maxS;
+      if (outro) {
+        const r = outro.getBoundingClientRect();
+        end = Math.min(maxS, window.scrollY + r.top + r.height / 2 - H * 0.47);
+      }
+      const endA = Math.max(1, end - H * 0.9);
+      const sy0 = window.scrollY;
+      const g = reduced
+        ? 0
+        : sy0 < endA
+          ? (sy0 / endA) * (STAGES - 2)
+          : STAGES - 2 + Math.min(1, (sy0 - endA) / Math.max(1, end - endA));
       const a = Math.min(STAGES - 2, Math.floor(g));
-      const m = plateau(g - a);
+      // the last transition runs linearly with the outro; the others hold, then glide
+      const m = a === STAGES - 2 && sy0 >= endA ? smoothstep(g - a) : plateau(g - a);
       const f = H * 0.9;
       bn.fill(0);
 
