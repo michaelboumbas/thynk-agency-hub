@@ -42,15 +42,38 @@ function Range({
   );
 }
 
+const VOICE = {
+  you: {
+    badEmail: "Γράψε ένα έγκυρο email, π.χ. you@business.gr",
+    eats: "Τι σου τρώει χρόνο;",
+    picked: "διάλεξες",
+    placeholder: "το email σου",
+    send: "Στείλε μου την αναφορά",
+    sendNote: "",
+    sendPending: "",
+  },
+  formal: {
+    badEmail: "Γράψτε ένα έγκυρο email, π.χ. you@business.gr",
+    eats: "Τι σας τρώει χρόνο;",
+    picked: "διαλέξατε",
+    placeholder: "το email σας",
+    send: "Στείλτε μου την αναφορά",
+    sendNote: "Θα λάβετε αναλυτική αναφορά και πλάνο 90 ημερών.",
+    sendPending: "Η αποστολή αναφοράς ενεργοποιείται με το back-end. Μέχρι τότε, γράψτε μας στο hello@thynkagency.gr.",
+  },
+};
+
 /** `initialTasks` pre-selects what eats the visitor's time (v7 passes the pain picked in the hero). */
-export function Calculator({ initialTasks }: { initialTasks?: string[] } = {}) {
+/** `formal` switches the copy to the plural/formal voice (v9 onwards). */
+export function Calculator({ initialTasks, formal = false }: { initialTasks?: string[]; formal?: boolean } = {}) {
+  const V = formal ? VOICE.formal : VOICE.you;
   const [industry, setIndustry] = useState(C.defaultIndustry);
   const [team, setTeam] = useState(6);
   const [hours, setHours] = useState(6);
   const [rate, setRate] = useState(9);
   const [tasks, setTasks] = useState<TaskId[]>((initialTasks?.length ? initialTasks : C.defaultTasks) as TaskId[]);
   const [email, setEmail] = useState("");
-  const [note, setNote] = useState<{ text: string; ok: boolean }>({ text: C.sendNote, ok: false });
+  const [note, setNote] = useState<{ text: string; ok: boolean }>({ text: formal ? V.sendNote : C.sendNote, ok: false });
 
   const r = useMemo(() => {
     const picked = tasks.length ? tasks : TASK_IDS;
@@ -79,11 +102,11 @@ export function Calculator({ initialTasks }: { initialTasks?: string[] } = {}) {
     e.preventDefault();
     const input = e.currentTarget.querySelector("input");
     if (!email || (input && !input.checkValidity())) {
-      setNote({ text: "Γράψε ένα έγκυρο email, π.χ. you@business.gr", ok: false });
+      setNote({ text: V.badEmail, ok: false });
       input?.focus();
       return;
     }
-    setNote({ text: C.sendPending, ok: true });
+    setNote({ text: formal ? V.sendPending : C.sendPending, ok: true });
   };
 
   return (
@@ -111,7 +134,7 @@ export function Calculator({ initialTasks }: { initialTasks?: string[] } = {}) {
         />
         <Range id="c-rate" label="Κόστος ώρας εργασίας" value={rate} min={5} max={40} display={`€${rate}`} onChange={setRate} />
         <div className="t5-field">
-          <span className="t5-lbl">Τι σου τρώει χρόνο;</span>
+          <span className="t5-lbl">{V.eats}</span>
           <div className="t5-tasks">
             {TASK_IDS.map((k) => (
               <label key={k} className={tasks.includes(k) ? "on" : undefined}>
@@ -149,7 +172,7 @@ export function Calculator({ initialTasks }: { initialTasks?: string[] } = {}) {
         </ol>
         <p className="t5-how">
           {team} άτομα × {hours} ώρες × 4,33 εβδομάδες × €{rate}. Υποθέτουμε ότι φεύγει περίπου το{" "}
-          {Math.round(r.share * 100)}% των δουλειών που διάλεξες. Το audit το μετράει στην πράξη.
+          {Math.round(r.share * 100)}% των δουλειών που {V.picked}. Το audit το μετράει στην πράξη.
         </p>
         <form className="t5-sendrow" noValidate onSubmit={onSend}>
           <label htmlFor="c-email" className="t5-sr">
@@ -158,13 +181,13 @@ export function Calculator({ initialTasks }: { initialTasks?: string[] } = {}) {
           <input
             type="email"
             id="c-email"
-            placeholder="το email σου"
+            placeholder={V.placeholder}
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <button className="t5-btn" type="submit">
-            Στείλε μου την αναφορά
+            {V.send}
           </button>
         </form>
         <div className={`t5-note${note.ok ? " ok" : ""}`}>{note.text}</div>
