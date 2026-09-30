@@ -10,11 +10,20 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuditRouteImport } from './routes/audit'
 import { Route as LabRouteImport } from './routes/lab'
+import { Route as ParadeigmataRouteImport } from './routes/paradeigmata'
+import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
+import { Route as YpiresiesRouteImport } from './routes/ypiresies'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditRoute = AuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LabRoute = LabRouteImport.update({
@@ -22,31 +31,62 @@ const LabRoute = LabRouteImport.update({
   path: '/lab',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ParadeigmataRoute = ParadeigmataRouteImport.update({
+  id: '/paradeigmata',
+  path: '/paradeigmata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoioiEimasteRoute = PoioiEimasteRouteImport.update({
+  id: '/poioi-eimaste',
+  path: '/poioi-eimaste',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const YpiresiesRoute = YpiresiesRouteImport.update({
+  id: '/ypiresies',
+  path: '/ypiresies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/audit': typeof AuditRoute
   '/lab': typeof LabRoute
+  '/paradeigmata': typeof ParadeigmataRoute
+  '/poioi-eimaste': typeof PoioiEimasteRoute
+  '/ypiresies': typeof YpiresiesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/audit': typeof AuditRoute
   '/lab': typeof LabRoute
+  '/paradeigmata': typeof ParadeigmataRoute
+  '/poioi-eimaste': typeof PoioiEimasteRoute
+  '/ypiresies': typeof YpiresiesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/audit': typeof AuditRoute
   '/lab': typeof LabRoute
+  '/paradeigmata': typeof ParadeigmataRoute
+  '/poioi-eimaste': typeof PoioiEimasteRoute
+  '/ypiresies': typeof YpiresiesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/lab'
+  fullPaths: '/' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/ypiresies'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/lab'
-  id: '__root__' | '/' | '/lab'
+  to: '/' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/ypiresies'
+  id: '__root__' | '/' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/ypiresies'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuditRoute: typeof AuditRoute
   LabRoute: typeof LabRoute
+  ParadeigmataRoute: typeof ParadeigmataRoute
+  PoioiEimasteRoute: typeof PoioiEimasteRoute
+  YpiresiesRoute: typeof YpiresiesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +98,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/audit': {
+      id: '/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lab': {
       id: '/lab'
       path: '/lab'
@@ -65,12 +112,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/paradeigmata': {
+      id: '/paradeigmata'
+      path: '/paradeigmata'
+      fullPath: '/paradeigmata'
+      preLoaderRoute: typeof ParadeigmataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/poioi-eimaste': {
+      id: '/poioi-eimaste'
+      path: '/poioi-eimaste'
+      fullPath: '/poioi-eimaste'
+      preLoaderRoute: typeof PoioiEimasteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ypiresies': {
+      id: '/ypiresies'
+      path: '/ypiresies'
+      fullPath: '/ypiresies'
+      preLoaderRoute: typeof YpiresiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuditRoute: AuditRoute,
   LabRoute: LabRoute,
+  ParadeigmataRoute: ParadeigmataRoute,
+  PoioiEimasteRoute: PoioiEimasteRoute,
+  YpiresiesRoute: YpiresiesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

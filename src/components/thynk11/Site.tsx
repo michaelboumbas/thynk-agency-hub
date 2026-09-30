@@ -1,0 +1,699 @@
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { ComingSoon } from "@/components/thynk/ComingSoon";
+import {
+  allServices,
+  audit,
+  calculatorCopy,
+  caps,
+  cta,
+  faq,
+  forWhom,
+  hero,
+  pains,
+  rules,
+  team,
+  type PainId,
+} from "@/content/site-v9";
+import {
+  finalBand,
+  footerLinks,
+  homeAudit,
+  homeCalc,
+  homeFaq,
+  moreIdeas,
+  nav,
+  pages,
+  routes,
+  values,
+} from "@/content/site-v11";
+import { footer } from "@/content/site-v9";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { Calculator } from "@/components/thynk5/Calculator";
+import { HandsHero } from "@/components/thynk10/HandsHero";
+import {
+  Arrow,
+  AuditForm,
+  Examples,
+  ServicesSteps,
+  Wordmark,
+  useReveal,
+} from "@/components/thynk9/ThynkSiteV9";
+import { ParticleField } from "./ParticleField";
+
+/**
+ * v11 — the site as real pages (30/09/2026): Αρχική · Υπηρεσίες · Παραδείγματα · Audit · Ποιοι είμαστε.
+ * Built on v9/v10 pieces (plural voice, AI-first hero with the hands, examples, three steps).
+ * A light particle field (wave → ring) sits behind every page.
+ * Public host: every page shows Coming Soon until launch (same rule as before; ?site=1 overrides).
+ */
+
+/* ---------------- gate: Coming Soon on the public site ---------------- */
+let gateCache: boolean | null = null;
+function shouldShowSite(): boolean {
+  const { hostname, search } = window.location;
+  const q = new URLSearchParams(search);
+  if (q.has("soon")) return false;
+  if (q.has("site")) return true;
+  return (
+    hostname.startsWith("id-preview--") ||
+    hostname.endsWith(".lovableproject.com") ||
+    hostname === "localhost" ||
+    hostname === "127.0.0.1"
+  );
+}
+export function useSiteGate() {
+  // first render = Coming Soon (matches the server render); client-side navigations reuse the answer
+  const [show, setShow] = useState(gateCache === true);
+  useEffect(() => {
+    if (gateCache === null) gateCache = shouldShowSite();
+    setShow(gateCache);
+  }, []);
+  return show;
+}
+
+const SERIF_HREF = "https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@1,500;1,600&display=swap";
+
+/* ---------------- shell: header, background, footer, sticky CTA ---------------- */
+function Shell({ children, pathname }: { children: ReactNode; pathname: string }) {
+  const reduced = useReducedMotion();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [sticky, setSticky] = useState(false);
+  const hash = useRouterState({ select: (s) => s.location.hash });
+
+  useReveal(rootRef, pathname);
+
+  useEffect(() => {
+    if (document.querySelector(`link[href="${SERIF_HREF}"]`)) return;
+    const l = document.createElement("link");
+    l.rel = "stylesheet";
+    l.href = SERIF_HREF;
+    document.head.appendChild(l);
+  }, []);
+
+  // the app shell locks scrolling for v5: unlock while the site is mounted
+  useEffect(() => {
+    const els = [document.documentElement, document.body];
+    const prev = els.map((e) => e.style.overflow);
+    els.forEach((e) => (e.style.overflow = "visible"));
+    document.documentElement.style.overflowY = "auto";
+    return () => {
+      els.forEach((e, i) => (e.style.overflow = prev[i]));
+      document.documentElement.style.overflowY = "";
+    };
+  }, []);
+
+  // new page: close the menu; go to #hash if there is one, else to the top
+  useEffect(() => {
+    setMenuOpen(false);
+    const id = (hash || "").replace(/^#/, "");
+    const t = window.setTimeout(() => {
+      const el = id ? document.getElementById(id) : null;
+      if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
+    }, 60);
+    return () => window.clearTimeout(t);
+  }, [pathname, hash]);
+
+  useEffect(() => {
+    const on = () => {
+      setScrolled(window.scrollY > 12);
+      const form = document.getElementById("book");
+      const atForm = form ? form.getBoundingClientRect().top < window.innerHeight * 0.9 : false;
+      setSticky(window.scrollY > window.innerHeight * 0.8 && !atForm);
+    };
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, [pathname]);
+
+  return (
+    <div className="t8 t9 t10 t11" ref={rootRef} lang="el">
+      <ParticleField reduced={reduced} />
+      <a className="t8-skip" href="#main">
+        Μετάβαση στο περιεχόμενο
+      </a>
+      <header className={`t8-header${scrolled ? " scrolled" : ""}`}>
+        <Link to={routes.home} className="t8-brand" aria-label="Thynk, αρχική">
+          <Wordmark />
+        </Link>
+        <nav className={`t8-nav${menuOpen ? " open" : ""}`} aria-label="Κύριο μενού">
+          {nav.map((n) => (
+            <Link key={n.to} to={n.to} className={pathname === n.to ? "on" : ""} aria-current={pathname === n.to ? "page" : undefined}>
+              {n.label}
+            </Link>
+          ))}
+          <Link to={routes.audit} hash="book" className="t8-btn t8-btn-sm t8-nav-cta">
+            {cta.primary}
+          </Link>
+        </nav>
+        <button
+          type="button"
+          className="t8-burger"
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Κλείσιμο μενού" : "Άνοιγμα μενού"}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span />
+          <span />
+        </button>
+      </header>
+
+      <main id="main" className="t11-main">
+        {children}
+      </main>
+
+      <footer className="t11-footer">
+        <div className="t11-footer-top">
+          <div>
+            <Wordmark />
+            <p>{footer.small}</p>
+          </div>
+          <nav aria-label="Σελίδες">
+            <Link to={routes.home}>Αρχική</Link>
+            {nav.map((n) => (
+              <Link key={n.to} to={n.to}>
+                {n.label}
+              </Link>
+            ))}
+          </nav>
+          <a className="t11-footer-mail" href={`mailto:${footerLinks.contact}`}>
+            {footerLinks.contact}
+          </a>
+        </div>
+        <p className="t11-footer-line">{footer.line}</p>
+      </footer>
+
+      <div className={`t8-sticky${sticky ? " show" : ""}`} aria-hidden={!sticky}>
+        <Link to={routes.audit} hash="book" className="t8-btn t8-btn-block" tabIndex={sticky ? 0 : -1}>
+          {cta.primary}
+          <Arrow />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- shared blocks ---------------- */
+function PageHero({ p }: { p: { eyebrow: string; titleStart: string; titleAccent: string; titleEnd: string; lead: string } }) {
+  return (
+    <section className="t11-phero">
+      <nav className="t11-crumbs" aria-label="Διαδρομή">
+        <Link to={routes.home}>Αρχική</Link>
+        <span aria-hidden="true">/</span>
+        <span>{p.eyebrow}</span>
+      </nav>
+      <h1 className="t11-ptitle">
+        {p.titleStart}
+        <em className="t9-em">{p.titleAccent}</em>
+        {p.titleEnd}
+      </h1>
+      <p className="t11-plead">{p.lead}</p>
+    </section>
+  );
+}
+
+function Faq({ items, title, id }: { items: { q: string; a: string }[]; title: string; id?: string }) {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <section className="t8-section t8-narrow" id={id}>
+      <div className="t8-head" data-reveal>
+        <h2 className="t8-h2">{title}</h2>
+      </div>
+      <div className="t8-faq">
+        {items.map((f, i) => {
+          const on = open === i;
+          return (
+            <div key={f.q} className={`t8-faq-item${on ? " open" : ""}`} data-reveal>
+              <button type="button" aria-expanded={on} aria-controls={`faq-${id}-${i}`} onClick={() => setOpen(on ? null : i)}>
+                {f.q}
+                <span className="t8-plus" aria-hidden="true" />
+              </button>
+              {on && <p id={`faq-${id}-${i}`}>{f.a}</p>}
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function FinalBand() {
+  return (
+    <section className="t8-section">
+      <div className="t11-band" data-reveal>
+        <div>
+          <h2>{finalBand.title}</h2>
+          <p>{finalBand.text}</p>
+        </div>
+        <div className="t11-band-actions">
+          <Link to={routes.audit} hash="book" className="t8-btn">
+            {finalBand.button}
+            <Arrow />
+          </Link>
+          <a href={`mailto:${footerLinks.contact}`} className="t11-band-mail">
+            {finalBand.secondary}
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AllServices({ highlight }: { highlight?: string | null }) {
+  const [openPillar, setOpenPillar] = useState<string | null>(null);
+  return (
+    <section className="t8-section t9-all" id="all-services">
+      <div className="t8-head" data-reveal>
+        <span className="t8-eyebrow">{caps(allServices.eyebrow)}</span>
+        <h2 className="t8-h2">{allServices.title}</h2>
+        <p className="t8-lead">{allServices.lead}</p>
+      </div>
+      <div className="t8-acc">
+        {allServices.pillars.map((p) => {
+          const open = openPillar === p.id;
+          return (
+            <div key={p.id} className={`t8-acc-item${open ? " open" : ""}${highlight === p.id ? " hl" : ""}`} data-reveal>
+              <button
+                type="button"
+                className="t8-acc-head"
+                aria-expanded={open}
+                aria-controls={`pillar-${p.id}`}
+                onClick={() => setOpenPillar(open ? null : p.id)}
+              >
+                <span className="t8-acc-title">
+                  <span className="t8-tag">{caps(p.tag)}</span>
+                  <strong>{p.title}</strong>
+                  <span className="t8-muted">{p.sub}</span>
+                </span>
+                <span className="t8-plus" aria-hidden="true" />
+              </button>
+              {open && (
+                <div className="t8-acc-body" id={`pillar-${p.id}`}>
+                  {p.groups.map((g) => (
+                    <div key={g.title} className="t8-sub-card">
+                      <h4>{g.title}</h4>
+                      <ul>
+                        {g.items.map((it) => (
+                          <li key={it}>{it}</li>
+                        ))}
+                      </ul>
+                      {"note" in g && g.note && <p className="t8-note-s">{g.note}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="t8-rules" data-reveal>
+        <h3>{rules.title}</h3>
+        <dl>
+          {rules.items.map((r) => (
+            <div key={r.title}>
+              <dt>{r.title}</dt>
+              <dd>{r.text}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
+function useStepGo() {
+  const navigate = useNavigate();
+  return (to: string) => {
+    if (to === "book") navigate({ to: routes.audit, hash: "book" });
+    else if (to === "faq") navigate({ to: routes.home, hash: "faq" });
+    else document.getElementById(to)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+}
+
+/* ---------------- pages ---------------- */
+function HomePage() {
+  const reduced = useReducedMotion();
+  const navigate = useNavigate();
+  const stepGo = useStepGo();
+  const [pain, setPain] = useState<PainId | null>(null);
+  const picked = pains.find((p) => p.id === pain) ?? null;
+
+  return (
+    <>
+      <HandsHero
+        reduced={reduced}
+        onBook={() => navigate({ to: routes.audit, hash: "book" })}
+        onExamples={() => navigate({ to: routes.examples })}
+      />
+
+      <section className="t8-section t10-ask-sec">
+        <div className="t8-ask">
+          <p className="t8-ask-q">
+            <strong>{hero.question}</strong> <span>{hero.questionHint}</span>
+          </p>
+          <div className="t8-chips" role="group" aria-label={hero.question}>
+            {pains.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                className={`t8-chip${pain === p.id ? " on" : ""}`}
+                aria-pressed={pain === p.id}
+                onClick={() => setPain(pain === p.id ? null : p.id)}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+          {picked && (
+            <div className="t8-reply" role="status">
+              <p>{picked.reply}</p>
+              <div className="t8-reply-actions">
+                <Link to={routes.audit} search={{ focus: picked.id }} hash="book" className="t8-link">
+                  {hero.replyAudit} <Arrow />
+                </Link>
+                <Link to={routes.audit} search={{ focus: picked.id }} hash="calculator" className="t8-link t8-link-muted">
+                  {hero.replyCalc}
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="t8-section t8-who">
+        <div className="t8-who-text" data-reveal>
+          <h2 className="t8-h2">{forWhom.title}</h2>
+          <p className="t8-lead">{forWhom.lead}</p>
+        </div>
+        <ul className="t8-who-list">
+          {forWhom.segments.map((s) => (
+            <li key={s.title} data-reveal>
+              <h3>{s.title}</h3>
+              <p>{s.pain}</p>
+            </li>
+          ))}
+          <li className="t8-who-more" data-reveal>
+            <p>{forWhom.more}</p>
+          </li>
+        </ul>
+      </section>
+
+      <Examples reduced={reduced} />
+      <div className="t11-more-link">
+        <Link to={routes.examples} className="t8-link">
+          Όλα τα παραδείγματα <Arrow />
+        </Link>
+      </div>
+
+      <ServicesSteps reduced={reduced} onGo={stepGo} />
+      <div className="t9-thread" aria-hidden="true" />
+      <AllServices highlight={picked?.pillar} />
+
+      {/* ---- rebuilt lower half (30/09) ---- */}
+      <section className="t8-section">
+        <div className="t11-audit-card" data-reveal>
+          <div className="t11-audit-text">
+            <span className="t8-eyebrow">{caps(homeAudit.eyebrow)}</span>
+            <h2 className="t8-h2">{homeAudit.title}</h2>
+            <p>{homeAudit.text}</p>
+            <ol className="t11-mini-steps">
+              {audit.steps.map((s) => (
+                <li key={s.n}>
+                  <span>{s.n}</span>
+                  {s.title}
+                </li>
+              ))}
+            </ol>
+            <div className="t8-ctas">
+              <Link to={routes.audit} hash="book" className="t8-btn">
+                {cta.primary}
+                <Arrow />
+              </Link>
+              <Link to={routes.audit} className="t8-btn t8-btn-ghost">
+                {homeAudit.more}
+              </Link>
+            </div>
+          </div>
+          <figure className="t8-sample t11-sample" aria-label={audit.sample.label}>
+            <figcaption>
+              <span className="t8-eyebrow">{caps(audit.sample.label)}</span>
+              <strong>{audit.sample.business}</strong>
+            </figcaption>
+            <ul>
+              {audit.sample.items.map((it) => (
+                <li key={it.text} className={`t8-sample-${it.tag === "Πρώτο" ? "first" : it.tag === "Μετά" ? "next" : "later"}`}>
+                  <span className="t8-sample-tag">{it.tag}</span>
+                  <span>{it.text}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="t8-sample-foot">{audit.sample.foot}</p>
+          </figure>
+        </div>
+      </section>
+
+      <section className="t8-section">
+        <div className="t11-calc-band" data-reveal>
+          <div>
+            <h2>{homeCalc.title}</h2>
+            <p>{homeCalc.text}</p>
+          </div>
+          <Link to={routes.audit} hash="calculator" className="t8-btn t8-btn-ghost">
+            {homeCalc.button}
+            <Arrow />
+          </Link>
+        </div>
+      </section>
+
+      <Faq items={homeFaq} title="Ό,τι μας ρωτάνε συνήθως" id="faq" />
+      <FinalBand />
+    </>
+  );
+}
+
+function ServicesPage() {
+  const reduced = useReducedMotion();
+  const stepGo = useStepGo();
+  return (
+    <>
+      <PageHero p={pages.services} />
+      <ServicesSteps reduced={reduced} onGo={stepGo} />
+      <div className="t9-thread" aria-hidden="true" />
+      <AllServices />
+      <FinalBand />
+    </>
+  );
+}
+
+function ExamplesPage() {
+  const reduced = useReducedMotion();
+  return (
+    <>
+      <PageHero p={pages.examples} />
+      <Examples reduced={reduced} />
+      <section className="t8-section">
+        <div className="t8-head" data-reveal>
+          <h2 className="t8-h2">{moreIdeas.title}</h2>
+          <p className="t8-lead">{moreIdeas.lead}</p>
+        </div>
+        <div className="t11-ideas">
+          {moreIdeas.groups.map((g) => (
+            <div key={g.tag} className="t11-ideas-col" data-reveal>
+              <span className="t8-tag">{caps(g.tag)}</span>
+              <ul>
+                {g.items.map((it) => (
+                  <li key={it.t}>
+                    <strong>{it.t}</strong>
+                    <span>{it.d}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="t11-more-link">
+          <Link to={routes.services} className="t8-link">
+            Όλες οι υπηρεσίες <Arrow />
+          </Link>
+        </div>
+      </section>
+      <FinalBand />
+    </>
+  );
+}
+
+function AuditPage() {
+  const search = useRouterState({ select: (s) => s.location.search as Record<string, unknown> });
+  const focus = typeof search?.focus === "string" ? (search.focus as PainId) : null;
+  const picked = pains.find((p) => p.id === focus) ?? null;
+
+  return (
+    <>
+      <PageHero p={pages.audit} />
+      <section className="t8-section t11-first">
+        <div className="t8-audit">
+          <div className="t8-audit-main">
+            <ol className="t8-looks">
+              {audit.looks.map((l, i) => (
+                <li key={l.title} data-reveal>
+                  <span className="t8-num">{String(i + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h3>{l.title}</h3>
+                    <p>{l.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className="t8-get" data-reveal>
+              <h3>{audit.youGet}</h3>
+              <p>{audit.youGetText}</p>
+            </div>
+          </div>
+          <figure className="t8-sample" data-reveal aria-label={audit.sample.label}>
+            <figcaption>
+              <span className="t8-eyebrow">{caps(audit.sample.label)}</span>
+              <strong>{audit.sample.business}</strong>
+            </figcaption>
+            <ul>
+              {audit.sample.items.map((it) => (
+                <li key={it.text} className={`t8-sample-${it.tag === "Πρώτο" ? "first" : it.tag === "Μετά" ? "next" : "later"}`}>
+                  <span className="t8-sample-tag">{it.tag}</span>
+                  <span>{it.text}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="t8-sample-foot">{audit.sample.foot}</p>
+          </figure>
+        </div>
+        <ol className="t8-flow" aria-label="Πώς γίνεται το audit">
+          {audit.steps.map((s) => (
+            <li key={s.n} data-reveal>
+              <span className="t8-flow-n">{s.n}</span>
+              <strong>{s.title}</strong>
+              <p>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="t8-section" id="calculator">
+        <div className="t8-head" data-reveal>
+          <span className="t8-eyebrow">{caps(calculatorCopy.eyebrow)}</span>
+          <h2 className="t8-h2">{calculatorCopy.headline}</h2>
+          <p className="t8-lead">{calculatorCopy.intro}</p>
+        </div>
+        <div className="t8-card t8-calc t5 t5-embed" data-reveal>
+          <Calculator key={focus ?? "none"} initialTasks={picked?.calc} formal />
+        </div>
+        <p className="t11-calc-note">{calculatorCopy.cta}</p>
+      </section>
+
+      <Faq items={faq.items} title="Ερωτήσεις για το audit και τις τιμές" id="audit-faq" />
+
+      <section className="t8-section" id="book">
+        <div className="t11-book">
+          <div className="t11-book-side">
+            <h2>{finalBand.title}</h2>
+            <p>{finalBand.text}</p>
+            <ol className="t11-mini-steps">
+              {audit.steps.map((s) => (
+                <li key={s.n}>
+                  <span>{s.n}</span>
+                  {s.title}
+                </li>
+              ))}
+            </ol>
+            <p className="t11-book-mail">
+              Προτιμάτε email; <a href={`mailto:${footerLinks.contact}`}>{footerLinks.contact}</a>
+            </p>
+          </div>
+          <div className="t8-book-form">
+            <AuditForm pain={focus} />
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function AboutPage() {
+  return (
+    <>
+      <PageHero p={pages.about} />
+      <section className="t8-section t11-first">
+        <div className="t8-people t11-people">
+          {team.founders.map((f) => (
+            <article key={f.name} className="t8-person" data-reveal>
+              <div className="t8-portrait" aria-hidden="true">
+                <span>{f.initials}</span>
+              </div>
+              <div className="t8-person-body">
+                <h2 className="t8-h3">{f.name}</h2>
+                <p className="t8-role">{f.role}</p>
+                <p>{f.bio}</p>
+                <p className="t8-ask-him">{f.ask}</p>
+                <a className="t8-link" href={`mailto:${f.email}`}>
+                  {f.write} <Arrow />
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="t11-where" data-reveal>
+          {team.where}
+        </p>
+      </section>
+
+      <section className="t8-section">
+        <div className="t8-head" data-reveal>
+          <h2 className="t8-h2">
+            Πώς δουλεύουμε <em className="t9-em">μαζί σας</em>
+          </h2>
+        </div>
+        <ul className="t11-values">
+          {values.items.map((v, i) => (
+            <li key={v.t} data-reveal>
+              <span className="t8-num">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{v.t}</h3>
+              <p>{v.d}</p>
+            </li>
+          ))}
+        </ul>
+        <div className="t8-rules" data-reveal>
+          <h3>{rules.title}</h3>
+          <dl>
+            {rules.items.map((r) => (
+              <div key={r.title}>
+                <dt>{r.title}</dt>
+                <dd>{r.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+      <FinalBand />
+    </>
+  );
+}
+
+/* ---------------- route entry points ---------------- */
+const PAGES = {
+  [routes.home]: HomePage,
+  [routes.services]: ServicesPage,
+  [routes.examples]: ExamplesPage,
+  [routes.audit]: AuditPage,
+  [routes.about]: AboutPage,
+} as const;
+
+export function SitePage({ path }: { path: keyof typeof PAGES }) {
+  const show = useSiteGate();
+  if (!show) return <ComingSoon />;
+  const Page = PAGES[path];
+  return (
+    <Shell pathname={path}>
+      <Page />
+    </Shell>
+  );
+}

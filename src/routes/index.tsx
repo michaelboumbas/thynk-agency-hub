@@ -1,16 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ComingSoon } from "@/components/thynk/ComingSoon";
 import { ThynkSite } from "@/components/thynk5/ThynkSite";
 import { ThynkSiteV6 } from "@/components/thynk6/ThynkSiteV6";
 import { ThynkSiteV7 } from "@/components/thynk7/ThynkSiteV7";
 import { ThynkSiteV8 } from "@/components/thynk8/ThynkSiteV8";
 import { ThynkSiteV9 } from "@/components/thynk9/ThynkSiteV9";
+import { SitePage } from "@/components/thynk11/Site";
 
 
-const title = "Thynk Digital Agency — Σκέψη πίσω από κάθε κίνηση";
+const title = "Thynk Digital Agency — Το AI κάνει τη δουλειά. Εσείς αποφασίζετε.";
 const description =
-  "Marketing και Digital Transformation για επιχειρήσεις της Ηπείρου. Ιωάννινα, established 2026. Πρώτα audit, μετά στρατηγική.";
+  "Marketing και Digital Transformation με AI για επιχειρήσεις σε όλη την Ελλάδα και στο εξωτερικό. Έδρα Ιωάννινα. Ξεκινάμε πάντα με audit.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -46,16 +46,14 @@ function shouldShowSite(): boolean {
 }
 
 function Index() {
-  // Server render + first paint = Coming Soon (safe default for the public site);
-  // the editor preview switches to the site (v10) right after mount.
-  const [face, setFace] = useState<"soon" | "v5" | "v6" | "v7" | "v8" | "v9" | "v10">("soon");
+  // The site (v11, multi-page) is the default. Older single-page versions stay reachable for comparison
+  // with ?v=5 … ?v=10 (preview hosts only, as before).
+  const [face, setFace] = useState<"site" | "v5" | "v6" | "v7" | "v8" | "v9" | "v10">("site");
   useEffect(() => {
     if (!shouldShowSite()) return;
-    // v10 (30/09/2026: v9 + the "hands" hero, AI-first) is the preview default; ?v=8 = "Thynk Clear" (Sleed-style),
-    // ?v=9 = v8 + liberators-style services (plural voice) for comparison, ?v=10 = v9 + the "hands" hero (AI-first),
-    // ?v=7 = "Thynk Light" with the dark 3D intro, ?v=6 = the dark long scroll, ?v=5 = the old v5.
     const v = new URLSearchParams(window.location.search).get("v");
-    setFace(v === "5" ? "v5" : v === "6" ? "v6" : v === "7" ? "v7" : v === "8" ? "v8" : v === "9" ? "v9" : "v10");
+    const map: Record<string, typeof face> = { "5": "v5", "6": "v6", "7": "v7", "8": "v8", "9": "v9", "10": "v10" };
+    if (v && map[v]) setFace(map[v]);
   }, []);
 
   if (face === "v10") return <ThynkSiteV9 handsHero />;
@@ -64,5 +62,5 @@ function Index() {
   if (face === "v7") return <ThynkSiteV7 />;
   if (face === "v6") return <ThynkSiteV6 />;
   if (face === "v5") return <ThynkSite />;
-  return <ComingSoon />;
+  return <SitePage path="/" />;
 }

@@ -50,8 +50,8 @@
   inset: 42%;
   background: radial-gradient(circle, rgba(255, 106, 26, 0.9) 0%, rgba(255, 106, 26, 0.35) 40%, rgba(255, 106, 26, 0) 70%);
   filter: blur(6px);
-  opacity: calc(var(--p) * var(--p));
-  transform: scale(calc(0.6 + var(--p) * 1.4));
+  opacity: calc(var(--p) * var(--p) * 0.75);
+  transform: scale(calc(0.6 + var(--p) * 0.8));
 }
 
 /* ---------- hands ---------- */

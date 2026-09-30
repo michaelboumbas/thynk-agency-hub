@@ -41,7 +41,7 @@ import { HandsHero } from "@/components/thynk10/HandsHero";
 const DESKTOP = "(min-width: 981px)";
 const pad = (n: number) => String(n).padStart(2, "0");
 
-function useMedia(q: string) {
+export function useMedia(q: string) {
   const [on, setOn] = useState(false);
   useEffect(() => {
     const m = window.matchMedia(q);
@@ -54,7 +54,7 @@ function useMedia(q: string) {
 }
 
 /** 0 → 1 while a tall section scrolls past a sticky child. */
-function usePinProgress(ref: RefObject<HTMLElement | null>, enabled: boolean) {
+export function usePinProgress(ref: RefObject<HTMLElement | null>, enabled: boolean) {
   const [p, setP] = useState(0);
   useEffect(() => {
     if (!enabled) return;
@@ -83,7 +83,7 @@ function usePinProgress(ref: RefObject<HTMLElement | null>, enabled: boolean) {
   return p;
 }
 
-function useReveal(root: RefObject<HTMLElement | null>, dep: unknown) {
+export function useReveal(root: RefObject<HTMLElement | null>, dep: unknown) {
   useEffect(() => {
     const els = root.current?.querySelectorAll<HTMLElement>("[data-reveal]:not([data-in])");
     if (!els?.length) return;
@@ -130,7 +130,7 @@ function useStepper(active: boolean, total: number, reduced: boolean) {
   return shown;
 }
 
-function Wordmark() {
+export function Wordmark() {
   return (
     <span className="t8-word" aria-label="Thynk">
       THYNK<i>.</i>
@@ -138,7 +138,7 @@ function Wordmark() {
   );
 }
 
-function Arrow() {
+export function Arrow() {
   return (
     <svg className="t8-icon" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M5 12h14M13 6l6 6-6 6" />
@@ -146,7 +146,7 @@ function Arrow() {
   );
 }
 
-function Check() {
+export function Check() {
   return (
     <svg className="t9-check" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M5 12.5l4.2 4.2L19 7" />
@@ -154,7 +154,7 @@ function Check() {
   );
 }
 
-function Title({ start, accent, end, id }: { start: string; accent: string; end: string; id?: string }) {
+export function Title({ start, accent, end, id }: { start: string; accent: string; end: string; id?: string }) {
   return (
     <h2 className="t8-h2" id={id}>
       {start}
@@ -353,7 +353,7 @@ function ExampleCard({ ex, i, active, reduced }: { ex: Example; i: number; activ
   );
 }
 
-function Examples({ reduced }: { reduced: boolean }) {
+export function Examples({ reduced }: { reduced: boolean }) {
   const desktop = useMedia(DESKTOP);
   const pinned = desktop && !reduced;
   const secRef = useRef<HTMLElement>(null);
@@ -615,7 +615,7 @@ function StepPanel({
   );
 }
 
-function ServicesSteps({ reduced, onGo }: { reduced: boolean; onGo: (to: string) => void }) {
+export function ServicesSteps({ reduced, onGo }: { reduced: boolean; onGo: (to: string) => void }) {
   const desktop = useMedia(DESKTOP);
   const pinned = desktop && !reduced;
   const secRef = useRef<HTMLElement>(null);
@@ -683,7 +683,7 @@ function ServicesSteps({ reduced, onGo }: { reduced: boolean; onGo: (to: string)
 /* ------------------------------------------------------------------ */
 /* Audit form (v8, plural copy)                                        */
 /* ------------------------------------------------------------------ */
-function AuditForm({ pain }: { pain: PainId | null }) {
+export function AuditForm({ pain }: { pain: PainId | null }) {
   const [focus, setFocus] = useState<string>(pain ?? "any");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
