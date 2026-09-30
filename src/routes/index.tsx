@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
 /**
  * Which face to show.
  * - Public/published site: the Coming Soon page, until the founders decide to launch.
- * - Lovable editor preview (id-preview--*.lovable.app, *.lovableproject.com) and localhost: the v8 site.
+ * - Lovable editor preview (id-preview--*.lovable.app, *.lovableproject.com) and localhost: the v10 site.
  * Overrides for any host: ?site=1 shows the site, ?soon=1 shows Coming Soon, ?v=5 … ?v=10 pick a version.
  */
 function shouldShowSite(): boolean {
@@ -47,15 +47,15 @@ function shouldShowSite(): boolean {
 
 function Index() {
   // Server render + first paint = Coming Soon (safe default for the public site);
-  // the editor preview switches to the v5 site right after mount.
+  // the editor preview switches to the site (v10) right after mount.
   const [face, setFace] = useState<"soon" | "v5" | "v6" | "v7" | "v8" | "v9" | "v10">("soon");
   useEffect(() => {
     if (!shouldShowSite()) return;
-    // v8 ("Thynk Clear", 30/09/2026: Sleed-style, B2B, no particle Muse) is the preview default;
+    // v10 (30/09/2026: v9 + the "hands" hero, AI-first) is the preview default; ?v=8 = "Thynk Clear" (Sleed-style),
     // ?v=9 = v8 + liberators-style services (plural voice) for comparison, ?v=10 = v9 + the "hands" hero (AI-first),
     // ?v=7 = "Thynk Light" with the dark 3D intro, ?v=6 = the dark long scroll, ?v=5 = the old v5.
     const v = new URLSearchParams(window.location.search).get("v");
-    setFace(v === "5" ? "v5" : v === "6" ? "v6" : v === "7" ? "v7" : v === "9" ? "v9" : v === "10" ? "v10" : "v8");
+    setFace(v === "5" ? "v5" : v === "6" ? "v6" : v === "7" ? "v7" : v === "8" ? "v8" : v === "9" ? "v9" : "v10");
   }, []);
 
   if (face === "v10") return <ThynkSiteV9 handsHero />;
