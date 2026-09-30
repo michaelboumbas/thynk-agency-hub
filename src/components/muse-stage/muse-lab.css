@@ -1,0 +1,628 @@
+/* /lab — Muse stage prototype. Scoped under .ms-root. Palette + type from thynk7. */
+
+.ms-root {
+  --paper: #fbfaf7;
+  --ink: #111113;
+  --body: #3b3a3e;
+  --muted: #6c6a66;
+  --line: #e8e4dd;
+  --orange: #ff6a1a;
+  --orange-ink: #c84706;
+  --display: "Sofia Sans Extra Condensed", "Anton", "Open Sans", sans-serif;
+  --sans: "Open Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+
+  /* dark theme values (scenes 1-3); [data-theme="light"] swaps them */
+  --fg: #f4f1ec;
+  --fg-soft: rgba(244, 241, 236, 0.78);
+  --card-bg: rgba(14, 14, 16, 0.74);
+  --card-line: rgba(255, 255, 255, 0.09);
+  --chip-bg: rgba(255, 255, 255, 0.06);
+  --accent-text: var(--orange);
+
+  position: relative;
+  min-height: 100vh;
+  background: rgb(14, 14, 16); /* driven per frame by the director */
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+  color-scheme: dark;
+}
+.ms-root[data-theme="light"] {
+  --fg: var(--ink);
+  --fg-soft: var(--body);
+  --card-bg: rgba(251, 250, 247, 0.88);
+  --card-line: var(--line);
+  --chip-bg: #fff;
+  --accent-text: var(--orange-ink);
+  color-scheme: light;
+}
+.ms-root *,
+.ms-root *::before,
+.ms-root *::after {
+  box-sizing: border-box;
+}
+.ms-root :focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.ms-root p {
+  margin: 0 0 1em;
+}
+.ms-root h1,
+.ms-root h2 {
+  margin: 0 0 0.35em;
+}
+
+/* ---------------------------------------------------------------- stage */
+.ms-canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100lvh; /* the largest viewport: the phone URL bar showing/hiding never resizes the canvas */
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+.ms-skip {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 50;
+}
+.ms-skip:focus {
+  left: 16px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+/* ---------------------------------------------------------------- header */
+.ms-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 20;
+  height: 60px;
+  padding: 0 max(16px, 3vw);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--fg);
+  transition: color 0.4s var(--ease);
+}
+.ms-logo {
+  font-family: "Anton", var(--display);
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  color: inherit;
+  text-decoration: none;
+}
+.ms-logo span {
+  color: var(--orange);
+}
+
+.ms-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #111113;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  border: 2px solid var(--orange);
+  transition:
+    transform 0.2s var(--ease),
+    background 0.2s;
+}
+.ms-btn:hover {
+  transform: translateY(-1px);
+}
+.ms-btn-sm {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 15px;
+}
+.ms-btn-ghost {
+  background: transparent;
+  color: var(--fg);
+  border-color: currentColor;
+}
+
+/* ---------------------------------------------------------------- stations */
+.ms-stations {
+  position: fixed;
+  z-index: 15;
+  right: max(16px, 2.2vw);
+  bottom: 24px;
+  display: flex;
+  flex-direction: column-reverse; /* dots above, the label in the bottom-right corner */
+  align-items: flex-end;
+  gap: 10px;
+  color: var(--fg);
+}
+.ms-stations-label {
+  margin: 0 !important;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--fg-soft);
+  writing-mode: horizontal-tb;
+  white-space: nowrap;
+}
+.ms-stations ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ms-dot {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+.ms-dot span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.35;
+  transition:
+    transform 0.3s var(--ease),
+    opacity 0.3s,
+    background 0.3s;
+}
+.ms-dot:hover span {
+  opacity: 0.8;
+}
+.ms-dot[aria-current] span {
+  opacity: 1;
+  background: var(--orange);
+  transform: scale(1.5);
+}
+
+/* ---------------------------------------------------------------- scenes */
+.ms-main {
+  position: relative;
+  z-index: 1;
+}
+.ms-scene {
+  position: relative;
+  min-height: 130vh;
+  min-height: 130svh;
+  padding: 16vh max(16px, 5vw) 0;
+}
+.ms-scene:first-child {
+  padding-top: 0;
+}
+.ms-scene:last-child {
+  min-height: 110svh;
+}
+.ms-card {
+  position: sticky;
+  top: 20vh;
+  top: 20svh;
+  width: min(520px, 44vw);
+  padding: 28px 30px 24px;
+  border-radius: 22px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-line);
+  color: var(--fg);
+  transition:
+    background 0.45s var(--ease),
+    border-color 0.45s,
+    color 0.45s;
+}
+.ms-card-wide {
+  width: min(600px, 46vw);
+}
+@media (min-width: 768px) {
+  .ms-card {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}
+/* the hero reads straight off the dark stage: no box */
+.ms-scene:first-child .ms-card {
+  top: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(640px, 48vw);
+  padding: 80px 0 40px;
+  background: none;
+  border-color: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.ms-kicker {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--orange);
+}
+.ms-h1,
+.ms-h2 {
+  font-family: var(--display);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.005em;
+  color: var(--fg);
+}
+.ms-h1 {
+  font-size: clamp(54px, 7.4vw, 118px);
+}
+.ms-h1 em {
+  font-style: normal;
+  color: var(--orange);
+  display: block;
+}
+.ms-h2 {
+  font-size: clamp(40px, 4.6vw, 72px);
+}
+.ms-lead {
+  font-size: clamp(18px, 1.5vw, 21px);
+  color: var(--fg-soft);
+  max-width: 34ch;
+}
+.ms-card p {
+  color: var(--fg-soft);
+}
+.ms-card strong {
+  color: var(--fg);
+}
+.ms-accent,
+.ms-card strong.ms-accent {
+  color: var(--accent-text);
+}
+.ms-note {
+  font-size: 14px;
+  opacity: 0.85;
+  border-left: 2px solid var(--orange);
+  padding-left: 10px;
+}
+.ms-hint {
+  margin-top: 2em !important;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+/* chips */
+.ms-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ms-chip {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--card-line);
+  background: var(--chip-bg);
+  color: var(--fg);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.ms-chip[aria-pressed="true"] {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #111113;
+}
+
+/* two streams */
+.ms-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 8px;
+}
+.ms-col {
+  border-top: 2px solid var(--fg);
+  padding-top: 12px;
+}
+.ms-col p {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(24px, 2.2vw, 32px);
+  line-height: 1.02;
+  color: var(--fg) !important;
+  margin: 0;
+}
+.ms-col-mark {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--fg);
+  margin-bottom: 10px;
+}
+.ms-col-mark-glow {
+  background: var(--orange);
+  box-shadow: 0 0 12px rgba(255, 106, 26, 0.6);
+}
+
+/* steps */
+.ms-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.ms-steps li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 18px;
+  color: var(--fg-soft);
+}
+.ms-step-n {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 24px;
+  background: var(--fg);
+  color: var(--paper);
+}
+.ms-steps li:last-child .ms-step-n {
+  background: var(--orange);
+  color: #111113;
+}
+
+/* founders */
+.ms-founders {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+.ms-founder {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.ms-avatar {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  border: 2px dashed var(--card-line);
+  background: var(--chip-bg);
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 2px;
+}
+.ms-avatar span {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 38px;
+  line-height: 1;
+}
+.ms-avatar small {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.ms-founder figcaption {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.ms-founder figcaption span {
+  color: var(--fg-soft);
+  font-size: 15px;
+}
+
+/* contact */
+.ms-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 6px 0 14px;
+}
+.ms-mail a {
+  color: var(--accent-text);
+  font-weight: 700;
+}
+.ms-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--card-line);
+  font-size: 13px;
+  color: var(--muted);
+}
+.ms-still {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--card-line);
+  background: var(--chip-bg);
+  color: var(--fg);
+  cursor: pointer;
+}
+.ms-still:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+/* mobile bottom bar (hidden on desktop) */
+.ms-bar {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- phones */
+@media (max-width: 767px) {
+  .ms-root {
+    font-size: 18px;
+  }
+  .ms-header {
+    height: 56px;
+  }
+  .ms-header .ms-btn-sm {
+    display: none; /* the bottom bar carries the CTA */
+  }
+  .ms-stations {
+    top: 56px;
+    bottom: auto;
+    right: 12px;
+    left: 12px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    padding: 0 4px 0 12px;
+    border-radius: 999px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-line);
+    transition: background 0.45s;
+  }
+  .ms-stations-label {
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 52vw;
+  }
+  .ms-stations ol {
+    flex-direction: row;
+    gap: 0;
+  }
+  .ms-dot {
+    width: 18px;
+    height: 28px;
+  }
+  .ms-dot span {
+    width: 6px;
+    height: 6px;
+  }
+  .ms-scene {
+    padding: 40vh 12px 0;
+    padding-top: 40svh;
+  }
+  .ms-card,
+  .ms-card-wide {
+    top: 44vh;
+    top: 44svh;
+    width: 100%;
+    padding: 20px 18px 18px;
+  }
+  .ms-scene:first-child .ms-card {
+    top: 0;
+    width: 100%;
+    min-height: 100svh;
+    justify-content: flex-end;
+    padding: 0 4px calc(96px + env(safe-area-inset-bottom));
+  }
+  .ms-h1 {
+    font-size: clamp(46px, 13vw, 64px);
+  }
+  .ms-h2 {
+    font-size: clamp(36px, 10.5vw, 48px);
+  }
+  .ms-lead,
+  .ms-card p,
+  .ms-steps li {
+    font-size: 18px;
+  }
+  .ms-cols,
+  .ms-founders {
+    gap: 12px;
+  }
+  .ms-col p {
+    font-size: 23px;
+  }
+  .ms-avatar {
+    width: 84px;
+    height: 84px;
+  }
+  .ms-avatar span {
+    font-size: 30px;
+  }
+  .ms-avatar small {
+    font-size: 9px;
+  }
+  .ms-scene:last-child {
+    padding-bottom: calc(90px + env(safe-area-inset-bottom));
+  }
+  .ms-bar {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 8px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    background: var(--card-bg);
+    border-top: 1px solid var(--card-line);
+    transition: background 0.45s;
+  }
+  .ms-bar a {
+    min-height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: none;
+  }
+  .ms-bar-call {
+    border: 2px solid var(--fg);
+    color: var(--fg);
+  }
+  .ms-bar-book {
+    background: var(--orange);
+    color: #111113;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-root * {
+    transition: none !important;
+  }
+}
