@@ -553,7 +553,7 @@ function DiagramCare() {
     <div className="t9-dia t9-dia-care">
       <div className="t9-care-head">
         <span className="t9-pulse" />
-        <strong>Όλα τρέχουν</strong>
+        <strong>Σε λειτουργία</strong>
       </div>
       <ul>
         {d.rows.map((r, i) => (

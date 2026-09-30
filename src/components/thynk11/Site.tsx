@@ -196,7 +196,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: string }
               <a href={`mailto:${footerLinks.contact}`}>{footerLinks.contact}</a>
               <a href="mailto:dimitris@thynkagency.gr">dimitris@thynkagency.gr</a>
               <a href="mailto:mike@thynkagency.gr">mike@thynkagency.gr</a>
-              <span className="t11-foot-note">Έδρα Ιωάννινα · online σε όλη την Ελλάδα</span>
+              <span className="t11-foot-note">Έδρα Ιωάννινα · Συνεργασίες σε όλη την Ελλάδα και το εξωτερικό</span>
             </div>
           </div>
           <p className="t11-footer-line">
@@ -567,7 +567,7 @@ function HomePage() {
       </section>
 
       <HLine />
-      <Faq items={homeFaq} title="Ό,τι μας ρωτάνε συνήθως" id="faq" />
+      <Faq items={homeFaq} title="Συχνές ερωτήσεις" id="faq" />
       <FinalBand />
     </>
   );
@@ -670,7 +670,7 @@ function AuditPage() {
             <p className="t8-sample-foot">{audit.sample.foot}</p>
           </figure>
         </div>
-        <ol className="t8-flow" aria-label="Πώς γίνεται το audit">
+        <ol className="t8-flow" aria-label="Η διαδικασία του audit">
           {audit.steps.map((s) => (
             <li key={s.n} data-reveal>
               <span className="t8-flow-n">{s.n}</span>
@@ -753,7 +753,7 @@ function AboutPage() {
       <section className="t8-section">
         <div className="t8-head" data-reveal>
           <h2 className="t8-h2">
-            Πώς δουλεύουμε <em className="t9-em">μαζί σας</em>
+            Αρχές <em className="t9-em">συνεργασίας</em>
           </h2>
         </div>
         <ul className="t11-values">
