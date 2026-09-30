@@ -168,24 +168,41 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: string }
       <div className="t11-outro" aria-hidden="true" />
 
       <footer className="t11-footer">
-        <div className="t11-footer-top">
-          <div>
-            <Wordmark />
-            <p>{footer.small}</p>
-          </div>
-          <nav aria-label="Σελίδες">
-            <Link to={routes.home}>Αρχική</Link>
-            {nav.map((n) => (
-              <Link key={n.to} to={n.to}>
-                {n.label}
+        {/* glowing "horizon": the THYNK. dots above land on it */}
+        <div className="t11-horizon" aria-hidden="true" />
+        <div className="t11-foot">
+          <CircuitTraces />
+          <div className="t11-foot-grid">
+            <div className="t11-foot-brand">
+              <Wordmark />
+              <p>{footer.small}</p>
+              <Link to={routes.audit} hash="book" className="t8-btn t8-btn-sm">
+                {cta.primary}
+                <Arrow />
               </Link>
-            ))}
-          </nav>
-          <a className="t11-footer-mail" href={`mailto:${footerLinks.contact}`}>
-            {footerLinks.contact}
-          </a>
+            </div>
+            <nav aria-label="Σελίδες" className="t11-foot-col">
+              <span className="t11-foot-h">{caps("Σελίδες")}</span>
+              <Link to={routes.home}>Αρχική</Link>
+              {nav.map((n) => (
+                <Link key={n.to} to={n.to}>
+                  {n.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="t11-foot-col">
+              <span className="t11-foot-h">{caps("Επικοινωνία")}</span>
+              <a href={`mailto:${footerLinks.contact}`}>{footerLinks.contact}</a>
+              <a href="mailto:dimitris@thynkagency.gr">dimitris@thynkagency.gr</a>
+              <a href="mailto:mike@thynkagency.gr">mike@thynkagency.gr</a>
+              <span className="t11-foot-note">Έδρα Ιωάννινα · online σε όλη την Ελλάδα</span>
+            </div>
+          </div>
+          <p className="t11-footer-line">
+            <span className="t11-live" aria-hidden="true" />
+            {footer.line}
+          </p>
         </div>
-        <p className="t11-footer-line">{footer.line}</p>
       </footer>
 
       <div className={`t8-sticky${sticky ? " show" : ""}`} aria-hidden={!sticky}>
@@ -195,6 +212,34 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: string }
         </Link>
       </div>
     </div>
+  );
+}
+
+/* Thin orange "circuit" traces behind the footer, with light pulses running along them
+   (same language as the robot arm's circuits). Decorative only. */
+function CircuitTraces() {
+  const paths = [
+    "M0 40 H180 L210 70 H420 L450 40 H700",
+    "M1200 30 H980 L950 60 H760 L730 90 H560",
+    "M0 150 H120 L150 120 H330 L360 150 H520",
+    "M1200 160 H1040 L1010 130 H860 L830 160 H700",
+    "M600 0 V30 L630 60 V110",
+  ];
+  const nodes = [
+    [180, 40], [420, 70], [700, 40], [980, 30], [760, 60], [560, 90], [330, 120], [520, 150], [860, 130], [700, 160], [630, 110],
+  ];
+  return (
+    <svg className="t11-circuit" viewBox="0 0 1200 190" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      {paths.map((d, i) => (
+        <g key={i}>
+          <path className="t11-trace" d={d} />
+          <path className="t11-pulse" d={d} style={{ animationDelay: `${i * 0.9}s` }} />
+        </g>
+      ))}
+      {nodes.map(([x, y], i) => (
+        <circle key={i} className="t11-node" cx={x} cy={y} r="3.2" />
+      ))}
+    </svg>
   );
 }
 

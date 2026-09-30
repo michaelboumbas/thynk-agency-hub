@@ -285,9 +285,13 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       const maxS = Math.max(1, document.documentElement.scrollHeight - H);
       const outro = document.querySelector<HTMLElement>(".t11-outro");
       let end = maxS;
+      let outroY = H * 0.47; // where the outro's middle is on screen right now
       if (outro) {
         const r = outro.getBoundingClientRect();
-        end = Math.min(maxS, window.scrollY + r.top + r.height / 2 - H * 0.47);
+        // the letters settle just above the footer's glowing line
+        const settle = r.bottom - Math.min(150, H * 0.17);
+        end = Math.min(maxS, window.scrollY + settle - H * 0.47);
+        outroY = settle;
       }
       const endA = Math.max(1, end - H * 0.9);
       const sy0 = window.scrollY;
@@ -321,7 +325,9 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
         }
         if (Z < 0.5) continue;
         const sx = W / 2 + (X * f) / Z;
-        const sy = H * 0.47 - (Y * f) / Z;
+        // the wordmark rides with the outro space, so it never sits behind the footer
+        const lift = a === STAGES - 2 ? m * (outroY - H * 0.47) : 0;
+        const sy = H * 0.47 + lift - (Y * f) / Z;
         if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
         // wordmark weight: how far we are into the last shape
         const word = a === STAGES - 2 ? m : 0;
