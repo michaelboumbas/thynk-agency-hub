@@ -40,6 +40,8 @@ import {
   useReveal,
 } from "@/components/thynk9/ThynkSiteV9";
 import { ParticleField } from "./ParticleField";
+import { TypeHero } from "@/components/thynk12/TypeHero";
+import { handsMoment, type HeadlineId } from "@/content/site-v12";
 
 /**
  * v11 — the site as real pages (30/09/2026): Αρχική · Υπηρεσίες · Παραδείγματα · Audit · Ποιοι είμαστε.
@@ -429,7 +431,7 @@ function useStepGo() {
 }
 
 /* ---------------- pages ---------------- */
-function HomePage() {
+function HomePage({ typeHero }: { typeHero?: HeadlineId }) {
   const reduced = useReducedMotion();
   const navigate = useNavigate();
   const stepGo = useStepGo();
@@ -438,11 +440,20 @@ function HomePage() {
 
   return (
     <>
-      <HandsHero
-        reduced={reduced}
-        onBook={() => navigate({ to: routes.audit, hash: "book" })}
-        onExamples={() => navigate({ to: routes.examples })}
-      />
+      {typeHero ? (
+        <TypeHero
+          reduced={reduced}
+          variant={typeHero}
+          onBook={() => navigate({ to: routes.audit, hash: "book" })}
+          onExamples={() => navigate({ to: routes.examples })}
+        />
+      ) : (
+        <HandsHero
+          reduced={reduced}
+          onBook={() => navigate({ to: routes.audit, hash: "book" })}
+          onExamples={() => navigate({ to: routes.examples })}
+        />
+      )}
 
       <section className="t8-section t10-ask-sec">
         <div className="t8-ask">
@@ -495,6 +506,16 @@ function HomePage() {
           </li>
         </ul>
       </section>
+
+      {typeHero && (
+        <HandsHero
+          moment
+          eyebrow={handsMoment.eyebrow}
+          reduced={reduced}
+          onBook={() => navigate({ to: routes.audit, hash: "book" })}
+          onExamples={() => navigate({ to: routes.examples })}
+        />
+      )}
 
       <HLine />
       <Examples reduced={reduced} />
@@ -791,13 +812,13 @@ const PAGES = {
   [routes.about]: AboutPage,
 } as const;
 
-export function SitePage({ path }: { path: keyof typeof PAGES }) {
+export function SitePage({ path, typeHero }: { path: keyof typeof PAGES; typeHero?: HeadlineId }) {
   const show = useSiteGate();
   if (!show) return <ComingSoon />;
   const Page = PAGES[path];
   return (
     <Shell pathname={path}>
-      <Page />
+      {path === routes.home ? <HomePage typeHero={typeHero} /> : <Page />}
     </Shell>
   );
 }

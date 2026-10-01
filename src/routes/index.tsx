@@ -6,6 +6,7 @@ import { ThynkSiteV7 } from "@/components/thynk7/ThynkSiteV7";
 import { ThynkSiteV8 } from "@/components/thynk8/ThynkSiteV8";
 import { ThynkSiteV9 } from "@/components/thynk9/ThynkSiteV9";
 import { SitePage } from "@/components/thynk11/Site";
+import type { HeadlineId } from "@/content/site-v12";
 
 
 const title = "Thynk Digital Agency — Το AI κάνει τη δουλειά. Εσείς αποφασίζετε.";
@@ -49,9 +50,17 @@ function Index() {
   // The site (v11, multi-page) is the default. Older single-page versions stay reachable for comparison
   // with ?v=5 … ?v=10 (preview hosts only, as before).
   const [face, setFace] = useState<"site" | "v5" | "v6" | "v7" | "v8" | "v9" | "v10">("site");
+  // v12 (01/10): v11 with the typographic hero; &h=bi | hi | si picks the headline
+  const [typeHero, setTypeHero] = useState<HeadlineId | undefined>(undefined);
   useEffect(() => {
     if (!shouldShowSite()) return;
-    const v = new URLSearchParams(window.location.search).get("v");
+    const q = new URLSearchParams(window.location.search);
+    if (q.get("v") === "12") {
+      const h = q.get("h");
+      setTypeHero(h === "hi" || h === "si" ? h : "bi");
+      return;
+    }
+    const v = q.get("v");
     const map: Record<string, typeof face> = { "5": "v5", "6": "v6", "7": "v7", "8": "v8", "9": "v9", "10": "v10" };
     if (v && map[v]) setFace(map[v]);
   }, []);
@@ -62,5 +71,5 @@ function Index() {
   if (face === "v7") return <ThynkSiteV7 />;
   if (face === "v6") return <ThynkSiteV6 />;
   if (face === "v5") return <ThynkSite />;
-  return <SitePage path="/" />;
+  return <SitePage path="/" typeHero={typeHero} />;
 }
