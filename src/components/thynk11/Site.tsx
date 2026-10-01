@@ -40,6 +40,7 @@ import {
   useReveal,
 } from "@/components/thynk9/ThynkSiteV9";
 import { ParticleField } from "./ParticleField";
+import { PlanetField } from "@/components/thynk13/PlanetField";
 import { HeroIntro, TypeHero } from "@/components/thynk12/TypeHero";
 import { handsMoment, type HeadlineId } from "@/content/site-v12";
 
@@ -72,6 +73,13 @@ export function useSiteGate() {
     setShow(gateCache);
   }, []);
   return show;
+}
+
+// v13 (01/10): which background field the shell draws. Set once from the home route (?v=13) and kept
+// for the session, so moving between pages keeps the same background.
+let fieldChoice: "particles" | "planet" = "particles";
+export function setFieldChoice(f: "particles" | "planet") {
+  fieldChoice = f;
 }
 
 const SERIF_HREF = "https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@1,500;1,600&display=swap";
@@ -132,7 +140,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: string }
 
   return (
     <div className="t8 t9 t10 t11" ref={rootRef} lang="el">
-      <ParticleField reduced={reduced} />
+      {fieldChoice === "planet" ? <PlanetField reduced={reduced} /> : <ParticleField reduced={reduced} />}
       <CursorGlow reduced={reduced} />
       <a className="t8-skip" href="#main">
         Μετάβαση στο περιεχόμενο

@@ -5,7 +5,7 @@ import { ThynkSiteV6 } from "@/components/thynk6/ThynkSiteV6";
 import { ThynkSiteV7 } from "@/components/thynk7/ThynkSiteV7";
 import { ThynkSiteV8 } from "@/components/thynk8/ThynkSiteV8";
 import { ThynkSiteV9 } from "@/components/thynk9/ThynkSiteV9";
-import { SitePage } from "@/components/thynk11/Site";
+import { SitePage, setFieldChoice } from "@/components/thynk11/Site";
 import type { HeadlineId } from "@/content/site-v12";
 
 
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/")({
  * Which face to show.
  * - Public/published site: the Coming Soon page, until the founders decide to launch.
  * - Lovable editor preview (id-preview--*.lovable.app, *.lovableproject.com) and localhost: the v10 site.
- * Overrides for any host: ?site=1 shows the site, ?soon=1 shows Coming Soon, ?v=5 … ?v=10 pick a version.
+ * Overrides for any host: ?site=1 shows the site, ?soon=1 shows Coming Soon, ?v=5 … ?v=13 pick a version.
  */
 function shouldShowSite(): boolean {
   const { hostname, search } = window.location;
@@ -55,6 +55,13 @@ function Index() {
   useEffect(() => {
     if (!shouldShowSite()) return;
     const q = new URLSearchParams(window.location.search);
+    // v13 (01/10): v12 + the "Thynk Flow" planet field instead of the v11 particle shapes
+    if (q.get("v") === "13") {
+      setFieldChoice("planet");
+      const h = q.get("h");
+      setTypeHero(h === "hi" || h === "bi" ? h : "si");
+      return;
+    }
     if (q.get("v") === "12") {
       const h = q.get("h");
       setTypeHero(h === "hi" || h === "bi" ? h : "si");
