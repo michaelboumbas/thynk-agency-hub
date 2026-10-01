@@ -268,6 +268,20 @@
 }
 
 @media (max-width: 640px) {
+  /* mobile: no full-screen centring, the content starts right under the header (01/10, Mike) */
+  .t12-hero {
+    min-height: 0;
+    align-items: flex-start;
+  }
+  .t12-inner {
+    padding: 20px 0 8px;
+  }
+  .t12-hero .t12-stages {
+    margin-bottom: 24px;
+  }
+  .t8 .t12-intro {
+    padding-top: 28px;
+  }
   .t12-stages {
     gap: 10px;
   }
