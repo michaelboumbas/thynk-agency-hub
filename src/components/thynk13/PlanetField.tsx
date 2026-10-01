@@ -215,7 +215,9 @@ export function PlanetField({ reduced }: { reduced: boolean }) {
 
     gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    // transparent canvas: blend colour normally but keep alpha linear (plain blendFunc would square it
+    // and the dots come out far fainter than on an opaque ground)
+    gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.clearColor(0, 0, 0, 0);
 
     let W = 0, H = 0, proj = perspective(42, 1, 0.05, 120);
