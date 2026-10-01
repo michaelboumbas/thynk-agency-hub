@@ -166,19 +166,63 @@
   transform: scaleX(1);
 }
 
-.t12-bottom {
+/* ---------- the formula under the title: HI + AI = SI ---------- */
+.t12-formula {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px 40px;
+  flex-wrap: wrap;
+}
+.t12-hero .t12-eq {
+  margin: 0;
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+}
+.t12-term {
+  display: inline-flex;
+  align-items: baseline;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s ease, transform 0.7s var(--ease);
+}
+.t12-hero.in .t12-term {
+  opacity: 1;
+  transform: none;
+}
+.t12-op {
+  color: var(--orange);
+  font-weight: 700;
+  margin: 0 0.45em;
+}
+.t12-term-sum .t12-term-label {
+  color: var(--ink);
+}
+.t12-hero .t12-eq-note {
+  margin: 0;
+  max-width: 420px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--body);
+  opacity: 0;
+  transition: opacity 0.9s ease 1.7s;
+}
+.t12-hero.in .t12-eq-note {
+  opacity: 1;
+}
+
+/* ---------- the intro, now its own section under the hero ---------- */
+.t12-intro {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   gap: 22px 48px;
   flex-wrap: wrap;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.9s ease 1s, transform 0.9s ease 1s;
-}
-.t12-hero.in .t12-bottom {
-  opacity: 1;
-  transform: none;
 }
 .t12-lead {
   max-width: 560px;
@@ -258,7 +302,8 @@
 @media (prefers-reduced-motion: reduce) {
   .t12-word > span,
   .t12-rule,
-  .t12-bottom,
+  .t12-term,
+  .t12-eq-note,
   .t12-tag {
     transition: none !important;
     transform: none !important;

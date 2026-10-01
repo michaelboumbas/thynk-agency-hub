@@ -9,7 +9,8 @@ export const headlines: Record<HeadlineId, { lead: string; word: string; last: s
   bi: { lead: "The future of", word: "Business", last: "Intelligence.", tag: "BI" },
   // Our own twist: the AI does the work, people decide ("άνθρωπος στη μέση").
   hi: { lead: "The future of", word: "Human", last: "Intelligence.", tag: "HI" },
-  // Mike's original idea. ⚠️ A claim we cannot support (05: no promises we can't back) — kept for comparison only.
+  // Chosen by Mike (01/10). Defined right under the title as Human + Artificial Intelligence, so it reads as
+  // our "human in the loop" rule, not as a claim about superhuman AI.
   si: { lead: "The future of", word: "Super", last: "Intelligence.", tag: "SI" },
 };
 
@@ -17,6 +18,13 @@ export const typeHero = {
   eyebrow: "Thynk Digital Agency · Ιωάννινα",
   // the four stages of the method (05 · Ορολογία)
   stages: ["Audit", "Στρατηγική", "Υλοποίηση", "Κλιμάκωση"],
+  // the tagline under the title: what "Super Intelligence" means for us
+  formula: [
+    { label: "Human Intelligence", short: "HI" },
+    { label: "Artificial Intelligence", short: "AI" },
+    { label: "Super Intelligence", short: "SI" },
+  ],
+  formulaNote: "Η κρίση και η εμπειρία της ομάδας σας, μαζί με την ταχύτητα της τεχνητής νοημοσύνης.",
   leadStrong: "Marketing και Digital Transformation με AI, για επιχειρήσεις.",
   lead: "Η Thynk σχεδιάζει και υλοποιεί λύσεις που μειώνουν τις επαναλαμβανόμενες εργασίες και φέρνουν μετρήσιμους πελάτες. Κάθε συνεργασία ξεκινά με audit.",
   primary: "Κλείστε audit",

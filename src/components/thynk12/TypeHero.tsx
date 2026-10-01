@@ -9,17 +9,7 @@ import { headlines, typeHero as T, type HeadlineId } from "@/content/site-v12";
  * - A giant outlined "Y" (the "you" in Thynk) behind everything, drifting slowly with the scroll.
  * Mechanics borrowed from the Decide AI / SVZ references; palette stays ours (light, orange used sparingly).
  */
-export function TypeHero({
-  reduced,
-  variant,
-  onBook,
-  onExamples,
-}: {
-  reduced: boolean;
-  variant: HeadlineId;
-  onBook: () => void;
-  onExamples: () => void;
-}) {
+export function TypeHero({ reduced, variant }: { reduced: boolean; variant: HeadlineId }) {
   const ref = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
   const [stage, setStage] = useState(0);
@@ -97,22 +87,39 @@ export function TypeHero({
 
         <hr className="t12-rule" />
 
-        <div className="t12-bottom">
-          <p className="t12-lead">
-            <strong>{T.leadStrong}</strong> {T.lead}
+        <div className="t12-formula">
+          <p className="t12-eq" lang="en" aria-label="Human Intelligence plus Artificial Intelligence equals Super Intelligence">
+            {T.formula.map((f, i) => (
+              <span key={f.short} className={`t12-term${i === 2 ? " t12-term-sum" : ""}`} style={{ transitionDelay: `${1.05 + i * 0.18}s` }}>
+                {i > 0 && <span className="t12-op" aria-hidden="true">{i === 1 ? "+" : "="}</span>}
+                <span className="t12-term-label">{f.label}</span>
+              </span>
+            ))}
           </p>
-          <div className="t12-ctas">
-            <button type="button" className="t8-btn" onClick={onBook}>
-              {T.primary}
-              <svg className="t8-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </button>
-            <button type="button" className="t12-arrowlink" onClick={onExamples}>
-              {T.secondary} <span aria-hidden="true">↗</span>
-            </button>
-          </div>
+          <p className="t12-eq-note">{T.formulaNote}</p>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/** The intro that used to sit inside the hero (01/10, Mike: moved below the hero). */
+export function HeroIntro({ onBook, onExamples }: { onBook: () => void; onExamples: () => void }) {
+  return (
+    <section className="t8-section t12-intro" data-reveal>
+      <p className="t12-lead">
+        <strong>{T.leadStrong}</strong> {T.lead}
+      </p>
+      <div className="t12-ctas">
+        <button type="button" className="t8-btn" onClick={onBook}>
+          {T.primary}
+          <svg className="t8-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </button>
+        <button type="button" className="t12-arrowlink" onClick={onExamples}>
+          {T.secondary} <span aria-hidden="true">↗</span>
+        </button>
       </div>
     </section>
   );

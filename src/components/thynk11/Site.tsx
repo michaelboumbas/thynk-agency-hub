@@ -40,7 +40,7 @@ import {
   useReveal,
 } from "@/components/thynk9/ThynkSiteV9";
 import { ParticleField } from "./ParticleField";
-import { TypeHero } from "@/components/thynk12/TypeHero";
+import { HeroIntro, TypeHero } from "@/components/thynk12/TypeHero";
 import { handsMoment, type HeadlineId } from "@/content/site-v12";
 
 /**
@@ -441,12 +441,13 @@ function HomePage({ typeHero }: { typeHero?: HeadlineId }) {
   return (
     <>
       {typeHero ? (
-        <TypeHero
-          reduced={reduced}
-          variant={typeHero}
-          onBook={() => navigate({ to: routes.audit, hash: "book" })}
-          onExamples={() => navigate({ to: routes.examples })}
-        />
+        <>
+          <TypeHero reduced={reduced} variant={typeHero} />
+          <HeroIntro
+            onBook={() => navigate({ to: routes.audit, hash: "book" })}
+            onExamples={() => navigate({ to: routes.examples })}
+          />
+        </>
       ) : (
         <HandsHero
           reduced={reduced}

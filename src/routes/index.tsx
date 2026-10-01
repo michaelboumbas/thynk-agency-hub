@@ -50,14 +50,14 @@ function Index() {
   // The site (v11, multi-page) is the default. Older single-page versions stay reachable for comparison
   // with ?v=5 … ?v=10 (preview hosts only, as before).
   const [face, setFace] = useState<"site" | "v5" | "v6" | "v7" | "v8" | "v9" | "v10">("site");
-  // v12 (01/10): v11 with the typographic hero; &h=bi | hi | si picks the headline
+  // v12 (01/10): v11 with the typographic hero; &h=bi | hi | si picks the headline (si default)
   const [typeHero, setTypeHero] = useState<HeadlineId | undefined>(undefined);
   useEffect(() => {
     if (!shouldShowSite()) return;
     const q = new URLSearchParams(window.location.search);
     if (q.get("v") === "12") {
       const h = q.get("h");
-      setTypeHero(h === "hi" || h === "si" ? h : "bi");
+      setTypeHero(h === "hi" || h === "bi" ? h : "si");
       return;
     }
     const v = q.get("v");
