@@ -500,7 +500,7 @@ function HomePage() {
       <Examples reduced={reduced} />
       <div className="t11-more-link">
         <Link to={routes.examples} className="t8-link">
-          Όλα τα παραδείγματα <Arrow />
+          Όλες οι λύσεις <Arrow />
         </Link>
       </div>
 
@@ -594,7 +594,7 @@ function ExamplesPage() {
     <>
       <PageHero p={pages.examples} />
       <HLine />
-      <Examples reduced={reduced} />
+      <Examples reduced={reduced} hideLead />
       <section className="t8-section">
         <div className="t8-head" data-reveal>
           <h2 className="t8-h2">{moreIdeas.title}</h2>

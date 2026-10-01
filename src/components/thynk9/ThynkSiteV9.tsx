@@ -353,7 +353,7 @@ function ExampleCard({ ex, i, active, reduced }: { ex: Example; i: number; activ
   );
 }
 
-export function Examples({ reduced }: { reduced: boolean }) {
+export function Examples({ reduced, hideLead = false }: { reduced: boolean; hideLead?: boolean }) {
   const desktop = useMedia(DESKTOP);
   const pinned = desktop && !reduced;
   const secRef = useRef<HTMLElement>(null);
@@ -429,7 +429,7 @@ export function Examples({ reduced }: { reduced: boolean }) {
             <Title id="ex-title" start={examples.titleStart} accent={examples.titleAccent} end={examples.titleEnd} />
           </div>
           <div className="t9-ex-side">
-            <p className="t8-muted">{examples.lead}</p>
+            {!hideLead && <p className="t8-muted">{examples.lead}</p>}
             <div className="t9-dots" role="group" aria-label="Επιλογή παραδείγματος">
               {examples.items.map((ex, i) => (
                 <button

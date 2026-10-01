@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SitePage } from "@/components/thynk11/Site";
 
-const title = "Παραδείγματα συστημάτων — Thynk Digital Agency";
-const description = "Ενδεικτικά συστήματα με AI που στήνουμε: βοηθός κρατήσεων, follow-up προσφορών, αναφορές διαφημίσεων, τιμολόγια.";
+const title = "Λύσεις — Thynk Digital Agency";
+const description = "Ενδεικτικές λύσεις AI: ψηφιακός βοηθός κρατήσεων, follow-up προσφορών, αναφορές απόδοσης, καταχώριση παραστατικών.";
 
 export const Route = createFileRoute("/paradeigmata")({
   head: () => ({
