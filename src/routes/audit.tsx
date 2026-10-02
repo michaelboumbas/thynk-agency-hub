@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SitePage } from "@/components/thynk11/Site";
+import { CleanPage } from "@/components/thynk14/CleanSite";
 
-const title = "Το audit — Thynk Digital Agency";
-const description = "Μάθετε πού χάνει χρόνο και πελάτες η επιχείρησή σας. Σύντομο, αμειβόμενο audit με ιεραρχημένο πλάνο ενεργειών.";
+// v14 (02/10/2026): English page in the «Thynk Clean» style (the v11 Greek audit page is no longer routed).
+const title = "The audit — Thynk Digital Agency";
+const description =
+  "Find out where your business loses time and customers. A short, paid audit with a prioritized action plan that stays yours.";
 
 export const Route = createFileRoute("/audit")({
   head: () => ({
@@ -13,5 +15,5 @@ export const Route = createFileRoute("/audit")({
       { property: "og:description", content: description },
     ],
   }),
-  component: () => <SitePage path="/audit" />,
+  component: () => <CleanPage path="/audit" />,
 });

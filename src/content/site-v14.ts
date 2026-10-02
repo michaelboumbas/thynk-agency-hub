@@ -178,3 +178,292 @@ export const v14Screens = {
     ],
   },
 } as const;
+
+/* ======================= pages (02/10, Mike: whole site in the v14 style, in English) ======================= */
+
+export const v14Routes = {
+  home: "/",
+  services: "/services",
+  solutions: "/solutions",
+  audit: "/audit",
+  about: "/about",
+} as const;
+
+export const v14Menu = [
+  { to: v14Routes.services, label: "Services" },
+  { to: v14Routes.solutions, label: "Solutions" },
+  { to: v14Routes.audit, label: "The audit" },
+  { to: v14Routes.about, label: "About us" },
+] as const;
+
+export const v14More = {
+  method: "All services →",
+  solutions: "All solutions →",
+  audit: "How the audit works →",
+  team: "About us →",
+};
+
+export const v14PageHeads = {
+  services: {
+    label: "Services",
+    title: "Services",
+    lead: "Marketing and digital transformation with AI. From advertising to automation, every service fits into a plan that starts with an audit.",
+  },
+  solutions: {
+    label: "Solutions",
+    title: "Solutions",
+    lead: "Automation that works alongside your team. Illustrative solutions from the ones Thynk designs and builds. Client projects are shown only with their explicit permission.",
+  },
+  audit: {
+    label: "The audit",
+    title: "Audit",
+    lead: "A short, paid service with a specific deliverable that stays yours, whatever happens next.",
+  },
+  about: {
+    label: "About us",
+    title: "About",
+    lead: "Thynk Digital Agency is based in Ioannina, Greece, and specializes in marketing and digital transformation with artificial intelligence. In every engagement, the founders are directly responsible.",
+  },
+};
+
+export const v14Pillars = {
+  note: "We don't build e-shops. For existing online stores we take on marketing and automation.",
+  items: [
+    {
+      id: "marketing",
+      tag: "Growing your customer base",
+      title: "Marketing",
+      sub: "Advertising, social media and email marketing, within one strategy.",
+      groups: [
+        {
+          title: "Advertising you can measure",
+          items: [
+            "Google Ads (Search, Shopping, Performance Max) measured in customers, not just clicks.",
+            "Products on Google Shopping with photo and price.",
+            "TikTok Ads for audiences you can't reach through Google and Meta.",
+            "Campaign planning before launch: goal, budget, audience.",
+            "A/B testing on copy, images and calls to action.",
+            "Clear, regular performance reports.",
+          ],
+        },
+        {
+          title: "Social & content",
+          items: [
+            "Content strategy and calendar built on your brand.",
+            "Facebook, Instagram, TikTok and LinkedIn management, with timely replies to messages.",
+            "Professional copy for website, ads, email and blog.",
+            "Graphic design consistent with your identity.",
+            "UGC and short-form video for Reels, TikTok and Shorts.",
+            "AI brand ambassadors, where they serve the strategy.",
+          ],
+        },
+        {
+          title: "Email, SMS & automated messages",
+          items: [
+            "Automated messages for abandoned carts, upsell and repeat purchases.",
+            "Klaviyo flows and Mailchimp newsletters.",
+            "SMS campaigns for time-sensitive offers and updates.",
+            "Contacts organized in HubSpot or Brevo, so every message is relevant.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "transformation",
+      tag: "Operational efficiency",
+      title: "Digital Transformation",
+      sub: "AI automation, data and reporting, consulting and landing pages.",
+      groups: [
+        {
+          title: "AI automation & data",
+          items: [
+            "AI chatbot that answers questions and books appointments on your website and social media.",
+            "Voice assistant for after-hours calls.",
+            "Connecting your tools to automate repetitive tasks.",
+            "Custom AI agents and GPTs built on your own data.",
+            "GEO: optimizing to be cited by ChatGPT and Google AI Overviews.",
+            "GA4 and GTM setup, Looker Studio dashboards with reliable data.",
+          ],
+        },
+        {
+          title: "Consulting & growth",
+          items: [
+            "A roadmap from manual processes to automated systems.",
+            "Workshops that train your team to use AI day to day.",
+            "Growth strategy sessions with a concrete action plan.",
+          ],
+        },
+        {
+          title: "Website & landing pages",
+          items: ["Landing pages and company websites designed to convert."],
+        },
+      ],
+    },
+  ],
+};
+
+export const v14Examples = {
+  label: "Illustrative example",
+  items: [
+    {
+      id: "bookings" as ScreenId,
+      tag: "Bookings",
+      title: "A digital booking assistant, around the clock",
+      text: "Answers questions about availability, prices and opening hours instantly on your website, Messenger and Instagram. Requests that need a person are passed to your team with the full history.",
+      punch: "Instant service for the customer, full control for your team.",
+    },
+    {
+      id: "followup" as ScreenId,
+      tag: "Sales",
+      title: "Automated quote follow-up",
+      text: "Every quote is tracked. When the customer doesn't reply, the system prepares a reminder at the right moment and submits it for your approval in one click.",
+      punch: "No quote left without a follow-up.",
+    },
+    {
+      id: "report" as ScreenId,
+      tag: "Marketing",
+      title: "Weekly performance report",
+      text: "Data from Google, Meta and your sales is gathered into one report every Monday: what worked, what didn't, and which changes we recommend.",
+      punch: "Decisions based on data.",
+    },
+    {
+      id: "invoices" as ScreenId,
+      tag: "Admin",
+      title: "Automatic invoice entry",
+      text: "Invoices you receive by email are recognized, their details are entered into your accounting records, and discrepancies are flagged for review.",
+      punch: "Less manual entry, full control.",
+    },
+  ],
+};
+
+export const v14MoreIdeas = {
+  title: "More solutions",
+  lead: "Every business has different needs. These are the most common starting points.",
+  groups: [
+    {
+      tag: "Marketing",
+      items: [
+        { t: "Measurable advertising", d: "Google and Meta campaigns tied to bookings, calls and sales, not just clicks." },
+        { t: "Organized social media", d: "A content calendar, AI-assisted production and timely replies to messages." },
+        { t: "Email marketing", d: "Automated flows for abandoned carts, repeat purchases and updates." },
+      ],
+    },
+    {
+      tag: "Digital Transformation",
+      items: [
+        { t: "AI voice assistant", d: "Answers after-hours calls, logs requests and books appointments." },
+        { t: "Performance dashboards", d: "Your key business metrics on one page, updated automatically." },
+        { t: "Internal AI assistant", d: "Answers your team's questions based on your company documents and processes." },
+      ],
+    },
+  ],
+};
+
+export const v14AuditPage = {
+  sample: {
+    label: "Sample deliverable",
+    business: "Hotel, 14 rooms",
+    items: [
+      { tag: "First", tone: "o", text: "Booking messages are answered by hand, 2–3 hours a day." },
+      { tag: "First", tone: "o", text: "The Google Business Profile shows the wrong hours and no photos." },
+      { tag: "Next", tone: "", text: "Ads run without tracking bookings." },
+      { tag: "Not recommended", tone: "k", text: "A new website. The current one covers today's needs." },
+    ],
+    foot: "Illustrative example, not a real client.",
+  },
+  stepsTitle: "How it works",
+  steps: [
+    { title: "Request", text: "A short description of your business and your priorities." },
+    { title: "Analysis", text: "We review your presence and processes. Anything we need is requested in advance." },
+    { title: "Presentation", text: "We present the findings, prioritized and explained. The decision on what comes next is yours." },
+  ],
+  faqTitle: "Questions about the audit and pricing",
+  faq: [
+    { q: "How much does the audit cost?", a: "The audit is a short, paid service and its cost is shared before we start. It isn't free, because it is real work with a deliverable you can use whatever happens next." },
+    { q: "What if we don't continue after the audit?", a: "The deliverable stays yours and you can implement it with any partner you like. If you don't need a service, we'll tell you." },
+    { q: "How are your services priced?", a: "Each service is priced separately, based on the size of the business and the workload. The detailed proposal is presented after the audit. We don't sell all-in-one packages." },
+    { q: "Are the examples real clients?", a: "No. They are illustrative solutions that show how things work. Client projects are shown only with their explicit permission." },
+    { q: "Do you build e-shops?", a: "No. For existing online stores we take on advertising, email marketing and abandoned cart recovery." },
+  ],
+  bookSide: {
+    title: "The first step is a clear picture of where you are today.",
+    text: "Once the audit is done, you know what your business needs, in what order, and why.",
+    mail: "Prefer email?",
+  },
+};
+
+export const v14Calc = {
+  label: "Calculator",
+  title: "What do repetitive tasks cost you?",
+  lead: "Enter your team's numbers for an instant, indicative estimate. The exact figure comes from the audit.",
+  industry: "Industry",
+  industries: [
+    { id: "clinic", label: "Clinic / medical practice" },
+    { id: "office", label: "Accounting / law office" },
+    { id: "hosp", label: "Hotel / restaurant" },
+    { id: "retail", label: "Retail / e-shop" },
+    { id: "build", label: "Construction / technical services" },
+    { id: "other", label: "Other" },
+  ],
+  team: "People on the team",
+  hours: "Hours per person per week on repetitive tasks",
+  rate: "Hourly labor cost",
+  where: "Where is time lost?",
+  tasks: {
+    phone: { label: "Calls & appointments", opp: "Digital assistant for calls & appointments" },
+    msg: { label: "Messages & email", opp: "Automatic sorting of email & messages" },
+    docs: { label: "Invoices & documents", opp: "Automatic invoice entry" },
+    reports: { label: "Reports & Excel", opp: "Automated reports" },
+    social: { label: "Social media", opp: "Organized content production & publishing" },
+    quotes: { label: "Quotes & follow-up", opp: "Automated quote follow-up" },
+  },
+  yearLabel: "Yearly cost of repetitive tasks",
+  perYear: "/ year",
+  monthHours: "hours a month",
+  autoHours: "hours/month that could be automated",
+  start: "Suggested starting points",
+  hoursShort: "h",
+  how: (team: number, hours: number, rate: number) =>
+    `${team} people × ${hours} hours × 4.33 weeks × €${rate}. The estimate assumes 25–40% of the tasks you picked can be automated. The real share is measured in the audit.`,
+  note: "Estimate based on averages. In the audit, the numbers are calculated with your real data.",
+};
+
+export const v14AboutPage = {
+  founders: [
+    {
+      initials: "DC",
+      name: "Dimitris Chrysochoou",
+      role: "Co-founder · Business, data & automation",
+      bio: "Founder of Anadelta Education. Studied Mathematics and Economics at the University of Ioannina, specializing in data analysis and measuring results.",
+      ask: "Talk to him about: automation, data, costing, processes.",
+      email: "dimitris@thynkagency.gr",
+    },
+    {
+      initials: "MB",
+      name: "Michael Boumpas",
+      role: "Co-founder · Marketing, advertising & creative",
+      bio: "Digital Account Manager at an Athens agency, working on e-commerce, CRO and performance marketing. Co-founder of myMetsovo.gr. Studied Entrepreneurship Management (Deree).",
+      ask: "Talk to him about: advertising, social media, content, brand.",
+      email: "mike@thynkagency.gr",
+    },
+  ],
+  where: "Based in Ioannina, Greece. We work with businesses across Greece and abroad, remotely and in person.",
+  valuesTitle: "How we work",
+  values: [
+    { t: "Transparency", d: "We share every finding, even when it isn't what you expected." },
+    { t: "Accountable for value", d: "If a service isn't delivering the value you're paying for, we'll be the first to say so." },
+    { t: "Clarity", d: "No unnecessary jargon. Every proposal is understandable and measurable." },
+    { t: "Collaboration", d: "Real collaboration is a precondition for any result." },
+  ],
+  rulesTitle: "How we use artificial intelligence",
+  rules: [
+    { title: "Data ownership", text: "Accounts, access keys and data belong to your business and stay with it, in every case." },
+    { title: "Human oversight", text: "Every sensitive action is prepared by AI and approved by a person before it runs." },
+    { title: "Full control", text: "Operating limits, approval steps and the ability to switch everything off at once." },
+  ],
+};
+
+export const v14Final = {
+  title: "The first step is a clear picture of where you are today.",
+  button: "Book an audit",
+};
