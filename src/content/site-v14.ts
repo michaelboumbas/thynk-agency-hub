@@ -96,7 +96,7 @@ export const v14Book = {
   optional: "optional",
   pain: {
     label: "WHAT SHOULD WE LOOK AT FIRST",
-    options: ["Getting more customers", "Marketing & advertising", "Social media & content", "Automating repetitive work", "Data, reporting & measurement", "Not sure yet: a full review"],
+    options: ["Marketing: advertising, social media, content", "Digital transformation: automation, AI, data & reporting", "Both", "Not sure yet: a full review"],
   },
   submit: "Send request",
   // front-end only until the back-end (n8n / inbox) is connected
