@@ -9,6 +9,7 @@
 @import "./components/thynk10/thynk10.css";
 @import "./components/thynk11/thynk11.css";
 @import "./components/thynk12/thynk12.css";
+@import "./components/thynk14/thynk14.css";
 
 @custom-variant dark (&:is(.dark *));
 

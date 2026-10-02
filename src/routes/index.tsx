@@ -6,6 +6,7 @@ import { ThynkSiteV7 } from "@/components/thynk7/ThynkSiteV7";
 import { ThynkSiteV8 } from "@/components/thynk8/ThynkSiteV8";
 import { ThynkSiteV9 } from "@/components/thynk9/ThynkSiteV9";
 import { SitePage, setFieldChoice } from "@/components/thynk11/Site";
+import { CleanSite } from "@/components/thynk14/CleanSite";
 import type { HeadlineId } from "@/content/site-v12";
 
 
@@ -31,7 +32,7 @@ export const Route = createFileRoute("/")({
  * Which face to show.
  * - Public/published site: the Coming Soon page, until the founders decide to launch.
  * - Lovable editor preview (id-preview--*.lovable.app, *.lovableproject.com) and localhost: the v10 site.
- * Overrides for any host: ?site=1 shows the site, ?soon=1 shows Coming Soon, ?v=5 … ?v=13 pick a version.
+ * Overrides for any host: ?site=1 shows the site, ?soon=1 shows Coming Soon, ?v=5 … ?v=14 pick a version.
  */
 function shouldShowSite(): boolean {
   const { hostname, search } = window.location;
@@ -52,9 +53,15 @@ function Index() {
   const [face, setFace] = useState<"site" | "v5" | "v6" | "v7" | "v8" | "v9" | "v10">("site");
   // v12 (01/10): v11 with the typographic hero; &h=bi | hi | si picks the headline (si default)
   const [typeHero, setTypeHero] = useState<HeadlineId | undefined>(undefined);
+  // v14 (02/10): «Thynk Clean», the ubernatural.io style on white, one page
+  const [clean, setClean] = useState(false);
   useEffect(() => {
     if (!shouldShowSite()) return;
     const q = new URLSearchParams(window.location.search);
+    if (q.get("v") === "14") {
+      setClean(true);
+      return;
+    }
     // v13 (01/10): v12 + the "Thynk Flow" planet field instead of the v11 particle shapes
     if (q.get("v") === "13") {
       setFieldChoice("planet");
@@ -72,6 +79,7 @@ function Index() {
     if (v && map[v]) setFace(map[v]);
   }, []);
 
+  if (clean) return <CleanSite />;
   if (face === "v10") return <ThynkSiteV9 handsHero />;
   if (face === "v9") return <ThynkSiteV9 />;
   if (face === "v8") return <ThynkSiteV8 />;
