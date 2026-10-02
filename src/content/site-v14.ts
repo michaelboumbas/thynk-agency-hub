@@ -499,6 +499,8 @@ const enRaw = {
     auditAria: "Audit",
     switchTo: "EL",
     switchAria: "Ελληνικά",
+    homeLabel: "Home",
+    contact: "Contact",
   },
   menu: v14Menu,
   more: v14More,

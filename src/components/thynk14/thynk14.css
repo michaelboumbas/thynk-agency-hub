@@ -2305,3 +2305,160 @@
     opacity: 0;
   }
 }
+
+/* ======================= full-screen menu (02/10, Mike · after Liberators AI) =======================
+   Burger on every width. The page blurs behind a dark veil; the pages stand like a wheel:
+   the active one sharp, the others tilt away and blur with their distance (--a). */
+.t14-nav {
+  display: none !important;
+}
+.t14 .t14-burger {
+  display: inline-flex;
+}
+.t14-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: calc(14px + env(safe-area-inset-top, 0px)) var(--gut) calc(26px + env(safe-area-inset-bottom, 0px));
+  color: #fff;
+  background:
+    radial-gradient(120% 60% at 30% 118%, rgba(255, 106, 26, 0.34), transparent 60%),
+    radial-gradient(90% 50% at 85% 112%, rgba(120, 90, 255, 0.22), transparent 62%),
+    rgba(12, 13, 16, 0.8);
+  -webkit-backdrop-filter: blur(22px) saturate(1.15);
+  backdrop-filter: blur(22px) saturate(1.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+}
+.t14-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease;
+}
+.t14-menu-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.t14-menu-top a {
+  text-decoration: none;
+}
+.t14-menu .t14-logo {
+  color: #fff;
+}
+.t14-menu-x {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 52px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.t14-menu-x:hover {
+  transform: rotate(90deg);
+}
+.t14-wheel {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.06em;
+  perspective: 900px;
+  perspective-origin: 0 50%;
+  font-family: var(--f-display);
+  font-size: clamp(44px, 6.4vw, 92px);
+  font-weight: 500;
+  font-stretch: 112%;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  /* the active row sits in the middle of the screen, the wheel turns around it */
+  transform: translateY(calc(var(--shift, 0) * 1.14em));
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1), translate 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.t14-wheel-i {
+  display: inline-block;
+  padding-left: 0.08em;
+  color: #fff;
+  text-decoration: none;
+  transform-origin: 0 50%;
+  transform: translateX(calc(var(--a) * var(--sx, -0.12em))) rotateX(calc(var(--d) * var(--rot, -16deg))) scale(calc(1 - var(--a) * 0.06));
+  opacity: calc(1 - var(--a) * var(--fade, 0.22));
+  filter: blur(calc(var(--a) * var(--blur, 1.7px)));
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.45s, filter 0.45s, color 0.25s;
+}
+.t14-wheel-i.on {
+  opacity: 1;
+  filter: none;
+}
+.t14-wheel-i[aria-current="page"]::after {
+  content: "";
+  display: inline-block;
+  width: 0.16em;
+  height: 0.16em;
+  margin-left: 0.14em;
+  border-radius: 50%;
+  background: var(--orange);
+  vertical-align: 0.12em;
+}
+.t14-wheel-i.on:hover {
+  color: var(--orange);
+}
+/* opening: the wheel rises in, one row after another */
+.t14-menu .t14-wheel {
+  translate: 0 4vh;
+}
+.t14-menu.open .t14-wheel {
+  translate: 0 0;
+}
+.t14-menu-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+}
+.t14-menu .t14-pill {
+  background: #fff;
+  color: var(--ink) !important;
+}
+.t14-menu-lang,
+.t14-menu-mail {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  text-decoration: none;
+}
+.t14-menu-lang {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.t14-menu-lang:hover,
+.t14-menu-mail:hover {
+  color: var(--orange);
+}
+@media (max-width: 900px) {
+  .t14-menu-x {
+    width: 44px;
+    height: 44px;
+  }
+  .t14-wheel {
+    --rot: -9deg;
+    --blur: 0.7px;
+    --fade: 0.13;
+    --sx: 0em;
+    font-size: clamp(38px, 11.5vw, 64px);
+    font-stretch: 105%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t14-wheel-i,
+  .t14-menu,
+  .t14-menu .t14-wheel {
+    transition: none;
+  }
+}

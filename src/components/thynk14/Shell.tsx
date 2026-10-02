@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { LangProvider, localPath, useCopy } from "./i18n";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ComingSoon } from "@/components/thynk/ComingSoon";
@@ -23,6 +23,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
   const reduced = useReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
   const [menu, setMenu] = useState(false);
+  const burgerRef = useRef<HTMLButtonElement>(null);
   const hash = useRouterState({ select: (s) => s.location.hash });
   useCleanMotion(rootRef, pathname);
 
@@ -74,20 +75,14 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
       <a className="t14-skip" href="#main">{c.ui.skip}</a>
       <header className="t14-hdr">
         <Link to={href(v14Routes.home)} aria-label={c.ui.home}><Logo /></Link>
-        <nav className={`t14-nav${menu ? " open" : ""}`} aria-label={c.ui.mainMenu}>
-          {c.menu.map((n) => (
-            <Link key={n.to} to={href(n.to)} className={pathname === n.to ? "on" : ""} aria-current={pathname === n.to ? "page" : undefined}>
-              {n.label}
-            </Link>
-          ))}
-          <Link className="t14-pill lg t14-nav-cta" to={href(v14Routes.audit)} hash="book">{c.hero.primary}</Link>
-        </nav>
+        <span aria-hidden="true" />
         <div className="t14-hdr-r">
           <Link className="t14-lang" to={localPath(pathname, other)} hrefLang={other} aria-label={c.ui.switchAria}>
             {c.ui.switchTo}
           </Link>
           <Link className="t14-pill" to={href(v14Routes.audit)} hash="book">{c.hero.primary}</Link>
           <button
+            ref={burgerRef}
             type="button"
             className="t14-burger"
             aria-expanded={menu}
@@ -99,10 +94,11 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
           </button>
         </div>
       </header>
+      <MenuOverlay open={menu} pathname={pathname} onClose={() => setMenu(false)} returnRef={burgerRef} />
 
       <main id="main">
         {children}
-        <footer className="t14-footer t14-wrap">
+        <footer className="t14-footer t14-wrap" id="contact">
           <Link to={href(v14Routes.home)} aria-label={c.ui.home}><Logo size={26} /></Link>
           <div>
             <h4>Thynk</h4>
@@ -125,6 +121,92 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
           <div className="t14-legal"><b>Thynk Digital Agency</b><br />{c.footer.city}<br />{c.footer.year}</div>
         </footer>
       </main>
+    </div>
+  );
+}
+
+/**
+ * Full-screen menu (02/10, Mike, after Liberators AI): the page blurs behind a dark veil, the pages stand
+ * in a column like a wheel: the active one sharp, the rest tilt away and blur with distance.
+ */
+function MenuOverlay({ open, pathname, onClose, returnRef }: {
+  open: boolean;
+  pathname: V14Path;
+  onClose: () => void;
+  returnRef: React.RefObject<HTMLButtonElement | null>;
+}) {
+  const { c, href, lang } = useCopy();
+  const other: Lang = lang === "en" ? "el" : "en";
+  const items = [
+    { key: "home", label: c.ui.homeLabel, to: v14Routes.home as V14Path, hash: undefined as string | undefined },
+    ...c.menu.map((n) => ({ key: n.to, label: n.label, to: n.to as V14Path, hash: undefined as string | undefined })),
+    { key: "contact", label: c.ui.contact, to: pathname, hash: "contact" },
+  ];
+  const current = Math.max(0, items.findIndex((it) => !it.hash && it.to === pathname));
+  const [active, setActive] = useState(current);
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    setActive(current);
+    const html = document.documentElement;
+    const prev = html.style.overflowY;
+    html.style.overflowY = "hidden";
+    const t = window.setTimeout(() => closeRef.current?.focus(), 30);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => {
+      html.style.overflowY = prev || "auto";
+      window.clearTimeout(t);
+      window.removeEventListener("keydown", onKey);
+      returnRef.current?.focus();
+    };
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <div className={`t14-menu${open ? " open" : ""}`} aria-hidden={!open} inert={!open ? true : undefined}>
+      <div className="t14-menu-top">
+        <Link to={href(v14Routes.home)} aria-label={c.ui.home} onClick={onClose}><Logo /></Link>
+        <button ref={closeRef} type="button" className="t14-menu-x" aria-label={c.ui.closeMenu} onClick={onClose}>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+        </button>
+      </div>
+      <nav
+        className="t14-wheel"
+        aria-label={c.ui.mainMenu}
+        style={{ "--shift": (items.length - 1) / 2 - active } as React.CSSProperties}
+        onMouseLeave={() => setActive(current)}
+      >
+        {items.map((it, i) => {
+          const d = i - active;
+          const a = Math.abs(d);
+          const style = {
+            "--d": d,
+            "--a": a,
+            "--i": i,
+          } as React.CSSProperties;
+          return (
+            <Link
+              key={it.key}
+              to={href(it.to)}
+              hash={it.hash}
+              className={`t14-wheel-i${d === 0 ? " on" : ""}`}
+              style={style}
+              aria-current={!it.hash && it.to === pathname ? "page" : undefined}
+              onMouseEnter={() => setActive(i)}
+              onFocus={() => setActive(i)}
+              onClick={onClose}
+            >
+              {it.label}
+            </Link>
+          );
+        })}
+      </nav>
+      <div className="t14-menu-foot">
+        <Link className="t14-pill lg" to={href(v14Routes.audit)} hash="book" onClick={onClose}>{c.hero.primary}</Link>
+        <Link className="t14-menu-lang" to={localPath(pathname, other)} hrefLang={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</Link>
+        <a className="t14-menu-mail" href={`mailto:${c.footer.contact}`}>{c.footer.contact}</a>
+      </div>
     </div>
   );
 }

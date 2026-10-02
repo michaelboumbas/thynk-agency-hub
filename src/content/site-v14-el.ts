@@ -18,6 +18,8 @@ export const el: Copy = {
     auditAria: "Audit",
     switchTo: "EN",
     switchAria: "English",
+    homeLabel: "Αρχική",
+    contact: "Επικοινωνία",
   },
   menu: [
     { to: v14Menu[0].to, label: "Υπηρεσίες" },
