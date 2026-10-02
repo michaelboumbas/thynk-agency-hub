@@ -22,7 +22,7 @@ export const v14Hero = {
 
 export const v14About = {
   label: "Thynk",
-  text: "We help businesses grow with marketing and digital transformation powered by artificial intelligence. We find where time and customers are lost, then design and build the solutions that fix it: less repetitive work, more measurable results. Based in Ioannina, we work with businesses across Greece and abroad, and the founders personally lead every engagement.",
+  text: "Thynk is a digital agency combining marketing and digital transformation, with artificial intelligence at the core of every solution. Every engagement starts with analysis, to find where time, customers and revenue are being lost. We then design and build the solutions that fix it. We recommend only what is evidence-based and measurable.",
   founders: "Dimitris Chrysochoou & Michael Boumpas",
   foundersNote: "A senior team you talk to directly. Every engagement starts with an audit.",
 };
