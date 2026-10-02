@@ -2526,17 +2526,43 @@
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
-.t14-person:hover .t14-founder-name {
-  color: var(--orange);
+@media (hover: hover) {
+  .t14-person:hover .t14-founder-name {
+    color: var(--orange);
+  }
 }
 .t14-person .t14-in {
   height: 42px;
   padding: 0 16px 0 13px;
 }
+/* phones: still side by side, smaller; name over a compact LinkedIn button */
 @media (max-width: 700px) {
   .t14-team-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 14px;
+  }
+  .t14-photo span {
+    font-size: 40px;
+  }
+  .t14-person-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 12px;
+  }
+  .t14 .t14-person .t14-founder-name {
+    font-size: 17px;
+    font-stretch: 100%;
+    letter-spacing: -0.02em;
+  }
+  .t14-person .t14-in {
+    height: 34px;
+    padding: 0 12px 0 10px;
+    gap: 7px;
+    font-size: 12px;
+  }
+  .t14-person .t14-in svg {
+    width: 14px;
+    height: 14px;
   }
 }
 
