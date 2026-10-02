@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from "react";
 import { useSiteGate } from "@/components/thynk11/Site";
 import { ComingSoon } from "@/components/thynk/ComingSoon";
+import { PlanetField } from "@/components/thynk13/PlanetField";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import {
   v14About,
   v14Audit,
@@ -17,24 +19,17 @@ import {
 } from "@/content/site-v14";
 
 /**
- * v14 «Thynk Clean» (02/10/2026): the ubernatural.io grammar on a white page — one neo-grotesk (Inter, has Greek)
+ * v14 «Thynk Clean» (02/10/2026): the ubernatural.io grammar on a white page — one neo-grotesk (Inter)
  * at extreme sizes, ink + Thynk orange, every section a scroll-driven moment:
- *   hero with floating example screens · words that light up · ghost "Μεθοδολογία" with flying stage cards ·
- *   giant "Λύσεις" + list with hover peek · horizontal audit panels · team list · form · FAQ.
- * One page with anchors. Preview only: ?v=14. Desktop motion is scroll-driven (sticky stages); on phones
+ *   hero · words that light up · ghost "Method" with flying stage cards ·
+ *   giant "Solutions" + list with hover peek · horizontal audit panels · team list · form · FAQ.
+ * 02/10 (Mike): default face of the preview, all in English, the v13 dot planet + space dust behind the page,
+ * hero without the floating screens (they now only peek over the solutions list).
+ * One page with anchors. Desktop motion is scroll-driven (sticky stages); on phones
  * (≤900px) the sticky stages fall back to a normal vertical flow. prefers-reduced-motion: everything static.
  */
 
-const INTER_HREF = "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..600&display=swap";
-
-/* where each floating screen sits in the hero (percent of the stage), its parallax speed and tilt */
-const SHOTS: { id: ScreenId; x: number; y: number; s: number; r: number; mobile?: "a" | "b" }[] = [
-  { id: "bookings", x: 6, y: 14, s: 0.55, r: -3, mobile: "a" },
-  { id: "followup", x: 74, y: 10, s: 0.8, r: 2 },
-  { id: "report", x: 8, y: 66, s: 1.05, r: 2 },
-  { id: "invoices", x: 70, y: 62, s: 0.7, r: -2, mobile: "b" },
-  { id: "audit", x: 40, y: 80, s: 1.3, r: 1 },
-];
+const INTER_HREF = "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap";
 
 function Screen({ id }: { id: ScreenId }) {
   if (id === "bookings") {
@@ -128,6 +123,7 @@ function Logo({ size }: { size?: number }) {
 }
 
 function CleanPage() {
+  const reduced = useReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
   const peekRef = useRef<HTMLDivElement>(null);
   const [peek, setPeek] = useState<ScreenId | null>(null);
@@ -145,6 +141,15 @@ function CleanPage() {
     document.head.appendChild(l);
   }, []);
 
+  // the site is in English: tell the browser (hyphenation, screen readers, translation prompts)
+  useEffect(() => {
+    const prev = document.documentElement.lang;
+    document.documentElement.lang = "en";
+    return () => {
+      document.documentElement.lang = prev;
+    };
+  }, []);
+
   // the app shell locks scrolling for v5: unlock while this page is mounted
   useEffect(() => {
     const els = [document.documentElement, document.body];
@@ -157,7 +162,7 @@ function CleanPage() {
     };
   }, []);
 
-  // the giant "Λύσεις" fills the content width exactly, whatever the font metrics.
+  // the giant "Solutions" fills the content width exactly, whatever the font metrics.
   // Re-fits when Inter finishes loading (it arrives after first paint) and on resize.
   useEffect(() => {
     const el = rootRef.current?.querySelector<HTMLElement>(".t14-giant");
@@ -193,9 +198,6 @@ function CleanPage() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const narrowQ = window.matchMedia("(max-width: 900px)");
 
-    const hero = root.querySelector<HTMLElement>(".t14-hero")!;
-    const heroC = root.querySelector<HTMLElement>(".t14-hero-c")!;
-    const shots = [...root.querySelectorAll<HTMLElement>(".t14-shot")];
     const words = [...root.querySelectorAll<HTMLElement>(".t14-reveal span")];
     const reveal = root.querySelector<HTMLElement>(".t14-reveal")!;
     const method = root.querySelector<HTMLElement>(".t14-method")!;
@@ -204,10 +206,8 @@ function CleanPage() {
     const hz = root.querySelector<HTMLElement>(".t14-hz")!;
     const track = root.querySelector<HTMLElement>(".t14-hz-track")!;
 
-    let mx = 0, my = 0, tx = 0, ty = 0, raf = 0;
+    let raf = 0;
     const onMove = (e: PointerEvent) => {
-      tx = e.clientX / window.innerWidth - 0.5;
-      ty = e.clientY / window.innerHeight - 0.5;
       const p = peekRef.current;
       if (p) {
         p.style.left = e.clientX + "px";
@@ -217,24 +217,8 @@ function CleanPage() {
     window.addEventListener("pointermove", onMove, { passive: true });
 
     const frame = () => {
-      mx += (tx - mx) * 0.06;
-      my += (ty - my) * 0.06;
-      const W = window.innerWidth, H = window.innerHeight;
+      const H = window.innerHeight, W = window.innerWidth;
       const narrow = narrowQ.matches;
-
-      // hero: content lifts and fades; screens scatter outward and drift up at their own speed
-      const hp = clamp(window.scrollY / Math.max(1, hero.offsetHeight - H), 0, 1);
-      heroC.style.transform = `translateY(${-hp * 40}px)`;
-      heroC.style.opacity = String(1 - ease(clamp((hp - 0.35) / 0.5, 0, 1)));
-      const t = reduced ? 0 : performance.now() / 1000;
-      shots.forEach((s, i) => {
-        const cfg = SHOTS[i];
-        const fx = (cfg.x - 45) / 45;
-        const bob = reduced ? 0 : Math.sin(t * 0.6 + i * 1.7) * 6;
-        const dx = (reduced ? 0 : fx * hp * W * 0.18) + mx * 30 * cfg.s;
-        const dy = (reduced ? 0 : -hp * H * 0.9 * cfg.s) + bob + my * 22 * cfg.s;
-        s.style.transform = `translate3d(${dx}px,${dy}px,0) rotate(${cfg.r * (1 - hp)}deg)`;
-      });
 
       // about: words light up as the paragraph passes
       if (!reduced) {
@@ -314,10 +298,11 @@ function CleanPage() {
   };
 
   return (
-    <div className="t14" ref={rootRef} lang="el">
+    <div className="t14" ref={rootRef} lang="en">
+      <PlanetField reduced={reduced} />
       <header className="t14-hdr">
-        <a href="#top" onClick={(e) => go(e, "top")} aria-label="Thynk, αρχική"><Logo /></a>
-        <nav className="t14-nav" aria-label="Κύριο μενού">
+        <a href="#top" onClick={(e) => go(e, "top")} aria-label="Thynk, home"><Logo /></a>
+        <nav className="t14-nav" aria-label="Main menu">
           {v14Nav.map((n) => (
             <a key={n.id} href={`#${n.id}`} onClick={(e) => go(e, n.id)}>{n.label}</a>
           ))}
@@ -330,28 +315,19 @@ function CleanPage() {
       <main id="top">
         {/* hero */}
         <section className="t14-hero" aria-label="Thynk">
-          <div className="t14-hero-stage">
-            <div className="t14-hero-c">
-              <div className="t14-hero-mark"><i />{v14Hero.mark}</div>
-              <h1>
-                {v14Hero.lead}<em>{v14Hero.accent}</em>{v14Hero.last}
-              </h1>
-              <p className="t14-formula"><b>{v14Hero.formulaStrong}</b> {v14Hero.formula}</p>
-              <div className="t14-ctas">
-                <a className="t14-pill lg" href="#book" onClick={(e) => go(e, "book")}>{v14Hero.primary}</a>
-                <a className="t14-pill lg ghost" href="#method" onClick={(e) => go(e, "method")}>{v14Hero.secondary}</a>
-              </div>
+          <div className="t14-hero-c">
+            <h1>
+              <span className="t14-h1-a">{v14Hero.lead}</span>
+              <strong className="t14-h1-b"><em>{v14Hero.accent}</em>{v14Hero.last}</strong>
+            </h1>
+            <p className="t14-formula">
+              <b>{v14Hero.formulaStrong}</b>
+              <span>{v14Hero.formula}</span>
+            </p>
+            <div className="t14-ctas">
+              <a className="t14-pill lg" href="#book" onClick={(e) => go(e, "book")}>{v14Hero.primary}</a>
+              <a className="t14-pill lg ghost" href="#method" onClick={(e) => go(e, "method")}>{v14Hero.secondary}</a>
             </div>
-            {SHOTS.map((s) => (
-              <div
-                key={s.id}
-                className={`t14-shot${s.mobile ? " m-" + s.mobile : " m-hide"}`}
-                style={{ left: `${s.x}%`, top: `${s.y}%` } as CSSProperties}
-                aria-hidden="true"
-              >
-                <Screen id={s.id} />
-              </div>
-            ))}
           </div>
         </section>
 
@@ -413,7 +389,7 @@ function CleanPage() {
         </div>
 
         {/* audit, horizontal */}
-        <section className="t14-hz" id="audit" aria-label="Το audit">
+        <section className="t14-hz" id="audit" aria-label="The audit">
           <div className="t14-hz-stage">
             <h2 className="t14-hz-title">
               {v14Audit.titleStart}<em>{v14Audit.titleAccent}</em>
@@ -487,18 +463,18 @@ function CleanPage() {
         </section>
 
         <footer className="t14-footer t14-wrap">
-          <a href="#top" onClick={(e) => go(e, "top")} aria-label="Thynk, αρχική"><Logo size={26} /></a>
+          <a href="#top" onClick={(e) => go(e, "top")} aria-label="Thynk, home"><Logo size={26} /></a>
           <div>
             <h4>Thynk</h4>
             <ul>
               {v14Nav.map((n) => (
                 <li key={n.id}><a href={`#${n.id}`} onClick={(e) => go(e, n.id)}>{n.label}</a></li>
               ))}
-              <li><a href="#faq" onClick={(e) => go(e, "faq")}>Συχνές ερωτήσεις</a></li>
+              <li><a href="#faq" onClick={(e) => go(e, "faq")}>{v14Footer.faq}</a></li>
             </ul>
           </div>
           <div>
-            <h4>Επικοινωνία</h4>
+            <h4>{v14Footer.contactLabel}</h4>
             <ul><li><a href={`mailto:${v14Footer.contact}`}>{v14Footer.contact}</a></li></ul>
           </div>
           <div className="t14-legal"><b>Thynk Digital Agency</b><br />{v14Footer.city}<br />{v14Footer.year}</div>

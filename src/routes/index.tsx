@@ -10,9 +10,9 @@ import { CleanSite } from "@/components/thynk14/CleanSite";
 import type { HeadlineId } from "@/content/site-v12";
 
 
-const title = "Thynk Digital Agency — Το AI κάνει τη δουλειά. Εσείς αποφασίζετε.";
+const title = "Thynk Digital Agency — The future of Super Intelligence";
 const description =
-  "Marketing και Digital Transformation με AI για επιχειρήσεις σε όλη την Ελλάδα και στο εξωτερικό. Έδρα Ιωάννινα. Ξεκινάμε πάντα με audit.";
+  "Marketing and digital transformation with AI for businesses across Greece and abroad. Based in Ioannina. Every engagement starts with an audit.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,20 +48,20 @@ function shouldShowSite(): boolean {
 }
 
 function Index() {
-  // The site (v11, multi-page) is the default. Older single-page versions stay reachable for comparison
-  // with ?v=5 … ?v=10 (preview hosts only, as before).
+  // Default: v14 (see below). Older versions stay reachable for comparison with ?v=5 … ?v=13
+  // (preview hosts only, as before).
   const [face, setFace] = useState<"site" | "v5" | "v6" | "v7" | "v8" | "v9" | "v10">("site");
   // v12 (01/10): v11 with the typographic hero; &h=bi | hi | si picks the headline (si default)
   const [typeHero, setTypeHero] = useState<HeadlineId | undefined>(undefined);
-  // v14 (02/10): «Thynk Clean», the ubernatural.io style on white, one page
-  const [clean, setClean] = useState(false);
+  // v14 (02/10): «Thynk Clean», the ubernatural.io style on white, in English — the default face since 02/10 (Mike).
+  // The previous default (v11 multi-page, Greek) stays on ?v=11; v12/v13 on ?v=12 / ?v=13.
+  const [clean, setClean] = useState(true);
   useEffect(() => {
     if (!shouldShowSite()) return;
     const q = new URLSearchParams(window.location.search);
-    if (q.get("v") === "14") {
-      setClean(true);
-      return;
-    }
+    const v = q.get("v");
+    if (v && v !== "14") setClean(false);
+    if (v === "11") return;
     // v13 (01/10): v12 + the "Thynk Flow" planet field instead of the v11 particle shapes
     if (q.get("v") === "13") {
       setFieldChoice("planet");
@@ -74,7 +74,6 @@ function Index() {
       setTypeHero(h === "hi" || h === "bi" ? h : "si");
       return;
     }
-    const v = q.get("v");
     const map: Record<string, typeof face> = { "5": "v5", "6": "v6", "7": "v7", "8": "v8", "9": "v9", "10": "v10" };
     if (v && map[v]) setFace(map[v]);
   }, []);
