@@ -143,12 +143,14 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
     { key: "contact", label: c.ui.contact, to: pathname, hash: "contact" },
   ];
   const current = Math.max(0, items.findIndex((it) => !it.hash && it.to === pathname));
-  const [active, setActive] = useState(current);
+  // the wheel's position, in rows (0 = first item in the middle); turned by scroll / swipe, never by hover
+  const [pos, setPos] = useState(current);
+  const rootRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
-    setActive(current);
+    setPos(current);
     const html = document.documentElement;
     const prev = html.style.overflowY;
     html.style.overflowY = "hidden";
@@ -163,41 +165,74 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
     };
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // scroll / swipe turns the wheel; it settles on the nearest row
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || !open) return;
+    const max = items.length - 1;
+    let p = current;
+    let snap = 0;
+    const set = (v: number) => {
+      p = Math.min(max, Math.max(0, v));
+      setPos(p);
+      window.clearTimeout(snap);
+      snap = window.setTimeout(() => setPos((p = Math.round(p))), 160);
+    };
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      set(p + (e.deltaMode === 1 ? e.deltaY * 33 : e.deltaY) / 160);
+    };
+    let ty = 0, tp = 0;
+    const onStart = (e: TouchEvent) => ((ty = e.touches[0].clientY), (tp = p));
+    const onMove = (e: TouchEvent) => {
+      e.preventDefault();
+      set(tp + (ty - e.touches[0].clientY) / 64);
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("touchstart", onStart, { passive: true });
+    el.addEventListener("touchmove", onMove, { passive: false });
+    return () => {
+      window.clearTimeout(snap);
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onStart);
+      el.removeEventListener("touchmove", onMove);
+    };
+  }, [open, items.length, current]);
+
   return (
-    <div className={`t14-menu${open ? " open" : ""}`} aria-hidden={!open} inert={!open ? true : undefined}>
+    <div ref={rootRef} className={`t14-menu${open ? " open" : ""}`} aria-hidden={!open} inert={!open ? true : undefined}>
       <div className="t14-menu-top">
         <Link to={href(v14Routes.home)} aria-label={c.ui.home} onClick={onClose}><Logo /></Link>
         <button ref={closeRef} type="button" className="t14-menu-x" aria-label={c.ui.closeMenu} onClick={onClose}>
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
         </button>
       </div>
-      <nav
-        className="t14-wheel"
-        aria-label={c.ui.mainMenu}
-        style={{ "--shift": (items.length - 1) / 2 - active } as React.CSSProperties}
-        onMouseLeave={() => setActive(current)}
-      >
+      <nav className="t14-wheel" aria-label={c.ui.mainMenu}>
         {items.map((it, i) => {
-          const d = i - active;
+          // rows sit on a circle seen edge-on: the middle one furthest out, the rest curve back and tilt
+          const d = i - pos;
           const a = Math.abs(d);
+          const th = (d * 15 * Math.PI) / 180;
+          const x = (Math.cos(th) - 1) * 4.6; // em
+          const y = Math.sin(th) * 4.6; // em
           const style = {
-            "--d": d,
-            "--a": a,
-            "--i": i,
+            transform: `translate(${x}em, calc(${y}em - 50%)) rotate(${d * 15}deg)`,
+            opacity: Math.max(0, 1 - a * 0.24),
+            filter: a < 0.5 ? "none" : `blur(${(a * 1.5).toFixed(2)}px)`,
+            zIndex: 10 - Math.round(a),
           } as React.CSSProperties;
           return (
             <Link
               key={it.key}
               to={href(it.to)}
               hash={it.hash}
-              className={`t14-wheel-i${d === 0 ? " on" : ""}`}
+              className={`t14-wheel-i${a < 0.5 ? " on" : ""}`}
               style={style}
               aria-current={!it.hash && it.to === pathname ? "page" : undefined}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
+              onFocus={() => setPos(i)}
               onClick={onClose}
             >
-              {it.label}
+              <span>{it.label}</span>
             </Link>
           );
         })}
