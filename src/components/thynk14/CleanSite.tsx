@@ -157,6 +157,22 @@ function CleanPage() {
     };
   }, []);
 
+  // the giant "Λύσεις" fills the content width exactly, whatever the font metrics
+  useEffect(() => {
+    const el = rootRef.current?.querySelector<HTMLElement>(".t14-giant");
+    if (!el) return;
+    const fit = () => {
+      el.style.fontSize = "";
+      const box = el.parentElement!.clientWidth - parseFloat(getComputedStyle(el.parentElement!).paddingLeft) * 2;
+      const w = el.scrollWidth;
+      if (w > 0) el.style.fontSize = `${(parseFloat(getComputedStyle(el).fontSize) * box) / w}px`;
+    };
+    fit();
+    document.fonts?.ready.then(fit);
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
   // all scroll-driven motion in one rAF loop
   useEffect(() => {
     const root = rootRef.current;

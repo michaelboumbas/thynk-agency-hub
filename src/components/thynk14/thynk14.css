@@ -457,6 +457,7 @@
   color: var(--ink-2);
 }
 .t14-giant {
+  display: inline-block; /* measured by the fit-to-width effect */
   margin: clamp(10px, 3vh, 40px) 0 clamp(30px, 5vh, 60px) -0.04em;
   font-size: clamp(80px, 23vw, 360px);
   font-weight: 400;
@@ -471,7 +472,7 @@
 }
 .t14-list li {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 14rem);
   gap: 16px;
   align-items: baseline;
   padding: 14px 0;
