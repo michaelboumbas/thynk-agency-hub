@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useCopy } from "./i18n";
 import { Link } from "@tanstack/react-router";
 import { calculator as C } from "@/content/site-v5";
@@ -62,13 +62,7 @@ export function HomePage() {
       <div className="t14-wrap"><MoreLink to={href(v14Routes.audit)}>{c.more.audit}</MoreLink></div>
 
       {/* 02/10 (Mike): the cost calculator on the home page too, right before the form: see the cost, then book */}
-      <section className="t14-wrap t14-calc-sec" id="calculator">
-        <Label>{c.calc.label}</Label>
-        <h2 className="t14-h2">{c.calc.title}</h2>
-        <p className="t14-lead">{c.calc.lead}</p>
-        <Calculator />
-        <p className="t14-sol-note">{c.calc.note}</p>
-      </section>
+      <CalcSection className="t14-calc-sec" />
 
       <section className="t14-book t14-wrap" id="book">
         <BookForm idPrefix="home" />
@@ -183,7 +177,7 @@ function Range({ id, label, value, min, max, display, onChange }: {
   );
 }
 
-function Calculator() {
+function Calculator({ pre = "calc", sheet = false }: { pre?: string; sheet?: boolean }) {
   const { c } = useCopy();
   const [industry, setIndustry] = useState("hosp");
   const [team, setTeam] = useState(6);
@@ -216,18 +210,24 @@ function Calculator() {
 
   return (
     <div className="t14-calc">
+      {sheet && (
+        <div className="t14-calc-sticky" aria-hidden="true">
+          <small>{c.calc.yearLabel}</small>
+          <b>€{fmt(r.yearCost)}</b> <span>{c.calc.perYear}</span>
+        </div>
+      )}
       <form className="t14-calc-form" onSubmit={(e: FormEvent) => e.preventDefault()}>
         <div className="t14-f">
-          <label htmlFor="calc-ind">{c.calc.industry}</label>
-          <select id="calc-ind" value={industry} onChange={(e) => setIndustry(e.target.value)}>
+          <label htmlFor={`${pre}-ind`}>{c.calc.industry}</label>
+          <select id={`${pre}-ind`} value={industry} onChange={(e) => setIndustry(e.target.value)}>
             {c.calc.industries.map((i) => (
               <option key={i.id} value={i.id}>{i.label}</option>
             ))}
           </select>
         </div>
-        <Range id="calc-team" label={c.calc.team} value={team} min={1} max={40} display={String(team)} onChange={setTeam} />
-        <Range id="calc-hours" label={c.calc.hours} value={hours} min={1} max={25} display={String(hours)} onChange={setHours} />
-        <Range id="calc-rate" label={c.calc.rate} value={rate} min={5} max={40} display={`€${rate}`} onChange={setRate} />
+        <Range id={`${pre}-team`} label={c.calc.team} value={team} min={1} max={40} display={String(team)} onChange={setTeam} />
+        <Range id={`${pre}-hours`} label={c.calc.hours} value={hours} min={1} max={25} display={String(hours)} onChange={setHours} />
+        <Range id={`${pre}-rate`} label={c.calc.rate} value={rate} min={5} max={40} display={`€${rate}`} onChange={setRate} />
         <fieldset className="t14-tasks">
           <legend>{c.calc.where}</legend>
           {TASK_IDS.map((k) => (
@@ -257,6 +257,59 @@ function Calculator() {
         <p className="t14-calc-how">{c.calc.how(team, hours, rate)}</p>
       </aside>
     </div>
+  );
+}
+
+/** the calculator section: inline on desktop; on phones a short teaser that opens it as a bottom sheet */
+function CalcSection({ className }: { className?: string }) {
+  const { c } = useCopy();
+  const [open, setOpen] = useState(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const openRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const html = document.documentElement;
+    const prev = html.style.overflow;
+    html.style.overflow = "hidden";
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      html.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+      openRef.current?.focus();
+    };
+  }, [open]);
+  const toBook = () => {
+    setOpen(false);
+    requestAnimationFrame(() => document.getElementById("book")?.scrollIntoView({ behavior: "smooth" }));
+  };
+  return (
+    <section className={`t14-wrap${className ? " " + className : ""}`} id="calculator">
+      <Label>{c.calc.label}</Label>
+      <h2 className="t14-h2">{c.calc.title}</h2>
+      <p className="t14-lead">{c.calc.lead}</p>
+      <div className="t14-calc-inline">
+        <Calculator />
+        <p className="t14-sol-note">{c.calc.note}</p>
+      </div>
+      <button ref={openRef} type="button" className="t14-pill lg t14-calc-open" onClick={() => setOpen(true)} aria-haspopup="dialog">
+        {c.calc.open}
+      </button>
+      {open && (
+        <div className="t14-sheet-back" onClick={() => setOpen(false)}>
+          <div className="t14-sheet" role="dialog" aria-modal="true" aria-label={c.calc.title} onClick={(e) => e.stopPropagation()}>
+            <div className="t14-sheet-head">
+              <b>{c.calc.title}</b>
+              <button ref={closeRef} type="button" className="t14-sheet-x" onClick={() => setOpen(false)} aria-label={c.calc.close}>×</button>
+            </div>
+            <Calculator pre="calc-m" sheet />
+            <p className="t14-sol-note">{c.calc.note}</p>
+            <button type="button" className="t14-pill lg t14-sheet-cta" onClick={toBook}>{c.calc.cta}</button>
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -300,13 +353,7 @@ export function AuditPage() {
         </div>
       </section>
 
-      <section className="t14-wrap" id="calculator">
-        <Label>{c.calc.label}</Label>
-        <h2 className="t14-h2">{c.calc.title}</h2>
-        <p className="t14-lead">{c.calc.lead}</p>
-        <Calculator />
-        <p className="t14-sol-note">{c.calc.note}</p>
-      </section>
+      <CalcSection />
 
       <Faq title={s.faqTitle} items={s.faq} id="audit-faq" />
 

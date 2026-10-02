@@ -412,6 +412,9 @@ export const v14AuditPage = {
 
 export const v14Calc = {
   label: "Calculator",
+  open: "Calculate your cost",
+  close: "Close",
+  cta: "Book an audit",
   title: "What do repetitive tasks cost you?",
   lead: "Enter your team's numbers for an instant, indicative estimate. The exact figure comes from the audit.",
   industry: "INDUSTRY",

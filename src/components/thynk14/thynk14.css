@@ -2206,3 +2206,102 @@
   opacity: 1;
   transform: none;
 }
+
+/* calculator on phones: a teaser button that opens it as a bottom sheet (02/10, Mike) */
+.t14-calc-open,
+.t14-sheet-back {
+  display: none;
+}
+@media (max-width: 900px) {
+  .t14-calc-inline {
+    display: none;
+  }
+  .t14-calc-open {
+    display: inline-flex;
+    margin-top: 22px;
+  }
+  .t14-sheet-back {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(15, 16, 18, 0.45);
+    animation: t14-fade 0.25s ease;
+  }
+  .t14-sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 92svh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 var(--gut) calc(28px + env(safe-area-inset-bottom));
+    background: var(--paper);
+    border-radius: 18px 18px 0 0;
+    animation: t14-up 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .t14-sheet-head {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 0 12px;
+    background: var(--paper);
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .t14-sheet-x {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 40px;
+    background: var(--paper-2);
+    font-size: 24px;
+    line-height: 1;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .t14-calc-sticky {
+    position: sticky;
+    top: 68px;
+    z-index: 2;
+    margin: 0 calc(-1 * var(--gut)) 14px;
+    padding: 10px var(--gut) 12px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .t14-calc-sticky small {
+    display: block;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+  .t14-calc-sticky b {
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    color: var(--orange);
+  }
+  .t14-calc-sticky span {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  .t14-sheet-cta {
+    width: 100%;
+    justify-content: center;
+    margin-top: 18px;
+  }
+}
+@keyframes t14-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes t14-fade {
+  from {
+    opacity: 0;
+  }
+}
