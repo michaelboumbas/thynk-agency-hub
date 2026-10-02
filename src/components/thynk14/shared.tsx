@@ -193,7 +193,7 @@ export function SolutionsList({ withHead = true }: { withHead?: boolean }) {
           <h2 className="t14-giant">{c.solutions.title}</h2>
         </>
       )}
-      <ul className="t14-list">
+      <ul className="t14-list t14-seq">
         {c.solutions.items.map((it) => (
           <li
             key={it.name}

@@ -7,8 +7,8 @@ import { clamp, ease, progress } from "./shared";
  *   .t14-method  ghost word letters light up, four cards fly in on a diagonal, then leave together
  *   .t14-hz      the panel track slides left over the title
  *   .t14-giant   the giant word fills the content width exactly (re-fit when Inter loads and on resize)
- * Re-scans when `key` changes (a new page). On phones (≤900px) the sticky stages are a normal flow in CSS
- * and the loop leaves them alone. prefers-reduced-motion: everything shown at rest.
+ * Re-scans when `key` changes (a new page). Phones (≤900px) get the same stages: the method cards slide in
+ * from the left on a diagonal, the panel track slides left. .t14-seq rows arrive one by one. prefers-reduced-motion: everything shown at rest.
  */
 export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: string) {
   // giant words
@@ -18,10 +18,8 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
     const els = [...root.querySelectorAll<HTMLElement>(".t14-giant")];
     // ghost words (Method, How we work, Αρχές συνεργασίας…) must fit the stage on desktop
     const ghosts = [...root.querySelectorAll<HTMLElement>(".t14-ghost")];
-    const narrowQ = window.matchMedia("(max-width: 900px)");
     const fitGhost = (el: HTMLElement) => {
       el.style.fontSize = "";
-      if (narrowQ.matches) return;
       const room = el.clientWidth * 0.94;
       if (el.scrollWidth > room) el.style.fontSize = `${(parseFloat(getComputedStyle(el).fontSize) * room) / el.scrollWidth}px`;
     };
@@ -70,6 +68,13 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
       el,
       track: el.querySelector<HTMLElement>(".t14-hz-track")!,
     }));
+    // lists whose rows arrive one by one (solutions)
+    const seqRows = reduced
+      ? []
+      : [...root.querySelectorAll<HTMLElement>(".t14-seq")].flatMap((ul) => {
+          ul.classList.add("ready");
+          return [...ul.querySelectorAll<HTMLElement>(":scope > li")];
+        });
 
     if (reduced) {
       reveals.forEach((r) => r.words.forEach((w) => w.classList.add("on")));
@@ -90,17 +95,28 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
       }
 
       methods.forEach(({ el, letters, cards }) => {
-        if (narrow) {
-          letters.forEach((l) => (l.className = "on"));
-          cards.forEach((c) => (c.style.transform = ""));
-          return;
-        }
         const p = progress(el);
         const lit = p * letters.length * 1.6;
         letters.forEach((l, i) => {
           const d = lit - i;
           l.className = reduced ? "on" : d > 2.2 ? "lit" : d > 0 ? "on" : "";
         });
+        if (narrow) {
+          // phones: a deck on a diagonal, each card slides in from the left, then all leave upwards
+          const n = cards.length;
+          const cw = cards[0]?.offsetWidth ?? 0;
+          const gut = 20;
+          const spread = Math.max(0, W - cw - gut * 2);
+          const exit = reduced ? 0 : ease(clamp((p - 0.88) / 0.12, 0, 1));
+          cards.forEach((c, i) => {
+            const start = 0.1 + i * 0.18;
+            const k = reduced ? 1 : ease(clamp((p - start) / 0.16, 0, 1));
+            const x = gut + (n > 1 ? (i * spread) / (n - 1) : 0);
+            const y = H * 0.12 + i * H * 0.075;
+            c.style.transform = `translate3d(${x - (1 - k) * (x + cw + 40)}px,${y - exit * H * 1.1}px,0)`;
+          });
+          return;
+        }
         const xs = [0.05, 0.29, 0.53, 0.77], ys = [0.12, 0.3, 0.48, 0.3];
         cards.forEach((c, i) => {
           const start = 0.12 + i * 0.13;
@@ -113,12 +129,12 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
       });
 
       tracks.forEach(({ el, track }) => {
-        if (narrow) {
-          track.style.transform = "";
-          return;
-        }
         const p = progress(el);
         track.style.transform = `translate3d(${-ease(p) * Math.max(0, track.scrollWidth - W)}px,0,0)`;
+      });
+
+      seqRows.forEach((li) => {
+        if (!li.classList.contains("in") && li.getBoundingClientRect().top < H * 0.9) li.classList.add("in");
       });
 
       raf = requestAnimationFrame(frame);

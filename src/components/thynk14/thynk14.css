@@ -904,7 +904,7 @@
     width: 100%;
     min-height: 0;
     margin-bottom: 12px;
-    transform: none !important;
+    transform: none;
   }
   .t14-num {
     margin-top: 18px;
@@ -944,7 +944,7 @@
   .t14-hz-track {
     position: static;
     flex-direction: column;
-    transform: none !important;
+    transform: none;
   }
   .t14-panel {
     width: 100%;
@@ -2108,4 +2108,101 @@
     font-size: clamp(36px, 10.5vw, 90px);
     font-stretch: 115%;
   }
+}
+
+/* ======================= 02/10 mobile motion (Mike) =======================
+   Phones get the desktop moments back: Method / How we work as a sticky stage with the ghost word
+   behind and the cards sliding in from the left; the audit / AI panels as a horizontal track. */
+@media (max-width: 900px) {
+  .t14-method {
+    height: 380vh;
+  }
+  .t14-method-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+    padding: 0;
+  }
+  .t14-ghost {
+    position: absolute;
+    left: var(--gut);
+    right: var(--gut);
+    top: 84%;
+    transform: translateY(-50%);
+    margin: 0;
+    text-align: center;
+    white-space: normal;
+    line-height: 0.95;
+    font-size: 17vw;
+  }
+  .t14-ghost span {
+    color: var(--line);
+  }
+  .t14-mcard {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: min(76vw, 320px);
+    min-height: 0;
+    margin: 0;
+    box-shadow: 0 24px 50px -34px rgba(15, 16, 18, 0.4);
+    transform: translate3d(-110vw, 0, 0);
+  }
+  .t14-mcard .t14-num {
+    margin-top: 14px;
+  }
+
+  .t14-hz {
+    height: 330vh;
+    margin-top: 60px;
+  }
+  .t14-hz-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+  }
+  .t14-hz-title {
+    position: absolute;
+    left: var(--gut);
+    right: var(--gut);
+    top: 84px;
+    bottom: auto;
+    padding: 0;
+  }
+  .t14-hz-track {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 0 var(--gut) 5svh 0;
+  }
+  .t14-spacer {
+    display: block;
+    width: calc(100vw - var(--gut));
+  }
+  .t14-panel {
+    width: min(80vw, 340px);
+    min-height: min(56svh, 420px);
+    border: 1px solid var(--line);
+  }
+}
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .t14-ghost span {
+    color: var(--ink);
+  }
+}
+
+/* solutions list: rows arrive one by one as you scroll (JS adds .ready, then .in per row) */
+.t14-seq.ready > li {
+  opacity: 0;
+  transform: translate3d(-28px, 0, 0);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1), padding 0.25s;
+}
+.t14-seq.ready > li.in {
+  opacity: 1;
+  transform: none;
 }
