@@ -8,7 +8,9 @@ import { v14Footer, v14Hero, v14Menu, v14Routes } from "@/content/site-v14";
 import { Logo } from "./shared";
 import { useCleanMotion } from "./motion";
 
-const INTER_HREF = "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap";
+// Inter for text; TikTok Sans (Grilli Type, has Greek, width 75–150%) for titles — Mike 02/10/2026
+const INTER_HREF =
+  "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=TikTok+Sans:opsz,wdth,wght@12..36,75..150,300..900&display=swap";
 
 /**
  * v14 shell: header (logo · pages · Book an audit), the v13 dot planet behind every page, footer.
@@ -21,7 +23,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: string }
   const hash = useRouterState({ select: (s) => s.location.hash });
   useCleanMotion(rootRef, pathname);
 
-  // Inter, only for this version
+  // the two faces, only for this version
   useEffect(() => {
     if (document.querySelector(`link[href="${INTER_HREF}"]`)) return;
     const l = document.createElement("link");

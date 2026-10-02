@@ -10,6 +10,8 @@
   --orange: #ff6a1a;
   --f: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --f-logo: "Anton", Impact, "Arial Narrow", sans-serif;
+  /* titles: TikTok Sans, stretched wide (Mike 02/10/2026). Has Greek for the future Greek version. */
+  --f-display: "TikTok Sans", "Inter", system-ui, sans-serif;
   --gut: clamp(16px, 4vw, 56px);
   background: var(--paper);
   color: var(--ink);
@@ -1664,5 +1666,138 @@
 @media (max-width: 520px) {
   .t14-hdr .t14-pill {
     display: none; /* the menu has room for it */
+  }
+}
+
+
+/* ======================= display face for titles (02/10, TikTok Sans) =======================
+   Text, lists, forms and small labels stay in Inter. Widths via font-stretch (the wdth axis). */
+.t14 h1,
+.t14-giant,
+.t14-ghost,
+.t14-hz-title,
+.t14-h2,
+.t14-final h2,
+.t14-faq h2,
+.t14-form h2,
+.t14-book-side h2,
+.t14-team-line h3,
+.t14-pillar-head h2,
+.t14-example-text h2,
+.t14-founder h2,
+.t14-panel h3,
+.t14-mcard h3,
+.t14-values h3,
+.t14-flow h3,
+.t14-num,
+.t14-pillar-n,
+.t14-calc-big,
+.t14-initials {
+  font-family: var(--f-display);
+  font-optical-sizing: auto;
+}
+
+/* hero */
+.t14 h1 {
+  font-size: clamp(34px, 5.4vw, 88px);
+  line-height: 1;
+}
+.t14-h1-a {
+  font-weight: 400;
+  font-stretch: 125%;
+  letter-spacing: -0.035em;
+}
+.t14-h1-b {
+  font-weight: 800;
+  font-stretch: 150%;
+  letter-spacing: -0.04em;
+}
+
+/* the big moments: widest, bold */
+.t14-giant,
+.t14-ghost {
+  font-weight: 700;
+  font-stretch: 150%;
+  letter-spacing: -0.045em;
+}
+.t14-ghost {
+  font-size: clamp(48px, 9.4vw, 150px);
+}
+.t14-hz-title {
+  max-width: 9em;
+  font-size: clamp(42px, 6.2vw, 104px);
+  font-weight: 700;
+  font-stretch: 140%;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+/* section titles */
+.t14-h2,
+.t14-final h2,
+.t14-faq h2,
+.t14-book-side h2,
+.t14-pillar-head h2,
+.t14-example-text h2,
+.t14-founder h2 {
+  font-weight: 700;
+  font-stretch: 130%;
+  letter-spacing: -0.04em;
+}
+.t14-faq h2 span {
+  font-weight: 400;
+}
+.t14-form h2,
+.t14-team-line h3 {
+  font-weight: 600;
+  font-stretch: 125%;
+  letter-spacing: -0.03em;
+}
+
+/* card and panel titles */
+.t14-panel h3,
+.t14-mcard h3,
+.t14-values h3,
+.t14-flow h3 {
+  font-weight: 600;
+  font-stretch: 120%;
+  letter-spacing: -0.025em;
+}
+.t14-panel h3 {
+  font-size: clamp(24px, 2.2vw, 34px);
+}
+
+/* numbers */
+.t14-num,
+.t14-pillar-n,
+.t14-calc-big {
+  font-weight: 500;
+  font-stretch: 140%;
+  letter-spacing: -0.05em;
+}
+.t14-initials {
+  font-weight: 600;
+  font-stretch: 130%;
+  font-size: 26px;
+}
+
+@media (max-width: 520px) {
+  .t14 h1 {
+    font-size: clamp(30px, 9vw, 40px);
+  }
+  .t14-h1-b {
+    font-stretch: 120%;
+  }
+  .t14-hz-title {
+    font-stretch: 120%;
+  }
+}
+@media (max-width: 900px) {
+  .t14-flow li {
+    grid-template-columns: 96px 1fr;
+  }
+  .t14-flow .t14-num {
+    font-size: 40px;
+    font-stretch: 120%;
   }
 }
