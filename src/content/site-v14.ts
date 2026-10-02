@@ -22,7 +22,7 @@ export const v14Hero = {
 
 export const v14About = {
   label: "Thynk",
-  text: "Thynk is a digital agency combining marketing and digital transformation, with artificial intelligence at the core of every solution. Every engagement starts with analysis, to find where time, customers and revenue are being lost. We then design and build the solutions that fix it. We recommend only what is evidence-based and measurable.",
+  text: "We help businesses grow: more customers, leaner operations, results you can measure. We do it through marketing and digital transformation, with artificial intelligence at the core of every solution. We work not as a vendor but as a strategic partner, treating every business as our own, because its success is our success.",
   founders: "Dimitris Chrysochoou & Michael Boumpas",
   foundersNote: "A senior team you talk to directly. Every engagement starts with an audit.",
 };
