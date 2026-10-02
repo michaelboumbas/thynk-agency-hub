@@ -2472,6 +2472,11 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(20px, 3vw, 44px);
   max-width: 940px;
+  margin-inline: auto;
+}
+.t14-team-sec .t14-lbl {
+  align-items: center;
+  margin-bottom: 34px;
 }
 .t14-photo {
   position: relative;
@@ -2532,5 +2537,46 @@
   .t14-team-grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+}
+
+/* solutions on phones: grouped by service, names only */
+.t14-sol-m {
+  display: none;
+}
+@media (max-width: 700px) {
+  .t14-sol-d,
+  .t14-sol-d + .t14-sol-m + .t14-sol-note {
+    display: none;
+  }
+  .t14-sol-m {
+    display: grid;
+    gap: 34px;
+    margin-top: 26px;
+  }
+  .t14-sol-g h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .t14-sol-g h3 span {
+    color: var(--orange);
+  }
+  .t14-sol-g ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .t14-sol-g li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 20px;
+    letter-spacing: -0.02em;
   }
 }

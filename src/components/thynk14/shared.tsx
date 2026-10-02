@@ -193,7 +193,7 @@ export function SolutionsList({ withHead = true }: { withHead?: boolean }) {
           <h2 className="t14-giant">{c.solutions.title}</h2>
         </>
       )}
-      <ul className="t14-list t14-seq">
+      <ul className="t14-list t14-seq t14-sol-d">
         {c.solutions.items.map((it) => (
           <li
             key={it.name}
@@ -206,6 +206,24 @@ export function SolutionsList({ withHead = true }: { withHead?: boolean }) {
           </li>
         ))}
       </ul>
+      {/* phones: the same solutions grouped under their two services, names only (Mike 02/10) */}
+      <div className="t14-sol-m">
+        {["Marketing", "Digital Transformation"].map((pl) => {
+          const list = c.solutions.items.filter((it) => it.pillar === pl);
+          return (
+            <div key={pl} className="t14-sol-g">
+              <h3>
+                {pl} <span>{String(list.length).padStart(2, "0")}</span>
+              </h3>
+              <ul className="t14-seq">
+                {list.map((it) => (
+                  <li key={it.name}>{it.name}</li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
       <p className="t14-sol-note">{c.solutions.note}</p>
       <div className={`t14-peek${peek ? " on" : ""}`} ref={peekRef} aria-hidden="true">
         {peek && <Screen id={peek} />}
