@@ -322,7 +322,7 @@ type BookKey = "first" | "last" | "email" | "phone" | "biz";
 
 export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
   const { c } = useCopy();
-  const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", biz: "", industry: "", pain: c.book.pain.options[0] });
+  const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", biz: "", industry: "", pain: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
 
@@ -332,11 +332,14 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
     if (!form.first.trim()) errs.first = c.book.first.error;
     if (!form.last.trim()) errs.last = c.book.last.error;
     if (!/^\S+@\S+\.\S+$/.test(form.email)) errs.email = c.book.email.error;
+    if (form.phone.replace(/\D/g, "").length < 10) errs.phone = c.book.phone.error;
     if (!form.biz.trim()) errs.biz = c.book.biz.error;
+    if (!form.industry) errs.industry = c.book.industry.error;
+    if (!form.pain) errs.pain = c.book.pain.error;
     setErrors(errs);
     const first = Object.keys(errs)[0];
     if (first) {
-      document.getElementById(`${idPrefix}-${first}`)?.focus();
+      document.getElementById(first === "pain" ? `${idPrefix}-pain-0` : `${idPrefix}-${first}`)?.focus();
       return;
     }
     setSent(true);
@@ -375,31 +378,37 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
         {field("first", "text", "given-name")}
         {field("last", "text", "family-name")}
         {field("email", "email", "email")}
-        {field("phone", "tel", "tel", true)}
+        {field("phone", "tel", "tel")}
         {field("biz", "text", "organization")}
         <div className="t14-f">
           <label htmlFor={`${idPrefix}-industry`}>
             {c.book.industry.label}
-            <em className="t14-opt"> · {c.book.optional}</em>
           </label>
-          <select id={`${idPrefix}-industry`} value={form.industry} onChange={(e) => setForm({ ...form, industry: e.target.value })}>
+          <select
+            id={`${idPrefix}-industry`}
+            value={form.industry}
+            aria-invalid={!!errors.industry}
+            aria-describedby={`${idPrefix}-industry-e`}
+            onChange={(e) => setForm({ ...form, industry: e.target.value })}
+          >
             <option value="">{c.book.industry.placeholder}</option>
             {c.book.industry.options.map((o) => (
               <option key={o}>{o}</option>
             ))}
           </select>
-          <span className="t14-err" aria-hidden="true" />
+          <span className="t14-err" id={`${idPrefix}-industry-e`}>{errors.industry ?? ""}</span>
         </div>
         <div className="t14-f t14-f-wide">
           <span className="t14-flabel" id={`${idPrefix}-pain-l`}>{c.book.pain.label}</span>
           <div className="t14-tasks t14-pains" role="radiogroup" aria-labelledby={`${idPrefix}-pain-l`}>
-            {c.book.pain.options.map((o) => (
+            {c.book.pain.options.map((o, i) => (
               <label key={o} className={form.pain === o ? "on" : undefined}>
-                <input type="radio" name={`${idPrefix}-pain`} value={o} checked={form.pain === o} onChange={() => setForm({ ...form, pain: o })} />
+                <input id={`${idPrefix}-pain-${i}`} type="radio" name={`${idPrefix}-pain`} value={o} checked={form.pain === o} aria-invalid={!!errors.pain} onChange={() => setForm({ ...form, pain: o })} />
                 {o}
               </label>
             ))}
           </div>
+          <span className="t14-err" role="alert">{errors.pain ?? ""}</span>
         </div>
       </div>
       <div className="t14-form-foot">
