@@ -422,3 +422,77 @@ export function AboutPage() {
     </>
   );
 }
+
+/* ---------- contact (02/10, Mike): office, phone, email, hours, map, the audit button ---------- */
+const MAP_SRC =
+  "https://www.openstreetmap.org/export/embed.html?bbox=20.8455%2C39.6620%2C20.8585%2C39.6690&layer=mapnik&marker=39.6656%2C20.8519";
+
+export function ContactPage() {
+  const { c, href } = useCopy();
+  const k = c.contactPage;
+  const link = (id: string, value: string) =>
+    id === "phone"
+      ? `tel:${value.replace(/\s+/g, "")}`
+      : id === "email"
+        ? `mailto:${value}`
+        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(k.mapsQuery)}`;
+  return (
+    <>
+      <PageHead p={c.pageHeads.contact} />
+
+      <section className="t14-wrap t14-contact">
+        <Label>{k.cardsLabel}</Label>
+        <ul className="t14-ccards">
+          {k.cards.map((cd, i) => {
+            const ext = cd.id === "address";
+            return (
+              <li key={cd.id} className={`t14-ccard${i === 0 ? " key" : ""}`}>
+                <small>0{i + 1} · {cd.kicker}</small>
+                <b>{cd.value}</b>
+                <span>{cd.sub}</span>
+                <a href={link(cd.id, cd.value)} {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                  {cd.action} <i aria-hidden="true">→</i>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="t14-cmap-row">
+          <div className="t14-cmap">
+            <iframe title={k.mapTitle} src={MAP_SRC} loading="lazy" referrerPolicy="no-referrer" />
+          </div>
+          <aside className="t14-chours">
+            <h3>{k.hoursTitle}</h3>
+            <ul>
+              {k.hours.map((h) => (
+                <li key={h.d}><span>{h.d}</span><b>{h.t}</b></li>
+              ))}
+            </ul>
+            <p>{k.hoursNote}</p>
+          </aside>
+        </div>
+      </section>
+
+      <section className="t14-wrap t14-cnext">
+        <h2 className="t14-h2">{k.stepsTitle}</h2>
+        <ol>
+          {k.steps.map((st, i) => (
+            <li key={st.title}>
+              <span className="t14-num"><sup>#.</sup>0{i + 1}</span>
+              <div><h3>{st.title}</h3><p>{st.text}</p></div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="t14-wrap t14-cbook">
+        <div>
+          <h2>{k.bookTitle}</h2>
+          <p>{k.bookText}</p>
+        </div>
+        <Link className="t14-pill lg" to={href(v14Routes.audit)} hash="book">{k.bookButton}</Link>
+      </section>
+    </>
+  );
+}

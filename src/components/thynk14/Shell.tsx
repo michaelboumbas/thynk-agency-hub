@@ -140,7 +140,6 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
   const items = [
     { key: "home", label: c.ui.homeLabel, to: v14Routes.home as V14Path, hash: undefined as string | undefined },
     ...c.menu.map((n) => ({ key: n.to, label: n.label, to: n.to as V14Path, hash: undefined as string | undefined })),
-    { key: "contact", label: c.ui.contact, to: pathname, hash: "contact" },
   ];
   const current = Math.max(0, items.findIndex((it) => !it.hash && it.to === pathname));
   // the wheel's position, in rows (0 = first item in the middle); turned by scroll / swipe, never by hover

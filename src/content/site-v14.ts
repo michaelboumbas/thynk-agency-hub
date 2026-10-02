@@ -131,9 +131,9 @@ export const v14Faq = {
 
 export const v14Footer = {
   contact: "hello@thynkagency.gr",
-  // ⚠️ to fill in (Mike, 02/10): office phone and street address in Ioannina. Empty = not shown.
-  phone: "",
-  address: "",
+  // ⚠️ DEMO values (Mike, 02/10): replace with the real office phone and street address in Ioannina.
+  phone: "+30 690 000 0000",
+  address: "Pyrrou Square 1, 453 32 Ioannina",
   city: "Ioannina, Greece",
   year: "© 2026",
   faq: "FAQ",
@@ -206,6 +206,7 @@ export const v14Routes = {
   solutions: "/solutions",
   audit: "/audit",
   about: "/about",
+  contact: "/contact",
 } as const;
 
 export const v14Menu = [
@@ -213,6 +214,7 @@ export const v14Menu = [
   { to: v14Routes.solutions, label: "Solutions" },
   { to: v14Routes.audit, label: "Audit" },
   { to: v14Routes.about, label: "About" },
+  { to: v14Routes.contact, label: "Contact" },
 ] as const;
 
 export const v14More = {
@@ -243,6 +245,38 @@ export const v14PageHeads = {
     title: "About",
     lead: "Thynk Digital Agency is based in Ioannina, Greece, and specializes in marketing and digital transformation with artificial intelligence. We work with every business as a strategic partner.",
   },
+  contact: {
+    label: "Contact",
+    title: "Contact",
+    lead: "Visit us at the office, call or send an email. For a full picture of your business, start with an audit.",
+  },
+};
+
+/* the contact page (02/10, Mike). ⚠️ address, phone and hours are DEMO values until the real ones arrive. */
+export const v14ContactPage = {
+  cardsLabel: "Get in touch",
+  cards: [
+    { id: "address", kicker: "Office", value: "Pyrrou Square 1", sub: "453 32 Ioannina, Greece", action: "Get directions" },
+    { id: "phone", kicker: "Phone", value: "+30 690 000 0000", sub: "Mon–Fri, 09:00–17:00", action: "Call us" },
+    { id: "email", kicker: "Email", value: "hello@thynkagency.gr", sub: "For questions and proposals", action: "Send an email" },
+  ],
+  mapsQuery: "Pyrrou Square, Ioannina",
+  hoursTitle: "Office hours",
+  hours: [
+    { d: "Monday – Friday", t: "09:00 – 17:00" },
+    { d: "Saturday – Sunday", t: "Closed" },
+  ],
+  hoursNote: "Office visits by appointment, so the right person is there for you.",
+  mapTitle: "Map: Thynk office in Ioannina",
+  bookTitle: "Ready for a clear picture of your business?",
+  bookText: "The audit shows where you lose time and customers, and what to fix first.",
+  bookButton: "Book an audit",
+  stepsTitle: "What happens next",
+  steps: [
+    { title: "You get in touch", text: "By phone, email or the audit form, whichever suits you." },
+    { title: "A short call", text: "We get to know your business and what matters most to you right now." },
+    { title: "The next step", text: "If there is a fit, we propose an audit with a clear scope and cost." },
+  ],
 };
 
 export const v14Pillars = {
@@ -522,6 +556,7 @@ const enRaw = {
   auditPage: v14AuditPage,
   calc: v14Calc,
   aboutPage: v14AboutPage,
+  contactPage: v14ContactPage,
   final: v14Final,
 };
 
