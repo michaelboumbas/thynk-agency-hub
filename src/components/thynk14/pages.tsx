@@ -424,9 +424,6 @@ export function AboutPage() {
 }
 
 /* ---------- contact (02/10, Mike): office, phone, email, hours, map, the audit button ---------- */
-const MAP_SRC =
-  "https://www.openstreetmap.org/export/embed.html?bbox=20.8455%2C39.6620%2C20.8585%2C39.6690&layer=mapnik&marker=39.6656%2C20.8519";
-
 export function ContactPage() {
   const { c, href } = useCopy();
   const k = c.contactPage;
@@ -460,7 +457,11 @@ export function ContactPage() {
 
         <div className="t14-cmap-row">
           <div className="t14-cmap">
-            <iframe title={k.mapTitle} src={MAP_SRC} loading="lazy" referrerPolicy="no-referrer" />
+            <iframe
+              title={k.mapTitle}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(k.mapsQuery)}&z=16&hl=${c.lang}&output=embed`}
+              loading="lazy"
+            />
           </div>
           <aside className="t14-chours">
             <h3>{k.hoursTitle}</h3>
