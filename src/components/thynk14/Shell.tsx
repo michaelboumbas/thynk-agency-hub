@@ -212,13 +212,16 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
           // rows sit on a circle seen edge-on: the middle one furthest out, the rest curve back and tilt
           const d = i - pos;
           const a = Math.abs(d);
-          const th = (d * 15 * Math.PI) / 180;
-          const x = (Math.cos(th) - 1) * 4.6; // em
-          const y = Math.sin(th) * 4.6; // em
+          // 10.5° a row (was 15°: 30% flatter); radius set so the rows keep ~1.34em apart, like liberators.ai
+          const deg = d * 10.5;
+          const th = (deg * Math.PI) / 180;
+          const R = 7.35; // em
+          const x = (Math.cos(th) - 1) * R;
+          const y = Math.sin(th) * R;
           const style = {
-            transform: `translate(${x}em, calc(${y}em - 50%)) rotate(${d * 15}deg)`,
-            opacity: Math.max(0, 1 - a * 0.24),
-            filter: a < 0.5 ? "none" : `blur(${(a * 1.5).toFixed(2)}px)`,
+            transform: `translate(${x.toFixed(3)}em, calc(${y.toFixed(3)}em - 50%)) rotate(${deg.toFixed(2)}deg)`,
+            opacity: Math.max(0.06, 1 - a * 0.26),
+            filter: a < 0.05 ? "none" : `blur(${(a * 2.4).toFixed(2)}px)`,
             zIndex: 10 - Math.round(a),
           } as React.CSSProperties;
           return (
