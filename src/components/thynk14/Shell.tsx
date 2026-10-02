@@ -114,7 +114,13 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
           </div>
           <div>
             <h4>{c.footer.contactLabel}</h4>
-            <ul><li><a href={`mailto:${c.footer.contact}`}>{c.footer.contact}</a></li></ul>
+            <ul>
+              <li><a href={`mailto:${c.footer.contact}`}>{c.footer.contact}</a></li>
+              {c.footer.phone && (
+                <li><a href={`tel:${c.footer.phone.replace(/\s+/g, "")}`} aria-label={c.footer.phoneLabel}>{c.footer.phone}</a></li>
+              )}
+              {c.footer.address && <li className="t14-addr">{c.footer.address}</li>}
+            </ul>
           </div>
           <div className="t14-legal"><b>Thynk Digital Agency</b><br />{c.footer.city}<br />{c.footer.year}</div>
         </footer>

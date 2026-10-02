@@ -22,7 +22,7 @@ export const v14Hero = {
 
 export const v14About = {
   label: "Thynk",
-  text: "Thynk Digital Agency is based in Ioannina, Greece, and specializes in marketing and digital transformation with artificial intelligence. We design and build solutions that cut repetitive work and bring in measurable customers. We work with businesses across Greece and abroad, and in every engagement the founders are directly responsible.",
+  text: "We help businesses grow with marketing and digital transformation powered by artificial intelligence. We find where time and customers are lost, then design and build the solutions that fix it: less repetitive work, more measurable results. Based in Ioannina, we work with businesses across Greece and abroad, and the founders personally lead every engagement.",
   founders: "Dimitris Chrysochoou & Michael Boumpas",
   foundersNote: "A senior team you talk to directly. Every engagement starts with an audit.",
 };
@@ -81,12 +81,24 @@ export const v14Team = {
 
 export const v14Book = {
   title: "Book an audit",
-  lead: "A short description of your business and your priorities.",
-  name: { label: "NAME", placeholder: "Your name", error: "Please enter your name." },
-  biz: { label: "BUSINESS", placeholder: "Company name", error: "Please enter your business." },
+  lead: "Tell us a little about your business, so we come to the first conversation prepared.",
+  // labels are written in capitals in the copy (no CSS uppercase; Greek capitals have no accents)
+  first: { label: "FIRST NAME", placeholder: "Your first name", error: "Please enter your first name." },
+  last: { label: "LAST NAME", placeholder: "Your last name", error: "Please enter your last name." },
   email: { label: "EMAIL", placeholder: "name@company.com", error: "Please enter a valid email." },
-  pain: { label: "WHAT SHOULD WE LOOK AT FIRST", options: ["Calls & appointments", "Messages & email", "Social media", "Customer acquisition", "Invoices & documents", "Quotes"] },
-  submit: "Send",
+  phone: { label: "PHONE", placeholder: "+30 …", error: "" },
+  biz: { label: "BUSINESS", placeholder: "Company name", error: "Please enter your business." },
+  industry: {
+    label: "INDUSTRY",
+    placeholder: "Select your industry",
+    options: ["Hotel / hospitality", "Restaurant / café", "Retail / e-shop", "Clinic / health", "Professional services (accounting, legal, consulting)", "Construction / technical services", "Education / training", "Other"],
+  },
+  optional: "optional",
+  pain: {
+    label: "WHAT SHOULD WE LOOK AT FIRST",
+    options: ["Getting more customers", "Marketing & advertising", "Social media & content", "Automating repetitive work", "Data, reporting & measurement", "Not sure yet: a full review"],
+  },
+  submit: "Send request",
   // front-end only until the back-end (n8n / inbox) is connected
   sent: "Thank you. The form isn't connected to our inbox yet, so please also email hello@thynkagency.gr.",
 };
@@ -117,10 +129,15 @@ export const v14Faq = {
 
 export const v14Footer = {
   contact: "hello@thynkagency.gr",
+  // ⚠️ to fill in (Mike, 02/10): office phone and street address in Ioannina. Empty = not shown.
+  phone: "",
+  address: "",
   city: "Ioannina, Greece",
   year: "© 2026",
   faq: "FAQ",
   contactLabel: "Contact",
+  phoneLabel: "Phone",
+  addressLabel: "Address",
 };
 
 /* the small UI screens that peek over the solutions list (from the site-v9 examples) */
@@ -192,15 +209,15 @@ export const v14Routes = {
 export const v14Menu = [
   { to: v14Routes.services, label: "Services" },
   { to: v14Routes.solutions, label: "Solutions" },
-  { to: v14Routes.audit, label: "The audit" },
-  { to: v14Routes.about, label: "About us" },
+  { to: v14Routes.audit, label: "Audit" },
+  { to: v14Routes.about, label: "About" },
 ] as const;
 
 export const v14More = {
   method: "All services →",
   solutions: "All solutions →",
   audit: "How the audit works →",
-  team: "About us →",
+  team: "About →",
 };
 
 export const v14PageHeads = {
@@ -220,7 +237,7 @@ export const v14PageHeads = {
     lead: "A short, paid service with a specific deliverable that stays yours, whatever happens next.",
   },
   about: {
-    label: "About us",
+    label: "About",
     title: "About",
     lead: "Thynk Digital Agency is based in Ioannina, Greece, and specializes in marketing and digital transformation with artificial intelligence. In every engagement, the founders are directly responsible.",
   },
@@ -430,38 +447,29 @@ export const v14Calc = {
 
 export const v14AboutPage = {
   founders: [
-    {
-      initials: "DC",
-      name: "Dimitris Chrysochoou",
-      role: "Co-founder · Business, data & automation",
-      bio: "Founder of Anadelta Education. Studied Mathematics and Economics at the University of Ioannina, specializing in data analysis and measuring results.",
-      ask: "Talk to him about: automation, data, costing, processes.",
-      email: "dimitris@thynkagency.gr",
-    },
-    {
-      initials: "MB",
-      name: "Michael Boumpas",
-      role: "Co-founder · Marketing, advertising & creative",
-      bio: "Digital Account Manager at an Athens agency, working on e-commerce, CRO and performance marketing. Co-founder of myMetsovo.gr. Studied Entrepreneurship Management (Deree).",
-      ask: "Talk to him about: advertising, social media, content, brand.",
-      email: "mike@thynkagency.gr",
-    },
+    { initials: "DC", name: "Dimitris Chrysochoou", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
+    { initials: "MB", name: "Michael Boumpas", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
   ],
-  where: "Based in Ioannina, Greece. We work with businesses across Greece and abroad, remotely and in person.",
+  linkedinLabel: "LinkedIn",
+  linkedinAria: "on LinkedIn",
   valuesTitle: "How we work",
+  valueWord: "Principle",
   values: [
     { t: "Transparency", d: "We share every finding, even when it isn't what you expected." },
     { t: "Accountable for value", d: "If a service isn't delivering the value you're paying for, we'll be the first to say so." },
     { t: "Clarity", d: "No unnecessary jargon. Every proposal is understandable and measurable." },
     { t: "Collaboration", d: "Real collaboration is a precondition for any result." },
   ],
-  rulesTitle: "How we use artificial intelligence",
+  rulesStart: "How we use ",
+  rulesAccent: "AI.",
+  rulesKicker: "How we use AI",
   rules: [
     { title: "Data ownership", text: "Accounts, access keys and data belong to your business and stay with it, in every case." },
     { title: "Human oversight", text: "Every sensitive action is prepared by AI and approved by a person before it runs." },
     { title: "Full control", text: "Operating limits, approval steps and the ability to switch everything off at once." },
   ],
 };
+
 
 export const v14Final = {
   title: "The first step is a clear picture of where you are today.",
@@ -484,7 +492,7 @@ const enRaw = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     home: "Thynk, home",
-    auditAria: "The audit",
+    auditAria: "Audit",
     switchTo: "EL",
     switchAria: "Ελληνικά",
   },

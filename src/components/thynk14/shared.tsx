@@ -131,19 +131,29 @@ export function Screen({ id }: { id: ScreenId }) {
 }
 
 /* ---------- Method: ghost word + four flying stage cards ---------- */
-export function MethodSection({ id = "method" }: { id?: string }) {
-  const { c } = useCopy();
+/** ghost word + four cards that fly in on a diagonal (motion.ts drives `.t14-method`) */
+export function FlyCards({
+  id,
+  title,
+  word,
+  items,
+}: {
+  id: string;
+  title: string;
+  word: string;
+  items: readonly { title: string; text: string }[];
+}) {
   return (
-    <section className="t14-method" id={id} aria-label={c.method.title}>
+    <section className="t14-method" id={id} aria-label={title}>
       <div className="t14-method-stage">
         <h2 className="t14-ghost">
-          {[...c.method.title].map((c, i) => (
-            <span key={i}>{c}</span>
+          {[...title].map((ch, i) => (
+            <span key={i}>{ch}</span>
           ))}
         </h2>
-        {c.method.steps.map((s, i) => (
+        {items.map((s, i) => (
           <article key={s.title} className="t14-mcard">
-            <small>( 0{i + 1} · {c.method.stepWord} )</small>
+            <small>( 0{i + 1} · {word} )</small>
             <h3>{s.title}</h3>
             <p>{s.text}</p>
             <div className="t14-num"><sup>#.</sup>0{i + 1}</div>
@@ -152,6 +162,11 @@ export function MethodSection({ id = "method" }: { id?: string }) {
       </div>
     </section>
   );
+}
+
+export function MethodSection({ id = "method" }: { id?: string }) {
+  const { c } = useCopy();
+  return <FlyCards id={id} title={c.method.title} word={c.method.stepWord} items={c.method.steps} />;
 }
 
 /* ---------- list of solutions with a peek card that follows the cursor ---------- */
@@ -200,21 +215,33 @@ export function SolutionsList({ withHead = true }: { withHead?: boolean }) {
 }
 
 /* ---------- the audit: horizontal panels over the title ---------- */
-export function AuditPanels({ id = "audit" }: { id?: string }) {
-  const { c } = useCopy();
+/** a title the cards slide over horizontally (motion.ts drives `.t14-hz`) */
+export function HzPanels({
+  id,
+  label,
+  titleStart,
+  titleAccent,
+  panels,
+}: {
+  id: string;
+  label: string;
+  titleStart: string;
+  titleAccent: string;
+  panels: readonly { kicker: string; sub?: string; title: string; text: string; key?: boolean }[];
+}) {
   return (
-    <section className="t14-hz" id={id} aria-label={c.ui.auditAria}>
+    <section className="t14-hz" id={id} aria-label={label}>
       <div className="t14-hz-stage">
         <h2 className="t14-hz-title">
-          {c.audit.titleStart}<em>{c.audit.titleAccent}</em>
+          {titleStart}<em>{titleAccent}</em>
         </h2>
         <div className="t14-hz-track">
           <div className="t14-spacer" aria-hidden="true" />
-          {c.audit.panels.map((p) => {
+          {panels.map((p) => {
             const n = /^\d+/.exec(p.kicker)?.[0];
             return (
-              <article key={p.title} className={`t14-panel${p.tone === "orange" ? " key" : ""}`}>
-                <small>{p.kicker}<i>{p.sub}</i></small>
+              <article key={p.title} className={`t14-panel${p.key ? " key" : ""}`}>
+                <small>{p.kicker}{p.sub && <i>{p.sub}</i>}</small>
                 <div>
                   <h3>{p.title}</h3>
                   <p>{p.text}</p>
@@ -226,6 +253,19 @@ export function AuditPanels({ id = "audit" }: { id?: string }) {
         </div>
       </div>
     </section>
+  );
+}
+
+export function AuditPanels({ id = "audit" }: { id?: string }) {
+  const { c } = useCopy();
+  return (
+    <HzPanels
+      id={id}
+      label={c.ui.auditAria}
+      titleStart={c.audit.titleStart}
+      titleAccent={c.audit.titleAccent}
+      panels={c.audit.panels.map((p) => ({ ...p, key: p.tone === "orange" }))}
+    />
   );
 }
 
@@ -278,18 +318,21 @@ export function Faq({
 }
 
 /* ---------- audit request form (front-end only until the back-end exists) ---------- */
+type BookKey = "first" | "last" | "email" | "phone" | "biz";
+
 export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
   const { c } = useCopy();
-  const [form, setForm] = useState({ name: "", biz: "", email: "", pain: c.book.pain.options[0] });
+  const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", biz: "", industry: "", pain: c.book.pain.options[0] });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
-    if (!form.name.trim()) errs.name = c.book.name.error;
-    if (!form.biz.trim()) errs.biz = c.book.biz.error;
+    if (!form.first.trim()) errs.first = c.book.first.error;
+    if (!form.last.trim()) errs.last = c.book.last.error;
     if (!/^\S+@\S+\.\S+$/.test(form.email)) errs.email = c.book.email.error;
+    if (!form.biz.trim()) errs.biz = c.book.biz.error;
     setErrors(errs);
     const first = Object.keys(errs)[0];
     if (first) {
@@ -299,11 +342,14 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
     setSent(true);
   };
 
-  const field = (k: "name" | "biz" | "email", type: string, auto: string) => {
+  const field = (k: BookKey, type: string, auto: string, optional = false) => {
     const f = c.book[k];
     return (
       <div className="t14-f">
-        <label htmlFor={`${idPrefix}-${k}`}>{f.label}</label>
+        <label htmlFor={`${idPrefix}-${k}`}>
+          {f.label}
+          {optional && <em className="t14-opt"> · {c.book.optional}</em>}
+        </label>
         <input
           id={`${idPrefix}-${k}`}
           type={type}
@@ -326,17 +372,34 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
         <p>{c.book.lead}</p>
       </div>
       <div className="t14-fgrid">
-        {field("name", "text", "name")}
-        {field("biz", "text", "organization")}
+        {field("first", "text", "given-name")}
+        {field("last", "text", "family-name")}
         {field("email", "email", "email")}
+        {field("phone", "tel", "tel", true)}
+        {field("biz", "text", "organization")}
         <div className="t14-f">
-          <label htmlFor={`${idPrefix}-pain`}>{c.book.pain.label}</label>
-          <select id={`${idPrefix}-pain`} value={form.pain} onChange={(e) => setForm({ ...form, pain: e.target.value })}>
-            {c.book.pain.options.map((o) => (
+          <label htmlFor={`${idPrefix}-industry`}>
+            {c.book.industry.label}
+            <em className="t14-opt"> · {c.book.optional}</em>
+          </label>
+          <select id={`${idPrefix}-industry`} value={form.industry} onChange={(e) => setForm({ ...form, industry: e.target.value })}>
+            <option value="">{c.book.industry.placeholder}</option>
+            {c.book.industry.options.map((o) => (
               <option key={o}>{o}</option>
             ))}
           </select>
           <span className="t14-err" aria-hidden="true" />
+        </div>
+        <div className="t14-f t14-f-wide">
+          <span className="t14-flabel" id={`${idPrefix}-pain-l`}>{c.book.pain.label}</span>
+          <div className="t14-tasks t14-pains" role="radiogroup" aria-labelledby={`${idPrefix}-pain-l`}>
+            {c.book.pain.options.map((o) => (
+              <label key={o} className={form.pain === o ? "on" : undefined}>
+                <input type="radio" name={`${idPrefix}-pain`} value={o} checked={form.pain === o} onChange={() => setForm({ ...form, pain: o })} />
+                {o}
+              </label>
+            ))}
+          </div>
         </div>
       </div>
       <div className="t14-form-foot">

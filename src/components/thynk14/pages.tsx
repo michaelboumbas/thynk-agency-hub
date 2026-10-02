@@ -9,6 +9,8 @@ import {
 import {
   AuditPanels,
   BookForm,
+  FlyCards,
+  HzPanels,
   Faq,
   FinalBand,
   Label,
@@ -59,6 +61,14 @@ export function HomePage() {
       <AuditPanels />
       <div className="t14-wrap"><MoreLink to={href(v14Routes.audit)}>{c.more.audit}</MoreLink></div>
 
+      {/* 02/10 (Mike): the cost calculator on the home page too, right before the form: see the cost, then book */}
+      <section className="t14-wrap t14-calc-sec" id="calculator">
+        <Label>{c.calc.label}</Label>
+        <h2 className="t14-h2">{c.calc.title}</h2>
+        <p className="t14-lead">{c.calc.lead}</p>
+        <Calculator />
+        <p className="t14-sol-note">{c.calc.note}</p>
+      </section>
 
       <section className="t14-book t14-wrap" id="book">
         <BookForm idPrefix="home" />
@@ -326,51 +336,35 @@ export function AboutPage() {
   return (
     <>
       <PageHead p={c.pageHeads.about} />
+
+      {/* founders: names and LinkedIn only (Mike 02/10) */}
       <section className="t14-wrap">
         <ul className="t14-list t14-founders">
           {a.founders.map((f) => (
             <li key={f.name}>
-              <span className="t14-initials" aria-hidden="true">{f.initials}</span>
-              <div className="t14-founder">
-                <h2>{f.name}</h2>
-                <small>{f.role}</small>
-                <p>{f.bio}</p>
-                <p className="t14-ask">{f.ask}</p>
-              </div>
-              <span className="y"><a href={`mailto:${f.email}`}>{f.email}</a></span>
+              <h2 className="t14-founder-name">{f.name}</h2>
+              <a className="t14-in" href={f.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${f.name} ${a.linkedinAria}`}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
+                </svg>
+                <span>{a.linkedinLabel}</span>
+              </a>
             </li>
           ))}
         </ul>
-        <p className="t14-sol-note">{a.where}</p>
       </section>
 
-      <section className="t14-wrap">
-        <Label>{a.valuesTitle}</Label>
-        <ol className="t14-values">
-          {a.values.map((v, i) => (
-            <li key={v.t}>
-              <span className="t14-num"><sup>#.</sup>0{i + 1}</span>
-              <h3>{v.t}</h3>
-              <p>{v.d}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+      {/* how we work: the same fly-in cards as Method */}
+      <FlyCards id="principles" title={a.valuesTitle} word={a.valueWord} items={a.values.map((v) => ({ title: v.t, text: v.d }))} />
 
-      <section className="t14-wrap t14-rules-sec">
-        <Label>{a.rulesTitle}</Label>
-        <div className="t14-rules">
-          {a.rules.map((r, i) => (
-            <article key={r.title} className={`t14-panel${i === 1 ? " key" : ""}`}>
-              <div>
-                <h3>{r.title}</h3>
-                <p>{r.text}</p>
-              </div>
-              <div className="t14-num"><sup>#.</sup>0{i + 1}</div>
-            </article>
-          ))}
-        </div>
-      </section>
+      {/* how we use AI: cards sliding over the title, like the audit */}
+      <HzPanels
+        id="ai"
+        label={a.rulesKicker}
+        titleStart={a.rulesStart}
+        titleAccent={a.rulesAccent}
+        panels={a.rules.map((r, i) => ({ kicker: `0${i + 1} · ${a.rulesKicker}`, title: r.title, text: r.text, key: i === 1 }))}
+      />
       <FinalBand />
     </>
   );

@@ -16,7 +16,16 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
     const root = rootRef.current;
     if (!root) return;
     const els = [...root.querySelectorAll<HTMLElement>(".t14-giant")];
-    if (!els.length) return;
+    // ghost words (Method, How we work, Αρχές συνεργασίας…) must fit the stage on desktop
+    const ghosts = [...root.querySelectorAll<HTMLElement>(".t14-ghost")];
+    const narrowQ = window.matchMedia("(max-width: 900px)");
+    const fitGhost = (el: HTMLElement) => {
+      el.style.fontSize = "";
+      if (narrowQ.matches) return;
+      const room = el.clientWidth * 0.94;
+      if (el.scrollWidth > room) el.style.fontSize = `${(parseFloat(getComputedStyle(el).fontSize) * room) / el.scrollWidth}px`;
+    };
+    if (!els.length && !ghosts.length) return;
     const fit = (el: HTMLElement) => {
       const par = el.parentElement!;
       const cs = getComputedStyle(par);
@@ -26,7 +35,10 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
       if (w > 0 && box > 0) el.style.fontSize = `${(fs * box) / w}px`;
     };
     // two passes: the first gets close, the second corrects for letter-spacing in em
-    const refit = () => els.forEach((el) => (fit(el), fit(el)));
+    const refit = () => {
+      els.forEach((el) => (fit(el), fit(el)));
+      ghosts.forEach(fitGhost);
+    };
     refit();
     const fonts = document.fonts;
     fonts?.ready.then(refit);

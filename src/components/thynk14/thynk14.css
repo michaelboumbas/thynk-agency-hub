@@ -2003,3 +2003,109 @@
     min-height: 0;
   }
 }
+
+/* ======================= 02/10 round 2 ======================= */
+
+/* page openers (Services, Solutions, Audit, About) bold, like Method / Solutions on home */
+.t14 h1.t14-giant {
+  font-weight: 700;
+}
+
+/* booking form: separate fields, optional ones marked, focus as chips across the full width */
+.t14-opt {
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-3);
+}
+.t14-f-wide {
+  grid-column: 1 / -1;
+}
+.t14-flabel {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+}
+.t14-pains label {
+  height: 44px;
+  padding: 0 18px;
+  font-size: 15px;
+}
+.t14-calc-sec {
+  padding-top: 10px;
+}
+
+/* About: names large, a LinkedIn button each */
+.t14-founders > li {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  padding: clamp(22px, 4vh, 40px) 0;
+}
+.t14-founder-name {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-stretch: 140%;
+  font-size: clamp(34px, 5.4vw, 86px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  transition: color 0.2s;
+}
+.t14-founders > li:hover .t14-founder-name {
+  color: var(--orange);
+}
+.t14-in {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 20px 0 16px;
+  border-radius: 48px;
+  background: var(--ink);
+  color: var(--paper) !important;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.t14-in svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+.t14-in:hover {
+  background: #0a66c2; /* LinkedIn blue on hover only */
+}
+
+/* footer address */
+.t14-addr {
+  color: var(--ink-2);
+  max-width: 26ch;
+}
+
+@media (max-width: 900px) {
+  .t14-founders > li {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+  .t14-in {
+    justify-self: start;
+  }
+}
+/* long Greek words in the big titles (χρησιμοποιούμε, συνεργασίας) */
+.t14-hz-title {
+  max-width: 11em;
+}
+@media (max-width: 900px) {
+  .t14-hz-title {
+    max-width: none;
+  }
+  .t14-ghost {
+    font-size: clamp(36px, 10.5vw, 90px);
+    font-stretch: 115%;
+  }
+}
