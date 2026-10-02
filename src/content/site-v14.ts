@@ -396,7 +396,7 @@ export const v14Calc = {
   label: "Calculator",
   title: "What do repetitive tasks cost you?",
   lead: "Enter your team's numbers for an instant, indicative estimate. The exact figure comes from the audit.",
-  industry: "Industry",
+  industry: "INDUSTRY",
   industries: [
     { id: "clinic", label: "Clinic / medical practice" },
     { id: "office", label: "Accounting / law office" },
@@ -408,7 +408,7 @@ export const v14Calc = {
   team: "People on the team",
   hours: "Hours per person per week on repetitive tasks",
   rate: "Hourly labor cost",
-  where: "Where is time lost?",
+  where: "WHERE IS TIME LOST?",
   tasks: {
     phone: { label: "Calls & appointments", opp: "Digital assistant for calls & appointments" },
     msg: { label: "Messages & email", opp: "Automatic sorting of email & messages" },
@@ -467,3 +467,60 @@ export const v14Final = {
   title: "The first step is a clear picture of where you are today.",
   button: "Book an audit",
 };
+
+
+/* ======================= two languages (02/10, Mike: Greek version next to English) ======================= */
+export type Lang = "en" | "el";
+export type V14Path = (typeof v14Routes)[keyof typeof v14Routes];
+/** the same page in Greek lives under /el */
+export type ElPath = "/el" | `/el${Exclude<V14Path, "/">}`;
+
+const enRaw = {
+  lang: "en",
+  locale: "en-US",
+  ui: {
+    skip: "Skip to content",
+    mainMenu: "Main menu",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    home: "Thynk, home",
+    auditAria: "The audit",
+    switchTo: "EL",
+    switchAria: "Ελληνικά",
+  },
+  menu: v14Menu,
+  more: v14More,
+  hero: v14Hero,
+  about: v14About,
+  method: v14Method,
+  solutions: v14Solutions,
+  audit: v14Audit,
+  team: v14Team,
+  book: v14Book,
+  faq: v14Faq,
+  footer: v14Footer,
+  screens: v14Screens,
+  pageHeads: v14PageHeads,
+  pillars: v14Pillars,
+  examples: v14Examples,
+  moreIdeas: v14MoreIdeas,
+  auditPage: v14AuditPage,
+  calc: v14Calc,
+  aboutPage: v14AboutPage,
+  final: v14Final,
+};
+
+// The Greek copy must have exactly the same shape as the English one. Strings are widened to `string`;
+// ids, paths and tones keep their literal types (they drive the UI, not the words).
+type Keep = "id" | "screen" | "to" | "tone" | "how";
+type Widen<T> = T extends string
+  ? string
+  : T extends number | boolean
+    ? T
+    : T extends (...a: never[]) => unknown
+      ? T
+      : T extends readonly (infer U)[]
+        ? readonly Widen<U>[]
+        : { [K in keyof T]: K extends Keep ? T[K] : Widen<T[K]> };
+export type Copy = Widen<typeof enRaw>;
+export const en: Copy = enRaw;

@@ -1801,3 +1801,36 @@
     font-stretch: 120%;
   }
 }
+
+/* language switch (EL / EN) */
+.t14-lang {
+  display: inline-grid;
+  place-items: center;
+  height: 40px;
+  min-width: 40px;
+  padding: 0 10px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--ink);
+}
+.t14-lang:hover {
+  background: var(--paper-2);
+  color: var(--orange);
+}
+
+/* long Greek words (e.g. «επαναλαμβανόμενες») on phones: a little narrower, never past the edge */
+@media (max-width: 520px) {
+  .t14-h2,
+  .t14-final h2,
+  .t14-book-side h2,
+  .t14-example-text h2,
+  .t14-pillar-head h2,
+  .t14-founder h2 {
+    font-stretch: 110%;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}

@@ -1,13 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode } from "react";
+import { useCopy } from "./i18n";
 import { Link } from "@tanstack/react-router";
 import {
-  v14Audit,
-  v14Book,
-  v14Final,
-  v14Method,
   v14Routes,
-  v14Screens,
-  v14Solutions,
   type ScreenId,
 } from "@/content/site-v14";
 
@@ -64,8 +59,9 @@ export function Reveal({ text, className = "" }: { text: string; className?: str
 
 /* ---------- the little UI screens (example systems) ---------- */
 export function Screen({ id }: { id: ScreenId }) {
+  const { c } = useCopy();
   if (id === "bookings") {
-    const d = v14Screens.bookings;
+    const d = c.screens.bookings;
     return (
       <div className="t14-card">
         <div className="t14-card-h"><b>{d.app}</b><i>{d.chip}</i></div>
@@ -78,7 +74,7 @@ export function Screen({ id }: { id: ScreenId }) {
     );
   }
   if (id === "followup") {
-    const d = v14Screens.followup;
+    const d = c.screens.followup;
     return (
       <div className="t14-card">
         <div className="t14-card-h"><b>{d.app}</b><i>{d.chip}</i></div>
@@ -89,7 +85,7 @@ export function Screen({ id }: { id: ScreenId }) {
     );
   }
   if (id === "report") {
-    const d = v14Screens.report;
+    const d = c.screens.report;
     return (
       <div className="t14-card">
         <div className="t14-card-h"><b>{d.app}</b><i>{d.chip}</i></div>
@@ -107,7 +103,7 @@ export function Screen({ id }: { id: ScreenId }) {
     );
   }
   if (id === "invoices") {
-    const d = v14Screens.invoices;
+    const d = c.screens.invoices;
     return (
       <div className="t14-card">
         <div className="t14-card-h"><b>{d.app}</b><i>{d.chip}</i></div>
@@ -120,7 +116,7 @@ export function Screen({ id }: { id: ScreenId }) {
       </div>
     );
   }
-  const d = v14Screens.audit;
+  const d = c.screens.audit;
   return (
     <div className="t14-card">
       <div className="t14-card-h"><b>{d.app}</b><i>{d.chip}</i></div>
@@ -136,17 +132,18 @@ export function Screen({ id }: { id: ScreenId }) {
 
 /* ---------- Method: ghost word + four flying stage cards ---------- */
 export function MethodSection({ id = "method" }: { id?: string }) {
+  const { c } = useCopy();
   return (
-    <section className="t14-method" id={id} aria-label={v14Method.title}>
+    <section className="t14-method" id={id} aria-label={c.method.title}>
       <div className="t14-method-stage">
         <h2 className="t14-ghost">
-          {[...v14Method.title].map((c, i) => (
+          {[...c.method.title].map((c, i) => (
             <span key={i}>{c}</span>
           ))}
         </h2>
-        {v14Method.steps.map((s, i) => (
+        {c.method.steps.map((s, i) => (
           <article key={s.title} className="t14-mcard">
-            <small>( 0{i + 1} · {v14Method.stepWord} )</small>
+            <small>( 0{i + 1} · {c.method.stepWord} )</small>
             <h3>{s.title}</h3>
             <p>{s.text}</p>
             <div className="t14-num"><sup>#.</sup>0{i + 1}</div>
@@ -159,6 +156,7 @@ export function MethodSection({ id = "method" }: { id?: string }) {
 
 /* ---------- list of solutions with a peek card that follows the cursor ---------- */
 export function SolutionsList({ withHead = true }: { withHead?: boolean }) {
+  const { c } = useCopy();
   const [peek, setPeek] = useState<ScreenId | null>(null);
   const peekRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -175,13 +173,13 @@ export function SolutionsList({ withHead = true }: { withHead?: boolean }) {
     <>
       {withHead && (
         <>
-          <Label>{v14Solutions.label}</Label>
-          <div className="t14-sol-top"><p>{v14Solutions.lead}</p></div>
-          <h2 className="t14-giant">{v14Solutions.title}</h2>
+          <Label>{c.solutions.label}</Label>
+          <div className="t14-sol-top"><p>{c.solutions.lead}</p></div>
+          <h2 className="t14-giant">{c.solutions.title}</h2>
         </>
       )}
       <ul className="t14-list">
-        {v14Solutions.items.map((it) => (
+        {c.solutions.items.map((it) => (
           <li
             key={it.name}
             onPointerEnter={(e) => it.screen && e.pointerType === "mouse" && setPeek(it.screen)}
@@ -193,7 +191,7 @@ export function SolutionsList({ withHead = true }: { withHead?: boolean }) {
           </li>
         ))}
       </ul>
-      <p className="t14-sol-note">{v14Solutions.note}</p>
+      <p className="t14-sol-note">{c.solutions.note}</p>
       <div className={`t14-peek${peek ? " on" : ""}`} ref={peekRef} aria-hidden="true">
         {peek && <Screen id={peek} />}
       </div>
@@ -203,15 +201,16 @@ export function SolutionsList({ withHead = true }: { withHead?: boolean }) {
 
 /* ---------- the audit: horizontal panels over the title ---------- */
 export function AuditPanels({ id = "audit" }: { id?: string }) {
+  const { c } = useCopy();
   return (
-    <section className="t14-hz" id={id} aria-label="The audit">
+    <section className="t14-hz" id={id} aria-label={c.ui.auditAria}>
       <div className="t14-hz-stage">
         <h2 className="t14-hz-title">
-          {v14Audit.titleStart}<em>{v14Audit.titleAccent}</em>
+          {c.audit.titleStart}<em>{c.audit.titleAccent}</em>
         </h2>
         <div className="t14-hz-track">
           <div className="t14-spacer" aria-hidden="true" />
-          {v14Audit.panels.map((p) => (
+          {c.audit.panels.map((p) => (
             <article key={p.title} className={`t14-panel ${p.tone}`}>
               <small>{p.kicker}<i>{p.sub}</i></small>
               <h3>{p.title}</h3>
@@ -274,16 +273,17 @@ export function Faq({
 
 /* ---------- audit request form (front-end only until the back-end exists) ---------- */
 export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
-  const [form, setForm] = useState({ name: "", biz: "", email: "", pain: v14Book.pain.options[0] });
+  const { c } = useCopy();
+  const [form, setForm] = useState({ name: "", biz: "", email: "", pain: c.book.pain.options[0] });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
-    if (!form.name.trim()) errs.name = v14Book.name.error;
-    if (!form.biz.trim()) errs.biz = v14Book.biz.error;
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) errs.email = v14Book.email.error;
+    if (!form.name.trim()) errs.name = c.book.name.error;
+    if (!form.biz.trim()) errs.biz = c.book.biz.error;
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) errs.email = c.book.email.error;
     setErrors(errs);
     const first = Object.keys(errs)[0];
     if (first) {
@@ -294,15 +294,15 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
   };
 
   const field = (k: "name" | "biz" | "email", type: string, auto: string) => {
-    const c = v14Book[k];
+    const f = c.book[k];
     return (
       <div className="t14-f">
-        <label htmlFor={`${idPrefix}-${k}`}>{c.label}</label>
+        <label htmlFor={`${idPrefix}-${k}`}>{f.label}</label>
         <input
           id={`${idPrefix}-${k}`}
           type={type}
           autoComplete={auto}
-          placeholder={c.placeholder}
+          placeholder={f.placeholder}
           value={form[k]}
           aria-invalid={!!errors[k]}
           aria-describedby={`${idPrefix}-${k}-e`}
@@ -315,34 +315,35 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
 
   return (
     <form className="t14-form" onSubmit={submit} noValidate>
-      <h2>{v14Book.title}</h2>
-      <p>{v14Book.lead}</p>
+      <h2>{c.book.title}</h2>
+      <p>{c.book.lead}</p>
       <div className="t14-fgrid">
         {field("name", "text", "name")}
         {field("biz", "text", "organization")}
       </div>
       {field("email", "email", "email")}
       <div className="t14-f">
-        <label htmlFor={`${idPrefix}-pain`}>{v14Book.pain.label}</label>
+        <label htmlFor={`${idPrefix}-pain`}>{c.book.pain.label}</label>
         <select id={`${idPrefix}-pain`} value={form.pain} onChange={(e) => setForm({ ...form, pain: e.target.value })}>
-          {v14Book.pain.options.map((o) => (
+          {c.book.pain.options.map((o) => (
             <option key={o}>{o}</option>
           ))}
         </select>
       </div>
-      <button className="t14-pill lg" type="submit">{v14Book.submit}</button>
-      {sent && <div className="t14-ok" role="status">{v14Book.sent}</div>}
+      <button className="t14-pill lg" type="submit">{c.book.submit}</button>
+      {sent && <div className="t14-ok" role="status">{c.book.sent}</div>}
     </form>
   );
 }
 
 /** a quiet closing line with the audit button, at the end of the inner pages */
 export function FinalBand() {
+  const { c, href } = useCopy();
   return (
     <section className="t14-final t14-wrap">
-      <h2>{v14Final.title}</h2>
-      <Link to={v14Routes.audit} hash="book" className="t14-pill lg">
-        {v14Final.button}
+      <h2>{c.final.title}</h2>
+      <Link to={href(v14Routes.audit)} hash="book" className="t14-pill lg">
+        {c.final.button}
       </Link>
     </section>
   );
@@ -350,9 +351,10 @@ export function FinalBand() {
 
 /** "→" link under a home section, to the page that covers it in full */
 export function MoreLink({ to, children }: { to: (typeof v14Routes)[keyof typeof v14Routes]; children: ReactNode }) {
+  const { href } = useCopy();
   return (
     <div className="t14-more">
-      <Link to={to}>{children}</Link>
+      <Link to={href(to)}>{children}</Link>
     </div>
   );
 }

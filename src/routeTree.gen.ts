@@ -18,6 +18,11 @@ import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as YpiresiesRouteImport } from './routes/ypiresies'
+import { Route as ElIndexRouteImport } from './routes/el/index'
+import { Route as ElAboutRouteImport } from './routes/el/about'
+import { Route as ElAuditRouteImport } from './routes/el/audit'
+import { Route as ElServicesRouteImport } from './routes/el/services'
+import { Route as ElSolutionsRouteImport } from './routes/el/solutions'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -65,6 +70,32 @@ const YpiresiesRoute = YpiresiesRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 
+const ElIndexRoute = ElIndexRouteImport.update({
+  id: '/el/',
+  path: '/el/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElAboutRoute = ElAboutRouteImport.update({
+  id: '/el/about',
+  path: '/el/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElAuditRoute = ElAuditRouteImport.update({
+  id: '/el/audit',
+  path: '/el/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElServicesRoute = ElServicesRouteImport.update({
+  id: '/el/services',
+  path: '/el/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElSolutionsRoute = ElSolutionsRouteImport.update({
+  id: '/el/solutions',
+  path: '/el/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
@@ -75,6 +106,11 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
+  '/el/': typeof ElIndexRoute
+  '/el/about': typeof ElAboutRoute
+  '/el/audit': typeof ElAuditRoute
+  '/el/services': typeof ElServicesRoute
+  '/el/solutions': typeof ElSolutionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +122,11 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
+  '/el': typeof ElIndexRoute
+  '/el/about': typeof ElAboutRoute
+  '/el/audit': typeof ElAuditRoute
+  '/el/services': typeof ElServicesRoute
+  '/el/solutions': typeof ElSolutionsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,13 +139,18 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
+  '/el/': typeof ElIndexRoute
+  '/el/about': typeof ElAboutRoute
+  '/el/audit': typeof ElAuditRoute
+  '/el/services': typeof ElServicesRoute
+  '/el/solutions': typeof ElSolutionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies'
+  fullPaths: '/' | '/about' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies' | '/el/' | '/el/about' | '/el/audit' | '/el/services' | '/el/solutions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies'
-  id: '__root__' | '/' | '/about' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies'
+  to: '/' | '/about' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies' | '/el' | '/el/about' | '/el/audit' | '/el/services' | '/el/solutions'
+  id: '__root__' | '/' | '/about' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies' | '/el/' | '/el/about' | '/el/audit' | '/el/services' | '/el/solutions'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,6 +163,11 @@ export interface RootRouteChildren {
   ServicesRoute: typeof ServicesRoute
   SolutionsRoute: typeof SolutionsRoute
   YpiresiesRoute: typeof YpiresiesRoute
+  ElIndexRoute: typeof ElIndexRoute
+  ElAboutRoute: typeof ElAboutRoute
+  ElAuditRoute: typeof ElAuditRoute
+  ElServicesRoute: typeof ElServicesRoute
+  ElSolutionsRoute: typeof ElSolutionsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -184,6 +235,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof YpiresiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/el/': {
+      id: '/el/'
+      path: '/el/'
+      fullPath: '/el/'
+      preLoaderRoute: typeof ElIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/el/about': {
+      id: '/el/about'
+      path: '/el/about'
+      fullPath: '/el/about'
+      preLoaderRoute: typeof ElAboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/el/audit': {
+      id: '/el/audit'
+      path: '/el/audit'
+      fullPath: '/el/audit'
+      preLoaderRoute: typeof ElAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/el/services': {
+      id: '/el/services'
+      path: '/el/services'
+      fullPath: '/el/services'
+      preLoaderRoute: typeof ElServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/el/solutions': {
+      id: '/el/solutions'
+      path: '/el/solutions'
+      fullPath: '/el/solutions'
+      preLoaderRoute: typeof ElSolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -197,6 +283,11 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesRoute: ServicesRoute,
   SolutionsRoute: SolutionsRoute,
   YpiresiesRoute: YpiresiesRoute,
+  ElIndexRoute: ElIndexRoute,
+  ElAboutRoute: ElAboutRoute,
+  ElAuditRoute: ElAuditRoute,
+  ElServicesRoute: ElServicesRoute,
+  ElSolutionsRoute: ElSolutionsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,20 +1,10 @@
 import { useMemo, useState, type FormEvent } from "react";
+import { useCopy } from "./i18n";
 import { Link } from "@tanstack/react-router";
 import { calculator as C } from "@/content/site-v5";
 import {
-  v14About,
-  v14AboutPage,
-  v14AuditPage,
-  v14Calc,
-  v14Examples,
-  v14Faq,
-  v14Hero,
-  v14MoreIdeas,
-  v14More,
-  v14PageHeads,
-  v14Pillars,
+  en,
   v14Routes,
-  v14Team,
 } from "@/content/site-v14";
 import {
   AuditPanels,
@@ -33,49 +23,50 @@ import {
 
 /* ================================ Home ================================ */
 export function HomePage() {
+  const { c, href } = useCopy();
   return (
     <>
       <section className="t14-hero" aria-label="Thynk">
         <div className="t14-hero-c">
           <h1>
-            <span className="t14-h1-a">{v14Hero.lead}</span>
-            <strong className="t14-h1-b"><em>{v14Hero.accent}</em>{v14Hero.last}</strong>
+            <span className="t14-h1-a">{c.hero.lead}</span>
+            <strong className="t14-h1-b"><em>{c.hero.accent}</em>{c.hero.last}</strong>
           </h1>
           <p className="t14-formula">
-            <b>{v14Hero.formulaStrong}</b>
-            <span>{v14Hero.formula}</span>
+            <b>{c.hero.formulaStrong}</b>
+            <span>{c.hero.formula}</span>
           </p>
           <div className="t14-ctas">
-            <Link className="t14-pill lg" to={v14Routes.audit} hash="book">{v14Hero.primary}</Link>
-            <a className="t14-pill lg ghost" href="#method" onClick={(e) => go(e, "method")}>{v14Hero.secondary}</a>
+            <Link className="t14-pill lg" to={href(v14Routes.audit)} hash="book">{c.hero.primary}</Link>
+            <a className="t14-pill lg ghost" href="#method" onClick={(e) => go(e, "method")}>{c.hero.secondary}</a>
           </div>
         </div>
       </section>
 
       <section className="t14-about t14-wrap" id="about">
-        <Label>{v14About.label}</Label>
-        <Reveal text={v14About.text} />
+        <Label>{c.about.label}</Label>
+        <Reveal text={c.about.text} />
         <div className="t14-team-line">
-          <h3>{v14About.founders}</h3>
-          <p>{v14About.foundersNote}</p>
+          <h3>{c.about.founders}</h3>
+          <p>{c.about.foundersNote}</p>
         </div>
       </section>
 
       <MethodSection />
-      <div className="t14-wrap"><MoreLink to={v14Routes.services}>{v14More.method}</MoreLink></div>
+      <div className="t14-wrap"><MoreLink to={href(v14Routes.services)}>{c.more.method}</MoreLink></div>
 
       <section className="t14-wrap" id="solutions">
         <SolutionsList />
-        <MoreLink to={v14Routes.solutions}>{v14More.solutions}</MoreLink>
+        <MoreLink to={href(v14Routes.solutions)}>{c.more.solutions}</MoreLink>
       </section>
 
       <AuditPanels />
-      <div className="t14-wrap"><MoreLink to={v14Routes.audit}>{v14More.audit}</MoreLink></div>
+      <div className="t14-wrap"><MoreLink to={href(v14Routes.audit)}>{c.more.audit}</MoreLink></div>
 
       <section className="t14-team t14-wrap" id="team">
-        <Label>{v14Team.label}</Label>
+        <Label>{c.team.label}</Label>
         <ul className="t14-list">
-          {v14Team.people.map((p) => (
+          {c.team.people.map((p) => (
             <li key={p.name}>
               <span className="n">{p.name}<small>{p.role}</small></span>
               <span className="t">{p.focus}</span>
@@ -83,24 +74,25 @@ export function HomePage() {
             </li>
           ))}
         </ul>
-        <MoreLink to={v14Routes.about}>{v14More.team}</MoreLink>
+        <MoreLink to={href(v14Routes.about)}>{c.more.team}</MoreLink>
       </section>
 
       <section className="t14-book t14-wrap" id="book">
         <BookForm idPrefix="home" />
       </section>
 
-      <Faq title={v14Faq.title} grey={v14Faq.titleGrey} note={v14Faq.note} items={v14Faq.items} />
+      <Faq title={c.faq.title} grey={c.faq.titleGrey} note={c.faq.note} items={c.faq.items} />
     </>
   );
 }
 
 /* ================================ Services ================================ */
 export function ServicesPage() {
+  const { c } = useCopy();
   return (
     <>
-      <PageHead p={v14PageHeads.services} />
-      {v14Pillars.items.map((pl, k) => (
+      <PageHead p={c.pageHeads.services} />
+      {c.pillars.items.map((pl, k) => (
         <section key={pl.id} className="t14-pillar t14-wrap" id={pl.id}>
           <div className="t14-pillar-head">
             <span className="t14-pillar-n"><sup>#.</sup>0{k + 1}</span>
@@ -122,7 +114,7 @@ export function ServicesPage() {
               </li>
             ))}
           </ul>
-          {pl.id === "transformation" && <p className="t14-sol-note">{v14Pillars.note}</p>}
+          {pl.id === "transformation" && <p className="t14-sol-note">{c.pillars.note}</p>}
         </section>
       ))}
       <MethodSection />
@@ -133,15 +125,16 @@ export function ServicesPage() {
 
 /* ================================ Solutions ================================ */
 export function SolutionsPage() {
+  const { c, href } = useCopy();
   return (
     <>
-      <PageHead p={v14PageHeads.solutions} />
+      <PageHead p={c.pageHeads.solutions} />
       <section className="t14-wrap t14-examples">
-        {v14Examples.items.map((ex, i) => (
+        {c.examples.items.map((ex, i) => (
           <article key={ex.id} className={`t14-example${i % 2 ? " flip" : ""}`}>
             <div className="t14-example-text">
               <small>
-                <span>0{i + 1}</span> {ex.tag} · {v14Examples.label}
+                <span>0{i + 1}</span> {ex.tag} · {c.examples.label}
               </small>
               <h2>{ex.title}</h2>
               <p>{ex.text}</p>
@@ -154,10 +147,10 @@ export function SolutionsPage() {
         ))}
       </section>
       <section className="t14-wrap">
-        <Label>{v14MoreIdeas.title}</Label>
-        <p className="t14-lead">{v14MoreIdeas.lead}</p>
+        <Label>{c.moreIdeas.title}</Label>
+        <p className="t14-lead">{c.moreIdeas.lead}</p>
         <div className="t14-ideas">
-          {v14MoreIdeas.groups.map((g) => (
+          {c.moreIdeas.groups.map((g) => (
             <div key={g.tag}>
               <h3>{g.tag}</h3>
               <ul className="t14-list">
@@ -171,7 +164,7 @@ export function SolutionsPage() {
             </div>
           ))}
         </div>
-        <MoreLink to={v14Routes.services}>{v14More.method}</MoreLink>
+        <MoreLink to={href(v14Routes.services)}>{c.more.method}</MoreLink>
       </section>
       <FinalBand />
     </>
@@ -179,12 +172,12 @@ export function SolutionsPage() {
 }
 
 /* ================================ Audit ================================ */
-type TaskId = keyof typeof v14Calc.tasks;
-const TASK_IDS = Object.keys(v14Calc.tasks) as TaskId[];
+type TaskId = keyof typeof en.calc.tasks;
+const TASK_IDS = Object.keys(en.calc.tasks) as TaskId[]; // same keys in both languages
 // savings shown as a range (25–40% of the hours on the picked tasks), decision Mike 01/10/2026,
 // until Dimitris validates per-task shares. Weights per industry come from the v5 calculator.
 const RANGE = [0.25, 0.4] as const;
-const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
+
 
 function Range({ id, label, value, min, max, display, onChange }: {
   id: string; label: string; value: number; min: number; max: number; display: string; onChange: (v: number) => void;
@@ -198,6 +191,7 @@ function Range({ id, label, value, min, max, display, onChange }: {
 }
 
 function Calculator() {
+  const { c } = useCopy();
   const [industry, setIndustry] = useState("hosp");
   const [team, setTeam] = useState(6);
   const [hours, setHours] = useState(6);
@@ -220,63 +214,65 @@ function Calculator() {
       lo,
       hi,
       yearCost: monthHours * 12 * rate,
-      opps: ranked.map((o) => ({ label: v14Calc.tasks[o.k].opp, lo: (lo * o.score) / tot, hi: (hi * o.score) / tot })),
+      opps: ranked.map((o) => ({ label: c.calc.tasks[o.k].opp, lo: (lo * o.score) / tot, hi: (hi * o.score) / tot })),
     };
   }, [industry, team, hours, rate, tasks]);
 
+  const fmt = (n: number) => Math.round(n).toLocaleString(c.locale);
   const toggle = (k: TaskId) => setTasks((t) => (t.includes(k) ? t.filter((x) => x !== k) : [...t, k]));
 
   return (
     <div className="t14-calc">
       <form className="t14-calc-form" onSubmit={(e: FormEvent) => e.preventDefault()}>
         <div className="t14-f">
-          <label htmlFor="calc-ind">{v14Calc.industry.toUpperCase()}</label>
+          <label htmlFor="calc-ind">{c.calc.industry}</label>
           <select id="calc-ind" value={industry} onChange={(e) => setIndustry(e.target.value)}>
-            {v14Calc.industries.map((i) => (
+            {c.calc.industries.map((i) => (
               <option key={i.id} value={i.id}>{i.label}</option>
             ))}
           </select>
         </div>
-        <Range id="calc-team" label={v14Calc.team} value={team} min={1} max={40} display={String(team)} onChange={setTeam} />
-        <Range id="calc-hours" label={v14Calc.hours} value={hours} min={1} max={25} display={String(hours)} onChange={setHours} />
-        <Range id="calc-rate" label={v14Calc.rate} value={rate} min={5} max={40} display={`€${rate}`} onChange={setRate} />
+        <Range id="calc-team" label={c.calc.team} value={team} min={1} max={40} display={String(team)} onChange={setTeam} />
+        <Range id="calc-hours" label={c.calc.hours} value={hours} min={1} max={25} display={String(hours)} onChange={setHours} />
+        <Range id="calc-rate" label={c.calc.rate} value={rate} min={5} max={40} display={`€${rate}`} onChange={setRate} />
         <fieldset className="t14-tasks">
-          <legend>{v14Calc.where}</legend>
+          <legend>{c.calc.where}</legend>
           {TASK_IDS.map((k) => (
             <label key={k} className={tasks.includes(k) ? "on" : undefined}>
               <input type="checkbox" checked={tasks.includes(k)} onChange={() => toggle(k)} />
-              {v14Calc.tasks[k].label}
+              {c.calc.tasks[k].label}
             </label>
           ))}
         </fieldset>
       </form>
       <aside className="t14-calc-out" aria-live="polite">
-        <small>{v14Calc.yearLabel}</small>
-        <div className="t14-calc-big">€{fmt(r.yearCost)} <span>{v14Calc.perYear}</span></div>
+        <small>{c.calc.yearLabel}</small>
+        <div className="t14-calc-big">€{fmt(r.yearCost)} <span>{c.calc.perYear}</span></div>
         <div className="t14-calc-kpis">
-          <div><b>{fmt(r.monthHours)}</b><span>{v14Calc.monthHours}</span></div>
-          <div><b>{fmt(r.lo)}–{fmt(r.hi)}</b><span>{v14Calc.autoHours}</span></div>
+          <div><b>{fmt(r.monthHours)}</b><span>{c.calc.monthHours}</span></div>
+          <div><b>{fmt(r.lo)}–{fmt(r.hi)}</b><span>{c.calc.autoHours}</span></div>
         </div>
-        <small>{v14Calc.start}</small>
+        <small>{c.calc.start}</small>
         <ol className="t14-calc-opps">
           {r.opps.map((o) => (
             <li key={o.label}>
               <span>{o.label}</span>
-              <span>{fmt(o.lo)}–{fmt(o.hi)} {v14Calc.hoursShort}</span>
+              <span>{fmt(o.lo)}–{fmt(o.hi)} {c.calc.hoursShort}</span>
             </li>
           ))}
         </ol>
-        <p className="t14-calc-how">{v14Calc.how(team, hours, rate)}</p>
+        <p className="t14-calc-how">{c.calc.how(team, hours, rate)}</p>
       </aside>
     </div>
   );
 }
 
 export function AuditPage() {
-  const s = v14AuditPage;
+  const { c } = useCopy();
+  const s = c.auditPage;
   return (
     <>
-      <PageHead p={v14PageHeads.audit} />
+      <PageHead p={c.pageHeads.audit} />
       <AuditPanels id="looks" />
 
       <section className="t14-wrap t14-sample-sec">
@@ -312,11 +308,11 @@ export function AuditPage() {
       </section>
 
       <section className="t14-wrap" id="calculator">
-        <Label>{v14Calc.label}</Label>
-        <h2 className="t14-h2">{v14Calc.title}</h2>
-        <p className="t14-lead">{v14Calc.lead}</p>
+        <Label>{c.calc.label}</Label>
+        <h2 className="t14-h2">{c.calc.title}</h2>
+        <p className="t14-lead">{c.calc.lead}</p>
         <Calculator />
-        <p className="t14-sol-note">{v14Calc.note}</p>
+        <p className="t14-sol-note">{c.calc.note}</p>
       </section>
 
       <Faq title={s.faqTitle} items={s.faq} id="audit-faq" />
@@ -342,10 +338,11 @@ export function AuditPage() {
 
 /* ================================ About ================================ */
 export function AboutPage() {
-  const a = v14AboutPage;
+  const { c } = useCopy();
+  const a = c.aboutPage;
   return (
     <>
-      <PageHead p={v14PageHeads.about} />
+      <PageHead p={c.pageHeads.about} />
       <section className="t14-wrap">
         <ul className="t14-list t14-founders">
           {a.founders.map((f) => (
