@@ -214,7 +214,7 @@ export const el: Copy = {
     about: {
       label: "Ποιοι είμαστε",
       title: "Ποιοι είμαστε",
-      lead: "Η Thynk Digital Agency εδρεύει στα Ιωάννινα και εξειδικεύεται σε marketing και digital transformation με τεχνητή νοημοσύνη. Σε κάθε συνεργασία, την ευθύνη έχουν απευθείας οι ιδρυτές.",
+      lead: "Η Thynk Digital Agency εδρεύει στα Ιωάννινα και εξειδικεύεται σε marketing και digital transformation με τεχνητή νοημοσύνη. Συνεργαζόμαστε με κάθε επιχείρηση ως στρατηγικός εταίρος.",
     },
   },
   pillars: {
@@ -418,9 +418,10 @@ export const el: Copy = {
   },
   aboutPage: {
     founders: [
-      { initials: "ΔΧ", name: "Δημήτρης Χρυσοχόου", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
-      { initials: "ΜΜ", name: "Μιχαήλ Μπούμπας", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
+      { initials: "ΔΧ", name: "Δημήτρης Χρυσοχόου", photo: "", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
+      { initials: "ΜΜ", name: "Μιχαήλ Μπούμπας", photo: "", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
     ],
+    teamLabel: "Η ομάδα",
     linkedinLabel: "LinkedIn",
     linkedinAria: "στο LinkedIn",
     valuesTitle: "Αρχές συνεργασίας",

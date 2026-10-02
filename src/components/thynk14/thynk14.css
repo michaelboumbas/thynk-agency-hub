@@ -2458,3 +2458,79 @@
     transition: none;
   }
 }
+
+/* About · founders (02/10, Mike): lower on the page, two cards side by side, a photo slot each,
+   names in a regular weight (not bold) */
+.t14-team-sec {
+  margin-top: clamp(90px, 16vh, 180px);
+}
+.t14-team-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 44px);
+  max-width: 940px;
+}
+.t14-photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 6px;
+  background:
+    radial-gradient(80% 60% at 50% 110%, rgba(255, 106, 26, 0.16), transparent 70%),
+    var(--paper-2);
+  border: 1px solid var(--line);
+}
+.t14-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+  transition: filter 0.4s, transform 0.6s;
+}
+.t14-person:hover .t14-photo img {
+  filter: none;
+  transform: scale(1.03);
+}
+.t14-photo span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-stretch: 150%;
+  font-size: clamp(56px, 8vw, 120px);
+  letter-spacing: -0.04em;
+  color: var(--line);
+}
+.t14-person-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 18px;
+}
+.t14 .t14-person .t14-founder-name {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-stretch: 110%;
+  font-size: clamp(24px, 2.3vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.t14-person:hover .t14-founder-name {
+  color: var(--orange);
+}
+.t14-person .t14-in {
+  height: 42px;
+  padding: 0 16px 0 13px;
+}
+@media (max-width: 700px) {
+  .t14-team-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

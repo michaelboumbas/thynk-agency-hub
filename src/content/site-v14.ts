@@ -241,7 +241,7 @@ export const v14PageHeads = {
   about: {
     label: "About",
     title: "About",
-    lead: "Thynk Digital Agency is based in Ioannina, Greece, and specializes in marketing and digital transformation with artificial intelligence. In every engagement, the founders are directly responsible.",
+    lead: "Thynk Digital Agency is based in Ioannina, Greece, and specializes in marketing and digital transformation with artificial intelligence. We work with every business as a strategic partner.",
   },
 };
 
@@ -451,9 +451,10 @@ export const v14Calc = {
 
 export const v14AboutPage = {
   founders: [
-    { initials: "DC", name: "Dimitris Chrysochoou", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
-    { initials: "MB", name: "Michael Boumpas", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
+    { initials: "DC", name: "Dimitris Chrysochoou", photo: "", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
+    { initials: "MB", name: "Michael Boumpas", photo: "", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
   ],
+  teamLabel: "The team",
   linkedinLabel: "LinkedIn",
   linkedinAria: "on LinkedIn",
   valuesTitle: "How we work",
