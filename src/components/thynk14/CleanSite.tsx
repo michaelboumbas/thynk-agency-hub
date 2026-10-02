@@ -157,20 +157,33 @@ function CleanPage() {
     };
   }, []);
 
-  // the giant "Λύσεις" fills the content width exactly, whatever the font metrics
+  // the giant "Λύσεις" fills the content width exactly, whatever the font metrics.
+  // Re-fits when Inter finishes loading (it arrives after first paint) and on resize.
   useEffect(() => {
     const el = rootRef.current?.querySelector<HTMLElement>(".t14-giant");
     if (!el) return;
     const fit = () => {
-      el.style.fontSize = "";
-      const box = el.parentElement!.clientWidth - parseFloat(getComputedStyle(el.parentElement!).paddingLeft) * 2;
-      const w = el.scrollWidth;
-      if (w > 0) el.style.fontSize = `${(parseFloat(getComputedStyle(el).fontSize) * box) / w}px`;
+      const par = el.parentElement!;
+      const pad = parseFloat(getComputedStyle(par).paddingLeft) + parseFloat(getComputedStyle(par).paddingRight);
+      const box = par.clientWidth - pad;
+      const w = el.getBoundingClientRect().width;
+      const fs = parseFloat(getComputedStyle(el).fontSize);
+      if (w > 0 && box > 0) el.style.fontSize = `${(fs * box) / w}px`;
     };
-    fit();
-    document.fonts?.ready.then(fit);
-    window.addEventListener("resize", fit);
-    return () => window.removeEventListener("resize", fit);
+    // two passes: the first gets close, the second corrects for letter-spacing in em
+    const refit = () => {
+      fit();
+      fit();
+    };
+    refit();
+    const fonts = document.fonts;
+    fonts?.ready.then(refit);
+    fonts?.addEventListener?.("loadingdone", refit);
+    window.addEventListener("resize", refit);
+    return () => {
+      fonts?.removeEventListener?.("loadingdone", refit);
+      window.removeEventListener("resize", refit);
+    };
   }, []);
 
   // all scroll-driven motion in one rAF loop
