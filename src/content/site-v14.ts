@@ -22,7 +22,7 @@ export const v14Hero = {
 
 export const v14About = {
   label: "Thynk",
-  text: "We help businesses grow: more customers, leaner operations, results you can measure. We do it through marketing and digital transformation, with artificial intelligence at the core of every solution. We work not as a vendor but as a strategic partner, treating every business as our own, because its success is our success.",
+  text: "Your business gains more customers, more efficient operations and growth that shows in the results. We deliver it by combining strategic marketing with digital transformation, with artificial intelligence at the core of every solution. We work as a strategic partner: we take on your goals as our own and invest in achieving them.",
   founders: "Dimitris Chrysochoou & Michael Boumpas",
   foundersNote: "A senior team you talk to directly. Every engagement starts with an audit.",
 };
