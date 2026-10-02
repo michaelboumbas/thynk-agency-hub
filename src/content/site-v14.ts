@@ -101,8 +101,8 @@ export const v14Faq = {
       a: "It is a short, paid service: we analyze your online presence and your processes and deliver a list of actions in order of priority. The deliverable stays yours, whatever happens next.",
     },
     {
-      q: "Do you only work with businesses in Ioannina?",
-      a: "No. We are based in Ioannina, but we work with businesses across Greece and abroad.",
+      q: "What kind of businesses do you work with?",
+      a: "Businesses that already have customers and processes, but lose valuable time on repetitive tasks and don't have a clear picture of how their marketing performs. In any industry, across Greece and abroad.",
     },
     {
       q: "Will AI replace people in my business?",

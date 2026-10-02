@@ -210,13 +210,19 @@ export function AuditPanels({ id = "audit" }: { id?: string }) {
         </h2>
         <div className="t14-hz-track">
           <div className="t14-spacer" aria-hidden="true" />
-          {c.audit.panels.map((p) => (
-            <article key={p.title} className={`t14-panel ${p.tone}`}>
-              <small>{p.kicker}<i>{p.sub}</i></small>
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
-            </article>
-          ))}
+          {c.audit.panels.map((p) => {
+            const n = /^\d+/.exec(p.kicker)?.[0];
+            return (
+              <article key={p.title} className={`t14-panel${p.tone === "orange" ? " key" : ""}`}>
+                <small>{p.kicker}<i>{p.sub}</i></small>
+                <div>
+                  <h3>{p.title}</h3>
+                  <p>{p.text}</p>
+                </div>
+                <div className="t14-num"><sup>#.</sup>{n ?? "AI"}</div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -315,23 +321,28 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
 
   return (
     <form className="t14-form" onSubmit={submit} noValidate>
-      <h2>{c.book.title}</h2>
-      <p>{c.book.lead}</p>
+      <div className="t14-form-head">
+        <h2>{c.book.title}</h2>
+        <p>{c.book.lead}</p>
+      </div>
       <div className="t14-fgrid">
         {field("name", "text", "name")}
         {field("biz", "text", "organization")}
+        {field("email", "email", "email")}
+        <div className="t14-f">
+          <label htmlFor={`${idPrefix}-pain`}>{c.book.pain.label}</label>
+          <select id={`${idPrefix}-pain`} value={form.pain} onChange={(e) => setForm({ ...form, pain: e.target.value })}>
+            {c.book.pain.options.map((o) => (
+              <option key={o}>{o}</option>
+            ))}
+          </select>
+          <span className="t14-err" aria-hidden="true" />
+        </div>
       </div>
-      {field("email", "email", "email")}
-      <div className="t14-f">
-        <label htmlFor={`${idPrefix}-pain`}>{c.book.pain.label}</label>
-        <select id={`${idPrefix}-pain`} value={form.pain} onChange={(e) => setForm({ ...form, pain: e.target.value })}>
-          {c.book.pain.options.map((o) => (
-            <option key={o}>{o}</option>
-          ))}
-        </select>
+      <div className="t14-form-foot">
+        <button className="t14-pill lg" type="submit">{c.book.submit}</button>
+        {sent && <div className="t14-ok" role="status">{c.book.sent}</div>}
       </div>
-      <button className="t14-pill lg" type="submit">{c.book.submit}</button>
-      {sent && <div className="t14-ok" role="status">{c.book.sent}</div>}
     </form>
   );
 }

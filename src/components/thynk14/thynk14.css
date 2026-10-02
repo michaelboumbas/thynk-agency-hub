@@ -1834,3 +1834,172 @@
     hyphens: auto;
   }
 }
+
+/* ======================= 02/10 (Mike): round of changes ======================= */
+
+/* 1 · «Thynk» paragraph centred */
+.t14-about-c {
+  text-align: center;
+}
+.t14-about-c .t14-lbl {
+  align-items: center;
+}
+.t14-about-c .t14-reveal {
+  margin-inline: auto;
+  text-indent: 0;
+  max-width: 28em;
+}
+
+/* 3 · the audit form, big: almost the whole section */
+.t14-book {
+  padding-block: clamp(80px, 12vh, 140px) clamp(40px, 8vh, 90px);
+}
+.t14-form {
+  width: min(1180px, 100%);
+  gap: clamp(26px, 4vh, 40px);
+  padding: clamp(24px, 4vw, 60px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 40px 80px -50px rgba(15, 16, 18, 0.35);
+}
+.t14-form-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.t14-form-head h2,
+.t14-form h2 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-stretch: 140%;
+  font-size: clamp(40px, 6vw, 92px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+.t14-form-head p,
+.t14-form > p {
+  margin-top: 0;
+  max-width: 52ch;
+  font-size: 16px;
+  color: var(--ink-2);
+}
+.t14-form .t14-fgrid {
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 28px;
+}
+.t14-form .t14-f label {
+  font-size: 12px;
+}
+.t14-form .t14-f input,
+.t14-form .t14-f select {
+  height: 58px;
+  padding: 0 16px;
+  font-size: 17px;
+  border-radius: 8px;
+}
+.t14-form-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+.t14-form .t14-pill {
+  height: 58px;
+  padding: 0 40px;
+  border-radius: 40px;
+  font-size: 16px;
+}
+.t14-form .t14-ok {
+  flex: 1 1 280px;
+}
+/* audit page: the closing text above the form, the form full width */
+.t14-book-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(30px, 5vh, 50px);
+}
+.t14-book-stack .t14-book-side {
+  width: min(1180px, 100%);
+}
+
+/* 5 · audit and AI-rule panels: floating cards over the dots (no more colour strips) */
+.t14-hz-track {
+  align-items: center;
+  gap: 22px;
+  padding-right: var(--gut);
+}
+.t14-panel {
+  flex: none;
+  width: clamp(280px, 25vw, 370px);
+  height: min(74vh, 620px);
+  padding: 24px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 30px 60px -40px rgba(15, 16, 18, 0.35);
+  text-align: left;
+}
+.t14-panel.key {
+  border-top: 4px solid var(--orange);
+}
+.t14-panel small {
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.t14-panel small i {
+  opacity: 1;
+  color: var(--ink);
+  margin-top: 2px;
+}
+.t14-panel h3 {
+  font-size: clamp(24px, 2.1vw, 32px);
+  line-height: 1.04;
+}
+.t14-panel p {
+  max-width: none;
+  margin: 12px 0 0;
+  opacity: 1;
+  color: var(--ink-2);
+  font-size: 14px;
+}
+.t14-panel .t14-num {
+  margin-top: 0;
+  font-size: clamp(56px, 5vw, 84px);
+}
+.t14-rules {
+  gap: 22px;
+}
+.t14-rules .t14-panel {
+  width: auto;
+  height: auto;
+  min-height: clamp(320px, 48vh, 440px);
+  border: 1px solid var(--line);
+}
+.t14-rules .t14-panel.key {
+  border-top: 4px solid var(--orange);
+}
+
+@media (max-width: 900px) {
+  .t14-form .t14-fgrid {
+    grid-template-columns: 1fr;
+  }
+  .t14-hz-track {
+    gap: 14px;
+    padding: 0 var(--gut);
+  }
+  .t14-panel {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    gap: 22px;
+  }
+  .t14-panel .t14-num {
+    font-size: 52px;
+  }
+  .t14-rules .t14-panel {
+    min-height: 0;
+  }
+}

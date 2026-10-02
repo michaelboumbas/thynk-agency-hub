@@ -43,13 +43,9 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="t14-about t14-wrap" id="about">
+      <section className="t14-about t14-about-c t14-wrap" id="about">
         <Label>{c.about.label}</Label>
         <Reveal text={c.about.text} />
-        <div className="t14-team-line">
-          <h3>{c.about.founders}</h3>
-          <p>{c.about.foundersNote}</p>
-        </div>
       </section>
 
       <MethodSection />
@@ -63,19 +59,6 @@ export function HomePage() {
       <AuditPanels />
       <div className="t14-wrap"><MoreLink to={href(v14Routes.audit)}>{c.more.audit}</MoreLink></div>
 
-      <section className="t14-team t14-wrap" id="team">
-        <Label>{c.team.label}</Label>
-        <ul className="t14-list">
-          {c.team.people.map((p) => (
-            <li key={p.name}>
-              <span className="n">{p.name}<small>{p.role}</small></span>
-              <span className="t">{p.focus}</span>
-              <span className="y"><a href={`mailto:${p.email}`}>{p.email}</a></span>
-            </li>
-          ))}
-        </ul>
-        <MoreLink to={href(v14Routes.about)}>{c.more.team}</MoreLink>
-      </section>
 
       <section className="t14-book t14-wrap" id="book">
         <BookForm idPrefix="home" />
@@ -317,7 +300,7 @@ export function AuditPage() {
 
       <Faq title={s.faqTitle} items={s.faq} id="audit-faq" />
 
-      <section className="t14-book t14-book-split t14-wrap" id="book">
+      <section className="t14-book t14-book-stack t14-wrap" id="book">
         <div className="t14-book-side">
           <h2>{s.bookSide.title}</h2>
           <p>{s.bookSide.text}</p>
@@ -378,10 +361,12 @@ export function AboutPage() {
         <Label>{a.rulesTitle}</Label>
         <div className="t14-rules">
           {a.rules.map((r, i) => (
-            <article key={r.title} className={`t14-panel ${i === 1 ? "orange" : i === 0 ? "ink" : "paper"}`}>
-              <small>0{i + 1}</small>
-              <h3>{r.title}</h3>
-              <p>{r.text}</p>
+            <article key={r.title} className={`t14-panel${i === 1 ? " key" : ""}`}>
+              <div>
+                <h3>{r.title}</h3>
+                <p>{r.text}</p>
+              </div>
+              <div className="t14-num"><sup>#.</sup>0{i + 1}</div>
             </article>
           ))}
         </div>
