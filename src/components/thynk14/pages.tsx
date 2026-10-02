@@ -127,7 +127,7 @@ export function SolutionsPage() {
           <article key={ex.id} className={`t14-example${i % 2 ? " flip" : ""}`}>
             <div className="t14-example-text">
               <small>
-                <span>0{i + 1}</span> {ex.tag} · {c.examples.label}
+                <span>0{i + 1}</span> {ex.tag}{c.examples.label && <> · {c.examples.label}</>}
               </small>
               <h2>{ex.title}</h2>
               <p>{ex.text}</p>
@@ -282,7 +282,7 @@ export function AuditPage() {
               </li>
             ))}
           </ul>
-          <p>{s.sample.foot}</p>
+          {s.sample.foot && <p>{s.sample.foot}</p>}
         </figure>
         <div className="t14-flow">
           <Label>{s.stepsTitle}</Label>

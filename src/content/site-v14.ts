@@ -43,8 +43,8 @@ export type ScreenId = "bookings" | "followup" | "report" | "invoices" | "audit"
 export const v14Solutions = {
   label: "Solutions",
   title: "Solutions",
-  lead: "A selection of the solutions Thynk designs and builds. Client projects are shown only with their explicit permission.",
-  note: "Hover over the first four to see how they work. Illustrative examples, not client projects.",
+  lead: "A selection of the solutions Thynk designs and builds.",
+  note: "Hover over the first four to see how they work.",
   items: [
     { name: "24/7 booking assistant", tags: "Bookings · Website, Messenger, Instagram", pillar: "Digital Transformation", screen: "bookings" },
     { name: "Quote follow-up", tags: "Sales · CRM", pillar: "Digital Transformation", screen: "followup" },
@@ -172,7 +172,7 @@ export const v14Screens = {
       { t: "Meta · Images", v: 28, flag: true },
       { t: "Google Maps", v: 47, flag: false },
     ],
-    foot: "Illustrative example · leads",
+    foot: "Leads by source",
   },
   invoices: {
     app: "Incoming invoices",
@@ -229,7 +229,7 @@ export const v14PageHeads = {
   solutions: {
     label: "Solutions",
     title: "Solutions",
-    lead: "Automation that works alongside your team. Illustrative solutions from the ones Thynk designs and builds. Client projects are shown only with their explicit permission.",
+    lead: "Automation that works alongside your team, designed and built by Thynk.",
   },
   audit: {
     label: "The audit",
@@ -320,7 +320,7 @@ export const v14Pillars = {
 };
 
 export const v14Examples = {
-  label: "Illustrative example",
+  label: "",
   items: [
     {
       id: "bookings" as ScreenId,
@@ -386,7 +386,7 @@ export const v14AuditPage = {
       { tag: "Next", tone: "", text: "Ads run without tracking bookings." },
       { tag: "Not recommended", tone: "k", text: "A new website. The current one covers today's needs." },
     ],
-    foot: "Illustrative example, not a real client.",
+    foot: "",
   },
   stepsTitle: "How it works",
   steps: [
@@ -399,7 +399,6 @@ export const v14AuditPage = {
     { q: "How much does the audit cost?", a: "The audit is a short, paid service and its cost is shared before we start. It isn't free, because it is real work with a deliverable you can use whatever happens next." },
     { q: "What if we don't continue after the audit?", a: "The deliverable stays yours and you can implement it with any partner you like. If you don't need a service, we'll tell you." },
     { q: "How are your services priced?", a: "Each service is priced separately, based on the size of the business and the workload. The detailed proposal is presented after the audit. We don't sell all-in-one packages." },
-    { q: "Are the examples real clients?", a: "No. They are illustrative solutions that show how things work. Client projects are shown only with their explicit permission." },
     { q: "Do you build e-shops?", a: "No. For existing online stores we take on advertising, email marketing and abandoned cart recovery." },
   ],
   bookSide: {
