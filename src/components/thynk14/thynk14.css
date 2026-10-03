@@ -2870,9 +2870,6 @@
   font-weight: 400;
   color: var(--orange);
 }
-.t14-foot:hover .t14-foot-ticker > div {
-  animation-play-state: paused;
-}
 @keyframes t14-ticker {
   to {
     transform: translateX(-50%);
