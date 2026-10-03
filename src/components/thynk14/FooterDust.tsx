@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
  * the bottom; the pointer pushes them away and they drift back. The dot after THYNK is orange.
  * Canvas 2D, runs only while visible; prefers-reduced-motion: the letters, formed and still.
  */
-type P = { x: number; y: number; hx: number; hy: number; sx: number; sy: number; vx: number; vy: number; s: number; o: boolean; tw: number };
+type P = { x: number; y: number; hx: number; hy: number; sx: number; sy: number; vx: number; vy: number; s: number; o: boolean; tw: number; d: number };
 
 export function FooterDust() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -19,6 +19,8 @@ export function FooterDust() {
     if (!ctx) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let W = 0, H = 0, dpr = 1, pts: P[] = [], raf = 0, visible = false, t0 = performance.now();
+    let last = performance.now();
+    let kk = reduced ? 1 : 0; // the formation, eased slowly towards the scroll target
     const mouse = { x: -9999, y: -9999 };
 
     const build = () => {
@@ -49,16 +51,18 @@ export function FooterDust() {
       o.fillStyle = "#f60";
       o.fillText(".", x0 + tw, base);
       const data = o.getImageData(0, 0, W, H).data;
-      const step = W > 900 ? 4 : 3;
+      // fine dust: many small grains (Mike 03/10)
+      const step = W > 900 ? 2.6 : 2;
       pts = [];
-      for (let y = 0; y < H; y += step) {
-        for (let x = 0; x < W; x += step) {
+      for (let yy = 0; yy < H; yy += step) {
+        for (let xx = 0; xx < W; xx += step) {
+          const x = Math.round(xx), y = Math.round(yy);
           const i = (y * W + x) * 4;
           if (data[i + 3] < 128) continue;
           const orange = data[i + 2] < 60; // the dot is the only non-white fill
           const ang = Math.random() * Math.PI * 2, r = (0.35 + Math.random() * 0.9) * W * 0.5;
           const sx = W / 2 + Math.cos(ang) * r, sy = H / 2 + Math.sin(ang) * r * 0.6;
-          pts.push({ x: sx, y: sy, hx: x + (Math.random() - 0.5) * step, hy: y + (Math.random() - 0.5) * step, sx, sy, vx: 0, vy: 0, s: 0.8 + Math.random() * 1.3, o: orange, tw: Math.random() * Math.PI * 2 });
+          pts.push({ x: sx, y: sy, hx: x + (Math.random() - 0.5) * step, hy: y + (Math.random() - 0.5) * step, sx, sy, vx: 0, vy: 0, s: 0.6 + Math.random() * 0.8, o: orange, tw: Math.random() * Math.PI * 2, d: Math.random() });
         }
       }
     };
@@ -74,10 +78,14 @@ export function FooterDust() {
 
     const frame = (now: number) => {
       const t = (now - t0) / 1000;
-      const k = ease(progress());
+      // slow gathering: follow the scroll target gently, every grain with its own small delay
+      const dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      kk += (progress() - kk) * (reduced ? 1 : 1 - Math.exp(-dt / 1.1)); // ~3 s to gather, at any frame rate
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, W, H);
       for (const p of pts) {
+        const k = reduced ? 1 : ease(Math.min(1, Math.max(0, (kk * 1.35 - p.d * 0.35))));
         // target: between the scattered start and the home position in the letters
         const tx = p.sx + (p.hx - p.sx) * k + (reduced ? 0 : Math.sin(t * 0.8 + p.tw) * (1 - k) * 6);
         const ty = p.sy + (p.hy - p.sy) * k + (reduced ? 0 : Math.cos(t * 0.7 + p.tw) * (1 - k) * 6);
@@ -88,17 +96,17 @@ export function FooterDust() {
             p.vx += (dx / Math.sqrt(d2 + 0.01)) * f * 2.4;
             p.vy += (dy / Math.sqrt(d2 + 0.01)) * f * 2.4;
           }
-          p.vx += (tx - p.x) * 0.09;
-          p.vy += (ty - p.y) * 0.09;
-          p.vx *= 0.82;
-          p.vy *= 0.82;
+          p.vx += (tx - p.x) * 0.035;
+          p.vy += (ty - p.y) * 0.035;
+          p.vx *= 0.86;
+          p.vy *= 0.86;
           p.x += p.vx;
           p.y += p.vy;
         } else {
           p.x = tx;
           p.y = ty;
         }
-        const a = 0.35 + 0.65 * k * (0.75 + 0.25 * Math.sin(t * 2 + p.tw));
+        const a = 0.4 + 0.6 * k * (0.78 + 0.22 * Math.sin(t * 2 + p.tw));
         ctx.fillStyle = p.o ? `rgba(255,106,26,${a})` : `rgba(255,255,255,${a})`;
         ctx.fillRect(p.x, p.y, p.s, p.s);
       }
@@ -107,6 +115,7 @@ export function FooterDust() {
 
     const start = () => {
       cancelAnimationFrame(raf);
+      last = performance.now();
       raf = requestAnimationFrame(frame);
     };
     const io = new IntersectionObserver(([e]) => {

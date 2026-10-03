@@ -2829,7 +2829,6 @@
   margin-top: clamp(60px, 10vh, 120px);
   overflow: hidden;
   background:
-    radial-gradient(70% 45% at 15% 100%, rgba(255, 106, 26, 0.22), transparent 70%),
     radial-gradient(60% 40% at 90% 105%, rgba(120, 90, 255, 0.16), transparent 70%),
     var(--ink);
   color: var(--paper);
