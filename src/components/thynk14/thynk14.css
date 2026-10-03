@@ -3100,3 +3100,56 @@
 .t14-foot-time {
   white-space: nowrap;
 }
+
+/* ======================= rounded corners everywhere (03/10, Mike: like the footer) ======================= */
+.t14 {
+  --r-card: 22px;
+  --r-field: 14px;
+}
+.t14 .t14-mcard,
+.t14 .t14-panel,
+.t14 .t14-ccard,
+.t14 .t14-cmap,
+.t14 .t14-chours,
+.t14 .t14-photo,
+.t14 .t14-form,
+.t14 .t14-sample,
+.t14 .t14-calc-out,
+.t14 .t14-card,
+.t14 .t14-ok,
+.t14 .t14-example-screen,
+.t14 .t14-peek > * {
+  border-radius: var(--r-card);
+}
+.t14 .t14-f input,
+.t14 .t14-f select,
+.t14 .t14-form .t14-f input,
+.t14 .t14-form .t14-f select {
+  border-radius: var(--r-field);
+}
+.t14 .t14-pill,
+.t14 .t14-form .t14-pill,
+.t14 .t14-skip {
+  border-radius: 999px;
+}
+.t14-sheet {
+  border-radius: 26px 26px 0 0;
+}
+@media (max-width: 900px) {
+  .t14 {
+    --r-card: 18px;
+  }
+}
+
+/* footer: Let's Thynk. / Together + the wordmark as space dust */
+.t14-foot-cta .t14-dot {
+  color: var(--orange);
+}
+.t14-foot-dust {
+  padding: 10px var(--gut) clamp(10px, 3vh, 30px);
+}
+.t14-foot-dust canvas {
+  display: block;
+  width: 100%;
+  cursor: crosshair;
+}

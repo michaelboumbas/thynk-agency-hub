@@ -8,6 +8,7 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { v14Routes, type Lang, type V14Path } from "@/content/site-v14";
 import { Logo } from "./shared";
 import { useCleanMotion } from "./motion";
+import { FooterDust } from "./FooterDust";
 
 // Inter for text; TikTok Sans (Grilli Type, has Greek, width 75–150%) for titles — Mike 02/10/2026
 const INTER_HREF =
@@ -261,7 +262,11 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
 
       <div className="t14-foot-in">
         <div className="t14-foot-cta">
-          <h2>{f.cta}</h2>
+          <h2 lang="en">
+            {f.ctaA}<span className="t14-dot">.</span>
+            <br />
+            {f.ctaB}
+          </h2>
           <div>
             <p>{c.final.title}</p>
             <div className="t14-foot-act">
@@ -306,12 +311,7 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
         </div>
       </div>
 
-      <div className="t14-foot-word" aria-hidden="true">
-        <span className="t14-foot-word-in">
-          {[..."THYNK"].map((ch, i) => <span key={i}>{ch}</span>)}
-          <span className="dot">.</span>
-        </span>
-      </div>
+      <FooterDust />
 
       <div className="t14-foot-legal">
         <span>© 2026 Thynk Digital Agency · {f.rights}</span>

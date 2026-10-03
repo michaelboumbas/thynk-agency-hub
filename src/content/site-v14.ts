@@ -141,7 +141,9 @@ export const v14Footer = {
   phoneLabel: "Phone",
   addressLabel: "Address",
   // the big footer (03/10, Mike)
-  cta: "Let's Thynk.",
+  // the same English line in both languages (Mike 03/10); the dot after Thynk is the brand dot
+  ctaA: "Let's Thynk",
+  ctaB: "Together",
   ticker: ["Marketing", "Digital Transformation", "Artificial Intelligence", "Automation", "Advertising", "Data & Reporting"],
   pagesLabel: "Pages",
   officeLabel: "Office",

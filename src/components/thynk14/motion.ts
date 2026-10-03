@@ -15,7 +15,7 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
-    const els = [...root.querySelectorAll<HTMLElement>(".t14-giant, .t14-foot-word-in")];
+    const els = [...root.querySelectorAll<HTMLElement>(".t14-giant")];
     // ghost words (Method, How we work, Αρχές συνεργασίας…) must fit the stage on desktop
     const ghosts = [...root.querySelectorAll<HTMLElement>(".t14-ghost")];
     const fitGhost = (el: HTMLElement) => {
