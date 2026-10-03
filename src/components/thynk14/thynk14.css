@@ -3149,3 +3149,171 @@
   width: 100%;
   cursor: crosshair;
 }
+
+/* ======================= Coming Soon in the v14 style (03/10, Mike) ======================= */
+.t14-cs {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+}
+.t14-cs > :not(.t11-field) {
+  position: relative;
+  z-index: 1;
+}
+.t14-cs-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px var(--gut);
+}
+.t14-cs-mail {
+  font-size: 14px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+}
+.t14-cs-mail:hover {
+  color: var(--orange);
+  border-color: var(--orange);
+}
+.t14-cs-main {
+  align-self: center;
+  padding: clamp(40px, 8vh, 90px) var(--gut);
+}
+.t14-cs-lbl {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.t14-cs-lbl i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 0 0 rgba(255, 106, 26, 0.55);
+  animation: t14-cs-pulse 2s infinite;
+}
+@keyframes t14-cs-pulse {
+  70% {
+    box-shadow: 0 0 0 9px rgba(255, 106, 26, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 106, 26, 0);
+  }
+}
+.t14 .t14-cs-h1 {
+  display: grid;
+  margin-top: 22px;
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-stretch: 120%;
+  font-size: clamp(48px, 9.4vw, 156px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+.t14-cs-acc {
+  font-weight: 700;
+  font-stretch: 150%;
+}
+.t14-cs-acc b {
+  color: var(--orange);
+}
+.t14 .t14-cs-formula {
+  margin-top: 26px;
+  font-size: clamp(16px, 1.5vw, 21px);
+  color: var(--ink-2);
+}
+.t14-cs-formula b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.t14-cs-formula span {
+  color: var(--orange);
+  font-weight: 600;
+}
+.t14 .t14-cs-lead {
+  max-width: 46ch;
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.t14 .t14-cs-act {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+.t14-cs-act .t14-pill i {
+  font-style: normal;
+}
+.t14-cs-soc {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.t14-cs-soc svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+.t14-cs-soc:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.t14-cs-foot {
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 28px 28px 0 0;
+}
+.t14-cs-legal {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px var(--gut) calc(16px + env(safe-area-inset-bottom, 0px));
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+.t14-cs-legal span:last-child {
+  color: #fff;
+  font-weight: 600;
+}
+.t14-cs-legal b {
+  color: var(--orange);
+}
+@media (max-width: 700px) {
+  .t14-cs-foot {
+    border-radius: 20px 20px 0 0;
+  }
+  .t14-cs-legal {
+    flex-direction: column;
+  }
+  .t14-cs-mail {
+    font-size: 13px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t14-cs-lbl i {
+    animation: none;
+  }
+}
