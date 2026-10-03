@@ -15,7 +15,7 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
-    const els = [...root.querySelectorAll<HTMLElement>(".t14-giant")];
+    const els = [...root.querySelectorAll<HTMLElement>(".t14-giant, .t14-foot-word-in")];
     // ghost words (Method, How we work, Αρχές συνεργασίας…) must fit the stage on desktop
     const ghosts = [...root.querySelectorAll<HTMLElement>(".t14-ghost")];
     const fitGhost = (el: HTMLElement) => {
@@ -64,6 +64,9 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
       letters: [...el.querySelectorAll<HTMLElement>(".t14-ghost span")],
       cards: [...el.querySelectorAll<HTMLElement>(".t14-mcard")],
     }));
+    // the giant THYNK. in the footer: letters rise one after another as you reach the bottom
+    const footWord = root.querySelector<HTMLElement>(".t14-foot-word");
+    const footLetters = footWord ? [...footWord.querySelectorAll<HTMLElement>(".t14-foot-word-in > span")] : [];
     const tracks = [...root.querySelectorAll<HTMLElement>(".t14-hz")].map((el) => ({
       el,
       track: el.querySelector<HTMLElement>(".t14-hz-track")!,
@@ -132,6 +135,15 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
         const p = progress(el);
         track.style.transform = `translate3d(${-ease(p) * Math.max(0, track.scrollWidth - W)}px,0,0)`;
       });
+
+      if (footWord && footLetters.length) {
+        const r = footWord.getBoundingClientRect();
+        const p = reduced ? 1 : clamp((H - r.top) / (r.height * 1.1), 0, 1);
+        footLetters.forEach((l, i) => {
+          const k = ease(clamp((p - i * 0.07) / 0.5, 0, 1));
+          l.style.transform = `translate3d(0,${((1 - k) * 105).toFixed(2)}%,0)`;
+        });
+      }
 
       seqRows.forEach((li) => {
         if (!li.classList.contains("in") && li.getBoundingClientRect().top < H * 0.9) li.classList.add("in");

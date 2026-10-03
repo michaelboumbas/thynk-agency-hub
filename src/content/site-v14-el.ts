@@ -140,6 +140,14 @@ export const el: Copy = {
     contactLabel: "Επικοινωνία",
     phoneLabel: "Τηλέφωνο",
     addressLabel: "Διεύθυνση",
+    cta: "Ας το σκεφτούμε μαζί.",
+    ticker: ["Marketing", "Digital Transformation", "Τεχνητή νοημοσύνη", "Αυτοματισμοί", "Διαφήμιση", "Δεδομένα & αναφορές"],
+    pagesLabel: "Σελίδες",
+    officeLabel: "Γραφείο",
+    localTime: "Τοπική ώρα",
+    hours: "Δευτέρα–Παρασκευή, 09:00–17:00",
+    backTop: "Επιστροφή στην κορυφή",
+    rights: "Με την επιφύλαξη παντός δικαιώματος.",
   },
 
   screens: {

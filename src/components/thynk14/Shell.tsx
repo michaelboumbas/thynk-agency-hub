@@ -98,28 +98,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
 
       <main id="main">
         {children}
-        <footer className="t14-footer t14-wrap" id="contact">
-          <Link to={href(v14Routes.home)} aria-label={c.ui.home}><Logo size={26} /></Link>
-          <div>
-            <h4>Thynk</h4>
-            <ul>
-              {c.menu.map((n) => (
-                <li key={n.to}><Link to={href(n.to)}>{n.label}</Link></li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4>{c.footer.contactLabel}</h4>
-            <ul>
-              <li><a href={`mailto:${c.footer.contact}`}>{c.footer.contact}</a></li>
-              {c.footer.phone && (
-                <li><a href={`tel:${c.footer.phone.replace(/\s+/g, "")}`} aria-label={c.footer.phoneLabel}>{c.footer.phone}</a></li>
-              )}
-              {c.footer.address && <li className="t14-addr">{c.footer.address}</li>}
-            </ul>
-          </div>
-          <div className="t14-legal"><b>Thynk Digital Agency</b><br />{c.footer.city}<br />{c.footer.year}</div>
-        </footer>
+        <SiteFooter pathname={pathname} />
       </main>
     </div>
   );
@@ -245,6 +224,100 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
         <a className="t14-menu-mail" href={`mailto:${c.footer.contact}`}>{c.footer.contact}</a>
       </div>
     </div>
+  );
+}
+
+/**
+ * The big footer (03/10, Mike): a dark block that rises over the page. A ticker of what we do, the call
+ * to action, pages / contact / office with the live Ioannina time, and a giant THYNK. that rises letter by
+ * letter as you reach the bottom (motion.ts, .t14-foot-word).
+ */
+function SiteFooter({ pathname }: { pathname: V14Path }) {
+  const { c, href, lang } = useCopy();
+  const f = c.footer;
+  const other: Lang = lang === "en" ? "el" : "en";
+  const [now, setNow] = useState("");
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat(c.locale, { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Athens" });
+    const tick = () => setNow(fmt.format(new Date()));
+    tick();
+    const t = window.setInterval(tick, 15000);
+    return () => window.clearInterval(t);
+  }, [c.locale]);
+  const words = [...f.ticker, ...f.ticker];
+  return (
+    <footer className="t14-foot" id="contact">
+      <div className="t14-foot-ticker" aria-hidden="true">
+        <div>
+          {[0, 1].map((k) => (
+            <span key={k}>
+              {words.map((w, i) => (
+                <em key={i}>{w}<b>✳</b></em>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="t14-foot-in">
+        <div className="t14-foot-cta">
+          <h2>{f.cta}</h2>
+          <div>
+            <p>{c.final.title}</p>
+            <div className="t14-foot-act">
+              <Link className="t14-pill lg t14-foot-pill" to={href(v14Routes.audit)} hash="book">{c.final.button} <i aria-hidden="true">→</i></Link>
+              <a className="t14-foot-mail" href={`mailto:${f.contact}`}>{f.contact}</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="t14-foot-grid">
+          <div>
+            <h4>{f.pagesLabel}</h4>
+            <ul>
+              <li><Link to={href(v14Routes.home)}>{c.ui.homeLabel}</Link></li>
+              {c.menu.map((n) => (
+                <li key={n.to}><Link to={href(n.to)} aria-current={pathname === n.to ? "page" : undefined}>{n.label}</Link></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4>{f.contactLabel}</h4>
+            <ul>
+              <li><a href={`mailto:${f.contact}`}>{f.contact}</a></li>
+              {f.phone && <li><a href={`tel:${f.phone.replace(/\s+/g, "")}`} aria-label={f.phoneLabel}>{f.phone}</a></li>}
+              {f.address && <li className="t14-addr">{f.address}</li>}
+            </ul>
+          </div>
+          <div>
+            <h4>{f.officeLabel}</h4>
+            <ul>
+              <li>{f.city}</li>
+              <li className="t14-addr">{f.hours}</li>
+              <li className="t14-foot-time"><i aria-hidden="true" /> {f.localTime} <b>{now}</b></li>
+            </ul>
+          </div>
+          <div className="t14-foot-top">
+            <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label={f.backTop}>
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+            <span>{f.backTop}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="t14-foot-word" aria-hidden="true">
+        <span className="t14-foot-word-in">
+          {[..."THYNK"].map((ch, i) => <span key={i}>{ch}</span>)}
+          <span className="dot">.</span>
+        </span>
+      </div>
+
+      <div className="t14-foot-legal">
+        <span>© 2026 Thynk Digital Agency · {f.rights}</span>
+        <Link to={localPath(pathname, other)} hrefLang={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</Link>
+      </div>
+    </footer>
   );
 }
 

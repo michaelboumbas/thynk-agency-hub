@@ -140,6 +140,15 @@ export const v14Footer = {
   contactLabel: "Contact",
   phoneLabel: "Phone",
   addressLabel: "Address",
+  // the big footer (03/10, Mike)
+  cta: "Let's Thynk.",
+  ticker: ["Marketing", "Digital Transformation", "Artificial Intelligence", "Automation", "Advertising", "Data & Reporting"],
+  pagesLabel: "Pages",
+  officeLabel: "Office",
+  localTime: "Local time",
+  hours: "Mon–Fri, 09:00–17:00",
+  backTop: "Back to top",
+  rights: "All rights reserved.",
 };
 
 /* the small UI screens that peek over the solutions list (from the site-v9 examples) */

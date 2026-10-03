@@ -12,7 +12,6 @@ import {
   FlyCards,
   HzPanels,
   Faq,
-  FinalBand,
   Label,
   MethodSection,
   MoreLink,
@@ -105,7 +104,6 @@ export function ServicesPage() {
         </section>
       ))}
       <MethodSection />
-      <FinalBand />
     </>
   );
 }
@@ -153,7 +151,6 @@ export function SolutionsPage() {
         </div>
         <MoreLink to={href(v14Routes.services)}>{c.more.method}</MoreLink>
       </section>
-      <FinalBand />
     </>
   );
 }
@@ -418,7 +415,6 @@ export function AboutPage() {
         titleAccent={a.rulesAccent}
         panels={a.rules.map((r, i) => ({ kicker: `0${i + 1} · ${a.rulesKicker}`, title: r.title, text: r.text, key: i === 1 }))}
       />
-      <FinalBand />
     </>
   );
 }
@@ -490,13 +486,6 @@ export function ContactPage() {
         </ol>
       </section>
 
-      <section className="t14-wrap t14-cbook">
-        <div>
-          <h2>{k.bookTitle}</h2>
-          <p>{k.bookText}</p>
-        </div>
-        <Link className="t14-pill lg" to={href(v14Routes.audit)} hash="book">{k.bookButton}</Link>
-      </section>
     </>
   );
 }
