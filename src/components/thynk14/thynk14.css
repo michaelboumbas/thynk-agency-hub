@@ -3317,3 +3317,47 @@
     animation: none;
   }
 }
+
+/* contact map: our orange pin over a marker-less map; the map itself is a picture, the button opens Google Maps */
+.t14-cmap iframe {
+  pointer-events: none;
+}
+.t14-cmap-pin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: 40px;
+  height: 52px;
+  transform: translate(-50%, -100%);
+  filter: drop-shadow(0 8px 10px rgba(15, 16, 18, 0.28));
+  pointer-events: none;
+}
+.t14-cmap-pin::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: rgba(255, 106, 26, 0.45);
+  animation: t14-pin 2.2s ease-out infinite;
+  z-index: -1;
+}
+@keyframes t14-pin {
+  from {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+  to {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t14-cmap-pin::after {
+    animation: none;
+  }
+}

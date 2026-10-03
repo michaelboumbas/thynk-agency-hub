@@ -420,6 +420,9 @@ export function AboutPage() {
 }
 
 /* ---------- contact (02/10, Mike): office, phone, email, hours, map, the audit button ---------- */
+/** the office on the map (demo: Pyrrou Square, Ioannina) */
+const MAP_LL = "39.66567,20.85178";
+
 export function ContactPage() {
   const { c, href } = useCopy();
   const k = c.contactPage;
@@ -453,11 +456,21 @@ export function ContactPage() {
 
         <div className="t14-cmap-row">
           <div className="t14-cmap">
+            {/* Google's own pin can't be recoloured inside the embed: the map is centred on the office with no
+                marker (ll=…) and our orange brand pin sits on top, exactly in the middle (Mike 03/10).
+                ⚠️ DEMO coordinates (Pyrrou Square) until the real address arrives. */}
             <iframe
               title={k.mapTitle}
-              src={`https://www.google.com/maps?q=${encodeURIComponent(k.mapsQuery)}&z=16&hl=${c.lang}&output=embed`}
+              src={`https://www.google.com/maps?ll=${MAP_LL}&z=16&hl=${c.lang}&output=embed`}
               loading="lazy"
+              tabIndex={-1}
             />
+            <span className="t14-cmap-pin" aria-hidden="true">
+              <svg viewBox="0 0 40 52" width="40" height="52">
+                <path d="M20 51C20 51 38 31.5 38 19A18 18 0 0 0 2 19C2 31.5 20 51 20 51Z" fill="#ff6a1a" stroke="#fff" strokeWidth="2.5" />
+                <circle cx="20" cy="19" r="6.5" fill="#fff" />
+              </svg>
+            </span>
             <a className="t14-cmap-open" href={link("address", "")} target="_blank" rel="noopener noreferrer">
               {k.cards[0].action} <i aria-hidden="true">↗</i>
             </a>
