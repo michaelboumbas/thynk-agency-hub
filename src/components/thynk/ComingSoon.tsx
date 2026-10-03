@@ -23,7 +23,7 @@ const SOCIAL = [
     d: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z",
   },
 ];
-const TICKER = ["Marketing", "Digital Transformation", "Τεχνητή νοημοσύνη", "Αυτοματισμοί", "Διαφήμιση", "Δεδομένα & αναφορές"];
+const TICKER = ["Marketing", "Digital Transformation", "Artificial Intelligence", "Automation", "Advertising", "Data & Reporting"];
 
 export function ComingSoon() {
   const reduced = useReducedMotion();
@@ -36,7 +36,7 @@ export function ComingSoon() {
       document.head.appendChild(l);
     }
     const prev = document.documentElement.lang;
-    document.documentElement.lang = "el";
+    document.documentElement.lang = "en";
     return () => {
       document.documentElement.lang = prev;
     };
@@ -44,7 +44,7 @@ export function ComingSoon() {
 
   const words = [...TICKER, ...TICKER];
   return (
-    <div className="t14 t14-cs" lang="el">
+    <div className="t14 t14-cs" lang="en">
       <PlanetField reduced={reduced} />
 
       <header className="t14-cs-top">
@@ -53,20 +53,20 @@ export function ComingSoon() {
       </header>
 
       <main className="t14-cs-main">
-        <div className="t14-cs-lbl"><i aria-hidden="true" /> Established 2026 · Ιωάννινα</div>
+        <div className="t14-cs-lbl"><i aria-hidden="true" /> Established 2026 · Ioannina, Greece</div>
         <h1 className="t14-cs-h1">
-          <span>Κάτι ωραίο</span>
-          <span className="t14-cs-acc">έρχεται<b>.</b></span>
+          <span>Something great</span>
+          <span className="t14-cs-acc">is coming<b>.</b></span>
         </h1>
         <p className="t14-cs-formula" lang="en">
           <b>Human Intelligence</b> + <span>Artificial Intelligence.</span>
         </p>
         <p className="t14-cs-lead">
-          Χτίζουμε το site μας με την ίδια σκέψη που βάζουμε σε ό,τι φτιάχνουμε για τους πελάτες μας. Μέχρι τότε,
-          μιλήστε μας απευθείας ή ακολουθήστε μας.
+          We're building our site with the same thinking we put into everything we make for our clients. Until then,
+          talk to us directly or follow along.
         </p>
         <div className="t14-cs-act">
-          <a className="t14-pill lg" href={`mailto:${EMAIL}`}>Στείλτε μας email <i aria-hidden="true">→</i></a>
+          <a className="t14-pill lg" href={`mailto:${EMAIL}`}>Email us <i aria-hidden="true">→</i></a>
           {SOCIAL.map((s) => (
             <a key={s.label} className="t14-cs-soc" href={s.href} target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d={s.d} /></svg>
@@ -89,7 +89,7 @@ export function ComingSoon() {
           </div>
         </div>
         <div className="t14-cs-legal">
-          <span>© 2026 Thynk Digital Agency · Ιωάννινα</span>
+          <span>© 2026 Thynk Digital Agency · Ioannina, Greece</span>
           <span lang="en">Let's Thynk<b>.</b> Together</span>
         </div>
       </footer>
