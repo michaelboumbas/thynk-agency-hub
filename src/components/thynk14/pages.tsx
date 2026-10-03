@@ -462,6 +462,9 @@ export function ContactPage() {
               src={`https://www.google.com/maps?q=${encodeURIComponent(k.mapsQuery)}&z=16&hl=${c.lang}&output=embed`}
               loading="lazy"
             />
+            <a className="t14-cmap-open" href={link("address", "")} target="_blank" rel="noopener noreferrer">
+              {k.cards[0].action} <i aria-hidden="true">↗</i>
+            </a>
           </div>
           <aside className="t14-chours">
             <h3>{k.hoursTitle}</h3>
