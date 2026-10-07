@@ -492,7 +492,7 @@ export const el: Copy = {
 
   work: {
     title: "Brands we Thynk with.",
-    titleGrey: "Αποδείξεις, όχι υποσχέσεις.",
+    titleGrey: "Thynk it. Build it. Run it.",
     homeLabel: "Έργα",
     view: "Δείτε το έργο",
     back: "← Όλα τα έργα",

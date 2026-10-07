@@ -24,7 +24,7 @@
 | 4 | The Thynk ecosystem. | Awards, conferences, wineries, education, places. One way of working. | Δένει με το «οικοσύστημα». Λιγότερο πιασάρικο |
 | 5 | Work that thynks. | Selected work. | Το πιο κοντά στο «Selected Work» που σου άρεσε |
 
-**Πρόταση:** #1. Το μενού μένει `Work`.
+**Απόφαση Mike (07/10):** «Brands we Thynk with.» + γκρι «Thynk it. Build it. Run it.» (και στα ελληνικά). Το «Proof, not promises.» απορρίφθηκε. Το μενού μένει `Work` (EL: «Έργα»).
 
 ## Intro της σελίδας (κάτω από τον τίτλο)
 

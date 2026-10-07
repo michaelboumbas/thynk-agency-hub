@@ -532,7 +532,7 @@ export const v14AboutPage = {
 /* the work page and the case pages (07/10, Mike): the cases themselves live in src/content/work-v14.ts */
 export const v14Work = {
   title: "Brands we Thynk with.",
-  titleGrey: "Proof, not promises.",
+  titleGrey: "Thynk it. Build it. Run it.",
   homeLabel: "Work",
   view: "View the case",
   back: "← All work",
