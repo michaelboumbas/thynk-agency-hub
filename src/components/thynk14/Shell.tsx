@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, type ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { LangProvider, localPath, useCopy } from "./i18n";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ComingSoon } from "@/components/thynk/ComingSoon";
@@ -26,7 +26,8 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
   const [menu, setMenu] = useState(false);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const hash = useRouterState({ select: (s) => s.location.hash });
-  useCleanMotion(rootRef, pathname);
+  const slug = useContext(SlugCtx);
+  useCleanMotion(rootRef, slug ? `${pathname}/${slug}` : pathname);
 
   // the two faces, only for this version
   useEffect(() => {
@@ -68,7 +69,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
       else window.scrollTo(0, 0);
     }, 60);
     return () => window.clearTimeout(t);
-  }, [pathname, hash]);
+  }, [pathname, hash, slug]);
 
   return (
     <div className="t14" ref={rootRef} lang={lang}>
@@ -78,9 +79,9 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
         <Link to={href(v14Routes.home)} aria-label={c.ui.home}><Logo /></Link>
         <span aria-hidden="true" />
         <div className="t14-hdr-r">
-          <Link className="t14-lang" to={localPath(pathname, other)} hrefLang={other} aria-label={c.ui.switchAria}>
+          <LangLink className="t14-lang" pathname={pathname} other={other} aria-label={c.ui.switchAria}>
             {c.ui.switchTo}
-          </Link>
+          </LangLink>
           <Link className="t14-pill" to={href(v14Routes.audit)} hash="book">{c.hero.primary}</Link>
           <button
             ref={burgerRef}
@@ -221,7 +222,7 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
       </nav>
       <div className="t14-menu-foot">
         <Link className="t14-pill lg" to={href(v14Routes.audit)} hash="book" onClick={onClose}>{c.hero.primary}</Link>
-        <Link className="t14-menu-lang" to={localPath(pathname, other)} hrefLang={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</Link>
+        <LangLink className="t14-menu-lang" pathname={pathname} other={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</LangLink>
         <a className="t14-menu-mail" href={`mailto:${c.footer.contact}`}>{c.footer.contact}</a>
       </div>
     </div>
@@ -315,18 +316,52 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
 
       <div className="t14-foot-legal">
         <span>© 2026 Thynk Digital Agency · {f.rights}</span>
-        <Link to={localPath(pathname, other)} hrefLang={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</Link>
+        <LangLink pathname={pathname} other={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</LangLink>
       </div>
     </footer>
   );
 }
 
-export function CleanShell({ pathname, lang, children }: { pathname: V14Path; lang: Lang; children: ReactNode }) {
+/** a case page (/work/:slug) passes its slug down, so the EL/EN switch lands on the same case (07/10) */
+const SlugCtx = createContext<string | undefined>(undefined);
+
+/** the EL/EN switch: the same page in the other language */
+function LangLink({ pathname, other, children, ...rest }: {
+  pathname: V14Path;
+  other: Lang;
+  children: ReactNode;
+  className?: string;
+  "aria-label"?: string;
+}) {
+  const slug = useContext(SlugCtx);
+  if (slug) {
+    return (
+      <Link to={other === "el" ? "/el/work/$slug" : "/work/$slug"} params={{ slug }} hrefLang={other} {...rest}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <Link to={localPath(pathname, other)} hrefLang={other} {...rest}>
+      {children}
+    </Link>
+  );
+}
+
+export function CleanShell({ pathname, lang, slug, children }: {
+  pathname: V14Path;
+  lang: Lang;
+  /** set on case pages: /work/:slug */
+  slug?: string;
+  children: ReactNode;
+}) {
   const show = useSiteGate();
   if (!show) return <ComingSoon />;
   return (
     <LangProvider lang={lang}>
-      <Shell pathname={pathname}>{children}</Shell>
+      <SlugCtx.Provider value={slug}>
+        <Shell pathname={pathname}>{children}</Shell>
+      </SlugCtx.Provider>
     </LangProvider>
   );
 }

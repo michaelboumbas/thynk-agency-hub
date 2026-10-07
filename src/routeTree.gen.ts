@@ -25,6 +25,10 @@ import { Route as ElContactRouteImport } from './routes/el/contact'
 import { Route as ElAuditRouteImport } from './routes/el/audit'
 import { Route as ElServicesRouteImport } from './routes/el/services'
 import { Route as ElSolutionsRouteImport } from './routes/el/solutions'
+import { Route as WorkIndexRouteImport } from './routes/work/index'
+import { Route as WorkSlugRouteImport } from './routes/work/$slug'
+import { Route as ElWorkIndexRouteImport } from './routes/el/work/index'
+import { Route as ElWorkSlugRouteImport } from './routes/el/work/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -107,6 +111,26 @@ const ElSolutionsRoute = ElSolutionsRouteImport.update({
   path: '/el/solutions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkIndexRoute = WorkIndexRouteImport.update({
+  id: '/work/',
+  path: '/work/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkSlugRoute = WorkSlugRouteImport.update({
+  id: '/work/$slug',
+  path: '/work/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElWorkIndexRoute = ElWorkIndexRouteImport.update({
+  id: '/el/work/',
+  path: '/el/work/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElWorkSlugRoute = ElWorkSlugRouteImport.update({
+  id: '/el/work/$slug',
+  path: '/el/work/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -125,6 +149,10 @@ export interface FileRoutesByFullPath {
   '/el/audit': typeof ElAuditRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
+  '/work/': typeof WorkIndexRoute
+  '/work/$slug': typeof WorkSlugRoute
+  '/el/work/': typeof ElWorkIndexRoute
+  '/el/work/$slug': typeof ElWorkSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -143,6 +171,10 @@ export interface FileRoutesByTo {
   '/el/audit': typeof ElAuditRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
+  '/work': typeof WorkIndexRoute
+  '/work/$slug': typeof WorkSlugRoute
+  '/el/work': typeof ElWorkIndexRoute
+  '/el/work/$slug': typeof ElWorkSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -162,13 +194,17 @@ export interface FileRoutesById {
   '/el/audit': typeof ElAuditRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
+  '/work/': typeof WorkIndexRoute
+  '/work/$slug': typeof WorkSlugRoute
+  '/el/work/': typeof ElWorkIndexRoute
+  '/el/work/$slug': typeof ElWorkSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies' | '/el/' | '/el/about' | '/el/contact' | '/el/audit' | '/el/services' | '/el/solutions'
+  fullPaths: '/' | '/about' | '/contact' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies' | '/el/' | '/el/about' | '/el/contact' | '/el/audit' | '/el/services' | '/el/solutions' | '/work/' | '/work/$slug' | '/el/work/' | '/el/work/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies' | '/el' | '/el/about' | '/el/contact' | '/el/audit' | '/el/services' | '/el/solutions'
-  id: '__root__' | '/' | '/about' | '/contact' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies' | '/el/' | '/el/about' | '/el/contact' | '/el/audit' | '/el/services' | '/el/solutions'
+  to: '/' | '/about' | '/contact' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies' | '/el' | '/el/about' | '/el/contact' | '/el/audit' | '/el/services' | '/el/solutions' | '/work' | '/work/$slug' | '/el/work' | '/el/work/$slug'
+  id: '__root__' | '/' | '/about' | '/contact' | '/audit' | '/lab' | '/paradeigmata' | '/poioi-eimaste' | '/services' | '/solutions' | '/ypiresies' | '/el/' | '/el/about' | '/el/contact' | '/el/audit' | '/el/services' | '/el/solutions' | '/work/' | '/work/$slug' | '/el/work/' | '/el/work/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -188,6 +224,10 @@ export interface RootRouteChildren {
   ElAuditRoute: typeof ElAuditRoute
   ElServicesRoute: typeof ElServicesRoute
   ElSolutionsRoute: typeof ElSolutionsRoute
+  WorkIndexRoute: typeof WorkIndexRoute
+  WorkSlugRoute: typeof WorkSlugRoute
+  ElWorkIndexRoute: typeof ElWorkIndexRoute
+  ElWorkSlugRoute: typeof ElWorkSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -304,6 +344,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ElSolutionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/work/': {
+      id: '/work/'
+      path: '/work/'
+      fullPath: '/work/'
+      preLoaderRoute: typeof WorkIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work/$slug': {
+      id: '/work/$slug'
+      path: '/work/$slug'
+      fullPath: '/work/$slug'
+      preLoaderRoute: typeof WorkSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/el/work/': {
+      id: '/el/work/'
+      path: '/el/work/'
+      fullPath: '/el/work/'
+      preLoaderRoute: typeof ElWorkIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/el/work/$slug': {
+      id: '/el/work/$slug'
+      path: '/el/work/$slug'
+      fullPath: '/el/work/$slug'
+      preLoaderRoute: typeof ElWorkSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -324,6 +392,10 @@ const rootRouteChildren: RootRouteChildren = {
   ElAuditRoute: ElAuditRoute,
   ElServicesRoute: ElServicesRoute,
   ElSolutionsRoute: ElSolutionsRoute,
+  WorkIndexRoute: WorkIndexRoute,
+  WorkSlugRoute: WorkSlugRoute,
+  ElWorkIndexRoute: ElWorkIndexRoute,
+  ElWorkSlugRoute: ElWorkSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

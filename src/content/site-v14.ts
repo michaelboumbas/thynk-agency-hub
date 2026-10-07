@@ -215,6 +215,7 @@ export const v14Routes = {
   home: "/",
   services: "/services",
   solutions: "/solutions",
+  work: "/work",
   audit: "/audit",
   about: "/about",
   contact: "/contact",
@@ -223,6 +224,7 @@ export const v14Routes = {
 export const v14Menu = [
   { to: v14Routes.services, label: "Services" },
   { to: v14Routes.solutions, label: "Solutions" },
+  { to: v14Routes.work, label: "Work" },
   { to: v14Routes.audit, label: "Audit" },
   { to: v14Routes.about, label: "About" },
   { to: v14Routes.contact, label: "Contact" },
@@ -233,6 +235,7 @@ export const v14More = {
   solutions: "All solutions →",
   audit: "How the audit works →",
   team: "About →",
+  work: "All work →",
 };
 
 export const v14PageHeads = {
@@ -245,6 +248,11 @@ export const v14PageHeads = {
     label: "Solutions",
     title: "Solutions",
     lead: "Automation that works alongside your team, designed and built by Thynk.",
+  },
+  work: {
+    label: "Work",
+    title: "Work",
+    lead: "From a 20-year business award institution to a monastic winery in the Pindus mountains: different worlds, one way of working. Every account below runs through Thynk: strategy, content, campaigns and the systems behind them.",
   },
   audit: {
     label: "The audit",
@@ -521,6 +529,34 @@ export const v14AboutPage = {
 };
 
 
+/* the work page and the case pages (07/10, Mike): the cases themselves live in src/content/work-v14.ts */
+export const v14Work = {
+  title: "Brands we Thynk with.",
+  titleGrey: "Proof, not promises.",
+  homeLabel: "Work",
+  view: "View the case",
+  back: "← All work",
+  next: "Next case",
+  visit: "Visit",
+  labels: {
+    context: "Context",
+    brief: "The brief",
+    work: "What we do",
+    workDone: "What we did",
+    deliverables: "Deliverables",
+    results: "Results",
+    services: "Services",
+  },
+  status: {
+    ongoing: "Ongoing",
+    onboarding: "Onboarding",
+    delivered: "Delivered",
+  },
+  sinceWord: "since",
+  months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+};
+
+
 export const v14Final = {
   title: "The first step is a clear picture of where you are today.",
   button: "Book an audit",
@@ -568,6 +604,7 @@ const enRaw = {
   calc: v14Calc,
   aboutPage: v14AboutPage,
   contactPage: v14ContactPage,
+  work: v14Work,
   final: v14Final,
 };
 

@@ -21,6 +21,7 @@ import {
   SolutionsList,
   go,
 } from "./shared";
+import { WorkStrip } from "./work";
 
 /* ================================ Home ================================ */
 export function HomePage() {
@@ -50,15 +51,18 @@ export function HomePage() {
       </section>
 
       <MethodSection />
-      <div className="t14-wrap"><MoreLink to={href(v14Routes.services)}>{c.more.method}</MoreLink></div>
+      <div className="t14-wrap"><MoreLink to={v14Routes.services}>{c.more.method}</MoreLink></div>
 
       <section className="t14-wrap" id="solutions">
         <SolutionsList />
-        <MoreLink to={href(v14Routes.solutions)}>{c.more.solutions}</MoreLink>
+        <MoreLink to={v14Routes.solutions}>{c.more.solutions}</MoreLink>
       </section>
 
+      {/* 07/10 (Mike): the work, between what we build and how we start */}
+      <WorkStrip />
+
       <AuditPanels />
-      <div className="t14-wrap"><MoreLink to={href(v14Routes.audit)}>{c.more.audit}</MoreLink></div>
+      <div className="t14-wrap"><MoreLink to={v14Routes.audit}>{c.more.audit}</MoreLink></div>
 
       {/* 02/10 (Mike): the cost calculator on the home page too, right before the form: see the cost, then book */}
       <CalcSection className="t14-calc-sec" />
@@ -110,7 +114,7 @@ export function ServicesPage() {
 
 /* ================================ Solutions ================================ */
 export function SolutionsPage() {
-  const { c, href } = useCopy();
+  const { c } = useCopy();
   return (
     <>
       <PageHead p={c.pageHeads.solutions} />
@@ -149,7 +153,7 @@ export function SolutionsPage() {
             </div>
           ))}
         </div>
-        <MoreLink to={href(v14Routes.services)}>{c.more.method}</MoreLink>
+        <MoreLink to={v14Routes.services}>{c.more.method}</MoreLink>
       </section>
     </>
   );
