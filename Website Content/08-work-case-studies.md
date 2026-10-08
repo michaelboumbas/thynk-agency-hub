@@ -32,6 +32,21 @@
 
 ---
 
+## Υπηρεσίες ανά πελάτη (απόφαση Mike, 08/10/2026) · αυτό ισχύει, πάνω από τα tags παρακάτω
+
+| Πελάτης | Υπηρεσίες |
+|---|---|
+| Manager of the Year & TLC | Strategy · Social Media Management · Performance Marketing · Event Coverage |
+| Slide2Open Shipping Finance | Strategy · Social Media Management · Performance Marketing · Event Coverage |
+| EEL – Ελληνική Εταιρεία Logistics | Strategy · Social Media Management · Performance Marketing · Event Coverage |
+| Imperator Winery | Web Design (δίγλωσσο site, σχεδιασμός & κατασκευή) · Brand Voice · Social Media Management · Content Creation · Performance Marketing |
+| myMetsovo | Web Design (σχεδιασμός & κατασκευή) · Strategy · Social Media Management · Performance Marketing |
+| The Anadelta Edu | Strategy · Social Media Management · Performance Marketing · Tracking & Data |
+| Youth Choice Epirus Forum | Strategy · Social Media Management · Performance Marketing |
+| θamõn (**live από 08/10**) | Strategy · Brand Positioning · Social Media Management · Performance Marketing · Content Creation · Podcast |
+
+Κανόνας: δεν γράφουμε πλατφόρμες (Meta, Google, TikTok) ούτε εργαλεία μέτρησης (Pixel, Conversions API). Εννοούνται μέσα στο Performance Marketing. Πλήρη κείμενα EN + EL: `src/content/work-v14.ts`.
+
 ## Τα cases (σειρά εμφάνισης)
 
 ### 1. Manager of the Year & Thought Leaders Club
@@ -140,4 +155,4 @@
 2. **Λογότυπα:** SVG/PNG από κάθε πελάτη, σε γκρι/μονόχρωμη εκδοχή για το grid.
 3. **Visuals ανά case:** 2-3 εικόνες (screenshots site, posts, φωτογραφίες event).
 4. **Άδεια σε γραπτό** από κάθε πελάτη για όνομα + λογότυπο (κανόνας του `07`). Με MOTY/Slide2Open/EEL είναι απαραίτητο, γιατί είναι τρίτοι οργανισμοί.
-5. **θamõn:** `published: false` μέχρι την υπογραφή.
+5. **θamõn:** live από 08/10 (Mike).
