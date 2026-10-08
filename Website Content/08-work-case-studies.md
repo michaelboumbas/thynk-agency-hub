@@ -40,7 +40,7 @@
 | Slide2Open Shipping Finance | Strategy · Social Media Management · Performance Marketing · Event Coverage |
 | EEL – Ελληνική Εταιρεία Logistics | Strategy · Social Media Management · Performance Marketing · Event Coverage |
 | Imperator Winery | Web Design (δίγλωσσο site, σχεδιασμός & κατασκευή) · Brand Voice · Social Media Management · Content Creation · Performance Marketing |
-| myMetsovo | Web Design (σχεδιασμός & κατασκευή) · Strategy · Social Media Management · Performance Marketing |
+| μάιμέτσοβο | Web Design (σχεδιασμός & κατασκευή) · Strategy · Social Media Management · Performance Marketing |
 | The Anadelta Edu | Strategy · Social Media Management · Performance Marketing · Tracking & Data |
 | Youth Choice Epirus Forum | Strategy · Social Media Management · Performance Marketing |
 | θamõn (**live από 08/10**) | Strategy · Brand Positioning · Social Media Management · Performance Marketing · Content Creation · Podcast |
@@ -98,13 +98,13 @@
 - **Results:** `[TBC]`
 - **Link:** https://im-votsas.gr
 
-### 5. myMetsovo
+### 5. μάιμέτσοβο
 - **Slug:** `mymetsovo`
 - **Sector · Location:** Place branding & sustainable tourism · Metsovo, Epirus
 - **Card line:** The digital guide to the highest village in Epirus.
 - **Tags:** Web Design · Strategy · Social Media · Performance Marketing
 - **Status:** Ongoing
-- **Context:** myMetsovo is the digital guide to Metsovo, bringing stays, food, sights, the Anilio ski centre and activities together in one place for visitors.
+- **Context:** μάιμέτσοβο is the digital guide to Metsovo, bringing stays, food, sights, the Anilio ski centre and activities together in one place for visitors.
 - **The brief:** Give a destination one coherent digital voice, so a visitor finds everything they need in one place and local businesses gain visibility.
 - **What we do:** We designed and built the guide's website, set the destination's digital strategy, and run its social media and paid campaigns, putting Metsovo in front of the travellers planning their next mountain escape.
 - **Deliverables:** Website · Digital strategy · Social media · Paid campaigns

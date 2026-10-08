@@ -3,6 +3,7 @@
 // Rules: no result numbers until we have measured them (leave `results` out). Figures inside `context`
 // are the client's own public facts (e.g. "two decades", "since 2018"), never our results.
 // `published: false` keeps a case off the site.
+// 08/10 (Mike): the brand is written «μάιμέτσοβο» in both languages (slug and domain stay mymetsovo).
 // 08/10 (Mike): services per case confirmed; Meta/Google/TikTok and Pixel/CAPI are implied by Performance Marketing, never listed.
 import type { Lang } from "@/content/site-v14";
 
@@ -185,13 +186,13 @@ export const caseStudies: CaseStudy[] = [
     url: "https://mymetsovo.gr",
     domain: "mymetsovo.gr",
     en: {
-      client: "myMetsovo",
+      client: "μάιμέτσοβο",
       sector: "Place branding & sustainable tourism",
       location: "Metsovo, Epirus",
       cardLine: "The digital guide to the highest village in Epirus.",
       tags: ["Web Design", "Strategy", "Social Media Management", "Performance Marketing"],
       context:
-        "myMetsovo is the digital guide to Metsovo, bringing stays, food, sights, the Anilio ski centre and activities together in one place for visitors.",
+        "μάιμέτσοβο is the digital guide to Metsovo, bringing stays, food, sights, the Anilio ski centre and activities together in one place for visitors.",
       brief:
         "Give a destination one coherent digital voice, so a visitor finds everything they need in one place and local businesses gain visibility.",
       work:
@@ -199,13 +200,13 @@ export const caseStudies: CaseStudy[] = [
       deliverables: ["Website: design & build", "Digital strategy", "Social media management", "Paid campaigns"],
     },
     el: {
-      client: "myMetsovo",
+      client: "μάιμέτσοβο",
       sector: "Place branding & βιώσιμος τουρισμός",
       location: "Μέτσοβο, Ήπειρος",
       cardLine: "Ο ψηφιακός οδηγός για το ορεινότερο χωριό της Ηπείρου.",
       tags: ["Web Design", "Στρατηγική", "Social Media Management", "Performance Marketing"],
       context:
-        "Το myMetsovo είναι ο ψηφιακός οδηγός του Μετσόβου: διαμονή, φαγητό, αξιοθέατα, το χιονοδρομικό Ανηλίου και δραστηριότητες, όλα σε ένα σημείο.",
+        "Το μάιμέτσοβο είναι ο ψηφιακός οδηγός του Μετσόβου: διαμονή, φαγητό, αξιοθέατα, το χιονοδρομικό Ανηλίου και δραστηριότητες, όλα σε ένα σημείο.",
       brief:
         "Ένας προορισμός να αποκτήσει μία ενιαία ψηφιακή φωνή, ώστε ο επισκέπτης να βρίσκει ό,τι χρειάζεται σε ένα σημείο και οι τοπικές επιχειρήσεις να κερδίζουν προβολή.",
       work:
