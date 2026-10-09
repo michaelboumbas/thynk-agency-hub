@@ -3502,62 +3502,6 @@
   padding-top: clamp(110px, 18vh, 170px);
   padding-bottom: clamp(30px, 6vh, 60px);
 }
-.t14-case-back {
-  display: inline-block;
-  font-size: 14px;
-  text-decoration: none;
-  border-bottom: 1px solid var(--ink);
-}
-.t14-case-back:hover {
-  color: var(--orange);
-  border-color: var(--orange);
-}
-.t14-case-kicker {
-  display: block;
-  margin-top: clamp(36px, 7vh, 72px);
-  font-size: 13px;
-  color: var(--ink-2);
-}
-.t14 h1.t14-case-title {
-  margin-top: 14px;
-  max-width: 14em;
-  font-weight: 700;
-  font-stretch: 140%;
-  font-size: clamp(40px, 7vw, 112px);
-  line-height: 0.92;
-  letter-spacing: -0.05em;
-  text-wrap: balance;
-}
-.t14-case-lead {
-  margin-top: 22px;
-  max-width: 34ch;
-  font-size: clamp(18px, 1.7vw, 24px);
-  line-height: 1.3;
-  color: var(--orange);
-}
-.t14-case-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px 22px;
-  margin-top: 30px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
-}
-.t14-case-meta .t14-wk-tags {
-  margin: 0;
-}
-.t14-case-visit {
-  margin-left: auto;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  border-bottom: 1px solid var(--ink);
-}
-.t14-case-visit:hover {
-  color: var(--orange);
-  border-color: var(--orange);
-}
 .t14-case-body {
   padding-bottom: clamp(20px, 4vh, 40px);
 }
@@ -3606,31 +3550,6 @@
 }
 .t14-wk-dl li:first-child {
   padding-top: 0;
-}
-.t14-case-next {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: clamp(20px, 4vh, 40px);
-  padding: clamp(26px, 5vh, 48px) 0;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  text-decoration: none;
-}
-.t14-case-next small {
-  font-size: 13px;
-  color: var(--ink-2);
-}
-.t14-case-next b {
-  font-weight: 700;
-  font-stretch: 140%;
-  font-size: clamp(30px, 5vw, 76px);
-  line-height: 0.95;
-  letter-spacing: -0.045em;
-  transition: color 0.2s;
-}
-.t14-case-next:hover b {
-  color: var(--orange);
 }
 
 /* home: the work strip */
@@ -3720,21 +3639,7 @@
   white-space: nowrap;
 }
 
-/* the case page: the logo above the kicker */
-.t14-case-logos {
-  --u: 1.15;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px 32px;
-  margin-top: clamp(28px, 5vh, 44px);
-  color: var(--ink);
-}
-
 @media (max-width: 700px) {
-  .t14-case-logos {
-    --u: 0.9;
-  }
 }
 
 /* home: the clients as a running strip, the footer ticker with logos for words (09/10, Mike) */
@@ -4030,5 +3935,204 @@
   }
   .t14-stack-cta i {
     transition: none;
+  }
+}
+
+/* ======================= case pages in the stack's style (09/10/2026, Mike) =======================
+   The brand's colours come in as --c-* on .t14-case (work.tsx: themeStyle). */
+.t14 .t14-case .t14-case-head {
+  padding-top: clamp(84px, 12vh, 120px);
+  padding-bottom: clamp(30px, 6vh, 64px);
+}
+.t14 .t14-ch {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(30px, 5vh, 56px);
+  min-height: min(82svh, 760px);
+  padding: clamp(24px, 3.6vw, 56px);
+  background: var(--c-bg);
+  color: var(--c-fg);
+  border-radius: 28px;
+}
+.t14-ch-ghost {
+  --u: 6;
+}
+.t14-ch-top,
+.t14-cn-top {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 26px;
+  font-size: 13px;
+}
+.t14 .t14-ch-back {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-radius: 99px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+.t14 .t14-ch-back:hover,
+.t14 .t14-ch-back:focus-visible {
+  background: var(--c-fg);
+  color: var(--c-bg);
+}
+.t14 .t14-ch .t14-wk-status {
+  color: inherit;
+  opacity: 0.78;
+}
+.t14 .t14-ch .t14-wk-status.is-ongoing i {
+  background: var(--c-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c-accent) 25%, transparent);
+}
+.t14 .t14-ch-logos,
+.t14 .t14-cn-logos {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px 52px;
+  color: var(--c-logo);
+}
+.t14 .t14-ch-logos {
+  --ux: clamp(2px, 0.2vw, 3.4px);
+}
+.t14 .t14-cn-logos {
+  --ux: clamp(1.4px, 0.13vw, 2.4px);
+  gap: 20px 40px;
+}
+.t14 .t14-ch-logos .t14-clogo,
+.t14 .t14-cn-logos .t14-clogo {
+  width: calc(var(--lh) * var(--lr) * var(--ux));
+  height: calc(var(--lh) * var(--ux));
+}
+.t14-ch-foot,
+.t14-cn-foot {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 22px 40px;
+}
+.t14 .t14-ch-lead {
+  max-width: 26ch;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-stretch: 110%;
+  font-size: clamp(24px, 2.8vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.t14 .t14-ch-visit {
+  color: var(--c-bg);
+  text-decoration: none;
+}
+.t14-ch-visit:hover i,
+.t14-ch-visit:focus-visible i {
+  transform: translate(3px, -3px);
+}
+@keyframes t14-ch-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+.t14-ch-logos,
+.t14-ch-foot {
+  animation: t14-ch-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.t14-ch-foot {
+  animation-delay: 0.12s;
+}
+/* the story: numbers in the brand's colour */
+.t14 .t14-case .t14-case-n,
+.t14 .t14-case .t14-case-n sup {
+  /* a shade deeper than the brand colour, so light brands (Youth Choice) still read on white */
+  color: color-mix(in srgb, var(--c-bg) 80%, #0f1012);
+}
+.t14 .t14-case .t14-case-row {
+  border-top-color: color-mix(in srgb, var(--c-bg) 22%, var(--line));
+}
+/* the next client, as its own card */
+.t14 .t14-cn {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(22px, 4vh, 40px);
+  min-height: min(56svh, 480px);
+  margin-top: clamp(20px, 4vh, 40px);
+  padding: clamp(24px, 3.6vw, 56px);
+  background: var(--c-bg);
+  color: var(--c-fg);
+  border-radius: 28px;
+  text-decoration: none;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.t14 .t14-cn:hover {
+  transform: translateY(-6px);
+}
+.t14-cn:hover .t14-stack-cta i,
+.t14-cn:focus-visible .t14-stack-cta i {
+  transform: translateX(5px);
+}
+.t14-cn-line {
+  max-width: 34ch;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(18px, 1.8vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+@media (max-width: 700px) {
+  .t14 .t14-ch,
+  .t14 .t14-cn {
+    min-height: auto;
+    padding: 22px 20px;
+    border-radius: 22px;
+  }
+  .t14 .t14-ch {
+    min-height: min(70svh, 560px);
+  }
+  .t14-ch-top,
+  .t14-cn-top {
+    gap: 8px 16px;
+    font-size: 12px;
+  }
+  .t14 .t14-ch-logos {
+    --ux: 1.25px;
+    gap: 16px 28px;
+  }
+  .t14 .t14-cn-logos {
+    --ux: 1px;
+    gap: 14px 24px;
+  }
+  .t14-ch-ghost {
+    --u: 3;
+  }
+  .t14 .t14-ch-lead {
+    font-size: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t14-ch-logos,
+  .t14-ch-foot {
+    animation: none;
+  }
+  .t14 .t14-cn {
+    transition: none;
+  }
+  .t14 .t14-cn:hover {
+    transform: none;
   }
 }

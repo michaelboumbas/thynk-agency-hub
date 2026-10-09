@@ -49,8 +49,10 @@ export interface CaseTheme {
 export interface CaseStudy {
   slug: string;
   status: CaseStatus;
-  /** YYYY-MM, when the engagement started (or the event took place) */
+  /** YYYY, the year the engagement started; shown as «Since 2026» (09/10, Mike: no month, no «Ongoing») */
   since?: string;
+  /** for an event: the edition we are working on, shown as «2027 edition» instead of «Since» */
+  edition?: string;
   published: boolean;
   url: string;
   /** shown as the link text, e.g. "manageroftheyear.gr" */
@@ -67,7 +69,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "manager-of-the-year",
     status: "ongoing",
-    since: "2026-10",
+    since: "2026",
     published: true,
     url: "https://manageroftheyear.gr",
     domain: "manageroftheyear.gr",
@@ -106,7 +108,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "slide2open-shipping-finance",
     status: "ongoing",
-    since: "2026-10",
+    since: "2026",
     published: true,
     // ⚠️ the 2026 edition has already taken place: switch to the next edition's page once it is online
     url: "https://www.slide2open.net/el/shipping-finance-2026/",
@@ -145,7 +147,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "eel-hellenic-logistics-association",
     status: "ongoing",
-    since: "2026-10",
+    since: "2026",
     published: true,
     url: "https://eel.gr",
     domain: "eel.gr",
@@ -183,6 +185,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "imperator-winery",
     status: "ongoing",
+    since: "2026",
     published: true,
     url: "https://im-votsas.gr",
     domain: "im-votsas.gr",
@@ -222,6 +225,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "mymetsovo",
     status: "ongoing",
+    since: "2026",
     published: true,
     url: "https://mymetsovo.gr",
     domain: "mymetsovo.gr",
@@ -261,6 +265,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "anadelta-edu",
     status: "ongoing",
+    since: "2026",
     published: true,
     url: "https://anadelta.edu.gr",
     domain: "anadelta.edu.gr",
@@ -297,8 +302,9 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "youth-choice-epirus-forum",
-    status: "delivered",
-    since: "2026-07",
+    // 09/10 (Mike): the case is the 2027 forum we are working on; the first edition (8 July 2026) is its history
+    status: "ongoing",
+    edition: "2027",
     published: true,
     url: "https://youthchoice.gr",
     domain: "youthchoice.gr",
@@ -310,27 +316,27 @@ export const caseStudies: CaseStudy[] = [
       client: "Youth Choice Epirus Forum",
       sector: "Education & career event",
       location: "Ioannina",
-      cardLine: "A new forum connecting the next generation of Epirus with education and careers.",
+      cardLine: "A forum connecting the next generation of Epirus with education and careers.",
       tags: ["Strategy", "Social Media Management", "Performance Marketing"],
       context:
-        "Youth Choice Epirus Forum, powered by Anadelta Education, brought universities, colleges, career experts and the business community of Epirus together for high-school students and parents, on 8 July 2026 at the Epirus Palace in Ioannina.",
+        "Youth Choice Epirus Forum, powered by Anadelta Education, brings universities, colleges, career experts and the business community of Epirus together for high-school students and parents. The first edition took place on 8 July 2026 at the Epirus Palace in Ioannina.",
       brief:
-        "Launch a brand-new event from zero: fill a free event with students and parents, and give sponsors and educational partners a reason to be there.",
+        "The first edition started from zero: fill a free event with students and parents, and give sponsors and educational partners a reason to be there.",
       work:
-        "We built the launch strategy and ran the forum's social media management and paid campaigns, driving pre-registrations from students and parents across Epirus.",
+        "We built the launch strategy and ran the forum's social media management and paid campaigns, driving pre-registrations from students and parents across Epirus. Now we carry the same work into the 2027 forum.",
     },
     el: {
       client: "Youth Choice Epirus Forum",
       sector: "Εκδήλωση εκπαίδευσης & καριέρας",
       location: "Ιωάννινα",
-      cardLine: "Ένα νέο forum που συνδέει τη νέα γενιά της Ηπείρου με την εκπαίδευση και την καριέρα.",
+      cardLine: "Ένα forum που συνδέει τη νέα γενιά της Ηπείρου με την εκπαίδευση και την καριέρα.",
       tags: ["Στρατηγική", "Social Media Management", "Performance Marketing"],
       context:
-        "Το Youth Choice Epirus Forum, με τη στήριξη της Anadelta Education, έφερε κοντά πανεπιστήμια, κολέγια, συμβούλους καριέρας και την επιχειρηματική κοινότητα της Ηπείρου για μαθητές Λυκείου και γονείς, στις 8 Ιουλίου 2026 στο Epirus Palace στα Ιωάννινα.",
+        "Το Youth Choice Epirus Forum, με τη στήριξη της Anadelta Education, φέρνει κοντά πανεπιστήμια, κολέγια, συμβούλους καριέρας και την επιχειρηματική κοινότητα της Ηπείρου για μαθητές Λυκείου και γονείς. Η πρώτη διοργάνωση έγινε στις 8 Ιουλίου 2026 στο Epirus Palace στα Ιωάννινα.",
       brief:
-        "Μια ολοκαίνουργια διοργάνωση να ξεκινήσει από το μηδέν: να γεμίσει μια δωρεάν εκδήλωση με μαθητές και γονείς, και να δώσει σε χορηγούς και εκπαιδευτικούς φορείς λόγο να είναι εκεί.",
+        "Η πρώτη διοργάνωση ξεκίνησε από το μηδέν: να γεμίσει μια δωρεάν εκδήλωση με μαθητές και γονείς, και να δώσει σε χορηγούς και εκπαιδευτικούς φορείς λόγο να είναι εκεί.",
       work:
-        "Χτίσαμε τη στρατηγική του λανσαρίσματος και κάναμε το social media management και τις διαφημιστικές καμπάνιες του forum, φέρνοντας προεγγραφές μαθητών και γονέων από όλη την Ήπειρο.",
+        "Χτίσαμε τη στρατηγική του λανσαρίσματος και κάναμε το social media management και τις διαφημιστικές καμπάνιες του forum, φέρνοντας προεγγραφές μαθητών και γονέων από όλη την Ήπειρο. Τώρα συνεχίζουμε την ίδια δουλειά για το forum του 2027.",
     },
   },
   {

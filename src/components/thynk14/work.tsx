@@ -61,11 +61,13 @@ function CaseLink({
   cs,
   className,
   tabIndex,
+  style,
   children,
 }: {
   cs: CaseStudy;
   className?: string;
   tabIndex?: number;
+  style?: CSSProperties;
   children: ReactNode;
 }) {
   const { lang } = useCopy();
@@ -75,26 +77,26 @@ function CaseLink({
       params={{ slug: cs.slug }}
       className={className}
       tabIndex={tabIndex}
+      style={style}
     >
       {children}
     </Link>
   );
 }
 
-/** "Ongoing · since October 2026", "Delivered" */
+/** "Since 2026", or for an event "2027 edition"; the plain status only when neither is set (09/10, Mike) */
 function StatusLine({ cs }: { cs: CaseStudy }) {
   const { c } = useCopy();
   const w = c.work;
-  let when = "";
-  if (cs.status === "ongoing" && cs.since) {
-    const [y, m] = cs.since.split("-").map(Number);
-    when = ` · ${w.sinceWord} ${w.months[m - 1]} ${y}`;
-  }
+  const label = cs.edition
+    ? w.editionLabel.replace("{year}", cs.edition)
+    : cs.since
+      ? w.sinceLabel.replace("{year}", cs.since.slice(0, 4))
+      : w.status[cs.status];
   return (
     <span className={`t14-wk-status is-${cs.status}`}>
       <i aria-hidden="true" />
-      {w.status[cs.status]}
-      {when}
+      {label}
     </span>
   );
 }
@@ -102,6 +104,11 @@ function StatusLine({ cs }: { cs: CaseStudy }) {
 /* ================================ /work ================================ */
 const NO_THEME: CaseTheme = { bg: "#0f1012", fg: "#ffffff", logo: "#ffffff", accent: "#ff6a1a" };
 const pad2 = (n: number) => String(n).padStart(2, "0");
+/** the brand's colours as CSS variables (--c-bg, --c-fg, --c-logo, --c-accent) */
+function themeStyle(theme?: CaseTheme): CSSProperties {
+  const th = theme ?? NO_THEME;
+  return { "--c-bg": th.bg, "--c-fg": th.fg, "--c-logo": th.logo, "--c-accent": th.accent } as CSSProperties;
+}
 
 /**
  * Clients page (rebuilt 09/10, Mike): a stack. Each client is one large card in its own brand colours
@@ -153,15 +160,8 @@ export function WorkPage() {
         <ol className="t14-stack" ref={stack}>
           {publishedCases.map((cs, i) => {
             const t = caseText(cs, lang);
-            const th = cs.theme ?? NO_THEME;
             const ghost = cs.logos?.[0];
-            const style = {
-              "--i": i,
-              "--c-bg": th.bg,
-              "--c-fg": th.fg,
-              "--c-logo": th.logo,
-              "--c-accent": th.accent,
-            } as CSSProperties;
+            const style = { "--i": i, ...themeStyle(cs.theme) } as CSSProperties;
             return (
               <li key={cs.slug} style={style}>
                 <CaseLink cs={cs} className="t14-stack-card">
@@ -233,32 +233,56 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
   }
   if (t.results) blocks.push({ key: "results", label: w.labels.results, body: <p>{t.results}</p> });
 
+  const nt = caseText(next, lang);
+  const idx = publishedCases.findIndex((p) => p.slug === cs.slug);
+  const ghost = cs.logos?.[0];
+  const nextGhost = next.logos?.[0];
+
+  /*
+   * 09/10 (Mike): the case page in the style of the stack on /work. A hero panel in the brand's colours with
+   * its logo big (the logo is the h1, the name stays for screen readers), the story on white with the
+   * numbers in the brand's colour, and the next client as a card in its own colours.
+   */
   return (
-    <>
+    <div className="t14-case" style={themeStyle(cs.theme)}>
       <section className="t14-wrap t14-case-head">
-        <Link className="t14-case-back" to={href(v14Routes.work)}>{w.back}</Link>
-        {cs.logos?.length ? (
-          <div className="t14-case-logos">
-            {cs.logos.map((l) => (
-              <Logo key={l.src} l={l} decorative />
-            ))}
+        <div className="t14-ch">
+          {ghost ? (
+            <span className="t14-stack-ghost t14-ch-ghost" aria-hidden="true">
+              <Logo l={ghost} decorative />
+            </span>
+          ) : null}
+          <div className="t14-ch-top">
+            <Link className="t14-ch-back" to={href(v14Routes.work)}>
+              {w.back}
+            </Link>
+            {idx >= 0 ? (
+              <span className="t14-stack-n">
+                {pad2(idx + 1)}
+                <i> / {pad2(publishedCases.length)}</i>
+              </span>
+            ) : null}
+            <span className="t14-stack-sector">
+              {t.sector} · {t.location}
+            </span>
+            <StatusLine cs={cs} />
           </div>
-        ) : null}
-        <small className="t14-case-kicker">
-          {t.sector} · {t.location}
-        </small>
-        <h1 className="t14-case-title">{t.client}</h1>
-        <p className="t14-case-lead">{t.cardLine}</p>
-        <div className="t14-case-meta">
-          <StatusLine cs={cs} />
-          <ul className="t14-wk-tags" aria-label={w.labels.services}>
-            {t.tags.map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
-          <a className="t14-case-visit" href={cs.url} target="_blank" rel="noopener noreferrer">
-            {w.visit} {cs.domain} <i aria-hidden="true">↗</i>
-          </a>
+          <h1 className="t14-ch-logos">
+            <ClientMark cs={cs} name={t.client} />
+          </h1>
+          <div className="t14-ch-foot">
+            <div>
+              <p className="t14-ch-lead">{t.cardLine}</p>
+              <ul className="t14-stack-tags" aria-label={w.labels.services}>
+                {t.tags.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
+              </ul>
+            </div>
+            <a className="t14-stack-cta t14-ch-visit" href={cs.url} target="_blank" rel="noopener noreferrer">
+              {w.visit} {cs.domain} <i aria-hidden="true">↗</i>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -266,7 +290,10 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
         {blocks.map((b, i) => (
           <div key={b.key} className="t14-case-row">
             <h2>
-              <span className="t14-case-n"><sup>#.</sup>{String(i + 1).padStart(2, "0")}</span>
+              <span className="t14-case-n">
+                <sup>#.</sup>
+                {pad2(i + 1)}
+              </span>
               {b.label}
             </h2>
             <div className="t14-case-text">{b.body}</div>
@@ -276,15 +303,33 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
 
       {next.slug !== cs.slug && (
         <section className="t14-wrap">
-          <CaseLink cs={next} className="t14-case-next">
-            <small>{w.next} →</small>
-            <b>{caseText(next, lang).client}</b>
+          <CaseLink cs={next} className="t14-cn" style={themeStyle(next.theme)}>
+            {nextGhost ? (
+              <span className="t14-stack-ghost" aria-hidden="true">
+                <Logo l={nextGhost} decorative />
+              </span>
+            ) : null}
+            <span className="t14-cn-top">
+              <span className="t14-stack-n">{w.next}</span>
+              <span className="t14-stack-sector">
+                {nt.sector} · {nt.location}
+              </span>
+            </span>
+            <span className="t14-cn-logos">
+              <ClientMark cs={next} name={nt.client} />
+            </span>
+            <span className="t14-cn-foot">
+              <span className="t14-cn-line">{nt.cardLine}</span>
+              <b className="t14-stack-cta">
+                {w.view} <i aria-hidden="true">→</i>
+              </b>
+            </span>
           </CaseLink>
         </section>
       )}
 
       <FinalBand />
-    </>
+    </div>
   );
 }
 

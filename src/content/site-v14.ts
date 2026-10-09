@@ -552,8 +552,9 @@ export const v14Work = {
     onboarding: "Onboarding",
     delivered: "Delivered",
   },
-  sinceWord: "since",
-  months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  // 09/10 (Mike): «Since 2026», no month, no «Ongoing»; an event shows its edition
+  sinceLabel: "Since {year}",
+  editionLabel: "{year} edition",
 };
 
 
