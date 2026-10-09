@@ -3696,7 +3696,7 @@
 
 /* ======================= clients as logos (09/10/2026, Mike) =======================
    One colour for every brand (a CSS mask over the logo file), the same visual weight (work.tsx: logoHeight).
-   Grey in the grid, ink in the cards, orange on hover, like the names before them. */
+   White in the home strip, ink in the cards, orange on hover, like the names before them. */
 .t14-clogo {
   display: block;
   flex: none;
@@ -3718,46 +3718,6 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
-}
-
-/* home: the logo grid */
-.t14-logos {
-  --u: 1;
-  list-style: none;
-  margin: clamp(30px, 5vh, 56px) 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-}
-.t14-logos li {
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.t14-logos a {
-  display: grid;
-  /* one track as wide as the cell, so a long wordmark shrinks instead of spilling over */
-  grid-template-columns: minmax(0, 1fr);
-  place-items: center;
-  height: clamp(130px, 13vw, 170px);
-  padding: 18px;
-  color: var(--ink-2);
-  text-decoration: none;
-  transition: color 0.2s, background-color 0.2s;
-}
-.t14-logos a:hover,
-.t14-logos a:focus-visible {
-  color: var(--orange);
-  background-color: var(--paper-2);
-}
-.t14-logos .t14-logos-name {
-  font-family: var(--f-display);
-  font-weight: 600;
-  font-stretch: 120%;
-  font-size: clamp(18px, 1.6vw, 24px);
-  letter-spacing: -0.03em;
-  text-align: center;
 }
 
 /* the cards on /work: the logo is the heading */
@@ -3789,14 +3749,6 @@
 }
 
 @media (max-width: 700px) {
-  .t14-logos {
-    --u: 0.72;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .t14-logos a {
-    height: 112px;
-    padding: 14px;
-  }
   .t14-wk-card h3.t14-wk-logo {
     --u: 0.85;
     min-height: 76px;
@@ -3806,8 +3758,97 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .t14-logos a,
   .t14-wk-card h3.t14-wk-logo {
     transition: none;
+  }
+}
+
+/* home: the clients as a running strip, the footer ticker with logos for words (09/10, Mike) */
+.t14-cl-strip {
+  --u: 0.72;
+  margin-top: clamp(30px, 5vh, 56px);
+  overflow: hidden;
+  background: var(--ink);
+  border-radius: 28px;
+}
+.t14-cl-track {
+  display: flex;
+  width: max-content;
+  animation: t14-ticker 64s linear infinite;
+}
+.t14-cl-strip:hover .t14-cl-track,
+.t14-cl-strip:focus-within .t14-cl-track {
+  animation-play-state: paused;
+}
+.t14-cl-set {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.t14-cl-set li {
+  display: inline-flex;
+  align-items: center;
+  gap: 36px;
+  padding-right: 36px;
+}
+.t14 .t14-cl-set a {
+  display: flex;
+  align-items: center;
+  height: 116px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.t14 .t14-cl-set a:hover,
+.t14 .t14-cl-set a:focus-visible {
+  color: var(--orange);
+}
+.t14-cl-set b {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(18px, 1.7vw, 26px);
+  color: var(--orange);
+}
+.t14-cl-name {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-stretch: 120%;
+  font-size: clamp(18px, 1.7vw, 26px);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  .t14-cl-strip {
+    --u: 0.46;
+    border-radius: 22px;
+  }
+  .t14 .t14-cl-set a {
+    height: 80px;
+  }
+  .t14-cl-set li {
+    gap: 24px;
+    padding-right: 24px;
+  }
+}
+/* no motion: one still, centred round of logos */
+@media (prefers-reduced-motion: reduce) {
+  .t14-cl-track {
+    width: auto;
+    animation: none;
+  }
+  .t14-cl-set {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 6px 24px;
+  }
+  .t14-cl-set[aria-hidden="true"],
+  .t14-cl-set li[aria-hidden="true"],
+  .t14-cl-set b {
+    display: none;
+  }
+  .t14-cl-set li {
+    padding: 0 22px;
   }
 }

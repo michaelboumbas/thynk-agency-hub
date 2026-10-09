@@ -50,10 +50,25 @@ function ClientMark({ cs, name }: { cs: CaseStudy; name: string }) {
 }
 
 /** link to a case page in the current language */
-function CaseLink({ cs, className, children }: { cs: CaseStudy; className?: string; children: ReactNode }) {
+function CaseLink({
+  cs,
+  className,
+  tabIndex,
+  children,
+}: {
+  cs: CaseStudy;
+  className?: string;
+  tabIndex?: number;
+  children: ReactNode;
+}) {
   const { lang } = useCopy();
   return (
-    <Link to={lang === "el" ? "/el/work/$slug" : "/work/$slug"} params={{ slug: cs.slug }} className={className}>
+    <Link
+      to={lang === "el" ? "/el/work/$slug" : "/work/$slug"}
+      params={{ slug: cs.slug }}
+      className={className}
+      tabIndex={tabIndex}
+    >
       {children}
     </Link>
   );
@@ -205,35 +220,42 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
 }
 
 /* ================================ home: the work strip ================================ */
-/** the client logos in a grid, each to its case, then "All clients →" (09/10: logos instead of names) */
+/**
+ * The client logos running in a strip, like the footer ticker (09/10, Mike): a dark band, the logos in white
+ * with an orange ✳ between them, each logo a link to its case; the strip stops while the pointer is on it.
+ * Seamless loop: two identical halves (each three rounds of logos, wide enough for big screens) moving by -50%.
+ * Only the first round is read out and reachable by keyboard; the copies are hidden from assistive tech.
+ */
 export function WorkStrip() {
   const { c, lang } = useCopy();
   const w = c.work;
+  const marks = publishedCases.flatMap((cs) =>
+    cs.logos?.length ? cs.logos.map((l) => ({ cs, l, key: l.src })) : [{ cs, l: undefined, key: cs.slug }],
+  );
+  const round = (copy: boolean, k: string) =>
+    marks.map(({ cs, l, key }) => (
+      <li key={k + key} aria-hidden={copy || undefined}>
+        <CaseLink cs={cs} tabIndex={copy ? -1 : undefined}>
+          {l ? <Logo l={l} decorative={copy} /> : <span className="t14-cl-name">{caseText(cs, lang).client}</span>}
+        </CaseLink>
+        <b aria-hidden="true">✳</b>
+      </li>
+    ));
   return (
     <section className="t14-wrap t14-wk-strip" id="work">
       <Label>{w.homeLabel}</Label>
       <h2 className="t14-wk-title">
         {w.title} <span>{w.titleGrey}</span>
       </h2>
-      <ul className="t14-logos">
-        {publishedCases.flatMap((cs) =>
-          cs.logos?.length
-            ? cs.logos.map((l) => (
-                <li key={l.src}>
-                  <CaseLink cs={cs}>
-                    <Logo l={l} />
-                  </CaseLink>
-                </li>
-              ))
-            : [
-                <li key={cs.slug}>
-                  <CaseLink cs={cs} className="t14-logos-name">
-                    {caseText(cs, lang).client}
-                  </CaseLink>
-                </li>,
-              ],
-        )}
-      </ul>
+      <div className="t14-cl-strip">
+        <div className="t14-cl-track">
+          {[0, 1].map((half) => (
+            <ul key={half} className="t14-cl-set" aria-hidden={half === 1 || undefined}>
+              {[0, 1, 2].map((r) => round(half === 1 || r > 0, `${half}-${r}-`))}
+            </ul>
+          ))}
+        </div>
+      </div>
       <MoreLink to={v14Routes.work}>{c.more.work}</MoreLink>
     </section>
   );
