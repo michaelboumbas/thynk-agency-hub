@@ -3776,7 +3776,7 @@
   width: max-content;
   animation: t14-ticker 64s linear infinite;
 }
-.t14-cl-strip:hover .t14-cl-track,
+/* 09/10 (Mike): keeps running under the pointer; it only waits while a logo has keyboard focus */
 .t14-cl-strip:focus-within .t14-cl-track {
   animation-play-state: paused;
 }

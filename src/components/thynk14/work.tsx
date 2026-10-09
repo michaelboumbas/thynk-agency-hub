@@ -222,7 +222,7 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
 /* ================================ home: the work strip ================================ */
 /**
  * The client logos running in a strip, like the footer ticker (09/10, Mike): a dark band, the logos in white
- * with an orange ✳ between them, each logo a link to its case; the strip stops while the pointer is on it.
+ * with an orange ✳ between them, each logo a link to its case; it keeps running under the pointer (09/10).
  * Seamless loop: two identical halves (each three rounds of logos, wide enough for big screens) moving by -50%.
  * Only the first round is read out and reachable by keyboard; the copies are hidden from assistive tech.
  */
