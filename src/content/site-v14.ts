@@ -224,7 +224,7 @@ export const v14Routes = {
 export const v14Menu = [
   { to: v14Routes.services, label: "Services" },
   { to: v14Routes.solutions, label: "Solutions" },
-  { to: v14Routes.work, label: "Work" },
+  { to: v14Routes.work, label: "Clients" },
   { to: v14Routes.audit, label: "Audit" },
   { to: v14Routes.about, label: "About" },
   { to: v14Routes.contact, label: "Contact" },
@@ -235,7 +235,7 @@ export const v14More = {
   solutions: "All solutions →",
   audit: "How the audit works →",
   team: "About →",
-  work: "All work →",
+  work: "All clients →",
 };
 
 export const v14PageHeads = {
@@ -250,8 +250,8 @@ export const v14PageHeads = {
     lead: "Automation that works alongside your team, designed and built by Thynk.",
   },
   work: {
-    label: "Work",
-    title: "Work",
+    label: "Clients",
+    title: "Clients",
     lead: "From a 20-year business award institution to a monastic winery in the Pindus mountains: different worlds, one way of working. Every account below runs through Thynk: strategy, content, campaigns and the systems behind them.",
   },
   audit: {
@@ -533,9 +533,9 @@ export const v14AboutPage = {
 export const v14Work = {
   title: "Brands we Thynk with.",
   titleGrey: "Thynk it. Build it. Run it.",
-  homeLabel: "Work",
+  homeLabel: "Clients",
   view: "View the case",
-  back: "← All work",
+  back: "← All clients",
   next: "Next case",
   visit: "Visit",
   labels: {

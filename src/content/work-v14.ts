@@ -4,6 +4,9 @@
 // are the client's own public facts (e.g. "two decades", "since 2018"), never our results.
 // `published: false` keeps a case off the site.
 // 08/10 (Mike): the brand is written «μάιμέτσοβο» in both languages (slug and domain stay mymetsovo).
+// 09/10 (Mike): the brands are shown as logos, not names (home strip, cards, case head). Files in public/clients/,
+// captured from each brand's own site and turned into one-colour marks; `ratio` (width/height) sizes them to the same visual weight.
+// 09/10 (Mike): θamõn is off the site until the engagement is final.
 // 08/10 (Mike): services per case confirmed; Meta/Google/TikTok and Pixel/CAPI are implied by Performance Marketing, never listed.
 import type { Lang } from "@/content/site-v14";
 
@@ -24,6 +27,14 @@ export interface CaseText {
   results?: string;
 }
 
+export interface ClientLogo {
+  src: string;
+  /** the brand name, read out instead of the picture */
+  alt: string;
+  /** width / height of the file */
+  ratio: number;
+}
+
 export interface CaseStudy {
   slug: string;
   status: CaseStatus;
@@ -33,8 +44,8 @@ export interface CaseStudy {
   url: string;
   /** shown as the link text, e.g. "manageroftheyear.gr" */
   domain: string;
-  /** /work/logos/<slug>.svg once we have permission and the files */
-  logo?: string;
+  /** the brand's logo(s), one-colour PNG in public/clients/ (MOTY carries two: the awards and the club) */
+  logos?: ClientLogo[];
   images?: string[];
   en: CaseText;
   el: CaseText;
@@ -48,6 +59,10 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://manageroftheyear.gr",
     domain: "manageroftheyear.gr",
+    logos: [
+      { src: "/clients/manager-of-the-year.png", alt: "Manager of the Year", ratio: 3.033 },
+      { src: "/clients/thought-leaders-club.png", alt: "Thought Leaders Club", ratio: 1.3 },
+    ],
     en: {
       client: "Manager of the Year & Thought Leaders Club",
       sector: "Business awards & executive network",
@@ -83,6 +98,9 @@ export const caseStudies: CaseStudy[] = [
     // ⚠️ the 2026 edition has already taken place: switch to the next edition's page once it is online
     url: "https://www.slide2open.net/el/shipping-finance-2026/",
     domain: "slide2open.net",
+    logos: [
+      { src: "/clients/slide2open-shipping-finance.png", alt: "Slide2Open Shipping Finance", ratio: 3.832 },
+    ],
     en: {
       client: "Slide2Open Shipping Finance",
       sector: "International shipping & finance conference",
@@ -117,6 +135,9 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://eel.gr",
     domain: "eel.gr",
+    logos: [
+      { src: "/clients/eel-hellenic-logistics-association.png", alt: "EEL – Hellenic Logistics Association", ratio: 4.295 },
+    ],
     en: {
       client: "EEL – Hellenic Logistics Association",
       sector: "Professional association, logistics & supply chain",
@@ -150,6 +171,9 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://im-votsas.gr",
     domain: "im-votsas.gr",
+    logos: [
+      { src: "/clients/imperator-winery.png", alt: "Imperator Winery", ratio: 0.779 },
+    ],
     en: {
       client: "Imperator Winery",
       sector: "Monastic winery",
@@ -185,6 +209,9 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://mymetsovo.gr",
     domain: "mymetsovo.gr",
+    logos: [
+      { src: "/clients/mymetsovo.png", alt: "μάιμέτσοβο", ratio: 4.776 },
+    ],
     en: {
       client: "μάιμέτσοβο",
       sector: "Place branding & sustainable tourism",
@@ -220,6 +247,9 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://anadelta.edu.gr",
     domain: "anadelta.edu.gr",
+    logos: [
+      { src: "/clients/anadelta-edu.png", alt: "The Anadelta Edu", ratio: 2.462 },
+    ],
     en: {
       client: "The Anadelta Edu",
       sector: "Education & career guidance",
@@ -254,6 +284,9 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://youthchoice.gr",
     domain: "youthchoice.gr",
+    logos: [
+      { src: "/clients/youth-choice-epirus-forum.png", alt: "Youth Choice Epirus Forum", ratio: 4.324 },
+    ],
     en: {
       client: "Youth Choice Epirus Forum",
       sector: "Education & career event",
@@ -284,8 +317,8 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "thamon",
     status: "onboarding",
-    // live on the site since 08/10 (Mike)
-    published: true,
+    // 09/10 (Mike): off the site until the engagement is final (was live 08/10)
+    published: false,
     url: "https://www.thamon.gr",
     domain: "thamon.gr",
     en: {

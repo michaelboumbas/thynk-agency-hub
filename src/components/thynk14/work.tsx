@@ -1,15 +1,53 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { useCopy } from "./i18n";
 import { FinalBand, Label, MoreLink, PageHead } from "./shared";
 import { v14Routes } from "@/content/site-v14";
-import { caseText, nextCase, publishedCases, type CaseStudy } from "@/content/work-v14";
+import { caseText, nextCase, publishedCases, type CaseStudy, type ClientLogo } from "@/content/work-v14";
 
 /**
- * Work (07/10/2026, Mike): /work lists the accounts that run through Thynk, /work/:slug tells one case.
- * Cases and their copy: src/content/work-v14.ts. No result numbers until measured: the Results block only
- * shows when a case has `results`.
+ * Clients (07/10/2026, Mike; renamed from «Work» 09/10): /work lists the accounts that run through Thynk,
+ * /work/:slug tells one case. Cases and their copy: src/content/work-v14.ts. No result numbers until measured:
+ * the Results block only shows when a case has `results`.
+ * 09/10 (Mike): the brands appear as logos, not names.
  */
+
+/**
+ * Height (px at --u: 1) that gives every logo about the same visual weight: equal area, so a tall crest
+ * and a long wordmark read as the same size. Capped so neither gets too tall nor too wide.
+ */
+function logoHeight(ratio: number) {
+  return Math.round(Math.min(84, Math.sqrt(9000 / ratio), 210 / ratio) * 10) / 10;
+}
+
+/** a client logo drawn in the current text colour (CSS mask), so it greys out, inks or turns orange with its parent */
+function Logo({ l, decorative = false }: { l: ClientLogo; decorative?: boolean }) {
+  const mask = `url("${l.src}")`;
+  const style = {
+    "--lh": logoHeight(l.ratio),
+    "--lr": l.ratio,
+    WebkitMaskImage: mask,
+    maskImage: mask,
+  } as CSSProperties;
+  return decorative ? (
+    <span className="t14-clogo" style={style} aria-hidden="true" />
+  ) : (
+    <span className="t14-clogo" style={style} role="img" aria-label={l.alt} />
+  );
+}
+
+/** the case's logo(s) with its name for screen readers; the plain name when a case has no logo yet */
+function ClientMark({ cs, name }: { cs: CaseStudy; name: string }) {
+  if (!cs.logos?.length) return <>{name}</>;
+  return (
+    <>
+      {cs.logos.map((l) => (
+        <Logo key={l.src} l={l} decorative />
+      ))}
+      <span className="t14-sr">{name}</span>
+    </>
+  );
+}
 
 /** link to a case page in the current language */
 function CaseLink({ cs, className, children }: { cs: CaseStudy; className?: string; children: ReactNode }) {
@@ -59,7 +97,9 @@ export function WorkPage() {
                   <small>
                     <span>{String(i + 1).padStart(2, "0")}</span> · {t.sector} · {t.location}
                   </small>
-                  <h3>{t.client}</h3>
+                  <h3 className={cs.logos?.length ? "t14-wk-logo" : undefined}>
+                    <ClientMark cs={cs} name={t.client} />
+                  </h3>
                   <p>{t.cardLine}</p>
                   <ul className="t14-wk-tags" aria-label={w.labels.services}>
                     {t.tags.map((tag) => (
@@ -113,6 +153,13 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
     <>
       <section className="t14-wrap t14-case-head">
         <Link className="t14-case-back" to={href(v14Routes.work)}>{w.back}</Link>
+        {cs.logos?.length ? (
+          <div className="t14-case-logos">
+            {cs.logos.map((l) => (
+              <Logo key={l.src} l={l} decorative />
+            ))}
+          </div>
+        ) : null}
         <small className="t14-case-kicker">
           {t.sector} · {t.location}
         </small>
@@ -158,7 +205,7 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
 }
 
 /* ================================ home: the work strip ================================ */
-/** the client names in a row, each to its case, then "All work →" (logos replace the names once we have them) */
+/** the client logos in a grid, each to its case, then "All clients →" (09/10: logos instead of names) */
 export function WorkStrip() {
   const { c, lang } = useCopy();
   const w = c.work;
@@ -168,12 +215,24 @@ export function WorkStrip() {
       <h2 className="t14-wk-title">
         {w.title} <span>{w.titleGrey}</span>
       </h2>
-      <ul className="t14-wk-names">
-        {publishedCases.map((cs) => (
-          <li key={cs.slug}>
-            <CaseLink cs={cs}>{caseText(cs, lang).client}</CaseLink>
-          </li>
-        ))}
+      <ul className="t14-logos">
+        {publishedCases.flatMap((cs) =>
+          cs.logos?.length
+            ? cs.logos.map((l) => (
+                <li key={l.src}>
+                  <CaseLink cs={cs}>
+                    <Logo l={l} />
+                  </CaseLink>
+                </li>
+              ))
+            : [
+                <li key={cs.slug}>
+                  <CaseLink cs={cs} className="t14-logos-name">
+                    {caseText(cs, lang).client}
+                  </CaseLink>
+                </li>,
+              ],
+        )}
       </ul>
       <MoreLink to={v14Routes.work}>{c.more.work}</MoreLink>
     </section>

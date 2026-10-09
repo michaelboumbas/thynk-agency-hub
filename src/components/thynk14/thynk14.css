@@ -3693,3 +3693,121 @@
     transform: none;
   }
 }
+
+/* ======================= clients as logos (09/10/2026, Mike) =======================
+   One colour for every brand (a CSS mask over the logo file), the same visual weight (work.tsx: logoHeight).
+   Grey in the grid, ink in the cards, orange on hover, like the names before them. */
+.t14-clogo {
+  display: block;
+  flex: none;
+  width: calc(var(--lh) * var(--lr) * var(--u, 1) * 1px);
+  height: calc(var(--lh) * var(--u, 1) * 1px);
+  max-width: 100%;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.t14-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* home: the logo grid */
+.t14-logos {
+  --u: 1;
+  list-style: none;
+  margin: clamp(30px, 5vh, 56px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.t14-logos li {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.t14-logos a {
+  display: grid;
+  /* one track as wide as the cell, so a long wordmark shrinks instead of spilling over */
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  height: clamp(130px, 13vw, 170px);
+  padding: 18px;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: color 0.2s, background-color 0.2s;
+}
+.t14-logos a:hover,
+.t14-logos a:focus-visible {
+  color: var(--orange);
+  background-color: var(--paper-2);
+}
+.t14-logos .t14-logos-name {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-stretch: 120%;
+  font-size: clamp(18px, 1.6vw, 24px);
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+
+/* the cards on /work: the logo is the heading */
+.t14-wk-card h3.t14-wk-logo {
+  --u: 1;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 28px;
+  min-height: 92px;
+  margin-top: 18px;
+  color: var(--ink);
+  transition: color 0.2s;
+}
+.t14-wk-card-in:hover h3.t14-wk-logo {
+  color: var(--orange);
+}
+
+/* the case page: the logo above the kicker */
+.t14-case-logos {
+  --u: 1.15;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+  margin-top: clamp(28px, 5vh, 44px);
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .t14-logos {
+    --u: 0.72;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .t14-logos a {
+    height: 112px;
+    padding: 14px;
+  }
+  .t14-wk-card h3.t14-wk-logo {
+    --u: 0.85;
+    min-height: 76px;
+  }
+  .t14-case-logos {
+    --u: 0.9;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t14-logos a,
+  .t14-wk-card h3.t14-wk-logo {
+    transition: none;
+  }
+}

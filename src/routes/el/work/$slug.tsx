@@ -11,7 +11,7 @@ export const Route = createFileRoute("/el/work/$slug")({
   head: ({ params }) => {
     const t = getCase(params.slug)?.el;
     if (!t) return {};
-    const title = `${t.client} — Έργα — Thynk Digital Agency`;
+    const title = `${t.client} — Πελάτες — Thynk Digital Agency`;
     return {
       meta: [
         { title },

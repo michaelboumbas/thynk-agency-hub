@@ -24,7 +24,7 @@ export const el: Copy = {
   menu: [
     { to: v14Menu[0].to, label: "Υπηρεσίες" },
     { to: v14Menu[1].to, label: "Λύσεις" },
-    { to: v14Menu[2].to, label: "Έργα" },
+    { to: v14Menu[2].to, label: "Πελάτες" },
     { to: v14Menu[3].to, label: "Audit" },
     { to: v14Menu[4].to, label: "Ποιοι είμαστε" },
     { to: v14Menu[5].to, label: "Επικοινωνία" },
@@ -34,7 +34,7 @@ export const el: Copy = {
     solutions: "Όλες οι λύσεις →",
     audit: "Η διαδικασία του audit →",
     team: "Ποιοι είμαστε →",
-    work: "Όλα τα έργα →",
+    work: "Όλοι οι πελάτες →",
   },
   hero: {
     lead: "Το μέλλον της",
@@ -219,8 +219,8 @@ export const el: Copy = {
       lead: "Αυτοματισμοί που δουλεύουν δίπλα στην ομάδα σας, σχεδιασμένοι και υλοποιημένοι από τη Thynk.",
     },
     work: {
-      label: "Έργα",
-      title: "Work",
+      label: "Πελάτες",
+      title: "Clients",
       lead: "Από έναν θεσμό βράβευσης στελεχών με 20 χρόνια ιστορίας μέχρι ένα μοναστηριακό οινοποιείο στην Πίνδο: διαφορετικοί κόσμοι, ένας τρόπος δουλειάς. Κάθε συνεργασία εδώ περνά μέσα από τη Thynk: στρατηγική, περιεχόμενο, καμπάνιες και τα συστήματα πίσω από αυτά.",
     },
     audit: {
@@ -493,9 +493,9 @@ export const el: Copy = {
   work: {
     title: "Brands we Thynk with.",
     titleGrey: "Thynk it. Build it. Run it.",
-    homeLabel: "Έργα",
+    homeLabel: "Πελάτες",
     view: "Δείτε το έργο",
-    back: "← Όλα τα έργα",
+    back: "← Όλοι οι πελάτες",
     next: "Επόμενο έργο",
     visit: "Επίσκεψη",
     labels: {
