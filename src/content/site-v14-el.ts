@@ -440,8 +440,8 @@ export const el: Copy = {
   },
   aboutPage: {
     founders: [
-      { initials: "ΔΧ", name: "Δημήτρης Χρυσοχόου", photo: "", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
-      { initials: "ΜΜ", name: "Μιχαήλ Μπούμπας", photo: "", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
+      { initials: "ΔΧ", name: "Δημήτρης Χρυσοχόου", photo: "/team/dimitris-chrysochoou.webp", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
+      { initials: "ΜΜ", name: "Μιχαήλ Μπούμπας", photo: "/team/michael-boumpas.webp", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
     ],
     teamLabel: "Η ομάδα",
     linkedinLabel: "LinkedIn",

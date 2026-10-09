@@ -504,8 +504,8 @@ export const v14Calc = {
 
 export const v14AboutPage = {
   founders: [
-    { initials: "DC", name: "Dimitris Chrysochoou", photo: "", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
-    { initials: "MB", name: "Michael Boumpas", photo: "", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
+    { initials: "DC", name: "Dimitris Chrysochoou", photo: "/team/dimitris-chrysochoou.webp", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
+    { initials: "MB", name: "Michael Boumpas", photo: "/team/michael-boumpas.webp", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
   ],
   teamLabel: "The team",
   linkedinLabel: "LinkedIn",
