@@ -3918,13 +3918,18 @@
   background: currentColor;
 }
 .t14 .t14-stack-logos {
-  --u: 2;
+  /* the logo grows with the screen: 2× on a laptop, up to 2.8× on a wide monitor */
+  --ux: clamp(1.5px, 0.15vw, 2.8px);
   position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 22px 44px;
   color: var(--c-logo);
+}
+.t14 .t14-stack-logos .t14-clogo {
+  width: calc(var(--lh) * var(--lr) * var(--ux));
+  height: calc(var(--lh) * var(--ux));
 }
 .t14-stack-foot {
   position: relative;
@@ -4008,7 +4013,7 @@
     padding: 0 18px;
   }
   .t14 .t14-stack-logos {
-    --u: 1.1;
+    --ux: 1.1px;
     gap: 16px 28px;
   }
   .t14-stack-ghost {
