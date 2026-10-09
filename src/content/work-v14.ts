@@ -35,6 +35,17 @@ export interface ClientLogo {
   ratio: number;
 }
 
+/**
+ * The brand's own colours for its card on /work (09/10, Mike): sampled from the brand's logo and site.
+ * bg: the card, fg: text on it, logo: the logo's colour, accent: small marks (index, dot, arrow).
+ */
+export interface CaseTheme {
+  bg: string;
+  fg: string;
+  logo: string;
+  accent: string;
+}
+
 export interface CaseStudy {
   slug: string;
   status: CaseStatus;
@@ -46,6 +57,7 @@ export interface CaseStudy {
   domain: string;
   /** the brand's logo(s), one-colour PNG in public/clients/ (MOTY carries two: the awards and the club) */
   logos?: ClientLogo[];
+  theme?: CaseTheme;
   images?: string[];
   en: CaseText;
   el: CaseText;
@@ -59,6 +71,7 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://manageroftheyear.gr",
     domain: "manageroftheyear.gr",
+    theme: { bg: "#0e0e0f", fg: "#ffffff", logo: "#c6965a", accent: "#c6965a" },
     logos: [
       { src: "/clients/manager-of-the-year.png", alt: "Manager of the Year", ratio: 3.033 },
       { src: "/clients/thought-leaders-club.png", alt: "Thought Leaders Club", ratio: 1.3 },
@@ -98,6 +111,7 @@ export const caseStudies: CaseStudy[] = [
     // ⚠️ the 2026 edition has already taken place: switch to the next edition's page once it is online
     url: "https://www.slide2open.net/el/shipping-finance-2026/",
     domain: "slide2open.net",
+    theme: { bg: "#067e8a", fg: "#ffffff", logo: "#ffffff", accent: "#f6ae2a" },
     logos: [
       { src: "/clients/slide2open-shipping-finance.png", alt: "Slide2Open Shipping Finance", ratio: 3.832 },
     ],
@@ -135,6 +149,7 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://eel.gr",
     domain: "eel.gr",
+    theme: { bg: "#364e8a", fg: "#ffffff", logo: "#ffffff", accent: "#e9c43b" },
     logos: [
       { src: "/clients/eel-hellenic-logistics-association.png", alt: "EEL – Hellenic Logistics Association", ratio: 4.295 },
     ],
@@ -171,6 +186,7 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://im-votsas.gr",
     domain: "im-votsas.gr",
+    theme: { bg: "#2b3a2f", fg: "#f3ead9", logo: "#b8924f", accent: "#b8924f" },
     logos: [
       { src: "/clients/imperator-winery.png", alt: "Imperator Winery", ratio: 0.779 },
     ],
@@ -209,6 +225,7 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://mymetsovo.gr",
     domain: "mymetsovo.gr",
+    theme: { bg: "#1c2266", fg: "#ffffff", logo: "#ffffff", accent: "#e4a853" },
     logos: [
       { src: "/clients/mymetsovo.png", alt: "μάιμέτσοβο", ratio: 4.776 },
     ],
@@ -247,6 +264,7 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://anadelta.edu.gr",
     domain: "anadelta.edu.gr",
+    theme: { bg: "#2a4e4e", fg: "#ffffff", logo: "#ffffff", accent: "#bcd6cf" },
     logos: [
       { src: "/clients/anadelta-edu.png", alt: "The Anadelta Edu", ratio: 2.462 },
     ],
@@ -284,6 +302,7 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://youthchoice.gr",
     domain: "youthchoice.gr",
+    theme: { bg: "#ae96c6", fg: "#0f1012", logo: "#0f1012", accent: "#ffffff" },
     logos: [
       { src: "/clients/youth-choice-epirus-forum.png", alt: "Youth Choice Epirus Forum", ratio: 4.324 },
     ],

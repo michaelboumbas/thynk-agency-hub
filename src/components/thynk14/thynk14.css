@@ -3696,7 +3696,7 @@
 
 /* ======================= clients as logos (09/10/2026, Mike) =======================
    One colour for every brand (a CSS mask over the logo file), the same visual weight (work.tsx: logoHeight).
-   White in the home strip, ink in the cards, orange on hover, like the names before them. */
+   White in the home strip, in each brand's own colour on /work, orange on hover in the strip. */
 .t14-clogo {
   display: block;
   flex: none;
@@ -3720,23 +3720,6 @@
   white-space: nowrap;
 }
 
-/* the cards on /work: the logo is the heading */
-.t14-wk-card h3.t14-wk-logo {
-  --u: 1;
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px 28px;
-  min-height: 92px;
-  margin-top: 18px;
-  color: var(--ink);
-  transition: color 0.2s;
-}
-.t14-wk-card-in:hover h3.t14-wk-logo {
-  color: var(--orange);
-}
-
 /* the case page: the logo above the kicker */
 .t14-case-logos {
   --u: 1.15;
@@ -3749,17 +3732,8 @@
 }
 
 @media (max-width: 700px) {
-  .t14-wk-card h3.t14-wk-logo {
-    --u: 0.85;
-    min-height: 76px;
-  }
   .t14-case-logos {
     --u: 0.9;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .t14-wk-card h3.t14-wk-logo {
-    transition: none;
   }
 }
 
@@ -3850,5 +3824,206 @@
   }
   .t14-cl-set li {
     padding: 0 22px;
+  }
+}
+
+/* ======================= /work: the stack (rebuilt 09/10/2026, Mike) =======================
+   One card per client in its brand colours (--c-*, from work-v14.ts), sticky near the top; the next card
+   rises over it while it settles back and dims (--p from work.tsx). */
+.t14-stack {
+  --stack-top: clamp(78px, 10vh, 104px);
+  list-style: none;
+  margin: clamp(30px, 5vh, 56px) 0 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(28px, 6vh, 64px);
+}
+.t14-stack > li {
+  position: sticky;
+  top: calc(var(--stack-top) + var(--i) * 12px);
+}
+.t14 .t14-stack-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(26px, 4vh, 48px);
+  min-height: min(74svh, 640px);
+  padding: clamp(24px, 3.6vw, 56px);
+  overflow: hidden;
+  background: var(--c-bg);
+  color: var(--c-fg);
+  border-radius: 28px;
+  text-decoration: none;
+  box-shadow: 0 -30px 60px -44px rgba(15, 16, 18, 0.5);
+  transform: scale(calc(1 - var(--p, 0) * 0.06));
+  transform-origin: 50% 0;
+  will-change: transform;
+}
+/* dims as the next card covers it */
+.t14-stack-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: calc(var(--p, 0) * 0.35);
+  pointer-events: none;
+}
+/* the brand's mark, huge and faint, bleeding off the corner */
+.t14-stack-ghost {
+  --u: 4.6;
+  position: absolute;
+  right: -4%;
+  bottom: -12%;
+  color: var(--c-logo);
+  opacity: 0.08;
+  pointer-events: none;
+  transform: translateY(calc(var(--p, 0) * -40px));
+}
+.t14-stack-ghost .t14-clogo {
+  max-width: none;
+}
+.t14-stack-top {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 26px;
+  font-size: 13px;
+}
+.t14-stack-n {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-stretch: 120%;
+  font-size: 15px;
+  color: var(--c-accent);
+}
+.t14-stack-n i {
+  font-style: normal;
+  color: var(--c-fg);
+  opacity: 0.55;
+}
+.t14-stack-sector {
+  opacity: 0.78;
+}
+.t14 .t14-stack-card .t14-wk-status {
+  color: inherit;
+  opacity: 0.78;
+}
+.t14 .t14-stack-card .t14-wk-status.is-ongoing i {
+  background: var(--c-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c-accent) 25%, transparent);
+}
+.t14 .t14-stack-card .t14-wk-status.is-delivered i {
+  background: currentColor;
+}
+.t14 .t14-stack-logos {
+  --u: 2;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px 44px;
+  color: var(--c-logo);
+}
+.t14-stack-foot {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 22px 40px;
+}
+.t14 .t14-stack-foot p {
+  max-width: 30ch;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-stretch: 110%;
+  font-size: clamp(20px, 2.1vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+.t14-stack-tags {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.t14-stack-tags li {
+  padding: 6px 12px;
+  font-size: 12.5px;
+  border: 1px solid color-mix(in srgb, currentColor 32%, transparent);
+  border-radius: 99px;
+}
+.t14-stack-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 99px;
+  background: var(--c-fg);
+  color: var(--c-bg);
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.t14-stack-cta i {
+  font-style: normal;
+  transition: transform 0.25s;
+}
+.t14-stack-card:hover .t14-stack-cta i,
+.t14-stack-card:focus-visible .t14-stack-cta i {
+  transform: translateX(5px);
+}
+@media (max-width: 700px) {
+  .t14-stack > li {
+    top: calc(var(--stack-top) + var(--i) * 8px);
+  }
+  .t14 .t14-stack-card {
+    min-height: min(68svh, 540px);
+    gap: 22px;
+    padding: 22px 20px;
+    border-radius: 22px;
+  }
+  .t14-stack-top {
+    gap: 6px 16px;
+    font-size: 12px;
+  }
+  .t14 .t14-stack-foot p {
+    font-size: 19px;
+  }
+  .t14-stack-tags {
+    margin-top: 14px;
+    gap: 6px;
+  }
+  .t14-stack-tags li {
+    padding: 4px 10px;
+    font-size: 11.5px;
+  }
+  .t14-stack-cta {
+    height: 42px;
+    padding: 0 18px;
+  }
+  .t14 .t14-stack-logos {
+    --u: 1.1;
+    gap: 16px 28px;
+  }
+  .t14-stack-ghost {
+    --u: 2.6;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t14 .t14-stack-card,
+  .t14-stack-ghost {
+    transform: none;
+  }
+  .t14-stack-card::after {
+    display: none;
+  }
+  .t14-stack-cta i {
+    transition: none;
   }
 }

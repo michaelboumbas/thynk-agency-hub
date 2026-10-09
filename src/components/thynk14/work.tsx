@@ -1,9 +1,16 @@
-import type { CSSProperties, ReactNode } from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { useCopy } from "./i18n";
 import { FinalBand, Label, MoreLink, PageHead } from "./shared";
 import { v14Routes } from "@/content/site-v14";
-import { caseText, nextCase, publishedCases, type CaseStudy, type ClientLogo } from "@/content/work-v14";
+import {
+  caseText,
+  nextCase,
+  publishedCases,
+  type CaseStudy,
+  type CaseTheme,
+  type ClientLogo,
+} from "@/content/work-v14";
 
 /**
  * Clients (07/10/2026, Mike; renamed from «Work» 09/10): /work lists the accounts that run through Thynk,
@@ -93,9 +100,49 @@ function StatusLine({ cs }: { cs: CaseStudy }) {
 }
 
 /* ================================ /work ================================ */
+const NO_THEME: CaseTheme = { bg: "#0f1012", fg: "#ffffff", logo: "#ffffff", accent: "#ff6a1a" };
+const pad2 = (n: number) => String(n).padStart(2, "0");
+
+/**
+ * Clients page (rebuilt 09/10, Mike): a stack. Each client is one large card in its own brand colours
+ * (theme in work-v14.ts) with its logo big; the cards stick near the top and the next one rises over the
+ * last, which settles back a little and dims (--p, 0 → 1, set on scroll below). Without motion the cards
+ * still stack, they just do not shrink.
+ */
 export function WorkPage() {
   const { c, lang } = useCopy();
   const w = c.work;
+  const stack = useRef<HTMLOListElement>(null);
+
+  useEffect(() => {
+    const ol = stack.current;
+    if (!ol || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const items = Array.from(ol.querySelectorAll<HTMLElement>(":scope > li"));
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      for (let i = 0; i < items.length - 1; i++) {
+        const cur = items[i].getBoundingClientRect();
+        const next = items[i + 1].getBoundingClientRect();
+        // how far the next card has slid over this one: 0 as it arrives, 1 once it covers it
+        const p = Math.min(1, Math.max(0, (cur.bottom - next.top) / cur.height));
+        items[i].style.setProperty("--p", p.toFixed(3));
+      }
+    };
+    const onScroll = () => {
+      if (!raf) raf = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) window.cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const total = publishedCases.length;
   return (
     <>
       <PageHead p={c.pageHeads.work} />
@@ -103,27 +150,49 @@ export function WorkPage() {
         <h2 className="t14-wk-title">
           {w.title} <span>{w.titleGrey}</span>
         </h2>
-        <ul className="t14-wk-grid">
+        <ol className="t14-stack" ref={stack}>
           {publishedCases.map((cs, i) => {
             const t = caseText(cs, lang);
+            const th = cs.theme ?? NO_THEME;
+            const ghost = cs.logos?.[0];
+            const style = {
+              "--i": i,
+              "--c-bg": th.bg,
+              "--c-fg": th.fg,
+              "--c-logo": th.logo,
+              "--c-accent": th.accent,
+            } as CSSProperties;
             return (
-              <li key={cs.slug} className="t14-wk-card">
-                <CaseLink cs={cs} className="t14-wk-card-in">
-                  <small>
-                    <span>{String(i + 1).padStart(2, "0")}</span> · {t.sector} · {t.location}
-                  </small>
-                  <h3 className={cs.logos?.length ? "t14-wk-logo" : undefined}>
+              <li key={cs.slug} style={style}>
+                <CaseLink cs={cs} className="t14-stack-card">
+                  {ghost ? (
+                    <span className="t14-stack-ghost" aria-hidden="true">
+                      <Logo l={ghost} decorative />
+                    </span>
+                  ) : null}
+                  <div className="t14-stack-top">
+                    <span className="t14-stack-n">
+                      {pad2(i + 1)}
+                      <i> / {pad2(total)}</i>
+                    </span>
+                    <span className="t14-stack-sector">
+                      {t.sector} · {t.location}
+                    </span>
+                    <StatusLine cs={cs} />
+                  </div>
+                  <h3 className="t14-stack-logos">
                     <ClientMark cs={cs} name={t.client} />
                   </h3>
-                  <p>{t.cardLine}</p>
-                  <ul className="t14-wk-tags" aria-label={w.labels.services}>
-                    {t.tags.map((tag) => (
-                      <li key={tag}>{tag}</li>
-                    ))}
-                  </ul>
-                  <div className="t14-wk-card-f">
-                    <StatusLine cs={cs} />
-                    <b>
+                  <div className="t14-stack-foot">
+                    <div>
+                      <p>{t.cardLine}</p>
+                      <ul className="t14-stack-tags" aria-label={w.labels.services}>
+                        {t.tags.map((tag) => (
+                          <li key={tag}>{tag}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <b className="t14-stack-cta">
                       {w.view} <i aria-hidden="true">→</i>
                     </b>
                   </div>
@@ -131,7 +200,7 @@ export function WorkPage() {
               </li>
             );
           })}
-        </ul>
+        </ol>
       </section>
       <FinalBand />
     </>
