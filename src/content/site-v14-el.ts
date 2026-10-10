@@ -135,7 +135,7 @@ export const el: Copy = {
   footer: {
     contact: "hello@thynkagency.gr",
     phone: "+30 690 000 0000",
-    address: "Πλατεία Πύρρου 1, 453 32 Ιωάννινα",
+    address: "Παπάζογλου 14Δ, 454 44 Ιωάννινα",
     city: "Ιωάννινα",
     year: "© 2026",
     faq: "Συχνές ερωτήσεις",
@@ -467,11 +467,11 @@ export const el: Copy = {
   contactPage: {
     cardsLabel: "Στοιχεία επικοινωνίας",
     cards: [
-      { id: "address", kicker: "Γραφείο", value: "Πλατεία Πύρρου 1", sub: "453 32 Ιωάννινα", action: "Οδηγίες χάρτη" },
+      { id: "address", kicker: "Γραφείο", value: "Παπάζογλου 14Δ", sub: "454 44 Ιωάννινα", action: "Οδηγίες χάρτη" },
       { id: "phone", kicker: "Τηλέφωνο", value: "+30 690 000 0000", sub: "Δευτέρα–Παρασκευή, 09:00–17:00", action: "Καλέστε μας" },
       { id: "email", kicker: "Email", value: "hello@thynkagency.gr", sub: "Για ερωτήσεις και προτάσεις", action: "Στείλτε email" },
     ],
-    mapsQuery: "Πλατεία Πύρρου, Ιωάννινα",
+    mapsQuery: "Παπάζογλου 14Δ, 454 44 Ιωάννινα",
     hoursTitle: "Ωράριο γραφείου",
     hours: [
       { d: "Δευτέρα – Παρασκευή", t: "09:00 – 17:00" },

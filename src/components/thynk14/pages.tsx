@@ -424,8 +424,8 @@ export function AboutPage() {
 }
 
 /* ---------- contact (02/10, Mike): office, phone, email, hours, map, the audit button ---------- */
-/** the office on the map (demo: Pyrrou Square, Ioannina) */
-const MAP_LL = "39.66567,20.85178";
+/** the office on the map: Papazoglou 14D, 454 44 Ioannina (Mike 10/10; Google Maps point for Papazoglou 14) */
+const MAP_LL = "39.66813,20.85431";
 
 export function ContactPage() {
   const { c, href } = useCopy();
@@ -461,8 +461,7 @@ export function ContactPage() {
         <div className="t14-cmap-row">
           <div className="t14-cmap">
             {/* Google's own pin can't be recoloured inside the embed: the map is centred on the office with no
-                marker (ll=…) and our orange brand pin sits on top, exactly in the middle (Mike 03/10).
-                ⚠️ DEMO coordinates (Pyrrou Square) until the real address arrives. */}
+                marker (ll=…) and our orange brand pin sits on top, exactly in the middle (Mike 03/10). */}
             <iframe
               title={k.mapTitle}
               src={`https://www.google.com/maps?ll=${MAP_LL}&z=16&hl=${c.lang}&output=embed`}

@@ -131,9 +131,9 @@ export const v14Faq = {
 
 export const v14Footer = {
   contact: "hello@thynkagency.gr",
-  // ⚠️ DEMO values (Mike, 02/10): replace with the real office phone and street address in Ioannina.
+  // office address confirmed by Mike (10/10). ⚠️ phone is still a DEMO value until Dimitris's mobile is added.
   phone: "+30 690 000 0000",
-  address: "Pyrrou Square 1, 453 32 Ioannina",
+  address: "Papazoglou 14D, 454 44 Ioannina",
   city: "Ioannina, Greece",
   year: "© 2026",
   faq: "FAQ",
@@ -271,15 +271,15 @@ export const v14PageHeads = {
   },
 };
 
-/* the contact page (02/10, Mike). ⚠️ address, phone and hours are DEMO values until the real ones arrive. */
+/* the contact page (02/10, Mike). Address confirmed 10/10 (Papazoglou 14D). ⚠️ phone and hours are still DEMO values. */
 export const v14ContactPage = {
   cardsLabel: "Get in touch",
   cards: [
-    { id: "address", kicker: "Office", value: "Pyrrou Square 1", sub: "453 32 Ioannina, Greece", action: "Get directions" },
+    { id: "address", kicker: "Office", value: "Papazoglou 14D", sub: "454 44 Ioannina, Greece", action: "Get directions" },
     { id: "phone", kicker: "Phone", value: "+30 690 000 0000", sub: "Mon–Fri, 09:00–17:00", action: "Call us" },
     { id: "email", kicker: "Email", value: "hello@thynkagency.gr", sub: "For questions and proposals", action: "Send an email" },
   ],
-  mapsQuery: "Pyrrou Square, Ioannina",
+  mapsQuery: "Papazoglou 14D, 454 44 Ioannina",
   hoursTitle: "Office hours",
   hours: [
     { d: "Monday – Friday", t: "09:00 – 17:00" },
