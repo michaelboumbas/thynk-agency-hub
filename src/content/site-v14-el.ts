@@ -134,7 +134,7 @@ export const el: Copy = {
   },
   footer: {
     contact: "hello@thynkagency.gr",
-    phone: "+30 690 000 0000",
+    phone: "+30 698 399 7522",
     address: "Παπάζογλου 14Δ, 454 44 Ιωάννινα",
     city: "Ιωάννινα",
     year: "© 2026",
@@ -468,7 +468,7 @@ export const el: Copy = {
     cardsLabel: "Στοιχεία επικοινωνίας",
     cards: [
       { id: "address", kicker: "Γραφείο", value: "Παπάζογλου 14Δ", sub: "454 44 Ιωάννινα", action: "Οδηγίες χάρτη" },
-      { id: "phone", kicker: "Τηλέφωνο", value: "+30 690 000 0000", sub: "Δευτέρα–Παρασκευή, 09:00–17:00", action: "Καλέστε μας" },
+      { id: "phone", kicker: "Τηλέφωνο", value: "+30 698 399 7522", sub: "Δευτέρα–Παρασκευή, 09:00–17:00", action: "Καλέστε μας" },
       { id: "email", kicker: "Email", value: "hello@thynkagency.gr", sub: "Για ερωτήσεις και προτάσεις", action: "Στείλτε email" },
     ],
     mapsQuery: "Παπάζογλου 14Δ, 454 44 Ιωάννινα",

@@ -8,7 +8,7 @@ import { SCENES } from "./scenes";
  */
 
 const STILL_KEY = "thynk-lab-still";
-const PHONE_HREF = "tel:+300000000000"; // placeholder until the real number
+const PHONE_HREF = "tel:+306983997522"; // Thynk phone (Dimitris's mobile, Mike 10/10)
 const BOOK_HREF = "#epikoinonia";
 
 const CHIPS = ["Τα τηλέφωνα", "Οι κρατήσεις", "Τα μηνύματα", "Τα χαρτιά", "Δεν έρχονται πελάτες"];
