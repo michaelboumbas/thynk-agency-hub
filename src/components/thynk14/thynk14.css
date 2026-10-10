@@ -2869,7 +2869,8 @@
   font-stretch: 145%;
   transition-duration: 0.9s;
 }
-.t14-foot-title .t14-dot {
+/* the brand dot (not .t14-dot, which is the small green status dot of the solution screens) */
+.t14-foot-dot {
   color: var(--orange);
 }
 .t14-foot-lead {

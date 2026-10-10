@@ -279,7 +279,7 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
         <div className="t14-foot-head">
           <h2 className="t14-foot-title" lang="en">
             <span className="t14-foot-line">
-              <span className="t14-foot-w">{f.ctaA}<span className="t14-dot">.</span></span>
+              <span className="t14-foot-w">{f.ctaA}<span className="t14-foot-dot">.</span></span>
             </span>
             <span className="t14-foot-line">
               <span className="t14-foot-w">{f.ctaB}</span>
