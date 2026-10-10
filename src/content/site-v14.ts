@@ -133,7 +133,7 @@ export const v14Footer = {
   contact: "hello@thynkagency.gr",
   // office address + phone (Dimitris's mobile) confirmed by Mike (10/10).
   phone: "+30 698 399 7522",
-  address: "Papazoglou 14D, 454 44 Ioannina",
+  address: "Papazoglou 14D, 454\u00a044 Ioannina",
   year: "© 2026",
   faq: "FAQ",
   contactLabel: "Contact",

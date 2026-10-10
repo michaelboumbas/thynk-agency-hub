@@ -135,7 +135,7 @@ export const el: Copy = {
   footer: {
     contact: "hello@thynkagency.gr",
     phone: "+30 698 399 7522",
-    address: "Παπάζογλου 14Δ, 454 44 Ιωάννινα",
+    address: "Παπάζογλου 14Δ, 454\u00a044 Ιωάννινα",
     year: "© 2026",
     faq: "Συχνές ερωτήσεις",
     contactLabel: "Επικοινωνία",

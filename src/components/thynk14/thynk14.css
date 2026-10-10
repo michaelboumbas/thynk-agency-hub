@@ -2930,6 +2930,9 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 1.25;
+  white-space: normal;
+  max-width: 100%;
+  text-align: left;
   transition: background 0.25s, color 0.25s;
 }
 .t14 .t14-foot-pill:hover {
@@ -3026,7 +3029,10 @@
   color: var(--orange);
 }
 @media (max-width: 900px) {
-  .t14-foot-lead {
+  .t14-foot-title {
+    font-size: clamp(40px, 12.8vw, 76px);
+  }
+  .t14 .t14-foot-lead {
     position: static;
     margin-top: 18px;
   }
