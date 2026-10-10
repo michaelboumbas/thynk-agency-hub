@@ -5,10 +5,9 @@ import { ComingSoon } from "@/components/thynk/ComingSoon";
 import { useSiteGate } from "@/components/thynk11/Site";
 import { PlanetField } from "@/components/thynk13/PlanetField";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
-import { v14Routes, type Lang, type V14Path } from "@/content/site-v14";
-import { Logo } from "./shared";
+import { v14Routes, v14Social, type Lang, type V14Path } from "@/content/site-v14";
+import { Logo, PAIN_EVENT, PAIN_KEY } from "./shared";
 import { useCleanMotion } from "./motion";
-import { FooterDust } from "./FooterDust";
 
 // Inter for text; TikTok Sans (Grilli Type, has Greek, width 75–150%) for titles — Mike 02/10/2026
 const INTER_HREF =
@@ -230,77 +229,107 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
 }
 
 /**
- * The big footer (03/10, Mike): a dark block that rises over the page. A ticker of what we do, the call
- * to action, pages / contact / office with the live Ioannina time, and a giant THYNK. that rises letter by
- * letter as you reach the bottom (motion.ts, .t14-foot-word).
+ * The footer v2 (10/10, Mike: the old one felt mechanical). White like the rest of the site; no ticker, clock
+ * or particle wordmark. «Let's Thynk. / Together» set large: the width of the letters opens up when the footer
+ * comes into view, and fully on hover (TikTok Sans width axis). Below it the audit form's «what should we look
+ * at first» choices: the button names the choice and the audit form opens with it already selected.
  */
 function SiteFooter({ pathname }: { pathname: V14Path }) {
   const { c, href, lang } = useCopy();
   const f = c.footer;
   const other: Lang = lang === "en" ? "el" : "en";
-  const [now, setNow] = useState("");
+  const [pick, setPick] = useState<number | null>(null);
+  const [seen, setSeen] = useState(false);
+  const footRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    const fmt = new Intl.DateTimeFormat(c.locale, { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Athens" });
-    const tick = () => setNow(fmt.format(new Date()));
-    tick();
-    const t = window.setInterval(tick, 15000);
-    return () => window.clearInterval(t);
-  }, [c.locale]);
-  const words = [...f.ticker, ...f.ticker];
+    const el = footRef.current;
+    if (!el || seen) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setSeen(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setSeen(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [seen]);
+  // hand the choice to the audit form: on the audit page directly, elsewhere when the form mounts
+  const go = () => {
+    if (pick === null) return;
+    if (pathname === v14Routes.audit) {
+      window.dispatchEvent(new CustomEvent(PAIN_EVENT, { detail: pick }));
+      return;
+    }
+    try {
+      window.sessionStorage.setItem(PAIN_KEY, String(pick));
+    } catch {
+      /* storage blocked: the form simply starts without a choice */
+    }
+  };
   return (
-    <footer className="t14-foot" id="contact">
-      <div className="t14-foot-ticker" aria-hidden="true">
-        <div>
-          {[0, 1].map((k) => (
-            <span key={k}>
-              {words.map((w, i) => (
-                <em key={i}>{w}<b>✳</b></em>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
-
+    <footer ref={footRef} className={`t14-foot${seen ? " in" : ""}`} id="contact">
       <div className="t14-foot-in">
-        <div className="t14-foot-cta">
-          <h2 lang="en">
-            {f.ctaA}<span className="t14-dot">.</span>
-            <br />
-            {f.ctaB}
+        <div className="t14-foot-head">
+          <h2 className="t14-foot-title" lang="en">
+            <span className="t14-foot-line">
+              <span className="t14-foot-w">{f.ctaA}<span className="t14-dot">.</span></span>
+            </span>
+            <span className="t14-foot-line">
+              <span className="t14-foot-w">{f.ctaB}</span>
+            </span>
           </h2>
-          <div>
-            <p>{c.final.title}</p>
-            <div className="t14-foot-act">
-              <Link className="t14-pill lg t14-foot-pill" to={href(v14Routes.audit)} hash="book">{c.final.button} <i aria-hidden="true">→</i></Link>
-              <a className="t14-foot-mail" href={`mailto:${f.contact}`}>{f.contact}</a>
-            </div>
+          <p className="t14-foot-lead">{c.final.title}</p>
+        </div>
+
+        <div className="t14-foot-start">
+          <span className="t14-foot-label" id="t14-foot-q">{f.startLabel}</span>
+          <div className="t14-foot-chips" role="group" aria-labelledby="t14-foot-q">
+            {c.book.pain.options.map((o, i) => (
+              <button
+                key={o}
+                type="button"
+                className={pick === i ? "on" : undefined}
+                aria-pressed={pick === i}
+                onClick={() => setPick(pick === i ? null : i)}
+              >
+                {o}
+              </button>
+            ))}
           </div>
+          <Link className="t14-pill lg t14-foot-pill" to={href(v14Routes.audit)} hash="book" onClick={go}>
+            {c.final.button}
+            {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
+          </Link>
         </div>
 
         <div className="t14-foot-grid">
           <div>
-            <h4>{f.pagesLabel}</h4>
-            <ul>
-              <li><Link to={href(v14Routes.home)}>{c.ui.homeLabel}</Link></li>
-              {c.menu.map((n) => (
-                <li key={n.to}><Link to={href(n.to)} aria-current={pathname === n.to ? "page" : undefined}>{n.label}</Link></li>
-              ))}
-            </ul>
-          </div>
-          <div>
             <h4>{f.contactLabel}</h4>
             <ul>
               <li><a href={`mailto:${f.contact}`}>{f.contact}</a></li>
-              {f.phone && <li><a href={`tel:${f.phone.replace(/\s+/g, "")}`} aria-label={f.phoneLabel}>{f.phone}</a></li>}
-              {f.address && <li className="t14-addr">{f.address}</li>}
+              {f.phone && <li><a href={`tel:${f.phone.replace(/\s+/g, "")}`} aria-label={`${f.phoneLabel} ${f.phone}`}>{f.phone}</a></li>}
             </ul>
           </div>
           <div>
             <h4>{f.officeLabel}</h4>
             <ul>
-              <li>{f.city}</li>
-              <li className="t14-addr">{f.hours}</li>
-              <li className="t14-foot-time"><i aria-hidden="true" /> {f.localTime} <b>{now}</b></li>
+              <li>{f.address}</li>
+              <li className="t14-addr">{f.visits}</li>
+            </ul>
+          </div>
+          <div>
+            <h4>{f.followLabel}</h4>
+            <ul className="t14-foot-social">
+              {v14Social.map((s) => (
+                <li key={s.href}><a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a></li>
+              ))}
             </ul>
           </div>
           <div className="t14-foot-top">
@@ -312,10 +341,13 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
         </div>
       </div>
 
-      <FooterDust />
-
       <div className="t14-foot-legal">
         <span>© 2026 Thynk Digital Agency · {f.rights}</span>
+        <nav aria-label={f.pagesLabel}>
+          {c.menu.map((n) => (
+            <Link key={n.to} to={href(n.to)} aria-current={pathname === n.to ? "page" : undefined}>{n.label}</Link>
+          ))}
+        </nav>
         <LangLink pathname={pathname} other={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</LangLink>
       </div>
     </footer>

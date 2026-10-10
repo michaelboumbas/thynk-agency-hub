@@ -336,6 +336,11 @@ export function Faq({
 }
 
 /* ---------- audit request form (front-end only until the back-end exists) ---------- */
+/** the footer's «what should we look at first» choice travels to the form (Mike 10/10):
+ *  another page → sessionStorage, read when the form mounts · the audit page itself → a window event */
+export const PAIN_KEY = "t14-pain";
+export const PAIN_EVENT = "t14:pain";
+
 type BookKey = "first" | "last" | "email" | "phone" | "biz";
 
 export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
@@ -343,6 +348,25 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
   const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", biz: "", industry: "", pain: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
+  const painOptions = c.book.pain.options;
+  useEffect(() => {
+    const apply = (i: number) => {
+      const o = painOptions[i];
+      if (o) setForm((f) => ({ ...f, pain: o }));
+    };
+    try {
+      const v = window.sessionStorage.getItem(PAIN_KEY);
+      if (v !== null) {
+        window.sessionStorage.removeItem(PAIN_KEY);
+        apply(Number(v));
+      }
+    } catch {
+      /* storage blocked: the form simply starts without a choice */
+    }
+    const on = (e: Event) => apply(Number((e as CustomEvent<number>).detail));
+    window.addEventListener(PAIN_EVENT, on);
+    return () => window.removeEventListener(PAIN_EVENT, on);
+  }, [painOptions]);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();

@@ -134,24 +134,30 @@ export const v14Footer = {
   // office address + phone (Dimitris's mobile) confirmed by Mike (10/10).
   phone: "+30 698 399 7522",
   address: "Papazoglou 14D, 454 44 Ioannina",
-  city: "Ioannina, Greece",
   year: "© 2026",
   faq: "FAQ",
   contactLabel: "Contact",
   phoneLabel: "Phone",
   addressLabel: "Address",
-  // the big footer (03/10, Mike)
   // the same English line in both languages (Mike 03/10); the dot after Thynk is the brand dot
   ctaA: "Let's Thynk",
   ctaB: "Together",
-  ticker: ["Marketing", "Digital Transformation", "Artificial Intelligence", "Automation", "Advertising", "Data & Reporting"],
+  // footer v2 (Mike 10/10): the audit form's «what should we look at first» choices; the button names the choice
+  startLabel: "What should we look at first?",
+  picks: ["Marketing", "Digital transformation", "Marketing + digital transformation", "Full review"],
+  followLabel: "Follow",
+  visits: "Office visits by appointment",
   pagesLabel: "Pages",
   officeLabel: "Office",
-  localTime: "Local time",
-  hours: "Mon–Fri, 09:00–17:00",
   backTop: "Back to top",
   rights: "All rights reserved.",
 };
+
+/* social profiles in the footer (the same handles as the Coming Soon page) */
+export const v14Social = [
+  { label: "Instagram", href: "https://www.instagram.com/thynkagency.gr/" },
+  { label: "Facebook", href: "https://www.facebook.com/thynkagency.gr/" },
+] as const;
 
 /* the small UI screens that peek over the solutions list (from the site-v9 examples) */
 export const v14Screens = {
