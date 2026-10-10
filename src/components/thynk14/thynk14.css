@@ -2935,11 +2935,18 @@
   text-align: left;
   transition: background 0.25s, color 0.25s;
 }
+/* one line of text that wraps like a sentence when a long choice is named (not flex columns) */
+.t14 .t14-pill.t14-foot-pill {
+  display: inline-block;
+  padding: 15px 26px;
+}
 .t14 .t14-foot-pill:hover {
   background: var(--ink);
   color: var(--paper) !important;
 }
 .t14-foot-pill i {
+  display: inline-block;
+  margin-left: 6px;
   font-style: normal;
   transition: transform 0.25s;
 }
