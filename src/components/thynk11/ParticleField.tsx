@@ -52,9 +52,9 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
     // shuffle so every shape draws from the whole wave (the morph looks like a swirl, not a slide)
     for (let i = N - 1; i > 0; i--) {
       const j = Math.floor(rnd() * (i + 1));
-      const t = order[i];
-      order[i] = order[j];
-      order[j] = t;
+      const t = order[i]!;
+      order[i] = order[j]!;
+      order[j]! = t;
     }
 
     // 1 ring (tilted galaxy)
