@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useRef, useState, type Rea
 import { LangProvider, localPath, useCopy } from "./i18n";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ComingSoon } from "@/components/thynk/ComingSoon";
-import { useSiteGate } from "@/components/thynk11/Site";
+import { GatePending, useSiteGate } from "@/components/thynk11/Site";
 import { PlanetField } from "@/components/thynk13/PlanetField";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { v14Routes, v14Social, type Lang, type V14Path } from "@/content/site-v14";
@@ -388,6 +388,7 @@ export function CleanShell({ pathname, lang, slug, children }: {
   children: ReactNode;
 }) {
   const show = useSiteGate();
+  if (show === null) return <GatePending />;
   if (!show) return <ComingSoon />;
   return (
     <LangProvider lang={lang}>

@@ -51,28 +51,27 @@ import { handsMoment, type HeadlineId } from "@/content/site-v12";
  * Public host: every page shows Coming Soon until launch (same rule as before; ?site=1 overrides).
  */
 
-/* ---------------- gate: Coming Soon on the public site ---------------- */
+/* ---------------- gate: open since 12/10 (Mike: «ξεκλείδωσέ την») ----------------
+ * Until 12/10 the public host showed Coming Soon and only the Lovable preview showed the site.
+ * Now every host shows the site; ?soon=1 still shows the Coming Soon page.
+ * The server can't read the query, so its first render is an empty white page (null) and the client
+ * decides right away; client-side navigations reuse the answer. */
 let gateCache: boolean | null = null;
 function shouldShowSite(): boolean {
-  const { hostname, search } = window.location;
-  const q = new URLSearchParams(search);
-  if (q.has("soon")) return false;
-  if (q.has("site")) return true;
-  return (
-    hostname.startsWith("id-preview--") ||
-    hostname.endsWith(".lovableproject.com") ||
-    hostname === "localhost" ||
-    hostname === "127.0.0.1"
-  );
+  return !new URLSearchParams(window.location.search).has("soon");
 }
-export function useSiteGate() {
-  // first render = Coming Soon (matches the server render); client-side navigations reuse the answer
-  const [show, setShow] = useState(gateCache === true);
+export function useSiteGate(): boolean | null {
+  const [show, setShow] = useState<boolean | null>(gateCache);
   useEffect(() => {
     if (gateCache === null) gateCache = shouldShowSite();
     setShow(gateCache);
   }, []);
   return show;
+}
+
+/** what a gated page shows while the gate is still undecided (server render, first paint) */
+export function GatePending() {
+  return <div style={{ minHeight: "100svh", background: "#fff" }} />;
 }
 
 // v13 (01/10): which background field the shell draws. Set once from the home route (?v=13) and kept
@@ -823,6 +822,7 @@ const PAGES = {
 
 export function SitePage({ path, typeHero }: { path: keyof typeof PAGES; typeHero?: HeadlineId }) {
   const show = useSiteGate();
+  if (show === null) return <GatePending />;
   if (!show) return <ComingSoon />;
   const Page = PAGES[path];
   return (

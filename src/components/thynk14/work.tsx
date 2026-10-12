@@ -336,7 +336,8 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
 /* ================================ home: the work strip ================================ */
 /**
  * The client logos running in a strip, like the footer ticker (09/10, Mike): a dark band, the logos in white
- * with an orange ✳ between them, each logo a link to its case; it keeps running under the pointer (09/10).
+ * with an orange dot between them (12/10: a drawn dot, not the ✳ character, which phones show as a green emoji),
+ * each logo a link to its case; it keeps running under the pointer (09/10).
  * Seamless loop: two identical halves (each three rounds of logos, wide enough for big screens) moving by -50%.
  * Only the first round is read out and reachable by keyboard; the copies are hidden from assistive tech.
  */
@@ -352,7 +353,7 @@ export function WorkStrip() {
         <CaseLink cs={cs} tabIndex={copy ? -1 : undefined}>
           {l ? <Logo l={l} decorative={copy} /> : <span className="t14-cl-name">{caseText(cs, lang).client}</span>}
         </CaseLink>
-        <b aria-hidden="true">✳</b>
+        <b className="t14-cl-dot" aria-hidden="true" />
       </li>
     ));
   return (

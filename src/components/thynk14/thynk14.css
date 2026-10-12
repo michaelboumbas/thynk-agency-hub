@@ -3623,6 +3623,16 @@
   width: max-content;
   animation: t14-ticker 64s linear infinite;
 }
+/* 12/10: this keyframe lived with the old footer ticker and went away with it (10/10), which froze the strip.
+   Two identical halves, so moving by -50% loops without a seam. */
+@keyframes t14-ticker {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
 /* 09/10 (Mike): keeps running under the pointer; it only waits while a logo has keyboard focus */
 .t14-cl-strip:focus-within .t14-cl-track {
   animation-play-state: paused;
@@ -3652,11 +3662,13 @@
 .t14 .t14-cl-set a:focus-visible {
   color: var(--orange);
 }
-.t14-cl-set b {
-  font-family: var(--f-display);
-  font-weight: 400;
-  font-size: clamp(18px, 1.7vw, 26px);
-  color: var(--orange);
+/* 12/10 (Mike): a drawn orange dot between the logos; the ✳ character turned into a green emoji on phones */
+.t14-cl-set b.t14-cl-dot {
+  flex: none;
+  width: clamp(8px, 0.75vw, 11px);
+  height: clamp(8px, 0.75vw, 11px);
+  border-radius: 50%;
+  background: var(--orange);
 }
 .t14-cl-name {
   font-family: var(--f-display);
