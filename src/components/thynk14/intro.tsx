@@ -1,28 +1,28 @@
 import { useEffect, useRef } from "react";
 
 /**
- * «Η τελεία» intro (12/10/2026, Mike): on the first load of the home page the screen is black and the orange
- * square brand dot sits in the middle. Then the black lifts to reveal the site, and the dot travels up to
- * the header and lands as the full stop of «THYNK.» (it becomes the logo's dot).
- * - Home page only, once per page load (moving around the site never replays it). ~1.6s in total.
- * - A click, tap, key or scroll skips it. Reduced motion: no travel, a quick fade.
- * - The server renders the first frame (<IntroFrame/>: black + the dot), so there is no white flash before
- *   the page hydrates; the client then plays the rest from that same frame.
+ * «Η τελεία» intro (12/10/2026, Mike, v3): on the first load of the home page the whole screen is orange,
+ * as if we were inside the dot. We zoom out: the orange gathers into the square brand dot in the middle and
+ * the white site appears around it. A short beat, then the dot travels up to the header and lands as the
+ * full stop of «THYNK.» (it becomes the logo's dot).
+ * - Home page only, once per page load (moving around the site never replays it). ~1.8s in total.
+ * - A click, tap, key or scroll skips it. Reduced motion: no zoom or travel, a quick fade.
+ * - The server renders the first frame (<IntroFrame/>: full orange), so there is no white flash before the
+ *   page hydrates; the client swaps it for the dot at full-screen size in the same frame and plays on.
  * The landing spot is measured from the real header logo: the ink box of the «.» glyph (Anton) at the
  * logo's font size, so the travelling dot ends exactly on top of it; the real dot is hidden until then.
  */
 let played = false;
 export const introPending = () => !played;
 
-const DOT = 26; // px, the dot at rest (the same proportions as the favicon)
-const INK = "#0f1012";
+const DOT = 26; // px, the dot at rest in the middle (the same proportions as the favicon)
+const ORANGE = "#ff6a1a";
 
-/** the first frame, also what the server sends: black screen, the dot in the middle */
+/** the first frame, also what the server sends: the whole screen orange */
 export function IntroFrame() {
   return (
     <div className="t14-intro" aria-hidden="true">
-      <div className="t14-intro-ink" style={{ background: INK }} />
-      <div className="t14-intro-dot t14-intro-dot-in" style={{ width: DOT, height: DOT }} />
+      <div className="t14-intro-fill" style={{ background: ORANGE }} />
     </div>
   );
 }
@@ -53,12 +53,12 @@ function logoDotBox(): DOMRect | null {
 
 export function DotIntro({ onDone }: { onDone: () => void }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const inkRef = useRef<HTMLDivElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const root = rootRef.current, ink = inkRef.current, dot = dotRef.current;
-    if (!root || !ink || !dot) return;
+    const root = rootRef.current, fill = fillRef.current, dot = dotRef.current;
+    if (!root || !fill || !dot) return;
     const html = document.documentElement;
     const prevOverflow = html.style.overflow;
     html.style.overflow = "hidden";
@@ -96,7 +96,7 @@ export function DotIntro({ onDone }: { onDone: () => void }) {
       return cleanup;
     }
 
-    // wait for the logo face, so the landing spot is measured on the real glyph
+    // wait for the logo face, so the landing spot is measured on the real glyph (the screen stays orange)
     const ready = document.fonts?.ready ?? Promise.resolve();
     Promise.race([ready, new Promise((r) => window.setTimeout(r, 900))]).then(() => {
       if (cancelled || finished) return;
@@ -109,24 +109,22 @@ export function DotIntro({ onDone }: { onDone: () => void }) {
       const tx = box.left + box.width / 2 - cx;
       const ty = box.top + box.height / 2 - cy;
       const sx = box.width / DOT, sy = box.height / DOT;
-      const HOLD = 420; // the dot rests in the middle for a beat
+      // at this scale the dot covers the whole screen, corners included
+      const k = (Math.hypot(window.innerWidth, window.innerHeight) + 8) / DOT;
+      // one move in three parts: zoom out of the orange · hold in the middle · travel to the logo
       anims.push(
-        // the black lifts and the site shows through
-        ink.animate([{ opacity: 1 }, { opacity: 0 }], {
-          duration: 700,
-          delay: HOLD,
-          easing: "cubic-bezier(.4,0,.2,1)",
-          fill: "forwards",
-        }),
-        // the dot travels to the logo and becomes its full stop
         dot.animate(
           [
-            { transform: "translate(0px, 0px) scale(1, 1)", borderRadius: "3px" },
+            { transform: `translate(0px, 0px) scale(${k}, ${k})`, borderRadius: "3px", easing: "cubic-bezier(.7,0,.15,1)" },
+            { transform: "translate(0px, 0px) scale(1, 1)", borderRadius: "3px", offset: 0.42 },
+            { transform: "translate(0px, 0px) scale(1, 1)", borderRadius: "3px", offset: 0.52, easing: "cubic-bezier(.65,0,.2,1)" },
             { transform: `translate(${tx}px, ${ty}px) scale(${sx}, ${sy})`, borderRadius: "0px" },
           ],
-          { duration: 1050, delay: HOLD, easing: "cubic-bezier(.65,0,.2,1)", fill: "forwards" },
+          { duration: 1800, fill: "both" },
         ),
       );
+      // swap the server's full orange frame for the dot at full-screen size, in the same frame
+      fill.style.display = "none";
       Promise.all(anims.map((a) => a.finished)).then(finish, () => {});
     });
     return cleanup;
@@ -136,7 +134,7 @@ export function DotIntro({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="t14-intro" ref={rootRef} aria-hidden="true">
-      <div className="t14-intro-ink" ref={inkRef} style={{ background: INK }} />
+      <div className="t14-intro-fill" ref={fillRef} style={{ background: ORANGE }} />
       <div className="t14-intro-dot" ref={dotRef} style={{ width: DOT, height: DOT }} />
     </div>
   );
