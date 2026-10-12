@@ -120,6 +120,8 @@ export function FooterDust() {
     };
     const io = new IntersectionObserver((entries) => {
       const e = entries[0]; if (!e) return;
+      visible = e.isIntersecting;
+      if (visible) start();
     });
     const onMove = (e: PointerEvent) => {
       const r = cv.getBoundingClientRect();
