@@ -109,7 +109,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: string }
     els.forEach((e) => (e.style.overflow = "visible"));
     document.documentElement.style.overflowY = "auto";
     return () => {
-      els.forEach((e, i) => (e.style.overflow = prev[i]));
+      els.forEach((e, i) => { const p = prev[i]; if (p !== undefined) e.style.overflow = p; });
       document.documentElement.style.overflowY = "";
     };
   }, []);
@@ -536,7 +536,7 @@ function HomePage({ typeHero }: { typeHero?: HeadlineId }) {
       <HLine />
       <ServicesSteps reduced={reduced} onGo={stepGo} />
       <div className="t9-thread" aria-hidden="true" />
-      <AllServices highlight={picked?.pillar} />
+      <AllServices {...(picked?.pillar ? { highlight: picked.pillar } : {})} />
       <HLine />
 
       {/* ---- rebuilt lower half (30/09) ---- */}
@@ -657,7 +657,7 @@ function ExamplesPage() {
 
 function AuditPage() {
   const search = useRouterState({ select: (s) => s.location.search as Record<string, unknown> });
-  const focus = typeof search?.focus === "string" ? (search.focus as PainId) : null;
+  const focus = typeof search?['focus'] === "string" ? (search.focus as PainId) : null;
   const picked = pains.find((p) => p.id === focus) ?? null;
 
   return (
@@ -717,7 +717,7 @@ function AuditPage() {
           <p className="t8-lead">{calculatorCopy.intro}</p>
         </div>
         <div className="t8-card t8-calc t5 t5-embed" data-reveal>
-          <Calculator key={focus ?? "none"} initialTasks={picked?.calc} formal />
+          <Calculator key={focus ?? "none"} {...(picked?.calc ? { initialTasks: picked.calc } : {})} formal />
         </div>
         <p className="t11-calc-note">{calculatorCopy.cta}</p>
       </section>
@@ -827,7 +827,7 @@ export function SitePage({ path, typeHero }: { path: keyof typeof PAGES; typeHer
   const Page = PAGES[path];
   return (
     <Shell pathname={path}>
-      {path === routes.home ? <HomePage typeHero={typeHero} /> : <Page />}
+      {path === routes.home ? <HomePage {...(typeHero !== undefined ? { typeHero } : {})} /> : <Page />}
     </Shell>
   );
 }

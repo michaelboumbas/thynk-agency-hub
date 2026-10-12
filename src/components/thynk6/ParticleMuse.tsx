@@ -109,14 +109,15 @@ void main() {
   vec3 warm = glowPt ? vec3(1.0, 0.45, 0.1) : vec3(1.0, 0.93, 0.86);
   vColor = vec4(mix(aColor.rgb, warm, k), mix(aColor.a * 0.5, formed * vis, k) * (0.3 + 0.7 * k) * clamp(f, 0.45, 1.35));
   if (uInk > 0.5) {
-    // ink on paper: dark points where the texture is dark, highlights stay paper, circuitry stays orange
+    // ink on paper: documentation: highlights stay paper, circuitry stays orange
     bool glow = aColor.g < 0.72 && aColor.r > 0.9;
     float lumn = clamp((aColor.r - 0.78) / 0.22, 0.0, 1.0);
     float a = glow ? 0.95 : (0.2 + 0.8 * (1.0 - lumn)) * (1.3 - 0.5 * key);
     vec3 c = glow ? vec3(1.0, 0.39, 0.08) : vec3(0.07, 0.07, 0.08);
     vColor = vec4(c, a * (0.3 + 0.7 * k) * mix(1.0, vis, k));
   }
-}`;
+}
+`;
 
 const FS = `
 precision mediump float;
@@ -127,7 +128,8 @@ void main() {
   if (r > 0.25) discard;
   float soft = smoothstep(0.25, 0.02, r);
   gl_FragColor = vec4(vColor.rgb * vColor.a * soft, vColor.a * soft);
-}`;
+}
+`;
 
 function compile(gl: WebGLRenderingContext, type: number, src: string) {
   const s = gl.createShader(type);
@@ -184,8 +186,6 @@ export function ParticleMuse({
     // don't spend GPU time while the stage is scrolled out of view
     let visible = true;
     const io = new IntersectionObserver(([e]) => {
-      if (e) visible = e.isIntersecting;
-    });
       if (e) visible = e.isIntersecting;
     });
     io.observe(cv);
@@ -246,6 +246,7 @@ export function ParticleMuse({
             gl.useProgram(prog);
             const attr = (name: string, data: Float32Array, size: number) => {
               const b = gl.createBuffer();
+              if (!b) return;
               gl.bindBuffer(gl.ARRAY_BUFFER, b);
               gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
               const loc = gl.getAttribLocation(prog, name);
@@ -340,27 +341,42 @@ export function ParticleMuse({
           const cy = Math.cos(v.rotY);
           const sy = Math.sin(v.rotY);
           for (let i = 0; i < c.n; i++) {
-            const k = ease(clamp(v.p * 1.35 - c.misc[i * 3 + 1] * 0.35));
+            const m1 = c.misc[i * 3 + 1];
+            if (m1 === undefined) continue;
+            const k = ease(clamp(v.p * 1.35 - m1 * 0.35));
             const drift = (1 - k * 0.9) * 22;
-            const ph = c.misc[i * 3 + 2];
-            const x = c.start[i * 3] + (c.target[i * 3] - c.start[i * 3]) * k + Math.sin(t * 0.7 + ph) * drift;
-            const y = c.start[i * 3 + 1] + (c.target[i * 3 + 1] - c.start[i * 3 + 1]) * k + Math.cos(t * 0.6 + ph) * drift;
-            const z = c.start[i * 3 + 2] + (c.target[i * 3 + 2] - c.start[i * 3 + 2]) * k;
+            const ph = c.misc[i * 3 + 2] ?? 0;
+            const sx = c.start[i * 3] ?? 0;
+            const tx = c.target[i * 3] ?? 0;
+            const sy_ = c.start[i * 3 + 1] ?? 0;
+            const ty = c.target[i * 3 + 1] ?? 0;
+            const sz = c.start[i * 3 + 2] ?? 0;
+            const tz = c.target[i * 3 + 2] ?? 0;
+            const x = sx + (tx - sx) * k + Math.sin(t * 0.7 + ph) * drift;
+            const y = sy_ + (ty - sy_) * k + Math.cos(t * 0.6 + ph) * drift;
+            const z = sz + (tz - sz) * k;
             const qx = x * cy + z * sy;
             const qz = -x * sy + z * cy;
             const f = CAM / Math.max(CAM + qz, CAM * 0.3);
             const px = v.cx + qx * v.scale * f;
             const py = v.cy + y * v.scale * f;
-            const nz = -c.normal[i * 3] * sy + c.normal[i * 3 + 2] * cy;
+            const nx = c.normal[i * 3] ?? 0;
+            const nz0 = c.normal[i * 3 + 2] ?? 0;
+            const nz = -nx * sy + nz0 * cy;
             const vis = 0.06 + 0.94 * clamp((-nz + 0.2) / 0.55);
-            const a = c.color[i * 4 + 3] * (0.22 + 0.78 * k) * (1 - k + k * vis);
+            const ca = c.color[i * 4 + 3] ?? 0;
+            const a = ca * (0.22 + 0.78 * k) * (1 - k + k * vis);
+            const cr = c.color[i * 4] ?? 0;
+            const cg = c.color[i * 4 + 1] ?? 0;
+            const cb = c.color[i * 4 + 2] ?? 0;
             if (ink) {
-              const glow = c.color[i * 4 + 1] < 0.72 && c.color[i * 4] > 0.9;
-              const ia = glow ? 0.95 : (0.2 + 0.8 * (1 - clamp((c.color[i * 4] - 0.78) / 0.22))) * (0.3 + 0.7 * k) * (1 - k + k * vis);
+              const glow = cg < 0.72 && cr > 0.9;
+              const ia = glow ? 0.95 : (0.2 + 0.8 * (1 - clamp((cr - 0.78) / 0.22))) * (0.3 + 0.7 * k) * (1 - k + k * vis);
               cx2.fillStyle = glow ? `rgba(255,100,20,${ia.toFixed(2)})` : `rgba(18,18,20,${ia.toFixed(2)})`;
             } else
-              cx2.fillStyle = `rgba(${(c.color[i * 4] * 255) | 0},${(c.color[i * 4 + 1] * 255) | 0},${(c.color[i * 4 + 2] * 255) | 0},${a.toFixed(2)})`;
-            const s = Math.max(1, c.misc[i * 3] * f);
+              cx2.fillStyle = `rgba(${(cr * 255) | 0},${(cg * 255) | 0},${(cb * 255) | 0},${a.toFixed(2)})`;
+            const ms = c.misc[i * 3] ?? 1;
+            const s = Math.max(1, ms * f);
             cx2.fillRect(px, py, s, s);
           }
           cx2.globalCompositeOperation = "source-over";

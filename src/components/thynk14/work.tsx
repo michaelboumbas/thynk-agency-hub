@@ -129,13 +129,13 @@ export function WorkPage() {
     const update = () => {
       raf = 0;
       for (let i = 0; i < items.length - 1; i++) {
-        const cur = items[i].getBoundingClientRect();
-        const next = items[i + 1].getBoundingClientRect();
-        // how far the next card has slid over this one: 0 as it arrives, 1 once it covers it
-        const p = Math.min(1, Math.max(0, (cur.bottom - next.top) / cur.height));
-        items[i].style.setProperty("--p", p.toFixed(3));
-      }
-    };
+        const item = items[i]; const nextItem = items[i+1];
+        if (item && nextItem) {
+          const cur = item.getBoundingClientRect();
+          const next = nextItem.getBoundingClientRect();
+          const p = Math.min(1, Math.max(0, (cur.bottom - next.top) / cur.height));
+          item.style.setProperty("--p", p.toFixed(3));
+        }
     const onScroll = () => {
       if (!raf) raf = window.requestAnimationFrame(update);
     };
@@ -347,8 +347,7 @@ export function WorkStrip() {
   const marks = publishedCases.flatMap((cs) =>
     cs.logos?.length ? cs.logos.map((l) => ({ cs, l, key: l.src })) : [{ cs, l: undefined, key: cs.slug }],
   );
-  const round = (copy: boolean, k: string) =>
-    marks.map(({ cs, l, key }) => (
+  const round = (copy: boolean, k: string) => (marks as any[]).map(({ cs, l, key }: any) => (
       <li key={k + key} aria-hidden={copy || undefined}>
         <CaseLink cs={cs} tabIndex={copy ? -1 : undefined}>
           {l ? <Logo l={l} decorative={copy} /> : <span className="t14-cl-name">{caseText(cs, lang).client}</span>}
@@ -366,7 +365,7 @@ export function WorkStrip() {
         <div className="t14-cl-track">
           {[0, 1].map((half) => (
             <ul key={half} className="t14-cl-set" aria-hidden={half === 1 || undefined}>
-              {[0, 1, 2].map((r) => round(half === 1 || r > 0, `${half}-${r}-`))}
+              {[0, 1, 2].map((r) => round(half === 1 || r > 0, )) as any}
             </ul>
           ))}
         </div>

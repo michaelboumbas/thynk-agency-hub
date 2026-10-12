@@ -34,7 +34,7 @@ function useReveal(root: RefObject<HTMLElement | null>) {
       (entries) =>
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            (e.target as HTMLElement).dataset.in = "1";
+            (e.target as HTMLElement).dataset["in"] = "1";
             io.unobserve(e.target);
           }
         }),
@@ -70,7 +70,7 @@ export function ThynkSiteV6() {
     els.forEach((e) => (e.style.overflow = "visible"));
     document.documentElement.style.overflowY = "auto";
     return () => {
-      els.forEach((e, i) => (e.style.overflow = prev[i]));
+      els.forEach((e, i) => { const p = prev[i]; if (p !== undefined) e.style.overflow = p; });
       document.documentElement.style.overflowY = "";
     };
   }, []);
