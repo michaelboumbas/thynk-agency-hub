@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Thynk favicon (12/10/2026, Mike): the lowercase «t.» of the header wordmark (Anton) with a square
+       orange dot, no tile. The t follows the browser theme: ink on light, white on dark. -->
+  <style>
+    .t { fill: #0f1012; }
+    @media (prefers-color-scheme: dark) { .t { fill: #ffffff; } }
+  </style>
+  <g transform="translate(20.37 114.01) scale(0.12685)">
+    <path class="t" d="M185.5 7.8L185.5 7.8Q114.7 7.8 90.1-22.2Q65.4-52.2 65.4-114.3L65.4-114.3L65.4-570.8L16.1-570.8L16.1-704.1L65.4-704.1L65.4-859.4L235.4-859.4L235.4-704.1L284.7-704.1L284.7-570.8L235.4-570.8L235.4-155.3Q235.4-137.2 241.2-129.9Q247.1-122.6 263.7-122.6L263.7-122.6Q275.4-122.6 284.7-124.5L284.7-124.5L284.7-5.4Q278.8-3.4 248.0 2.2Q217.3 7.8 185.5 7.8Z"/>
+    <rect fill="#ff6a1a" x="318.7" y="-290" width="290" height="290" rx="10"/>
+  </g>
+</svg>
