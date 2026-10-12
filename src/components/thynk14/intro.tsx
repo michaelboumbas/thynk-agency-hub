@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
 
 /**
- * «Η τελεία» intro (12/10/2026, Mike, v3): on the first load of the home page the whole screen is orange,
- * as if we were inside the dot. We zoom out: the orange gathers into the square brand dot in the middle and
- * the white site appears around it. A short beat, then the dot travels up to the header and lands as the
- * full stop of «THYNK.» (it becomes the logo's dot).
- * - Home page only, once per page load (moving around the site never replays it). ~1.8s in total.
+ * «Η τελεία» intro (12/10/2026, Mike, v4): on the first load of the home page the whole screen is orange,
+ * as if we were inside the dot. Then, in one continuous move, the orange shrinks straight towards the header
+ * and lands as the full stop of «THYNK.» (it becomes the logo's dot), while the white site appears around it.
+ * - Home page only, once per page load (moving around the site never replays it). ~1.5s once fonts are in.
  * - A click, tap, key or scroll skips it. Reduced motion: no zoom or travel, a quick fade.
  * - The server renders the first frame (<IntroFrame/>: full orange), so there is no white flash before the
  *   page hydrates; the client swaps it for the dot at full-screen size in the same frame and plays on.
@@ -111,18 +110,18 @@ export function DotIntro({ onDone }: { onDone: () => void }) {
       const sx = box.width / DOT, sy = box.height / DOT;
       // at this scale the dot covers the whole screen, corners included
       const k = (Math.hypot(window.innerWidth, window.innerHeight) + 8) / DOT;
-      // one move in three parts: zoom out of the orange · hold in the middle · travel to the logo
-      anims.push(
-        dot.animate(
-          [
-            { transform: `translate(0px, 0px) scale(${k}, ${k})`, borderRadius: "3px", easing: "cubic-bezier(.7,0,.15,1)" },
-            { transform: "translate(0px, 0px) scale(1, 1)", borderRadius: "3px", offset: 0.42 },
-            { transform: "translate(0px, 0px) scale(1, 1)", borderRadius: "3px", offset: 0.52, easing: "cubic-bezier(.65,0,.2,1)" },
-            { transform: `translate(${tx}px, ${ty}px) scale(${sx}, ${sy})`, borderRadius: "0px" },
-          ],
-          { duration: 1800, fill: "both" },
-        ),
-      );
+      // one continuous move (Mike 12/10): the orange shrinks straight towards the logo, no stop in the middle.
+      // The scale steps geometrically (a steady zoom-out feel, not a sudden collapse) and the centre glides
+      // to the logo dot; the whole move is eased.
+      const STEPS = 16;
+      const frames: Keyframe[] = [];
+      for (let i = 0; i <= STEPS; i++) {
+        const t = i / STEPS;
+        const scx = k * Math.pow(sx / k, t), scy = k * Math.pow(sy / k, t);
+        const pt = 1 - Math.pow(1 - t, 1.6); // the centre leaves a little earlier than the size settles
+        frames.push({ transform: `translate(${tx * pt}px, ${ty * pt}px) scale(${scx}, ${scy})`, borderRadius: t < 1 ? "3px" : "0px" });
+      }
+      anims.push(dot.animate(frames, { duration: 1500, easing: "cubic-bezier(.55,0,.25,1)", fill: "both" }));
       // swap the server's full orange frame for the dot at full-screen size, in the same frame
       fill.style.display = "none";
       Promise.all(anims.map((a) => a.finished)).then(finish, () => {});
