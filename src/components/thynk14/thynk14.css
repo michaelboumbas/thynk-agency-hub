@@ -4202,3 +4202,43 @@
     transform: none;
   }
 }
+
+/* «η τελεία» intro (12/10/2026, Mike): black screen, the orange brand dot, zoom into it (intro.tsx) */
+.t14-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  /* catches the click that skips it, so that click does not also open a link under the intro */
+  pointer-events: auto;
+}
+.t14-intro-ink {
+  position: absolute;
+  inset: 0;
+}
+.t14-intro-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  background: #ff6a1a;
+  border-radius: 3px;
+  will-change: transform, opacity;
+}
+/* the server-rendered first frame: the dot appears with a small pop */
+.t14-intro-dot-in {
+  animation: t14-intro-in 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes t14-intro-in {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

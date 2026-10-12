@@ -8,6 +8,7 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { v14Routes, v14Social, type Lang, type V14Path } from "@/content/site-v14";
 import { Logo, PAIN_EVENT, PAIN_KEY } from "./shared";
 import { useCleanMotion } from "./motion";
+import { DotIntro, IntroFrame, introPending } from "./intro";
 
 // Inter for text; TikTok Sans (Grilli Type, has Greek, width 75–150%) for titles — Mike 02/10/2026
 const INTER_HREF =
@@ -389,13 +390,17 @@ export function CleanShell({ pathname, lang, slug, children }: {
   children: ReactNode;
 }) {
   const show = useSiteGate();
-  if (show === null) return <GatePending />;
+  // 12/10 (Mike): «η τελεία» intro on the first load of the home page (see intro.tsx)
+  const isHome = pathname === v14Routes.home;
+  const [intro, setIntro] = useState(() => isHome && introPending());
+  if (show === null) return intro ? <IntroFrame /> : <GatePending />;
   if (!show) return <ComingSoon />;
   return (
     <LangProvider lang={lang}>
       <SlugCtx.Provider value={slug}>
         <Shell pathname={pathname}>{children}</Shell>
       </SlugCtx.Provider>
+      {intro && <DotIntro onDone={() => setIntro(false)} />}
     </LangProvider>
   );
 }
