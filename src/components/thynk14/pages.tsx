@@ -22,6 +22,7 @@ import {
   go,
 } from "./shared";
 import { WorkStrip } from "./work";
+import { privacyCopy } from "@/content/privacy-v14";
 
 /* ================================ Home ================================ */
 export function HomePage() {
@@ -475,7 +476,7 @@ export function ContactPage() {
               </svg>
             </span>
             <a className="t14-cmap-open" href={link("address", "")} target="_blank" rel="noopener noreferrer">
-              {k.cards[0]?.action} <i aria-hidden="true">→</i>
+              {k.cards[0]?.action} <i aria-hidden="true">↗</i>
             </a>
           </div>
           <aside className="t14-chours">
@@ -502,6 +503,35 @@ export function ContactPage() {
         </ol>
       </section>
 
+    </>
+  );
+}
+
+/* ================================ /privacy (12/10/2026) ================================ */
+/** the Privacy Policy that the audit form's consent links to; copy in src/content/privacy-v14.ts */
+export function PrivacyPage() {
+  const { lang } = useCopy();
+  const p = privacyCopy[lang];
+  return (
+    <>
+      <PageHead p={p} />
+      <section className="t14-wrap t14-legal">
+        <div className="t14-legal-body">
+          <p className="t14-legal-updated">{p.updated}</p>
+          {p.sections.map((s) => (
+            <div key={s.h}>
+              <h2>{s.h}</h2>
+              {s.p?.map((t) => <p key={t}>{t}</p>)}
+              {s.list && (
+                <ul>
+                  {s.list.map((t) => <li key={t}>{t}</li>)}
+                </ul>
+              )}
+              {s.after?.map((t) => <p key={t}>{t}</p>)}
+            </div>
+          ))}
+        </div>
+      </section>
     </>
   );
 }

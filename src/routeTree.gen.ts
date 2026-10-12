@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LabRouteImport } from './routes/lab'
 import { Route as ParadeigmataRouteImport } from './routes/paradeigmata'
 import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
@@ -23,6 +24,7 @@ import { Route as ElIndexRouteImport } from './routes/el/index'
 import { Route as ElAboutRouteImport } from './routes/el/about'
 import { Route as ElAuditRouteImport } from './routes/el/audit'
 import { Route as ElContactRouteImport } from './routes/el/contact'
+import { Route as ElPrivacyRouteImport } from './routes/el/privacy'
 import { Route as ElServicesRouteImport } from './routes/el/services'
 import { Route as ElSolutionsRouteImport } from './routes/el/solutions'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
@@ -48,6 +50,11 @@ const AuditRoute = AuditRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LabRoute = LabRouteImport.update({
@@ -100,6 +107,11 @@ const ElContactRoute = ElContactRouteImport.update({
   path: '/el/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ElPrivacyRoute = ElPrivacyRouteImport.update({
+  id: '/el/privacy',
+  path: '/el/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ElServicesRoute = ElServicesRouteImport.update({
   id: '/el/services',
   path: '/el/services',
@@ -136,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
@@ -145,6 +158,7 @@ export interface FileRoutesByFullPath {
   '/el/about': typeof ElAboutRoute
   '/el/audit': typeof ElAuditRoute
   '/el/contact': typeof ElContactRoute
+  '/el/privacy': typeof ElPrivacyRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -158,6 +172,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
@@ -167,6 +182,7 @@ export interface FileRoutesByTo {
   '/el/about': typeof ElAboutRoute
   '/el/audit': typeof ElAuditRoute
   '/el/contact': typeof ElContactRoute
+  '/el/privacy': typeof ElPrivacyRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -181,6 +197,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
@@ -190,6 +207,7 @@ export interface FileRoutesById {
   '/el/about': typeof ElAboutRoute
   '/el/audit': typeof ElAuditRoute
   '/el/contact': typeof ElContactRoute
+  '/el/privacy': typeof ElPrivacyRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -205,6 +223,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/contact'
+    | '/privacy'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
@@ -214,6 +233,7 @@ export interface FileRouteTypes {
     | '/el/about'
     | '/el/audit'
     | '/el/contact'
+    | '/el/privacy'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -227,6 +247,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/contact'
+    | '/privacy'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
@@ -236,6 +257,7 @@ export interface FileRouteTypes {
     | '/el/about'
     | '/el/audit'
     | '/el/contact'
+    | '/el/privacy'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -249,6 +271,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/contact'
+    | '/privacy'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
@@ -258,6 +281,7 @@ export interface FileRouteTypes {
     | '/el/about'
     | '/el/audit'
     | '/el/contact'
+    | '/el/privacy'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -272,6 +296,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuditRoute: typeof AuditRoute
   ContactRoute: typeof ContactRoute
+  PrivacyRoute: typeof PrivacyRoute
   LabRoute: typeof LabRoute
   ParadeigmataRoute: typeof ParadeigmataRoute
   PoioiEimasteRoute: typeof PoioiEimasteRoute
@@ -281,6 +306,7 @@ export interface RootRouteChildren {
   ElAboutRoute: typeof ElAboutRoute
   ElAuditRoute: typeof ElAuditRoute
   ElContactRoute: typeof ElContactRoute
+  ElPrivacyRoute: typeof ElPrivacyRoute
   ElServicesRoute: typeof ElServicesRoute
   ElSolutionsRoute: typeof ElSolutionsRoute
   WorkSlugRoute: typeof WorkSlugRoute
@@ -318,6 +344,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lab': {
@@ -390,6 +423,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ElContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/el/privacy': {
+      id: '/el/privacy'
+      path: '/el/privacy'
+      fullPath: '/el/privacy'
+      preLoaderRoute: typeof ElPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/el/services': {
       id: '/el/services'
       path: '/el/services'
@@ -440,6 +480,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuditRoute: AuditRoute,
   ContactRoute: ContactRoute,
+  PrivacyRoute: PrivacyRoute,
   LabRoute: LabRoute,
   ParadeigmataRoute: ParadeigmataRoute,
   PoioiEimasteRoute: PoioiEimasteRoute,
@@ -449,6 +490,7 @@ const rootRouteChildren: RootRouteChildren = {
   ElAboutRoute: ElAboutRoute,
   ElAuditRoute: ElAuditRoute,
   ElContactRoute: ElContactRoute,
+  ElPrivacyRoute: ElPrivacyRoute,
   ElServicesRoute: ElServicesRoute,
   ElSolutionsRoute: ElSolutionsRoute,
   WorkSlugRoute: WorkSlugRoute,

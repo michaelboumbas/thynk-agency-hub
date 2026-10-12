@@ -1,0 +1,141 @@
+/**
+ * Privacy Policy, /privacy and /el/privacy (12/10/2026), written for the audit form (our database + HubSpot).
+ * Not legal advice: have it reviewed, and add the legal name / VAT number once the general partnership is registered.
+ * If anything changes (new tools, analytics, ads pixels, newsletter), this page changes with it.
+ */
+export type PrivacyCopy = {
+  label: string;
+  title: string;
+  lead: string;
+  updated: string;
+  /** p: text before the list · list: bullet points · after: text after the list */
+  sections: { h: string; p?: string[]; list?: string[]; after?: string[] }[];
+};
+
+const en: PrivacyCopy = {
+  label: "Legal",
+  title: "Privacy",
+  lead: "What we collect when you contact us, why, where it is kept and what you can ask of us.",
+  updated: "Last updated: 12 October 2026",
+  sections: [
+    {
+      h: "Who we are",
+      p: [
+        "Thynk Digital Agency, Papazoglou 14D, 454 44 Ioannina, Greece. Email: hello@thynkagency.gr · Phone: +30 698 399 7522.",
+        "We are responsible (the «controller») for the personal data described on this page. For anything about your data, write to hello@thynkagency.gr.",
+      ],
+    },
+    {
+      h: "What we collect",
+      p: ["When you send an audit request through the form on this site, we collect:"],
+      list: [
+        "first and last name, email and phone number",
+        "the name of your business and its industry",
+        "what you would like us to look at first",
+        "the date and time of the request, the page and language you sent it from, and the consent sentence you accepted",
+      ],
+    },
+    {
+      h: "Why we use it",
+      p: [
+        "Only to respond to your request: to contact you, arrange the first conversation and prepare the audit or an offer.",
+        "Legal basis: steps taken at your request before a possible contract (Art. 6(1)(b) GDPR) and your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time without affecting what was done before.",
+        "We do not send you newsletters or marketing emails unless you ask for them separately, and we never sell your data.",
+      ],
+    },
+    {
+      h: "Where it is kept",
+      list: [
+        "Our database, hosted by Lovable Cloud (Supabase), so that no request is lost.",
+        "Our CRM, HubSpot, where the request becomes a contact and we are notified by email.",
+      ],
+      after: [
+        "Both act as processors on our behalf. Where data is processed outside the European Economic Area, this happens under the safeguards of the GDPR, such as the EU Standard Contractual Clauses. Only the founders of Thynk have access, and the database cannot be read from the website.",
+      ],
+    },
+    {
+      h: "How long we keep it",
+      p: [
+        "If we do not start working together, we delete your request within 24 months of our last contact, or sooner if you ask us to. If we do work together, your details become part of our client records and are kept for as long as the law requires.",
+      ],
+    },
+    {
+      h: "Fonts, cookies and storage",
+      p: [
+        "The site loads its fonts from Google Fonts, so your browser connects to Google's servers, which receive your IP address. We do not use advertising or analytics cookies. The site uses your browser's own storage only for functional purposes, for example to carry your choice from the footer to the audit form.",
+      ],
+    },
+    {
+      h: "Your rights",
+      p: [
+        "You can ask to see, correct or delete your data, to restrict or object to its processing, to receive it in a portable format, and to withdraw your consent. Write to hello@thynkagency.gr and we will respond within one month.",
+        "You can also lodge a complaint with the Hellenic Data Protection Authority (www.dpa.gr).",
+      ],
+    },
+  ],
+};
+
+const el: PrivacyCopy = {
+  label: "Νομικά",
+  title: "Απόρρητο",
+  lead: "Τι συλλέγουμε όταν επικοινωνείτε μαζί μας, γιατί, πού φυλάσσεται και τι μπορείτε να μας ζητήσετε.",
+  updated: "Τελευταία ενημέρωση: 12 Οκτωβρίου 2026",
+  sections: [
+    {
+      h: "Ποιοι είμαστε",
+      p: [
+        "Thynk Digital Agency, Παπάζογλου 14Δ, 454 44 Ιωάννινα. Email: hello@thynkagency.gr · Τηλέφωνο: +30 698 399 7522.",
+        "Είμαστε υπεύθυνοι επεξεργασίας για τα προσωπικά δεδομένα που περιγράφονται σε αυτή τη σελίδα. Για οτιδήποτε αφορά τα δεδομένα σας, γράψτε μας στο hello@thynkagency.gr.",
+      ],
+    },
+    {
+      h: "Τι συλλέγουμε",
+      p: ["Όταν στέλνετε αίτημα για audit μέσω της φόρμας του site, συλλέγουμε:"],
+      list: [
+        "όνομα και επώνυμο, email και τηλέφωνο",
+        "την επωνυμία της επιχείρησής σας και τον κλάδο της",
+        "τι θέλετε να κοιτάξουμε πρώτα",
+        "την ημερομηνία και ώρα του αιτήματος, τη σελίδα και τη γλώσσα από την οποία στάλθηκε, και τη φράση συναίνεσης που αποδεχτήκατε",
+      ],
+    },
+    {
+      h: "Γιατί τα χρησιμοποιούμε",
+      p: [
+        "Μόνο για να απαντήσουμε στο αίτημά σας: για να επικοινωνήσουμε μαζί σας, να κανονίσουμε την πρώτη συζήτηση και να ετοιμάσουμε το audit ή μια πρόταση.",
+        "Νομική βάση: ενέργειες που γίνονται κατόπιν αιτήματός σας πριν από μια πιθανή σύμβαση (άρθρο 6 παρ. 1 στοιχ. β΄ ΓΚΠΔ) και η συναίνεσή σας (άρθρο 6 παρ. 1 στοιχ. α΄ ΓΚΠΔ), την οποία μπορείτε να ανακαλέσετε οποιαδήποτε στιγμή, χωρίς να επηρεάζεται ό,τι έγινε πριν.",
+        "Δεν σας στέλνουμε newsletter ή διαφημιστικά email, εκτός αν το ζητήσετε χωριστά, και δεν πουλάμε ποτέ τα δεδομένα σας.",
+      ],
+    },
+    {
+      h: "Πού φυλάσσονται",
+      list: [
+        "Στη βάση δεδομένων μας, που φιλοξενείται στο Lovable Cloud (Supabase), ώστε να μη χάνεται κανένα αίτημα.",
+        "Στο CRM μας, το HubSpot, όπου το αίτημα γίνεται επαφή και λαμβάνουμε ειδοποίηση με email.",
+      ],
+      after: [
+        "Και οι δύο λειτουργούν ως εκτελούντες την επεξεργασία για λογαριασμό μας. Όπου τα δεδομένα επεξεργάζονται εκτός Ευρωπαϊκού Οικονομικού Χώρου, αυτό γίνεται με τις εγγυήσεις του ΓΚΠΔ, όπως οι Τυποποιημένες Συμβατικές Ρήτρες της ΕΕ. Πρόσβαση έχουν μόνο οι ιδρυτές της Thynk, και η βάση δεδομένων δεν διαβάζεται από το site.",
+      ],
+    },
+    {
+      h: "Για πόσο τα κρατάμε",
+      p: [
+        "Αν δεν ξεκινήσουμε συνεργασία, διαγράφουμε το αίτημά σας μέσα σε 24 μήνες από την τελευταία μας επικοινωνία, ή νωρίτερα αν μας το ζητήσετε. Αν συνεργαστούμε, τα στοιχεία σας γίνονται μέρος του αρχείου πελατών μας και φυλάσσονται όσο ορίζει ο νόμος.",
+      ],
+    },
+    {
+      h: "Γραμματοσειρές, cookies και αποθήκευση",
+      p: [
+        "Το site φορτώνει τις γραμματοσειρές του από το Google Fonts, οπότε ο browser σας συνδέεται με servers της Google, που λαμβάνουν τη διεύθυνση IP σας. Δεν χρησιμοποιούμε cookies διαφήμισης ή στατιστικών. Το site χρησιμοποιεί την αποθήκευση του browser σας μόνο για λειτουργικούς σκοπούς, για παράδειγμα για να μεταφέρει την επιλογή σας από το footer στη φόρμα audit.",
+      ],
+    },
+    {
+      h: "Τα δικαιώματά σας",
+      p: [
+        "Μπορείτε να ζητήσετε πρόσβαση, διόρθωση ή διαγραφή των δεδομένων σας, περιορισμό ή εναντίωση στην επεξεργασία, φορητότητα, και να ανακαλέσετε τη συναίνεσή σας. Γράψτε μας στο hello@thynkagency.gr και θα απαντήσουμε μέσα σε έναν μήνα.",
+        "Μπορείτε επίσης να υποβάλετε καταγγελία στην Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα (www.dpa.gr).",
+      ],
+    },
+  ],
+};
+
+export const privacyCopy = { en, el } as const;

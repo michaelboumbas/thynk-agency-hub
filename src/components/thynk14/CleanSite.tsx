@@ -1,5 +1,5 @@
 import { CleanShell } from "./Shell";
-import { AboutPage, AuditPage, ContactPage, HomePage, ServicesPage, SolutionsPage } from "./pages";
+import { AboutPage, AuditPage, ContactPage, HomePage, PrivacyPage, ServicesPage, SolutionsPage } from "./pages";
 import { WorkPage, CasePage } from "./work";
 import { v14Routes, type Lang } from "@/content/site-v14";
 import type { CaseStudy } from "@/content/work-v14";
@@ -23,6 +23,7 @@ const PAGES = {
   [v14Routes.audit]: AuditPage,
   [v14Routes.about]: AboutPage,
   [v14Routes.contact]: ContactPage,
+  [v14Routes.privacy]: PrivacyPage,
 } as const;
 
 export type CleanPath = keyof typeof PAGES;

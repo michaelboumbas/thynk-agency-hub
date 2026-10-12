@@ -101,8 +101,17 @@ export const v14Book = {
     options: ["Marketing: advertising, social media, content", "Digital transformation: automation, AI, data & reporting", "Both", "Not sure yet: a full review"],
   },
   submit: "Send request",
-  // front-end only until the back-end (n8n / inbox) is connected
-  sent: "Thank you. The form isn't connected to our inbox yet, so please also email hello@thynkagency.gr.",
+  sending: "Sending…",
+  // 12/10: the form is connected (our database + HubSpot)
+  sent: "Thank you, we've received your request. We'll be in touch soon to arrange the first conversation.",
+  error: "Something went wrong and your request wasn't sent. Please try again, or email us at hello@thynkagency.gr.",
+  // GDPR consent (12/10): the sentence is stored with the request exactly as shown
+  consentA: "I agree that Thynk stores my details in order to respond to my audit request, as described in the",
+  consentLink: "Privacy Policy",
+  consentB: ".",
+  consentError: "Please accept the Privacy Policy so we can respond to you.",
+  // anti-spam field, hidden from people; bots fill it in
+  trap: "Leave this field empty",
 };
 
 export const v14Faq = {
@@ -151,6 +160,7 @@ export const v14Footer = {
   officeLabel: "Office",
   backTop: "Back to top",
   rights: "All rights reserved.",
+  privacy: "Privacy",
 };
 
 /* social profiles in the footer (the same handles as the Coming Soon page) */
@@ -225,6 +235,7 @@ export const v14Routes = {
   audit: "/audit",
   about: "/about",
   contact: "/contact",
+  privacy: "/privacy",
 } as const;
 
 export const v14Menu = [

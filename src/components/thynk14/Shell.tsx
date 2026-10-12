@@ -347,6 +347,7 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
           {c.menu.map((n) => (
             <Link key={n.to} to={href(n.to)} aria-current={pathname === n.to ? "page" : undefined}>{n.label}</Link>
           ))}
+          <Link to={href(v14Routes.privacy)} aria-current={pathname === v14Routes.privacy ? "page" : undefined}>{f.privacy}</Link>
         </nav>
         <LangLink pathname={pathname} other={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</LangLink>
       </div>

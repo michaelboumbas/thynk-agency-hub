@@ -5,6 +5,7 @@ import {
   v14Routes,
   type ScreenId,
 } from "@/content/site-v14";
+import { submitAuditRequest } from "@/lib/audit-leads";
 
 /* small helpers shared by the v14 pages */
 export const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
@@ -335,7 +336,11 @@ export function Faq({
   );
 }
 
-/* ---------- audit request form (front-end only until the back-end exists) ---------- */
+/* ---------- audit request form ----------
+ * 12/10/2026: connected. Each request is saved in our database and sent to HubSpot (see src/lib/audit-leads.ts).
+ * GDPR: a required consent checkbox, linked to /privacy; the sentence is stored with the request.
+ * Spam: a hidden field people never see (bots fill it in) and a minimum time on the form; both get a quiet
+ * «thank you» and nothing is sent. The database also limits repeated requests. */
 /** the footer's «what should we look at first» choice travels to the form (Mike 10/10):
  *  another page → sessionStorage, read when the form mounts · the audit page itself → a window event */
 export const PAIN_KEY = "t14-pain";
@@ -344,10 +349,13 @@ export const PAIN_EVENT = "t14:pain";
 type BookKey = "first" | "last" | "email" | "phone" | "biz";
 
 export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
-  const { c } = useCopy();
+  const { c, lang, href } = useCopy();
   const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", biz: "", industry: "", pain: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
+  const [consent, setConsent] = useState(false);
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [trap, setTrap] = useState("");
+  const shownAt = useRef(Date.now());
   const painOptions = c.book.pain.options;
   useEffect(() => {
     const apply = (i: number) => {
@@ -378,13 +386,33 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
     if (!form['biz'].trim()) errs['biz'] = c.book['biz'].error;
     if (!form['industry']) errs['industry'] = c.book['industry'].error;
     if (!form['pain']) errs['pain'] = c.book['pain'].error;
+    if (!consent) errs['consent'] = c.book.consentError;
     setErrors(errs);
     const first = Object.keys(errs)[0];
     if (first) {
       document.getElementById(first === "pain" ? `${idPrefix}-pain-0` : `${idPrefix}-${first}`)?.focus();
       return;
     }
-    setSent(true);
+    if (state === "sending") return;
+    // a bot: the hidden field is filled in, or the form was sent within 3 seconds of appearing
+    if (trap || Date.now() - shownAt.current < 3000) {
+      setState("sent");
+      return;
+    }
+    setState("sending");
+    submitAuditRequest({
+      first: form.first,
+      last: form.last,
+      email: form.email,
+      phone: form.phone,
+      biz: form.biz,
+      industry: form.industry,
+      focus: form.pain,
+      lang,
+      consentText: `${c.book.consentA} ${c.book.consentLink}${c.book.consentB}`,
+    })
+      .then((r) => setState(r.ok ? "sent" : "error"))
+      .catch(() => setState("error"));
   };
 
   const field = (k: BookKey, type: string, auto: string, optional = false) => {
@@ -453,9 +481,35 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
           <span className="t14-err" role="alert">{errors['pain'] ?? ""}</span>
         </div>
       </div>
+      <div className="t14-consent">
+        <label htmlFor={`${idPrefix}-consent`}>
+          <input
+            id={`${idPrefix}-consent`}
+            type="checkbox"
+            checked={consent}
+            aria-invalid={!!errors['consent']}
+            aria-describedby={`${idPrefix}-consent-e`}
+            onChange={(e) => setConsent(e.target.checked)}
+          />
+          <span>
+            {c.book.consentA}{" "}
+            <Link to={href(v14Routes.privacy)} target="_blank">{c.book.consentLink}</Link>
+            {c.book.consentB}
+          </span>
+        </label>
+        <span className="t14-err" id={`${idPrefix}-consent-e`}>{errors['consent'] ?? ""}</span>
+      </div>
+      {/* anti-spam: off-screen, out of the tab order, hidden from screen readers */}
+      <div className="t14-trap" aria-hidden="true">
+        <label htmlFor={`${idPrefix}-website`}>{c.book.trap}</label>
+        <input id={`${idPrefix}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" value={trap} onChange={(e) => setTrap(e.target.value)} />
+      </div>
       <div className="t14-form-foot">
-        <button className="t14-pill lg" type="submit">{c.book.submit}</button>
-        {sent && <div className="t14-ok" role="status">{c.book.sent}</div>}
+        <button className="t14-pill lg" type="submit" disabled={state === "sending" || state === "sent"} aria-busy={state === "sending"}>
+          {state === "sending" ? c.book.sending : c.book.submit}
+        </button>
+        {state === "sent" && <div className="t14-ok" role="status">{c.book.sent}</div>}
+        {state === "error" && <div className="t14-ok t14-fail" role="alert">{c.book.error}</div>}
       </div>
     </form>
   );

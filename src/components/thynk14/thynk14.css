@@ -1913,6 +1913,92 @@
 .t14-form .t14-ok {
   flex: 1 1 280px;
 }
+/* 12/10: GDPR consent under the fields, the error state, and the anti-spam field (never shown to people) */
+.t14-consent {
+  margin-top: 6px;
+}
+.t14-consent label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 78ch;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.t14-consent input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  accent-color: var(--orange);
+  cursor: pointer;
+}
+.t14-consent a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.t14-consent a:hover {
+  color: var(--orange);
+}
+.t14-form .t14-pill:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.t14-fail {
+  background: #fdecec;
+  color: #8f1d1d;
+}
+.t14-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* /privacy (12/10): a plain reading column under the page head */
+.t14-legal {
+  padding-bottom: clamp(60px, 10vh, 120px);
+}
+.t14-legal-body {
+  max-width: 760px;
+}
+.t14-legal-updated {
+  margin: 0 0 clamp(28px, 5vh, 48px);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+.t14-legal h2 {
+  margin: clamp(30px, 5vh, 48px) 0 12px;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-stretch: 120%;
+  font-size: clamp(22px, 2.2vw, 30px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.t14-legal p,
+.t14-legal li {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.t14-legal p {
+  margin: 0 0 12px;
+}
+.t14-legal ul {
+  margin: 0 0 12px;
+  padding-left: 1.2em;
+}
+.t14-legal li {
+  margin-bottom: 6px;
+}
+.t14-legal li::marker {
+  color: var(--orange);
+}
 /* audit page: the closing text above the form, the form full width */
 .t14-book-stack {
   display: flex;
