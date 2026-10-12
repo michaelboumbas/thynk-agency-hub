@@ -102,12 +102,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      // favicon (12/10/2026, Mike): the header wordmark's lowercase «t.» (Anton) + square orange dot, no tile. Browsers that read SVG icons
-      // (Chrome, Edge, Firefox) get favicon.svg, whose T turns white in dark mode; the rest get the .ico.
+      // favicon (12/10/2026, Mike): «η τελεία», the square orange brand dot on a dark tile, no letter. Browsers that read SVG icons
+      // (Chrome, Edge, Firefox) get favicon.svg, which adds a hairline edge in dark mode; the rest get the .ico.
       // Bump ?v= whenever the icon changes, browsers cache favicons hard.
-      { rel: "icon", href: "/favicon.ico?v=2", sizes: "32x32" },
-      { rel: "icon", href: "/favicon.svg?v=2", type: "image/svg+xml" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=2" },
+      { rel: "icon", href: "/favicon.ico?v=3", sizes: "32x32" },
+      { rel: "icon", href: "/favicon.svg?v=3", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=3" },
     ],
   }),
 
