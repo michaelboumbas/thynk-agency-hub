@@ -391,5 +391,5 @@ export function caseText(cs: CaseStudy, lang: Lang): CaseText {
 /** the next published case, wrapping around (for the "Next case" link) */
 export function nextCase(slug: string): CaseStudy {
   const i = publishedCases.findIndex((c) => c.slug === slug);
-  return publishedCases[(i + 1) % publishedCases.length];
+  return publishedCases[(i + 1) % publishedCases.length]!;
 }

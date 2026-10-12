@@ -37,9 +37,9 @@ export function NetCanvas({ reduced }: { reduced: boolean }) {
     const draw = () => {
       cx.clearRect(0, 0, W, H);
       for (let i = 0; i < nodes.length; i++) {
-        const a = nodes[i];
+        const a = nodes[i]; if (!a) continue;
         for (let j = i + 1; j < nodes.length; j++) {
-          const b = nodes[j];
+          const b = nodes[j]; if (!b) continue;
           const d = Math.hypot(a.x - b.x, a.y - b.y);
           if (d < 120) {
             cx.strokeStyle = `rgba(255,106,26,${(1 - d / 120) * 0.22})`;

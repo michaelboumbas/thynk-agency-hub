@@ -58,8 +58,8 @@ export function FooterDust() {
         for (let xx = 0; xx < W; xx += step) {
           const x = Math.round(xx), y = Math.round(yy);
           const i = (y * W + x) * 4;
-          if (data[i + 3] < 128) continue;
-          const orange = data[i + 2] < 60; // the dot is the only non-white fill
+          const alpha = data[i + 3]; if (alpha === undefined || alpha < 128) continue;
+          const blue = data[i + 2]; if (blue === undefined) continue; const orange = blue < 60;
           const ang = Math.random() * Math.PI * 2, r = (0.35 + Math.random() * 0.9) * W * 0.5;
           const sx = W / 2 + Math.cos(ang) * r, sy = H / 2 + Math.sin(ang) * r * 0.6;
           pts.push({ x: sx, y: sy, hx: x + (Math.random() - 0.5) * step, hy: y + (Math.random() - 0.5) * step, sx, sy, vx: 0, vy: 0, s: 0.6 + Math.random() * 0.8, o: orange, tw: Math.random() * Math.PI * 2, d: Math.random() });
@@ -118,7 +118,8 @@ export function FooterDust() {
       last = performance.now();
       raf = requestAnimationFrame(frame);
     };
-    const io = new IntersectionObserver(([e]) => {
+    const io = new IntersectionObserver((entries) => {
+      const e = entries[0]; if (!e) return;
       visible = e.isIntersecting;
       if (visible) start();
     });

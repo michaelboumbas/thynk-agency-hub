@@ -52,34 +52,42 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
     // shuffle so every shape draws from the whole wave (the morph looks like a swirl, not a slide)
     for (let i = N - 1; i > 0; i--) {
       const j = Math.floor(rnd() * (i + 1));
-      const t = order[i];
-      order[i] = order[j];
+      const t = order[i]!;
+      order[i] = order[j]!;
       order[j] = t;
     }
 
     // 1 ring (tilted galaxy)
+    const sx1 = SX[1]!;
+    const sy1 = SY[1]!;
+    const sz1 = SZ[1]!;
+    const sh1 = SH[1]!;
     for (let k = 0; k < N; k++) {
-      const i = order[k];
+      const i = order[k]!;
       const band = rnd();
       const r = 2.6 + band * band * 2.9 + (rnd() - 0.5) * 0.4;
       const a = rnd() * Math.PI * 2;
-      SX[1][i] = Math.cos(a) * r;
-      SZ[1][i] = Math.sin(a) * r * 0.9;
-      SY[1][i] = Math.sin(a) * r * 0.22 + (rnd() - 0.5) * 0.28 * (1 + band);
-      SH[1][i] = Math.max(0, 1 - (r - 2.6) / 1.6);
+      sx1[i] = Math.cos(a) * r;
+      sz1[i] = Math.sin(a) * r * 0.9;
+      sy1[i] = Math.sin(a) * r * 0.22 + (rnd() - 0.5) * 0.28 * (1 + band);
+      sh1[i] = Math.max(0, 1 - (r - 2.6) / 1.6);
     }
     // 2 sphere (fibonacci)
     const golden = Math.PI * (3 - Math.sqrt(5));
+    const sx2 = SX[2]!;
+    const sy2 = SY[2]!;
+    const sz2 = SZ[2]!;
+    const sh2 = SH[2]!;
     for (let k = 0; k < N; k++) {
-      const i = order[k];
+      const i = order[k]!;
       const y = 1 - (k / (N - 1)) * 2;
       const rr = Math.sqrt(1 - y * y);
       const th = golden * k;
       const R = 3.4 + (rnd() - 0.5) * 0.07;
-      SX[2][i] = Math.cos(th) * rr * R;
-      SY[2][i] = y * R;
-      SZ[2][i] = Math.sin(th) * rr * R;
-      SH[2][i] = rnd() < 0.1 ? 1 : 0;
+      sx2[i] = Math.cos(th) * rr * R;
+      sy2[i] = y * R;
+      sz2[i] = Math.sin(th) * rr * R;
+      sh2[i] = rnd() < 0.1 ? 1 : 0;
     }
     // 3 network: nodes + edges
     const nodes: [number, number, number][] = [];
@@ -97,27 +105,38 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
         .filter(([b]) => b !== a)
         .sort((x, y) => x[1] - y[1]);
       for (let m = 0; m < 2; m++) {
-        const b = d[m][0];
+        const entry = d[m];
+        if (!entry) continue;
+        const b = entry[0];
         if (!edges.some(([x, y]) => (x === a && y === b) || (x === b && y === a))) edges.push([a, b]);
       }
     });
+    const sx3 = SX[3]!;
+    const sy3 = SY[3]!;
+    const sz3 = SZ[3]!;
+    const sh3 = SH[3]!;
     for (let k = 0; k < N; k++) {
-      const i = order[k];
+      const i = order[k]!;
       if (k < N * 0.22) {
-        const p = nodes[k % nodes.length];
+        const p = nodes[k % nodes.length]!;
         const sp = 0.16;
-        SX[3][i] = p[0] + gauss() * sp;
-        SY[3][i] = p[1] + gauss() * sp;
-        SZ[3][i] = p[2] + gauss() * sp;
-        SH[3][i] = 1;
+        sx3[i] = p[0] + gauss() * sp;
+        sy3[i] = p[1] + gauss() * sp;
+        sz3[i] = p[2] + gauss() * sp;
+        sh3[i] = 1;
       } else {
-        const [a, b] = edges[k % edges.length];
+        const edge = edges[k % edges.length];
+        if (!edge) continue;
+        const [a, b] = edge;
+        const nodeA = nodes[a];
+        const nodeB = nodes[b];
+        if (!nodeA || !nodeB) continue;
         const t = rnd();
         const j = 0.03;
-        SX[3][i] = nodes[a][0] + (nodes[b][0] - nodes[a][0]) * t + gauss() * j;
-        SY[3][i] = nodes[a][1] + (nodes[b][1] - nodes[a][1]) * t + gauss() * j;
-        SZ[3][i] = nodes[a][2] + (nodes[b][2] - nodes[a][2]) * t + gauss() * j;
-        SH[3][i] = 0;
+        sx3[i] = nodeA[0] + (nodeB[0] - nodeA[0]) * t + gauss() * j;
+        sy3[i] = nodeA[1] + (nodeB[1] - nodeA[1]) * t + gauss() * j;
+        sz3[i] = nodeA[2] + (nodeB[2] - nodeA[2]) * t + gauss() * j;
+        sh3[i] = 0;
       }
     }
     // 4 cube: edges + a few face dots, hot corners
@@ -126,28 +145,34 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
     const corners = [-1, 1].flatMap((x) => [-1, 1].flatMap((y) => [-1, 1].map((z) => [x, y, z])));
     corners.forEach((p, a) =>
       corners.forEach((q, b) => {
-        if (b > a && Math.abs(p[0] - q[0]) + Math.abs(p[1] - q[1]) + Math.abs(p[2] - q[2]) === 2) cubeEdges.push([p, q]);
+        if (b > a && Math.abs(p[0]! - q[0]!) + Math.abs(p[1]! - q[1]!) + Math.abs(p[2]! - q[2]!) === 2) cubeEdges.push([p, q]);
       }),
     );
+    const sx4 = SX[4]!;
+    const sy4 = SY[4]!;
+    const sz4 = SZ[4]!;
+    const sh4 = SH[4]!;
     for (let k = 0; k < N; k++) {
-      const i = order[k];
+      const i = order[k]!;
       if (k < N * 0.75) {
-        const [p, q] = cubeEdges[k % 12];
+        const edge = cubeEdges[k % 12];
+        if (!edge) continue;
+        const [p, q] = edge;
         const t = rnd();
-        SX[4][i] = (p[0] + (q[0] - p[0]) * t) * C + gauss() * 0.025;
-        SY[4][i] = (p[1] + (q[1] - p[1]) * t) * C + gauss() * 0.025;
-        SZ[4][i] = (p[2] + (q[2] - p[2]) * t) * C + gauss() * 0.025;
-        SH[4][i] = t < 0.07 || t > 0.93 ? 1 : 0;
+        sx4[i] = (p[0]! + (q[0]! - p[0]!) * t) * C + gauss() * 0.025;
+        sy4[i] = (p[1]! + (q[1]! - p[1]!) * t) * C + gauss() * 0.025;
+        sz4[i] = (p[2]! + (q[2]! - p[2]!) * t) * C + gauss() * 0.025;
+        sh4[i] = t < 0.07 || t > 0.93 ? 1 : 0;
       } else {
         const face = Math.floor(rnd() * 6);
         const ax = face % 3;
         const sgn = face < 3 ? -1 : 1;
         const v = [rnd() * 2 - 1, rnd() * 2 - 1, rnd() * 2 - 1];
         v[ax] = sgn;
-        SX[4][i] = v[0] * C * 0.999;
-        SY[4][i] = v[1] * C * 0.999;
-        SZ[4][i] = v[2] * C * 0.999;
-        SH[4][i] = 0;
+        sx4[i] = v[0]! * C * 0.999;
+        sy4[i] = v[1]! * C * 0.999;
+        sz4[i] = v[2]! * C * 0.999;
+        sh4[i] = 0;
       }
     }
 
@@ -179,15 +204,18 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       let gy1 = 0;
       let gx0 = tw;
       let gx1 = 0;
-      for (let y = 0; y < th; y += 2)
-        for (let x = 0; x < tw; x += 2)
-          if (data[(y * tw + x) * 4 + 3] > 128) {
+      for (let y = 0; y < th; y += 2) {
+        for (let x = 0; x < tw; x += 2) {
+          const val = data[(y * tw + x) * 4 + 3];
+          if (val && val > 128) {
             px.push(x, y);
             if (y < gy0) gy0 = y;
             if (y > gy1) gy1 = y;
             if (x < gx0) gx0 = x;
             if (x > gx1) gx1 = x;
           }
+        }
+      }
       const count = px.length / 2;
       if (!count) return;
       const half = Math.min(5.4, ((5 * W) / H) * 0.9);
@@ -197,15 +225,19 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       const cx = (gx0 + gx1) / 2;
       const cy = (gy0 + gy1) / 2;
       wordHalfPx = (((gy1 - gy0) * scale) / 2) * (H * 0.9) / 9;
+      const sx5 = SX[5]!;
+      const sy5 = SY[5]!;
+      const sz5 = SZ[5]!;
+      const sh5 = SH[5]!;
       for (let k = 0; k < N; k++) {
-        const i = order[k];
+        const i = order[k]!;
         const p = Math.floor(rnd() * count);
-        const x = px[p * 2];
-        const y = px[p * 2 + 1];
-        SX[5][i] = (x - cx) * scale + (rnd() - 0.5) * scale * 2;
-        SY[5][i] = -(y - cy) * scale + (rnd() - 0.5) * scale * 2;
-        SZ[5][i] = (rnd() - 0.5) * 0.25;
-        SH[5][i] = x >= dotX ? 1 : 0;
+        const x = px[p * 2]!;
+        const y = px[p * 2 + 1]!;
+        sx5[i] = (x - cx) * scale + (rnd() - 0.5) * scale * 2;
+        sy5[i] = -(y - cy) * scale + (rnd() - 0.5) * scale * 2;
+        sz5[i] = (rnd() - 0.5) * 0.25;
+        sh5[i] = x >= dotX ? 1 : 0;
       }
     };
 
@@ -249,8 +281,11 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
     const stagePoint = (st: number, i: number, t: number) => {
       if (st === 0) {
         const spread = W / H > 1 ? 7.5 : 4.2;
-        const X0 = gx[i] * spread;
-        const Z0 = 2.2 + gz[i] * 12;
+        const gx_i = gx[i];
+        const gz_i = gz[i];
+        if (gx_i === undefined || gz_i === undefined) return;
+        const X0 = gx_i * spread;
+        const Z0 = 2.2 + gz_i * 12;
         const w1 = Math.sin(X0 * 0.75 + t * 0.55) * Math.cos(Z0 * 0.45 - t * 0.35);
         const w2 = Math.sin(X0 * 1.6 + Z0 * 1.1 + t * 0.8) * 0.35;
         out.x = X0;
@@ -259,9 +294,19 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
         out.h = Math.max(0, (w1 + w2 - 0.55) / 0.8);
         return;
       }
-      let x = SX[st][i];
-      let y = SY[st][i];
-      let z = SZ[st][i];
+      const sx_st = SX[st];
+      const sy_st = SY[st];
+      const sz_st = SZ[st];
+      const sh_st = SH[st];
+      if (!sx_st || !sy_st || !sz_st || !sh_st) return;
+      const x_val = sx_st[i];
+      const y_val = sy_st[i];
+      const z_val = sz_st[i];
+      const h_val = sh_st[i];
+      if (x_val === undefined || y_val === undefined || z_val === undefined || h_val === undefined) return;
+      let x = x_val;
+      let y = y_val;
+      let z = z_val;
       const fit = W / H < 0.8 ? 0.6 : 1; // phones: shapes a bit smaller
       if (st !== 5) {
         const a = t * (st === 1 ? 0.06 : 0.16);
@@ -289,7 +334,7 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       out.x = x;
       out.y = y;
       out.z = 9 + z;
-      out.h = SH[st][i];
+      out.h = h_val;
     };
 
     // pointer: the dots around the cursor turn Thynk orange and make room (desktop only)
@@ -390,22 +435,37 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
         const base = Math.max(0.9, Math.min(2.4, (10 / Z) * (small ? 1.1 : 1)));
         // the THYNK. letters: dark and chunky so the word reads clearly
         const size = base + word * (small ? 1.6 : 2.2) + glow * 1.3;
-        const n = bn[k]++;
-        bx[k][n] = qx;
-        by[k][n] = qy;
-        bs[k][n] = size;
+        
+        const currentCount = bn[k];
+        if (currentCount === undefined) continue;
+        const n = currentCount;
+        bn[k] = n + 1;
+        
+        const b_xk = bx[k];
+        const b_yk = by[k];
+        const b_sk = bs[k];
+        if (b_xk && b_yk && b_sk) {
+          b_xk[n] = qx;
+          b_yk[n] = qy;
+          b_sk[n] = size;
+        }
       }
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, W, H);
       for (let k = 0; k < COLORS.length; k++) {
-        ctx.fillStyle = COLORS[k];
+        ctx.fillStyle = COLORS[k] ?? "";
         const xs = bx[k];
         const ys = by[k];
         const ss = bs[k];
-        for (let j = 0, n = bn[k]; j < n; j++) {
+        const count = bn[k];
+        if (!xs || !ys || !ss || count === undefined) continue;
+        for (let j = 0; j < count; j++) {
           const sz = ss[j];
-          ctx.fillRect(xs[j] - sz / 2, ys[j] - sz / 2, sz, sz);
+          const x_pos = xs[j];
+          const y_pos = ys[j];
+          if (sz === undefined || x_pos === undefined || y_pos === undefined) continue;
+          ctx.fillRect(x_pos - sz / 2, y_pos - sz / 2, sz, sz);
         }
       }
       if (running && !reduced) raf = requestAnimationFrame(frame);

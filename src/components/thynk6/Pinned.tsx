@@ -113,6 +113,7 @@ export function PinnedMethod({ reduced }: { reduced: boolean }) {
   }
 
   const s = steps[idx];
+  if (!s) return null;
   return (
     <section ref={ref} className="t6-pin t6-pin-method" id="method" style={{ height: `${100 + n * 85}vh` }}>
       <div className="t6-pin-stage">

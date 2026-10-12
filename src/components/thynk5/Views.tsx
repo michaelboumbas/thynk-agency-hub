@@ -27,7 +27,7 @@ export function AboutView() {
 }
 
 export function SolutionsView() {
-  const [open, setOpen] = useState<string[]>([solutions.pillars[0].id]);
+  const [open, setOpen] = useState<string[]>(solutions.pillars[0] ? [solutions.pillars[0].id] : []);
   const toggle = (id: string) =>
     setOpen((o) => (o.includes(id) ? o.filter((x) => x !== id) : [...o, id]));
 

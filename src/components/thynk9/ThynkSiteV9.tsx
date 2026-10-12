@@ -91,7 +91,7 @@ export function useReveal(root: RefObject<HTMLElement | null>, dep: unknown) {
       (entries) =>
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            (e.target as HTMLElement).dataset.in = "1";
+            (e.target as HTMLElement).dataset["in"] = "1";
             io.unobserve(e.target);
           }
         }),
@@ -367,7 +367,7 @@ export function Examples({ reduced, hideLead = false }: { reduced: boolean; hide
   useEffect(() => {
     const el = secRef.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.15 });
+    const io = new IntersectionObserver(([e]) => { if (e) setInView(e.isIntersecting); }, { threshold: 0.15 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -473,7 +473,7 @@ function DiagramMap() {
     [260, 170],
     [110, 165],
   ];
-  const edges = [
+  const edges: [number, number][] = [
     [0, 1],
     [1, 2],
     [2, 3],
@@ -486,16 +486,16 @@ function DiagramMap() {
     <div className="t9-dia">
       <svg viewBox="0 0 380 220" className="t9-dia-svg" aria-hidden="true">
         {edges.map(([a, b], i) => (
-          <line key={i} className="t9-edge" x1={pts[a][0]} y1={pts[a][1]} x2={pts[b][0]} y2={pts[b][1]} />
+          <line key={i} className="t9-edge" x1={pts[a]?.[0]} y1={pts[a]?.[1]} x2={pts[b]?.[0]} y2={pts[b]?.[1]} />
         ))}
         {pts.map(([x, y], i) => {
           const hot = d.hot.includes(i);
           return (
             <g key={i} className={`t9-node${hot ? " hot" : ""}`} style={{ ["--d" as string]: `${0.25 + i * 0.18}s` }}>
-              {hot && <circle className="t9-node-glow" cx={x} cy={y} r="22" />}
-              <circle className="t9-node-dot" cx={x} cy={y} r="11" />
-              {hot && <path className="t9-node-check" d={`M${x - 5} ${y}l3.5 3.6 6.5-7`} />}
-              <text x={x} y={y + 30} textAnchor="middle">
+              {hot && <circle className="t9-node-glow" cx={x ?? 0} cy={y ?? 0} r="22" />}
+              <circle className="t9-node-dot" cx={x ?? 0} cy={y ?? 0} r="11" />
+              {hot && <path className="t9-node-check" d={`M${(x ?? 0) - 5} ${y ?? 0}l3.5 3.6 6.5-7`} />}
+              <text x={x ?? 0} y={(y ?? 0) + 30} textAnchor="middle">
                 {d.nodes[i]}
               </text>
             </g>
@@ -522,16 +522,16 @@ function DiagramBranch() {
         </text>
         {d.branches.map((b, bi) => (
           <g key={b.title} className="t9-branch" style={{ ["--d" as string]: `${0.2 + bi * 0.35}s` }}>
-            <path className="t9-flow" d={`M110 110 C150 110 150 ${ys[bi]} 190 ${ys[bi]}`} />
-            <circle className="t9-node-dot t9-b-dot" cx="196" cy={ys[bi]} r="7" />
-            <text className="t9-b-title" x="210" y={ys[bi] - 12}>
+            <path className="t9-flow" d={`M110 110 C150 110 150 ${(ys[bi] ?? 0)} 190 ${(ys[bi] ?? 0)}`} />
+            <circle className="t9-node-dot t9-b-dot" cx="196" cy={(ys[bi] ?? 0)} r="7" />
+            <text className="t9-b-title" x="210" y={(ys[bi] ?? 0) - 12}>
               {b.title}
             </text>
             {b.items.map((it, ii) => (
               <g key={it} className="t9-leaf" style={{ ["--d" as string]: `${0.6 + bi * 0.35 + ii * 0.2}s` }}>
-                <circle className="t9-leaf-dot" cx="216" cy={ys[bi] + 8 + ii * 22} r="7" />
-                <path className="t9-node-check" d={`M${212.5} ${ys[bi] + 8 + ii * 22}l2.4 2.4 4.4-4.8`} />
-                <text x="230" y={ys[bi] + 12 + ii * 22}>
+                <circle className="t9-leaf-dot" cx="216" cy={(ys[bi] ?? 0) + 8 + ii * 22} r="7" />
+                <path className="t9-node-check" d={`M${212.5} ${(ys[bi] ?? 0) + 8 + ii * 22}l2.4 2.4 4.4-4.8`} />
+                <text x="230" y={(ys[bi] ?? 0) + 12 + ii * 22}>
                   {it}
                 </text>
               </g>
@@ -840,7 +840,7 @@ export function ThynkSiteV9({ handsHero = false }: { handsHero?: boolean } = {})
     els.forEach((e) => (e.style.overflow = "visible"));
     document.documentElement.style.overflowY = "auto";
     return () => {
-      els.forEach((e, i) => (e.style.overflow = prev[i]));
+      els.forEach((e, i) => { const p = prev[i]; if (p !== undefined) e.style.overflow = p; });
       document.documentElement.style.overflowY = "";
     };
   }, []);
@@ -1164,7 +1164,7 @@ export function ThynkSiteV9({ handsHero = false }: { handsHero?: boolean } = {})
             <p className="t8-lead">{calculatorCopy.intro}</p>
           </div>
           <div className="t8-card t8-calc t5 t5-embed" data-reveal>
-            <Calculator key={pain ?? "none"} initialTasks={picked?.calc} formal />
+            <Calculator key={pain ?? "none"} {...(picked?.calc ? { initialTasks: picked.calc } : {})} formal />
           </div>
           <div className="t8-inline-cta" data-reveal>
             <span>{calculatorCopy.cta}</span>

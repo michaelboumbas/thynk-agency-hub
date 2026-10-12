@@ -53,7 +53,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
     els.forEach((e) => (e.style.overflow = "visible"));
     document.documentElement.style.overflowY = "auto";
     return () => {
-      els.forEach((e, i) => (e.style.overflow = prev[i]));
+      els.forEach((e, i) => { const p = prev[i]; if (p !== undefined) e.style.overflow = p; });
       document.documentElement.style.overflowY = "";
     };
   }, []);
@@ -162,10 +162,10 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
       set(p + (e.deltaMode === 1 ? e.deltaY * 33 : e.deltaY) / 160);
     };
     let ty = 0, tp = 0;
-    const onStart = (e: TouchEvent) => ((ty = e.touches[0].clientY), (tp = p));
+    const onStart = (e: TouchEvent) => { const t0 = e.touches[0]; if (t0) { ty = t0.clientY; tp = p; } };
     const onMove = (e: TouchEvent) => {
       e.preventDefault();
-      set(tp + (ty - e.touches[0].clientY) / 64);
+      const t0 = e.touches[0]; if (t0) { set(tp + (ty - t0.clientY) / 64); }
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     el.addEventListener("touchstart", onStart, { passive: true });
@@ -207,7 +207,7 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
             <Link
               key={it.key}
               to={href(it.to)}
-              hash={it.hash}
+              hash={it.hash as any}
               className={`t14-wheel-i${a < 0.5 ? " on" : ""}`}
               style={style}
               aria-current={!it.hash && it.to === pathname ? "page" : undefined}

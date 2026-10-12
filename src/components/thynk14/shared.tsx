@@ -371,13 +371,13 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
   const submit = (e: FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
-    if (!form.first.trim()) errs.first = c.book.first.error;
-    if (!form.last.trim()) errs.last = c.book.last.error;
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) errs.email = c.book.email.error;
-    if (form.phone.replace(/\D/g, "").length < 10) errs.phone = c.book.phone.error;
-    if (!form.biz.trim()) errs.biz = c.book.biz.error;
-    if (!form.industry) errs.industry = c.book.industry.error;
-    if (!form.pain) errs.pain = c.book.pain.error;
+    if (!form['first'].trim()) errs['first'] = c.book['first'].error;
+    if (!form['last'].trim()) errs['last'] = c.book['last'].error;
+    if (!/^\S+@\S+\.\S+$/.test(form['email'])) errs['email'] = c.book['email'].error;
+    if (form['phone'].replace(/\D/g, "").length < 10) errs['phone'] = c.book['phone'].error;
+    if (!form['biz'].trim()) errs['biz'] = c.book['biz'].error;
+    if (!form['industry']) errs['industry'] = c.book['industry'].error;
+    if (!form['pain']) errs['pain'] = c.book['pain'].error;
     setErrors(errs);
     const first = Object.keys(errs)[0];
     if (first) {
@@ -428,8 +428,8 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
           </label>
           <select
             id={`${idPrefix}-industry`}
-            value={form.industry}
-            aria-invalid={!!errors.industry}
+            value={form['industry']}
+            aria-invalid={!!errors['industry']}
             aria-describedby={`${idPrefix}-industry-e`}
             onChange={(e) => setForm({ ...form, industry: e.target.value })}
           >
@@ -438,19 +438,19 @@ export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
               <option key={o}>{o}</option>
             ))}
           </select>
-          <span className="t14-err" id={`${idPrefix}-industry-e`}>{errors.industry ?? ""}</span>
+          <span className="t14-err" id={`${idPrefix}-industry-e`}>{errors['industry'] ?? ""}</span>
         </div>
         <div className="t14-f t14-f-wide">
           <span className="t14-flabel" id={`${idPrefix}-pain-l`}>{c.book.pain.label}</span>
           <div className="t14-tasks t14-pains" role="radiogroup" aria-labelledby={`${idPrefix}-pain-l`}>
             {c.book.pain.options.map((o, i) => (
-              <label key={o} className={form.pain === o ? "on" : undefined}>
-                <input id={`${idPrefix}-pain-${i}`} type="radio" name={`${idPrefix}-pain`} value={o} checked={form.pain === o} aria-invalid={!!errors.pain} onChange={() => setForm({ ...form, pain: o })} />
+              <label key={o} className={form['pain'] === o ? "on" : undefined}>
+                <input id={`${idPrefix}-pain-${i}`} type="radio" name={`${idPrefix}-pain`} value={o} checked={form['pain'] === o} aria-invalid={!!errors['pain']} onChange={() => setForm({ ...form, pain: o })} />
                 {o}
               </label>
             ))}
           </div>
-          <span className="t14-err" role="alert">{errors.pain ?? ""}</span>
+          <span className="t14-err" role="alert">{errors['pain'] ?? ""}</span>
         </div>
       </div>
       <div className="t14-form-foot">

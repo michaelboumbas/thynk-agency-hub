@@ -43,7 +43,7 @@ function useReveal(root: RefObject<HTMLElement | null>, dep: unknown) {
       (entries) =>
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            (e.target as HTMLElement).dataset.in = "1";
+            (e.target as HTMLElement).dataset["in"] = "1";
             io.unobserve(e.target);
           }
         }),
@@ -242,7 +242,7 @@ export function ThynkSiteV8() {
     els.forEach((e) => (e.style.overflow = "visible"));
     document.documentElement.style.overflowY = "auto";
     return () => {
-      els.forEach((e, i) => (e.style.overflow = prev[i]));
+      els.forEach((e, i) => { const p = prev[i]; if (p !== undefined) e.style.overflow = p; });
       document.documentElement.style.overflowY = "";
     };
   }, []);
@@ -561,7 +561,7 @@ export function ThynkSiteV8() {
             <p className="t8-lead">{calculator.intro}</p>
           </div>
           <div className="t8-card t8-calc t5 t5-embed" data-reveal>
-            <Calculator key={pain ?? "none"} initialTasks={picked?.calc} />
+            <Calculator key={pain ?? "none"} {...(picked?.calc ? { initialTasks: picked.calc } : {})} />
           </div>
           <div className="t8-inline-cta" data-reveal>
             <span>{calcCta.text}</span>

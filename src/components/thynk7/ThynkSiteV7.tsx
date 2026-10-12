@@ -43,7 +43,7 @@ function useReveal(root: RefObject<HTMLElement | null>, dep: unknown) {
       (entries) =>
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            (e.target as HTMLElement).dataset.in = "1";
+            (e.target as HTMLElement).dataset["in"] = "1";
             io.unobserve(e.target);
           }
         }),
@@ -103,7 +103,7 @@ export function ThynkSiteV7() {
     els.forEach((e) => (e.style.overflow = "visible"));
     document.documentElement.style.overflowY = "auto";
     return () => {
-      els.forEach((e, i) => (e.style.overflow = prev[i]));
+      els.forEach((e, i) => { const p = prev[i]; if (p !== undefined) e.style.overflow = p; });
       document.documentElement.style.overflowY = "";
     };
   }, []);
@@ -463,7 +463,7 @@ export function ThynkSiteV7() {
             {calculator.intro}
           </p>
           <div className="t5 t5-embed" data-reveal>
-            <Calculator key={pain ?? "none"} initialTasks={picked?.calc} />
+            <Calculator key={pain ?? "none"} {...(picked?.calc ? { initialTasks: picked.calc } : {})} />
           </div>
         </section>
 
@@ -603,21 +603,25 @@ function Method({ reduced }: { reduced: boolean }) {
                 <i key={s.n} className={i === idx ? "on" : i < idx ? "past" : undefined} />
               ))}
             </div>
-            {shown.map((i) => (
+            {shown.map((i) => {
+              const step = steps[i];
+              if (!step) return null;
+              return (
               <div key={i} className="t7-step" aria-live="polite">
                 <span className="t7-step-n">
-                  {steps[i].n}
+                  {step.n}
                   <em>/ 0{n}</em>
                 </span>
-                <h3>{steps[i].title}</h3>
-                <p>{steps[i].text}</p>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
                 <div className="t7-mini-chips">
-                  {steps[i].chips.map((c) => (
+                  {step.chips.map((c) => (
                     <span key={c}>{c}</span>
                   ))}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
           {!reduced && (
             <div className="t7-method-mock" key={`m${idx}`}>

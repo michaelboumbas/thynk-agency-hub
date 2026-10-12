@@ -85,5 +85,5 @@ function Index() {
   if (face === "v7") return <ThynkSiteV7 />;
   if (face === "v6") return <ThynkSiteV6 />;
   if (face === "v5") return <ThynkSite />;
-  return <SitePage path="/" typeHero={typeHero} />;
+  return <SitePage path="/" {...(typeHero !== undefined ? { typeHero } : {})} />;
 }

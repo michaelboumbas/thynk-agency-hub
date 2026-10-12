@@ -124,13 +124,15 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
         cards.forEach((c, i) => {
           const start = 0.12 + i * 0.13;
           const k = reduced ? 1 : ease(clamp((p - start) / 0.22, 0, 1));
-          const x = xs[i % 4] * W, y = ys[i % 4] * H;
-          const outY = H * 1.1 - y + 80;
-          const exit = reduced ? 0 : ease(clamp((p - 0.86) / 0.14, 0, 1));
-          c.style.transform = `translate3d(${x}px,${y + (1 - k) * outY - exit * H * 1.1}px,0)`;
+          const xi = xs[i % 4]; const yi = ys[i % 4];
+          if (xi !== undefined && yi !== undefined) {
+            const x = xi * W, y = yi * H;
+            const outY = H * 1.1 - y + 80;
+            const exit = reduced ? 0 : ease(clamp((p - 0.86) / 0.14, 0, 1));
+            c.style.transform = `translate3d(${x}px,${y + (1 - k) * outY - exit * H * 1.1}px,0)`;
+          }
         });
       });
-
       tracks.forEach(({ el, track }) => {
         const p = progress(el);
         track.style.transform = `translate3d(${-ease(p) * Math.max(0, track.scrollWidth - W)}px,0,0)`;

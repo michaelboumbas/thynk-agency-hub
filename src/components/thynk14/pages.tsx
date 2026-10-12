@@ -475,7 +475,7 @@ export function ContactPage() {
               </svg>
             </span>
             <a className="t14-cmap-open" href={link("address", "")} target="_blank" rel="noopener noreferrer">
-              {k.cards[0].action} <i aria-hidden="true">↗</i>
+              {k.cards[0]?.action} <i aria-hidden="true">→</i>
             </a>
           </div>
           <aside className="t14-chours">
