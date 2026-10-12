@@ -137,6 +137,7 @@ export function WorkPage() {
           item.style.setProperty("--p", p.toFixed(3));
         }
       }
+    };
     const onScroll = () => {
       if (!raf) raf = window.requestAnimationFrame(update);
     };
@@ -345,12 +346,12 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
 export function WorkStrip() {
   const { c, lang } = useCopy();
   const w = c.work;
-  const marks = publishedCases.flatMap((cs) =>
+  const marks = (publishedCases as any).flatMap((cs) =>
     cs.logos?.length ? cs.logos.map((l) => ({ cs, l, key: l.src })) : [{ cs, l: undefined, key: cs.slug }],
   );
   const round = (copy: boolean, k: string) => (marks as any[]).map(({ cs, l, key }: any) => (
       <li key={k + key} aria-hidden={copy || undefined}>
-        <CaseLink cs={cs} tabIndex={copy ? -1 : undefined}>
+        <CaseLink cs={cs} {...(copy ? { tabIndex: -1 } : {})}>
           {l ? <Logo l={l} decorative={copy} /> : <span className="t14-cl-name">{caseText(cs, lang).client}</span>}
         </CaseLink>
         <b className="t14-cl-dot" aria-hidden="true" />
@@ -366,7 +367,7 @@ export function WorkStrip() {
         <div className="t14-cl-track">
           {[0, 1].map((half) => (
             <ul key={half} className="t14-cl-set" aria-hidden={half === 1 || undefined}>
-              {[0, 1, 2].map((r) => round(half === 1 || r > 0, )) as any}
+              {[0, 1, 2].map((r) => round(half === 1 || r > 0, `${half}-${r}-`)) as any}
             </ul>
           ))}
         </div>
