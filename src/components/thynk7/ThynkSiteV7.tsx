@@ -603,7 +603,10 @@ function Method({ reduced }: { reduced: boolean }) {
                 <i key={s.n} className={i === idx ? "on" : i < idx ? "past" : undefined} />
               ))}
             </div>
-            {shown.map((i) => (
+            {shown.map((i) => {
+              const step = steps[i];
+              if (!step) return null;
+              return (
               <div key={i} className="t7-step" aria-live="polite">
                 <span className="t7-step-n">
                   {step.n}
@@ -617,8 +620,8 @@ function Method({ reduced }: { reduced: boolean }) {
                   ))}
                 </div>
               </div>
-                );
-            ))}
+              );
+            })}
           </div>
           {!reduced && (
             <div className="t7-method-mock" key={`m${idx}`}>
