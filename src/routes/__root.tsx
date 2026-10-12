@@ -102,7 +102,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      // favicon (12/10/2026): the logo's block T + square orange dot, no tile. Browsers that read SVG icons
+      // (Chrome, Edge, Firefox) get favicon.svg, whose T turns white in dark mode; the rest get the .ico.
+      // Bump ?v= whenever the icon changes, browsers cache favicons hard.
+      { rel: "icon", href: "/favicon.ico?v=2", sizes: "32x32" },
+      { rel: "icon", href: "/favicon.svg?v=2", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=2" },
     ],
   }),
 

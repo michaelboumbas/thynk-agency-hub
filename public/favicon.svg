@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Thynk favicon (12/10/2026): the logo's block T + the square brand dot, no tile.
+       The T follows the browser theme: ink on light, white on dark. The dot is always Thynk orange. -->
+  <style>
+    .t { fill: #0f1012; }
+    @media (prefers-color-scheme: dark) { .t { fill: #ffffff; } }
+  </style>
+  <rect class="t" x="2.5" y="11" width="73.8" height="37.1" rx="2.9"/>
+  <rect class="t" x="16.45" y="11" width="45.9" height="98" rx="2.9"/>
+  <rect fill="#ff6a1a" x="82.2" y="73.7" width="35.3" height="35.3" rx="2.9"/>
+</svg>
