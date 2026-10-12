@@ -122,7 +122,9 @@ function perspective(fovDeg: number, aspect: number, near: number, far: number) 
   return new Float32Array([f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0]);
 }
 function lookAt(e: number[], t: number[]) {
-  let zx = e[0] - t[0], zy = e[1] - t[1], zz = e[2] - t[2];
+    const e0 = e[0]!, e1 = e[1]!, e2 = e[2]!;
+  const t0 = t[0]!, t1 = t[1]!, t2 = t[2]!;
+  let zx = e0 - t0, zy = e1 - t1, zz = e2 - t2;
   let l = Math.hypot(zx, zy, zz); zx /= l; zy /= l; zz /= l;
   // x = up(0,1,0) × z
   const xy = 0;
@@ -133,7 +135,7 @@ function lookAt(e: number[], t: number[]) {
     xx, yx, zx, 0,
     xy, yy, zy, 0,
     xz, yz, zz, 0,
-    -(xx * e[0] + xy * e[1] + xz * e[2]), -(yx * e[0] + yy * e[1] + yz * e[2]), -(zx * e[0] + zy * e[1] + zz * e[2]), 1,
+        -(xx * e0 + xy * e1 + xz * e2), -(yx * e0 + yy * e1 + yz * e2), -(zx * e0 + zy * e1 + zz * e2), 1,
   ]);
 }
 
@@ -291,13 +293,13 @@ export function PlanetField({ reduced }: { reduced: boolean }) {
         const f = 1 / Math.tan((42 * Math.PI) / 360);
         const vx = (mx * (W / H)) / f, vy = my / f; // camera-space ray (z = -1)
         // camera basis from the view matrix (rows of its rotation)
-        const dx = view[0] * vx + view[1] * vy - view[2];
-        const dy = view[4] * vx + view[5] * vy - view[6];
-        const dz = view[8] * vx + view[9] * vy - view[10];
+        const dx = view[0]! * vx + view[1]! * vy - view[2]!;
+        const dy = view[4]! * vx + view[5]! * vy - view[6]!;
+        const dz = view[8]! * vx + view[9]! * vy - view[10]!;
         if (dy < -1e-4) {
-          const s = (-1.3 - eye[1]) / dy;
-          cursor[0] = lerp(cursor[0], eye[0] + dx * s, 0.15);
-          cursor[2] = lerp(cursor[2], eye[2] + dz * s, 0.15);
+          const s = (-1.3 - eye[1]!) / dy;
+          cursor[0] = lerp(cursor[0]!, eye[0]! + dx * s, 0.15);
+          cursor[2] = lerp(cursor[2]!, eye[2]! + dz * s, 0.15);
         }
       }
       const idle = (now - lastMove) / 1000;
@@ -306,18 +308,18 @@ export function PlanetField({ reduced }: { reduced: boolean }) {
       gl.clear(gl.COLOR_BUFFER_BIT);
 
       gl.useProgram(fieldP);
-      gl.uniformMatrix4fv(fu.uProj, false, proj);
-      gl.uniformMatrix4fv(fu.uView, false, view);
-      gl.uniform1f(fu.uTime, tsec);
-      gl.uniform1f(fu.uWave, wave);
-      gl.uniform1f(fu.uCalm, calm);
-      gl.uniform1f(fu.uStream, stream);
-      gl.uniform1f(fu.uActivity, activity);
-      gl.uniform1f(fu.uAppear, appear);
-      gl.uniform1f(fu.uCurve, curve);
-      gl.uniform1f(fu.uPx, 1.6 * DPR);
-      gl.uniform1f(fu.uFade, fade);
-      gl.uniform3f(fu.uCursor, cursor[0], cursor[1], cursor[2]);
+      gl.uniformMatrix4fv(fu['uProj'] ?? null, false, proj);
+      gl.uniformMatrix4fv(fu['uView'] ?? null, false, view);
+      gl.uniform1f(fu['uTime'] ?? null, tsec);
+      gl.uniform1f(fu['uWave'] ?? null, wave);
+      gl.uniform1f(fu['uCalm'] ?? null, calm);
+      gl.uniform1f(fu['uStream'] ?? null, stream);
+      gl.uniform1f(fu['uActivity'] ?? null, activity);
+      gl.uniform1f(fu['uAppear'] ?? null, appear);
+      gl.uniform1f(fu['uCurve'] ?? null, curve);
+      gl.uniform1f(fu['uPx'] ?? null, 1.6 * DPR);
+      gl.uniform1f(fu['uFade'] ?? null, fade);
+      gl.uniform3f(fu['uCursor'] ?? null, cursor[0]!, cursor[1]!, cursor[2]!);
       gl.bindBuffer(gl.ARRAY_BUFFER, fbuf);
       gl.enableVertexAttribArray(fa.grid);
       gl.vertexAttribPointer(fa.grid, 2, gl.FLOAT, false, 24, 0);
@@ -331,13 +333,13 @@ export function PlanetField({ reduced }: { reduced: boolean }) {
       gl.disableVertexAttribArray(fa.sky);
 
       gl.useProgram(dustP);
-      gl.uniformMatrix4fv(du.uProj, false, proj);
-      gl.uniformMatrix4fv(du.uView, false, view);
-      gl.uniform1f(du.uTime, tsec);
-      gl.uniform1f(du.uFly, fly);
-      gl.uniform1f(du.uPx, 1.6 * DPR);
-      gl.uniform1f(du.uFade, fade);
-      gl.uniform3f(du.uCam, eye[0], eye[1], eye[2]);
+      gl.uniformMatrix4fv(du['uProj'] ?? null, false, proj);
+      gl.uniformMatrix4fv(du['uView'] ?? null, false, view);
+      gl.uniform1f(du['uTime'] ?? null, tsec);
+      gl.uniform1f(du['uFly'] ?? null, fly);
+      gl.uniform1f(du['uPx'] ?? null, 1.6 * DPR);
+      gl.uniform1f(du['uFade'] ?? null, fade);
+      gl.uniform3f(du['uCam'] ?? null, eye[0]!, eye[1]!, eye[2]!);
       gl.bindBuffer(gl.ARRAY_BUFFER, dbuf);
       gl.enableVertexAttribArray(da.pos);
       gl.vertexAttribPointer(da.pos, 3, gl.FLOAT, false, 16, 0);

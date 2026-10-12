@@ -183,7 +183,11 @@ export function ParticleMuse({
     window.addEventListener("pointermove", onMove, { passive: true });
     // don't spend GPU time while the stage is scrolled out of view
     let visible = true;
-    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
+    const io = new IntersectionObserver(([e]) => {
+      if (e) visible = e.isIntersecting;
+    });
+      if (e) visible = e.isIntersecting;
+    });
     io.observe(cv);
 
     const small = window.innerWidth < 700;

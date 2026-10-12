@@ -63,10 +63,10 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       const band = rnd();
       const r = 2.6 + band * band * 2.9 + (rnd() - 0.5) * 0.4;
       const a = rnd() * Math.PI * 2;
-      SX[1][i] = Math.cos(a) * r;
-      SZ[1][i] = Math.sin(a) * r * 0.9;
-      SY[1][i] = Math.sin(a) * r * 0.22 + (rnd() - 0.5) * 0.28 * (1 + band);
-      SH[1][i] = Math.max(0, 1 - (r - 2.6) / 1.6);
+      SX[1]![i]! = Math.cos(a) * r;
+      SZ[1]![i]! = Math.sin(a) * r * 0.9;
+      SY[1]![i]! = Math.sin(a) * r * 0.22 + (rnd() - 0.5) * 0.28 * (1 + band);
+      SH[1]![i]! = Math.max(0, 1 - (r - 2.6) / 1.6);
     }
     // 2 sphere (fibonacci)
     const golden = Math.PI * (3 - Math.sqrt(5));
@@ -76,10 +76,10 @@ export function ParticleField({ reduced }: { reduced: boolean }) {
       const rr = Math.sqrt(1 - y * y);
       const th = golden * k;
       const R = 3.4 + (rnd() - 0.5) * 0.07;
-      SX[2][i] = Math.cos(th) * rr * R;
-      SY[2][i] = y * R;
-      SZ[2][i] = Math.sin(th) * rr * R;
-      SH[2][i] = rnd() < 0.1 ? 1 : 0;
+      SX[2]![i]! = Math.cos(th) * rr * R;
+      SY[2]![i]! = y * R;
+      SZ[2]![i]! = Math.sin(th) * rr * R;
+      SH[2]![i]! = rnd() < 0.1 ? 1 : 0;
     }
     // 3 network: nodes + edges
     const nodes: [number, number, number][] = [];
