@@ -102,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      // favicon (12/10/2026): the logo's block T + square orange dot, no tile. Browsers that read SVG icons
+      // favicon (12/10/2026, Mike): the header wordmark's lowercase «t.» (Anton) + square orange dot, no tile. Browsers that read SVG icons
       // (Chrome, Edge, Firefox) get favicon.svg, whose T turns white in dark mode; the rest get the .ico.
       // Bump ?v= whenever the icon changes, browsers cache favicons hard.
       { rel: "icon", href: "/favicon.ico?v=2", sizes: "32x32" },
