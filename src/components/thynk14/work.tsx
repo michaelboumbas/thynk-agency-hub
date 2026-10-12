@@ -346,10 +346,10 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
 export function WorkStrip() {
   const { c, lang } = useCopy();
   const w = c.work;
-  const marks = (publishedCases as any).flatMap((cs) =>
-    cs.logos?.length ? cs.logos.map((l) => ({ cs, l, key: l.src })) : [{ cs, l: undefined, key: cs.slug }],
+  const marks: { cs: CaseStudy; l?: ClientLogo; key: string }[] = publishedCases.flatMap((cs) =>
+    cs.logos?.length ? cs.logos.map((l) => ({ cs, l, key: l.src })) : [{ cs, key: cs.slug }],
   );
-  const round = (copy: boolean, k: string) => (marks as any[]).map(({ cs, l, key }: any) => (
+  const round = (copy: boolean, k: string) => marks.map(({ cs, l, key }) => (
       <li key={k + key} aria-hidden={copy || undefined}>
         <CaseLink cs={cs} {...(copy ? { tabIndex: -1 } : {})}>
           {l ? <Logo l={l} decorative={copy} /> : <span className="t14-cl-name">{caseText(cs, lang).client}</span>}

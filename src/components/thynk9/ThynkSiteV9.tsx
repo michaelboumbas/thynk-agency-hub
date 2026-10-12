@@ -473,7 +473,7 @@ function DiagramMap() {
     [260, 170],
     [110, 165],
   ];
-  const edges = [
+  const edges: [number, number][] = [
     [0, 1],
     [1, 2],
     [2, 3],
