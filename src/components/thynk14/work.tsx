@@ -136,6 +136,7 @@ export function WorkPage() {
           const p = Math.min(1, Math.max(0, (cur.bottom - next.top) / cur.height));
           item.style.setProperty("--p", p.toFixed(3));
         }
+      }
     const onScroll = () => {
       if (!raf) raf = window.requestAnimationFrame(update);
     };

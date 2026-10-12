@@ -657,7 +657,7 @@ function ExamplesPage() {
 
 function AuditPage() {
   const search = useRouterState({ select: (s) => s.location.search as Record<string, unknown> });
-  const focus = typeof search?['focus'] === "string" ? (search.focus as PainId) : null;
+  const focus = typeof search?.["focus"] === "string" ? (search["focus"] as PainId) : null;
   const picked = pains.find((p) => p.id === focus) ?? null;
 
   return (
