@@ -148,7 +148,7 @@ export const caseStudies: CaseStudy[] = [
     slug: "eel-hellenic-logistics-association",
     status: "ongoing",
     since: "2026",
-    published: true,
+    published: false, // 12/10 (Mike): off the site for now, to be added later
     url: "https://eel.gr",
     domain: "eel.gr",
     theme: { bg: "#364e8a", fg: "#ffffff", logo: "#ffffff", accent: "#e9c43b" },
