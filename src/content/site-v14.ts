@@ -141,7 +141,7 @@ export const v14Faq = {
 export const v14Footer = {
   contact: "hello@thynkagency.gr",
   // office address + phone (Dimitris's mobile) confirmed by Mike (10/10).
-  phone: "+30 698 399 7522",
+  phone: "+30 698 388 7522",
   address: "Papazoglou 14D, 454\u00a044 Ioannina",
   year: "© 2026",
   faq: "FAQ",
@@ -293,7 +293,7 @@ export const v14ContactPage = {
   cardsLabel: "Get in touch",
   cards: [
     { id: "address", kicker: "Office", value: "Papazoglou 14D", sub: "454 44 Ioannina, Greece", action: "Get directions" },
-    { id: "phone", kicker: "Phone", value: "+30 698 399 7522", sub: "Mon–Fri, 09:00–17:00", action: "Call us" },
+    { id: "phone", kicker: "Phone", value: "+30 698 388 7522", sub: "Mon–Fri, 09:00–17:00", action: "Call us" },
     { id: "email", kicker: "Email", value: "hello@thynkagency.gr", sub: "For questions and proposals", action: "Send an email" },
   ],
   mapsQuery: "Papazoglou 14D, 454 44 Ioannina",

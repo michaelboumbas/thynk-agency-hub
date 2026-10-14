@@ -21,7 +21,7 @@ const en: PrivacyCopy = {
     {
       h: "Who we are",
       p: [
-        "Thynk Digital Agency, Papazoglou 14D, 454 44 Ioannina, Greece. Email: hello@thynkagency.gr · Phone: +30 698 399 7522.",
+        "Thynk Digital Agency, Papazoglou 14D, 454 44 Ioannina, Greece. Email: hello@thynkagency.gr · Phone: +30 698 388 7522.",
         "We are responsible (the «controller») for the personal data described on this page. For anything about your data, write to hello@thynkagency.gr.",
       ],
     },
@@ -84,7 +84,7 @@ const el: PrivacyCopy = {
     {
       h: "Ποιοι είμαστε",
       p: [
-        "Thynk Digital Agency, Παπάζογλου 14Δ, 454 44 Ιωάννινα. Email: hello@thynkagency.gr · Τηλέφωνο: +30 698 399 7522.",
+        "Thynk Digital Agency, Παπάζογλου 14Δ, 454 44 Ιωάννινα. Email: hello@thynkagency.gr · Τηλέφωνο: +30 698 388 7522.",
         "Είμαστε υπεύθυνοι επεξεργασίας για τα προσωπικά δεδομένα που περιγράφονται σε αυτή τη σελίδα. Για οτιδήποτε αφορά τα δεδομένα σας, γράψτε μας στο hello@thynkagency.gr.",
       ],
     },
