@@ -15,6 +15,7 @@ const description =
   "Marketing and digital transformation with AI for businesses across Greece and abroad. Based in Ioannina. Every engagement starts with an audit.";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

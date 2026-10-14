@@ -7,6 +7,7 @@ const description =
   "Ενδεικτικές λύσεις AI της Thynk: βοηθός κρατήσεων, follow-up προσφορών, εβδομαδιαία αναφορά απόδοσης, αυτόματη καταχώριση παραστατικών και άλλες.";
 
 export const Route = createFileRoute("/el/solutions")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

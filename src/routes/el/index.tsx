@@ -7,6 +7,7 @@ const description =
   "Marketing και Digital Transformation με AI για επιχειρήσεις σε όλη την Ελλάδα και στο εξωτερικό. Έδρα Ιωάννινα. Κάθε συνεργασία ξεκινά με audit.";
 
 export const Route = createFileRoute("/el/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

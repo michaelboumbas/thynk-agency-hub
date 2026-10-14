@@ -6,6 +6,7 @@ const title = "Services — Thynk Digital Agency";
 const description = "Marketing and digital transformation with AI: advertising, social media, email, automation, AI agents, data. Every engagement starts with an audit.";
 
 export const Route = createFileRoute("/services")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

@@ -7,6 +7,7 @@ const description =
   "Brands we Thynk with: βραβεία επιχειρηματικότητας, διεθνή συνέδρια, ένα μοναστηριακό οινοποιείο, ένας οδηγός προορισμού, εκπαίδευση και εκδηλώσεις. Κάθε συνεργασία περνά μέσα από τη Thynk.";
 
 export const Route = createFileRoute("/el/work/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

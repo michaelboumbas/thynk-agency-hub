@@ -6,6 +6,7 @@ const title = "Πολιτική Απορρήτου — Thynk Digital Agency";
 const description = "Πώς διαχειρίζεται η Thynk Digital Agency τα στοιχεία που στέλνετε μέσω της φόρμας audit: τι συλλέγουμε, γιατί, πού φυλάσσονται και τα δικαιώματά σας.";
 
 export const Route = createFileRoute("/el/privacy")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

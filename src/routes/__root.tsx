@@ -73,6 +73,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -80,6 +81,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Thynk Digital Agency" },
       { name: "description", content: "Marketing και Digital Transformation, Ιωάννινα." },
       { name: "author", content: "Thynk Digital Agency" },
+      { name: "google-site-verification", content: "f98EGDL4pDHEWHkEOBSEohcRl5Cuu7fikU-SQea5zFc" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

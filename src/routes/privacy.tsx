@@ -6,6 +6,7 @@ const title = "Privacy Policy — Thynk Digital Agency";
 const description = "How Thynk Digital Agency handles the details you send through the audit form: what we collect, why, where it is kept and your rights.";
 
 export const Route = createFileRoute("/privacy")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

@@ -7,6 +7,7 @@ const description =
   "Μάθετε πού χάνει χρόνο και πελάτες η επιχείρησή σας. Σύντομο, αμειβόμενο audit με ιεραρχημένο πλάνο ενεργειών που παραμένει δικό σας.";
 
 export const Route = createFileRoute("/el/audit")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

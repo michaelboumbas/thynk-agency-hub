@@ -6,6 +6,7 @@ const title = "About — Thynk Digital Agency";
 const description = "Thynk Digital Agency, Ioannina, Greece. Founded by Dimitris Chrysochoou and Michael Boumpas. You talk to the founders directly.";
 
 export const Route = createFileRoute("/about")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

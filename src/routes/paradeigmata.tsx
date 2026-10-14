@@ -5,6 +5,7 @@ const title = "Λύσεις — Thynk Digital Agency";
 const description = "Ενδεικτικές λύσεις AI: ψηφιακός βοηθός κρατήσεων, follow-up προσφορών, αναφορές απόδοσης, καταχώριση παραστατικών.";
 
 export const Route = createFileRoute("/paradeigmata")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title },

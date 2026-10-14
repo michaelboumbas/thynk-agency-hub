@@ -4,6 +4,7 @@ import { getCase } from "@/content/work-v14";
 
 // v14 Greek version (07/10/2026). Same case as "/work/$slug".
 export const Route = createFileRoute("/el/work/$slug")({
+  staticData: { sitemap: false },
   loader: ({ params }) => {
     if (!getCase(params.slug)) throw notFound();
     return null;

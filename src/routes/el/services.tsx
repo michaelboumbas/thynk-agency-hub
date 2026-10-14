@@ -7,6 +7,7 @@ const description =
   "Marketing και Digital Transformation με AI: διαφήμιση, social, email, αυτοματισμοί, AI agents, δεδομένα. Κάθε συνεργασία ξεκινά με audit.";
 
 export const Route = createFileRoute("/el/services")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

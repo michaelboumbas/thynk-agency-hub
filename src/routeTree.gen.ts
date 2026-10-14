@@ -13,11 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LabRouteImport } from './routes/lab'
 import { Route as ParadeigmataRouteImport } from './routes/paradeigmata'
 import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as YpiresiesRouteImport } from './routes/ypiresies'
 import { Route as ElIndexRouteImport } from './routes/el/index'
@@ -52,11 +53,6 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LabRoute = LabRouteImport.update({
   id: '/lab',
   path: '/lab',
@@ -72,9 +68,19 @@ const PoioiEimasteRoute = PoioiEimasteRouteImport.update({
   path: '/poioi-eimaste',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolutionsRoute = SolutionsRouteImport.update({
@@ -148,11 +154,12 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/contact': typeof ContactRoute
-  '/privacy': typeof PrivacyRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
   '/el/about': typeof ElAboutRoute
@@ -172,11 +179,12 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/contact': typeof ContactRoute
-  '/privacy': typeof PrivacyRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
   '/el/about': typeof ElAboutRoute
@@ -197,11 +205,12 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/contact': typeof ContactRoute
-  '/privacy': typeof PrivacyRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
   '/el/about': typeof ElAboutRoute
@@ -223,11 +232,12 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/contact'
-    | '/privacy'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
+    | '/privacy'
     | '/services'
+    | '/sitemap.xml'
     | '/solutions'
     | '/ypiresies'
     | '/el/about'
@@ -247,11 +257,12 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/contact'
-    | '/privacy'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
+    | '/privacy'
     | '/services'
+    | '/sitemap.xml'
     | '/solutions'
     | '/ypiresies'
     | '/el/about'
@@ -271,11 +282,12 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/contact'
-    | '/privacy'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
+    | '/privacy'
     | '/services'
+    | '/sitemap.xml'
     | '/solutions'
     | '/ypiresies'
     | '/el/about'
@@ -296,11 +308,12 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuditRoute: typeof AuditRoute
   ContactRoute: typeof ContactRoute
-  PrivacyRoute: typeof PrivacyRoute
   LabRoute: typeof LabRoute
   ParadeigmataRoute: typeof ParadeigmataRoute
   PoioiEimasteRoute: typeof PoioiEimasteRoute
+  PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolutionsRoute: typeof SolutionsRoute
   YpiresiesRoute: typeof YpiresiesRoute
   ElAboutRoute: typeof ElAboutRoute
@@ -346,13 +359,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/lab': {
       id: '/lab'
       path: '/lab'
@@ -374,11 +380,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoioiEimasteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solutions': {
@@ -480,11 +500,12 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuditRoute: AuditRoute,
   ContactRoute: ContactRoute,
-  PrivacyRoute: PrivacyRoute,
   LabRoute: LabRoute,
   ParadeigmataRoute: ParadeigmataRoute,
   PoioiEimasteRoute: PoioiEimasteRoute,
+  PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolutionsRoute: SolutionsRoute,
   YpiresiesRoute: YpiresiesRoute,
   ElAboutRoute: ElAboutRoute,

@@ -7,6 +7,7 @@ const description =
   "Brands we Thynk with: business awards, international conferences, a monastic winery, a destination guide, education and events. Every account runs through Thynk.";
 
 export const Route = createFileRoute("/work/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },
