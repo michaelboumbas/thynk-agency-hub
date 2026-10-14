@@ -4,6 +4,7 @@ import { getCase } from "@/content/work-v14";
 
 // v14 (07/10/2026, Mike): one case study. Unknown or hidden cases (published: false) are a 404.
 export const Route = createFileRoute("/work/$slug")({
+  staticData: { sitemap: false },
   loader: ({ params }) => {
     if (!getCase(params.slug)) throw notFound();
     return null;

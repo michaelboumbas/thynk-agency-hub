@@ -6,6 +6,7 @@ const title = "Contact — Thynk Digital Agency";
 const description = "Contact Thynk Digital Agency in Ioannina, Greece: office, phone, email and office hours. Start with an audit.";
 
 export const Route = createFileRoute("/contact")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

@@ -6,6 +6,7 @@ const title = "Επικοινωνία — Thynk Digital Agency";
 const description = "Επικοινωνήστε με τη Thynk Digital Agency στα Ιωάννινα: γραφείο, τηλέφωνο, email και ωράριο. Ξεκινήστε με ένα audit.";
 
 export const Route = createFileRoute("/el/contact")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

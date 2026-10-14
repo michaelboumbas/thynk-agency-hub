@@ -7,6 +7,7 @@ const description =
   "Thynk Digital Agency, Ιωάννινα. Ιδρυτές: Δημήτρης Χρυσοχόου και Μιχαήλ Μπούμπας. Μιλάτε απευθείας με τους ιδρυτές.";
 
 export const Route = createFileRoute("/el/about")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },

@@ -7,6 +7,7 @@ const description =
   "Find out where your business loses time and customers. A short, paid audit with a prioritized action plan that stays yours.";
 
 export const Route = createFileRoute("/audit")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title },
