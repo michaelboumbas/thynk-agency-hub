@@ -18,6 +18,7 @@ import { Route as ParadeigmataRouteImport } from './routes/paradeigmata'
 import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as YpiresiesRouteImport } from './routes/ypiresies'
 import { Route as ElIndexRouteImport } from './routes/el/index'
@@ -75,6 +76,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolutionsRoute = SolutionsRouteImport.update({
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/poioi-eimaste': typeof PoioiEimasteRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
   '/el/about': typeof ElAboutRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/poioi-eimaste': typeof PoioiEimasteRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
   '/el/about': typeof ElAboutRoute
@@ -202,6 +210,7 @@ export interface FileRoutesById {
   '/poioi-eimaste': typeof PoioiEimasteRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
   '/el/about': typeof ElAboutRoute
@@ -228,6 +237,7 @@ export interface FileRouteTypes {
     | '/poioi-eimaste'
     | '/privacy'
     | '/services'
+    | '/sitemap.xml'
     | '/solutions'
     | '/ypiresies'
     | '/el/about'
@@ -252,6 +262,7 @@ export interface FileRouteTypes {
     | '/poioi-eimaste'
     | '/privacy'
     | '/services'
+    | '/sitemap.xml'
     | '/solutions'
     | '/ypiresies'
     | '/el/about'
@@ -276,6 +287,7 @@ export interface FileRouteTypes {
     | '/poioi-eimaste'
     | '/privacy'
     | '/services'
+    | '/sitemap.xml'
     | '/solutions'
     | '/ypiresies'
     | '/el/about'
@@ -301,6 +313,7 @@ export interface RootRouteChildren {
   PoioiEimasteRoute: typeof PoioiEimasteRoute
   PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolutionsRoute: typeof SolutionsRoute
   YpiresiesRoute: typeof YpiresiesRoute
   ElAboutRoute: typeof ElAboutRoute
@@ -379,6 +392,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solutions': {
@@ -485,6 +505,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoioiEimasteRoute: PoioiEimasteRoute,
   PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolutionsRoute: SolutionsRoute,
   YpiresiesRoute: YpiresiesRoute,
   ElAboutRoute: ElAboutRoute,
