@@ -13,10 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LabRouteImport } from './routes/lab'
 import { Route as ParadeigmataRouteImport } from './routes/paradeigmata'
 import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as YpiresiesRouteImport } from './routes/ypiresies'
@@ -52,11 +52,6 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LabRoute = LabRouteImport.update({
   id: '/lab',
   path: '/lab',
@@ -70,6 +65,11 @@ const ParadeigmataRoute = ParadeigmataRouteImport.update({
 const PoioiEimasteRoute = PoioiEimasteRouteImport.update({
   id: '/poioi-eimaste',
   path: '/poioi-eimaste',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -148,10 +148,10 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/contact': typeof ContactRoute
-  '/privacy': typeof PrivacyRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
@@ -172,10 +172,10 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/contact': typeof ContactRoute
-  '/privacy': typeof PrivacyRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
@@ -197,10 +197,10 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/contact': typeof ContactRoute
-  '/privacy': typeof PrivacyRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
@@ -223,10 +223,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/contact'
-    | '/privacy'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
+    | '/privacy'
     | '/services'
     | '/solutions'
     | '/ypiresies'
@@ -247,10 +247,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/contact'
-    | '/privacy'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
+    | '/privacy'
     | '/services'
     | '/solutions'
     | '/ypiresies'
@@ -271,10 +271,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/contact'
-    | '/privacy'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
+    | '/privacy'
     | '/services'
     | '/solutions'
     | '/ypiresies'
@@ -296,10 +296,10 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuditRoute: typeof AuditRoute
   ContactRoute: typeof ContactRoute
-  PrivacyRoute: typeof PrivacyRoute
   LabRoute: typeof LabRoute
   ParadeigmataRoute: typeof ParadeigmataRoute
   PoioiEimasteRoute: typeof PoioiEimasteRoute
+  PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
   SolutionsRoute: typeof SolutionsRoute
   YpiresiesRoute: typeof YpiresiesRoute
@@ -346,13 +346,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/lab': {
       id: '/lab'
       path: '/lab'
@@ -372,6 +365,13 @@ declare module '@tanstack/react-router' {
       path: '/poioi-eimaste'
       fullPath: '/poioi-eimaste'
       preLoaderRoute: typeof PoioiEimasteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -480,10 +480,10 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuditRoute: AuditRoute,
   ContactRoute: ContactRoute,
-  PrivacyRoute: PrivacyRoute,
   LabRoute: LabRoute,
   ParadeigmataRoute: ParadeigmataRoute,
   PoioiEimasteRoute: PoioiEimasteRoute,
+  PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
   SolutionsRoute: SolutionsRoute,
   YpiresiesRoute: YpiresiesRoute,
