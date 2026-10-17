@@ -13,8 +13,9 @@ import type { Engagement } from "@/content/careers-v14";
  * Applications and CVs are kept for 12 months (privacy policy).
  */
 const HUBSPOT_PORTAL_ID = "149314886";
-/** set once the HubSpot form exists; while empty, applications go to the database only */
-const HUBSPOT_FORM_ID = "";
+/** HubSpot form «Website · Careers application (thynkagency.gr)», created 17/10 (clone of the audit form,
+ *  lifecycle stage «Other», notifications to mboumpas@ + hello@). Empty → database only. */
+const HUBSPOT_FORM_ID = "48939679-efc3-49e8-b1a5-0067d5436d21";
 const CV_BUCKET = "career-cvs";
 
 export type CareerApplication = {
