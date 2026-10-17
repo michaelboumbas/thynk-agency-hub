@@ -67,7 +67,7 @@ function CareerForm() {
     if (!form.first.trim()) errs.first = f.first.error;
     if (!form.last.trim()) errs.last = f.last.error;
     if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) errs.email = f.email.error;
-    if (form.phone.trim() && form.phone.replace(/\D/g, "").length < 10) errs.phone = f.phone.error;
+    if (form.phone.replace(/\D/g, "").length < 10) errs.phone = f.phone.error;
     if (!form.area) errs.area = f.area.error;
     if (!engagement) errs.engagement = f.engagement.error;
     if (portfolio && !looksLikeUrl(portfolio)) errs.portfolio = f.portfolio.error;
@@ -144,7 +144,7 @@ function CareerForm() {
         {field("first", "text", "given-name")}
         {field("last", "text", "family-name")}
         {field("email", "email", "email")}
-        {field("phone", "tel", "tel", true)}
+        {field("phone", "tel", "tel")}
         <div className="t14-f t14-f-wide">
           <label htmlFor={`${id}-area`}>{f.area.label}</label>
           <select

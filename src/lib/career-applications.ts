@@ -79,7 +79,7 @@ async function saveToDatabase(r: CareerApplication, cvPath: string): Promise<boo
     first_name: r.first.trim().slice(0, 80),
     last_name: r.last.trim().slice(0, 80),
     email: r.email.trim(),
-    phone: orNull(r.phone, 40),
+    phone: r.phone.trim().slice(0, 40), // required (Mike 17/10)
     area: r.area.slice(0, 80),
     engagement: r.engagement,
     portfolio_url: orNull(r.portfolio, 400),

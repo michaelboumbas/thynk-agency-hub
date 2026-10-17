@@ -3,7 +3,7 @@ import type { Lang } from "./site-v14";
 /**
  * Careers (17/10/2026, Mike): open applications. No open position is shown unless one really exists
  * (Mike 17/10: no «fake» roles). We reply to every applicant, whether or not we move forward.
- * The CV (PDF) is required (Mike 17/10); portfolio and LinkedIn links are optional.
+ * The CV (PDF) and the phone number are required (Mike 17/10); portfolio and LinkedIn links are optional.
  * Applications: our database (public.career_applications) + CV in the private bucket «career-cvs»
  * + HubSpot for the email notification. Kept 12 months (privacy policy).
  * Page: src/components/thynk14/careers.tsx · sending: src/lib/career-applications.ts.
