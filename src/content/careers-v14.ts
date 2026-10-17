@@ -24,6 +24,20 @@ const en = {
   /** Mike 17/10: these six, in this order */
   areas: ["Performance marketing", "Social media management", "Design", "Video editing", "Web development", "AI automation"],
   areasNote: "Freelance, part-time or full-time.",
+  /**
+   * 17/10 (Mike): the first hire we plan, shown as planned, never as open. Remote; type not set yet.
+   * Remove or change it here when the plan changes; set `open: true` only when the role really opens.
+   */
+  planned: {
+    label: "Planned role",
+    badge: "Planned · not open yet",
+    title: "Social Media & Content",
+    meta: "Remote",
+    text: "Our first hire, when our numbers allow it. Someone who runs our clients' social media and creates the everyday content behind it: short videos, photos, posts. We'll open the role here when it's ready. Until then, you can register your interest.",
+    button: "Register interest",
+    /** the choice in the form's AREA list; stored in English */
+    option: "Planned role: Social Media & Content",
+  },
   side: {
     title: "Apply",
     text: "We read every application and reply to everyone, whether or not we move forward.",
@@ -80,6 +94,15 @@ const el: CareersCopy = {
   areasLabel: "Τομείς συνεργασίας",
   areas: ["Performance marketing", "Social media management", "Design", "Video editing", "Web development", "AI automation"],
   areasNote: "Freelance, μερική ή πλήρης απασχόληση.",
+  planned: {
+    label: "Προγραμματισμένη θέση",
+    badge: "Προγραμματισμένη · δεν είναι ανοιχτή ακόμα",
+    title: "Social Media & Content",
+    meta: "Remote",
+    text: "Η πρώτη μας πρόσληψη, όταν το επιτρέψουν τα νούμερά μας. Κάποιος που θα τρέχει τα social media των πελατών μας και θα δημιουργεί το καθημερινό περιεχόμενο πίσω από αυτά: σύντομα βίντεο, φωτογραφίες, posts. Θα ανοίξουμε τη θέση εδώ όταν είναι έτοιμη. Μέχρι τότε, μπορείτε να δηλώσετε ενδιαφέρον.",
+    button: "Δήλωση ενδιαφέροντος",
+    option: "Προγραμματισμένη θέση: Social Media & Content",
+  },
   side: {
     title: "Αίτηση",
     text: "Διαβάζουμε κάθε αίτηση και απαντάμε σε όλους, είτε προχωρήσουμε είτε όχι.",

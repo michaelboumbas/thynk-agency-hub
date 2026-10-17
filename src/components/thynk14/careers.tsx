@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "@tanstack/react-router";
 import { useCopy } from "./i18n";
 import { Label, PageHead } from "./shared";
@@ -14,6 +14,8 @@ import { submitCareerApplication } from "@/lib/career-applications";
 
 const ENGAGEMENTS: Engagement[] = ["freelance", "part-time", "full-time"];
 const OTHER = "__other";
+/** the planned role (17/10, Mike) as a choice in the AREA list */
+const PLANNED = "__planned";
 
 /** "linkedin.com/in/x" → "https://linkedin.com/in/x"; empty stays empty */
 function normalizeUrl(v: string) {
@@ -25,7 +27,8 @@ const looksLikeUrl = (s: string) => /^https?:\/\/[^\s/]+\.[^\s]+$/i.test(s);
 
 type TextKey = "first" | "last" | "email" | "phone" | "portfolio" | "linkedin";
 
-function CareerForm() {
+/** `pick` changes when «Register interest» is pressed: the form selects the planned role */
+function CareerForm({ pick }: { pick: number }) {
   const { lang, href } = useCopy();
   const f = careersCopy[lang].form;
   const id = "careers";
@@ -38,6 +41,11 @@ function CareerForm() {
   const [trap, setTrap] = useState("");
   const shownAt = useRef(Date.now());
   const fileRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (!pick) return;
+    setForm((x) => ({ ...x, area: PLANNED }));
+    setErrors((x) => ({ ...x, area: "" }));
+  }, [pick]);
 
   const pickCv = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
@@ -95,7 +103,7 @@ function CareerForm() {
       last: form.last,
       email: form.email,
       phone: form.phone,
-      area: areaIndex >= 0 ? careersCopy.en.areas[areaIndex] : "Other",
+      area: form.area === PLANNED ? careersCopy.en.planned.option : areaIndex >= 0 ? careersCopy.en.areas[areaIndex] : "Other",
       engagement: engagement as Engagement,
       portfolio,
       linkedin,
@@ -155,6 +163,7 @@ function CareerForm() {
             onChange={(e) => setForm({ ...form, area: e.target.value })}
           >
             <option value="">{f.area.placeholder}</option>
+            <option value={PLANNED}>{careersCopy[lang].planned.option}</option>
             {careersCopy[lang].areas.map((a) => (
               <option key={a} value={a}>{a}</option>
             ))}
@@ -271,6 +280,14 @@ function CareerForm() {
 export function CareersPage() {
   const { lang } = useCopy();
   const p = careersCopy[lang];
+  const [pick, setPick] = useState(0);
+  // «Register interest»: pick the planned role in the form, then bring the form into view
+  const registerInterest = () => {
+    setPick((n) => n + 1);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.getElementById("apply")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    window.setTimeout(() => document.getElementById("careers-first")?.focus({ preventScroll: true }), reduce ? 0 : 700);
+  };
   return (
     <>
       <PageHead p={p.head} />
@@ -288,6 +305,22 @@ export function CareersPage() {
         <p className="t14-cr-note">{p.areasNote}</p>
       </section>
 
+      {/* 17/10 (Mike): the first hire we plan — labelled as planned, never as an open position */}
+      <section className="t14-wrap t14-cr-planned" aria-labelledby="t14-cr-role">
+        <Label>{p.planned.label}</Label>
+        <article className="t14-cr-role">
+          <div className="t14-cr-role-l">
+            <span className="t14-cr-badge">{p.planned.badge}</span>
+            <h2 id="t14-cr-role" className="t14-cr-role-title">{p.planned.title}</h2>
+            <p className="t14-cr-role-meta">{p.planned.meta}</p>
+          </div>
+          <div className="t14-cr-role-r">
+            <p>{p.planned.text}</p>
+            <button type="button" className="t14-pill lg" onClick={registerInterest}>{p.planned.button}</button>
+          </div>
+        </article>
+      </section>
+
       <section className="t14-book t14-book-stack t14-wrap" id="apply">
         <div className="t14-book-side">
           <h2>{p.side.title}</h2>
@@ -301,7 +334,7 @@ export function CareersPage() {
             {p.side.mail} <a href="mailto:hello@thynkagency.gr">hello@thynkagency.gr</a>
           </p>
         </div>
-        <CareerForm />
+        <CareerForm pick={pick} />
       </section>
     </>
   );
