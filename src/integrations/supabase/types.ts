@@ -75,7 +75,7 @@ export type Database = {
           consent_text: string | null
           created_at: string
           cv_name: string | null
-          cv_path: string | null
+          cv_path: string
           email: string
           engagement: string
           first_name: string
@@ -96,7 +96,7 @@ export type Database = {
           consent_text?: string | null
           created_at?: string
           cv_name?: string | null
-          cv_path?: string | null
+          cv_path: string
           email: string
           engagement: string
           first_name: string
@@ -117,7 +117,7 @@ export type Database = {
           consent_text?: string | null
           created_at?: string
           cv_name?: string | null
-          cv_path?: string | null
+          cv_path?: string
           email?: string
           engagement?: string
           first_name?: string

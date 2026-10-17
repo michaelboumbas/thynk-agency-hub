@@ -63,7 +63,7 @@ const en: PrivacyCopy = {
     {
       h: "Applications through the Careers page",
       p: [
-        "When you apply through the Careers page, we collect your first and last name, your email, your phone number if you give it, the area and type of collaboration you are interested in, the links you add (portfolio, LinkedIn), your CV if you upload one (PDF), the message you write, the date, page and language of the application, and the consent sentence you accepted.",
+        "When you apply through the Careers page, we collect your first and last name, your email, your phone number if you give it, the area and type of collaboration you are interested in, your CV (PDF), the links you add (portfolio, LinkedIn), the message you write, the date, page and language of the application, and the consent sentence you accepted.",
         "We use them only to consider a possible collaboration with you and to reply to you. Legal basis: your consent and steps taken at your request before a possible contract (Art. 6(1)(a) and (b) GDPR).",
         "Applications are kept in our database and CVs in private file storage on Lovable Cloud (Supabase); neither can be read from the website. We are notified by email through HubSpot, where your application also appears as a contact. Only the founders of Thynk have access.",
         "We keep an application, together with the CV, for 12 months from the day we receive it and then delete it, unless we have started working together. You can ask us to delete it sooner at any time.",
@@ -135,7 +135,7 @@ const el: PrivacyCopy = {
     {
       h: "Αιτήσεις μέσω της σελίδας Καριέρα",
       p: [
-        "Όταν κάνετε αίτηση μέσω της σελίδας Καριέρα, συλλέγουμε το όνομα και το επώνυμό σας, το email σας, το τηλέφωνό σας αν το δώσετε, τον τομέα και τη μορφή συνεργασίας που σας ενδιαφέρει, τους συνδέσμους που προσθέτετε (portfolio, LinkedIn), το βιογραφικό σας αν το ανεβάσετε (PDF), το μήνυμα που γράφετε, την ημερομηνία, τη σελίδα και τη γλώσσα της αίτησης, και τη φράση συναίνεσης που αποδεχτήκατε.",
+        "Όταν κάνετε αίτηση μέσω της σελίδας Καριέρα, συλλέγουμε το όνομα και το επώνυμό σας, το email σας, το τηλέφωνό σας αν το δώσετε, τον τομέα και τη μορφή συνεργασίας που σας ενδιαφέρει, το βιογραφικό σας (PDF), τους συνδέσμους που προσθέτετε (portfolio, LinkedIn), το μήνυμα που γράφετε, την ημερομηνία, τη σελίδα και τη γλώσσα της αίτησης, και τη φράση συναίνεσης που αποδεχτήκατε.",
         "Τα χρησιμοποιούμε μόνο για να εξετάσουμε μια πιθανή συνεργασία μαζί σας και για να σας απαντήσουμε. Νομική βάση: η συναίνεσή σας και ενέργειες που γίνονται κατόπιν αιτήματός σας πριν από μια πιθανή σύμβαση (άρθρο 6 παρ. 1 στοιχ. α΄ και β΄ ΓΚΠΔ).",
         "Οι αιτήσεις φυλάσσονται στη βάση δεδομένων μας και τα βιογραφικά σε ιδιωτικό χώρο αρχείων στο Lovable Cloud (Supabase)· κανένα από τα δύο δεν διαβάζεται από το site. Λαμβάνουμε ειδοποίηση με email μέσω του HubSpot, όπου η αίτησή σας εμφανίζεται επίσης ως επαφή. Πρόσβαση έχουν μόνο οι ιδρυτές της Thynk.",
         "Κρατάμε μια αίτηση, μαζί με το βιογραφικό, για 12 μήνες από την ημέρα που τη λαμβάνουμε και έπειτα τη διαγράφουμε, εκτός αν έχουμε ξεκινήσει συνεργασία. Μπορείτε να μας ζητήσετε να τη διαγράψουμε νωρίτερα οποιαδήποτε στιγμή.",

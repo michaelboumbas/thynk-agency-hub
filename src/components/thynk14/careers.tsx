@@ -8,7 +8,7 @@ import { submitCareerApplication } from "@/lib/career-applications";
 
 /**
  * Careers (17/10/2026, Mike): /careers and /el/careers. Open applications: the areas we work with,
- * then the application form (links and/or a PDF CV). Same layout as the audit booking (.t14-book-stack).
+ * then the application form (a PDF CV, required, plus optional links). Same layout as the audit booking (.t14-book-stack).
  * Copy: src/content/careers-v14.ts · sending: src/lib/career-applications.ts.
  */
 
@@ -44,7 +44,7 @@ function CareerForm() {
     if (!file) return;
     const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
     const err = !isPdf ? f.cv.errorType : file.size > CV_MAX_BYTES ? f.cv.errorSize : "";
-    setErrors((x) => ({ ...x, cv: err, material: "" }));
+    setErrors((x) => ({ ...x, cv: err }));
     if (err) {
       e.target.value = "";
       setCv(null);
@@ -72,13 +72,13 @@ function CareerForm() {
     if (!engagement) errs.engagement = f.engagement.error;
     if (portfolio && !looksLikeUrl(portfolio)) errs.portfolio = f.portfolio.error;
     if (linkedin && !looksLikeUrl(linkedin)) errs.linkedin = f.linkedin.error;
-    if (!cv && !portfolio && !linkedin) errs.material = f.material;
+    if (!cv) errs.cv = f.cv.required;
     if (!consent) errs.consent = f.consentError;
     setErrors(errs);
     const first = Object.keys(errs)[0];
     if (first) {
       const target =
-        first === "engagement" ? `${id}-engagement-0` : first === "material" ? `${id}-cv` : `${id}-${first}`;
+        first === "engagement" ? `${id}-engagement-0` : `${id}-${first}`;
       document.getElementById(target)?.focus();
       return;
     }
@@ -100,7 +100,7 @@ function CareerForm() {
       portfolio,
       linkedin,
       message: form.message,
-      cv,
+      cv: cv as File,
       lang,
       consentText: `${f.consentA} ${f.consentLink}${f.consentB}`,
     })
@@ -185,13 +185,10 @@ function CareerForm() {
         {field("portfolio", "url", "url", true)}
         {field("linkedin", "url", "url", true)}
 
-        {/* the CV: a PDF up to 5 MB, uploaded only when the form is sent */}
+        {/* the CV: required (Mike 17/10), a PDF up to 10 MB, uploaded only when the form is sent */}
         <div className="t14-f-wide t14-cr-cv">
-          <span className="t14-flabel" id={`${id}-cv-l`}>
-            {f.cv.label}
-            <em className="t14-opt"> · {f.optional}</em>
-          </span>
-          <div className={`t14-cr-file${cv ? " has" : ""}${errors.cv || errors.material ? " bad" : ""}`}>
+          <span className="t14-flabel" id={`${id}-cv-l`}>{f.cv.label}</span>
+          <div className={`t14-cr-file${cv ? " has" : ""}${errors.cv ? " bad" : ""}`}>
             <input
               ref={fileRef}
               id={`${id}-cv`}
@@ -200,7 +197,8 @@ function CareerForm() {
               accept="application/pdf,.pdf"
               aria-labelledby={`${id}-cv-l ${id}-cv-b`}
               aria-describedby={`${id}-cv-e`}
-              aria-invalid={!!(errors.cv || errors.material)}
+              aria-required="true"
+              aria-invalid={!!errors.cv}
               onChange={pickCv}
             />
             {cv ? (
@@ -217,7 +215,7 @@ function CareerForm() {
               </label>
             )}
           </div>
-          <span className="t14-err" id={`${id}-cv-e`} role="alert">{errors.cv || errors.material || ""}</span>
+          <span className="t14-err" id={`${id}-cv-e`} role="alert">{errors.cv ?? ""}</span>
         </div>
 
         <div className="t14-f t14-f-wide">

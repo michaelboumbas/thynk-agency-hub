@@ -3,6 +3,7 @@ import type { Lang } from "./site-v14";
 /**
  * Careers (17/10/2026, Mike): open applications. No open position is shown unless one really exists
  * (Mike 17/10: no «fake» roles). We reply to every applicant, whether or not we move forward.
+ * The CV (PDF) is required (Mike 17/10); portfolio and LinkedIn links are optional.
  * Applications: our database (public.career_applications) + CV in the private bucket «career-cvs»
  * + HubSpot for the email notification. Kept 12 months (privacy policy).
  * Page: src/components/thynk14/careers.tsx · sending: src/lib/career-applications.ts.
@@ -10,8 +11,8 @@ import type { Lang } from "./site-v14";
 
 export type Engagement = "freelance" | "part-time" | "full-time";
 
-/** the CV limit, the same as the bucket's (5 MB, PDF only) */
-export const CV_MAX_BYTES = 5 * 1024 * 1024;
+/** the CV limit, the same as the bucket's (10 MB, PDF only — raised from 5 MB, Mike 17/10) */
+export const CV_MAX_BYTES = 10 * 1024 * 1024;
 
 const en = {
   head: {
@@ -31,7 +32,7 @@ const en = {
   },
   form: {
     title: "Your application",
-    lead: "Add your CV, a portfolio or your LinkedIn profile: at least one of the three.",
+    lead: "Attach your CV as a PDF. A portfolio or your LinkedIn profile helps us get to know your work.",
     // labels are written in capitals in the copy (no CSS uppercase; Greek capitals have no accents)
     first: { label: "FIRST NAME", placeholder: "Your first name", error: "Please enter your first name." },
     last: { label: "LAST NAME", placeholder: "Your last name", error: "Please enter your last name." },
@@ -48,12 +49,12 @@ const en = {
     cv: {
       label: "CV (PDF)",
       choose: "Choose a PDF",
-      hint: "Up to 5 MB",
+      hint: "Up to 10 MB",
       remove: "Remove",
       errorType: "Please choose a PDF file.",
-      errorSize: "The file is larger than 5 MB.",
+      errorSize: "The file is larger than 10 MB.",
+      required: "Please attach your CV as a PDF.",
     },
-    material: "Please add a CV, a portfolio or your LinkedIn profile.",
     message: { label: "A FEW WORDS ABOUT YOU", placeholder: "What you do, and what you would like to work on with us" },
     optional: "optional",
     consentA: "I agree that Thynk keeps my application for up to 12 months in order to consider a possible collaboration, as described in the",
@@ -87,7 +88,7 @@ const el: CareersCopy = {
   },
   form: {
     title: "Η αίτησή σας",
-    lead: "Προσθέστε βιογραφικό, portfolio ή το προφίλ σας στο LinkedIn: τουλάχιστον ένα από τα τρία.",
+    lead: "Επισυνάψτε το βιογραφικό σας σε PDF. Ένα portfolio ή το προφίλ σας στο LinkedIn μάς βοηθά να γνωρίσουμε τη δουλειά σας.",
     first: { label: "ΟΝΟΜΑ", placeholder: "Το όνομά σας", error: "Συμπληρώστε το όνομά σας." },
     last: { label: "ΕΠΩΝΥΜΟ", placeholder: "Το επώνυμό σας", error: "Συμπληρώστε το επώνυμό σας." },
     email: { label: "EMAIL", placeholder: "name@example.com", error: "Συμπληρώστε ένα έγκυρο email." },
@@ -103,12 +104,12 @@ const el: CareersCopy = {
     cv: {
       label: "ΒΙΟΓΡΑΦΙΚΟ (PDF)",
       choose: "Επιλέξτε PDF",
-      hint: "Έως 5 MB",
+      hint: "Έως 10 MB",
       remove: "Αφαίρεση",
       errorType: "Επιλέξτε αρχείο PDF.",
-      errorSize: "Το αρχείο είναι μεγαλύτερο από 5 MB.",
+      errorSize: "Το αρχείο είναι μεγαλύτερο από 10 MB.",
+      required: "Επισυνάψτε το βιογραφικό σας σε PDF.",
     },
-    material: "Προσθέστε βιογραφικό, portfolio ή το προφίλ σας στο LinkedIn.",
     message: { label: "ΛΙΓΑ ΛΟΓΙΑ ΓΙΑ ΕΣΑΣ", placeholder: "Τι κάνετε και σε τι θα θέλατε να δουλέψουμε μαζί" },
     optional: "προαιρετικό",
     consentA: "Συμφωνώ να διατηρήσει η Thynk την αίτησή μου έως 12 μήνες, για να εξετάσει πιθανή συνεργασία, όπως περιγράφεται στην",
