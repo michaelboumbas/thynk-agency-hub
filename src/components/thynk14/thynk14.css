@@ -4450,3 +4450,183 @@
     transition: none;
   }
 }
+
+/* ======================= careers (17/10, Mike): /careers — the six areas, then the application form ======================= */
+.t14-cr-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(24px, 4vw, 64px);
+  margin: clamp(24px, 4vh, 40px) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.t14-cr-list > li {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: clamp(14px, 2.4vh, 22px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.t14-cr-n {
+  flex: none;
+  width: 2.2em;
+  font-size: 14px;
+  color: var(--orange);
+  font-variant-numeric: tabular-nums;
+}
+.t14-cr-name {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-stretch: 115%;
+  font-size: clamp(24px, 2.8vw, 42px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+.t14 .t14-cr-note {
+  margin-top: 18px;
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+/* the CV: a drop-style box; the real file input stays focusable but invisible */
+.t14-cr-cv {
+  position: relative;
+}
+.t14-cr-file {
+  position: relative;
+  border: 1.5px dashed var(--ink-3);
+  border-radius: 8px;
+  background: var(--paper-2);
+  transition: border-color 0.2s, background 0.2s;
+}
+.t14-cr-file:hover,
+.t14-cr-file:focus-within {
+  border-color: var(--ink);
+  background: var(--paper);
+}
+.t14-cr-file:focus-within {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+.t14-cr-file.has {
+  border-style: solid;
+  border-color: var(--line);
+  background: var(--paper);
+}
+.t14-cr-file.bad {
+  border-color: #c92a2a;
+}
+.t14-cr-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+.t14-cr-file-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.t14-cr-file-btn small,
+.t14-cr-file-chosen small {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-2);
+}
+.t14-cr-file-ico {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 15px;
+}
+.t14-cr-file-chosen {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 14px 18px;
+  font-size: 15px;
+}
+.t14-cr-file-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.t14-cr-file-name::before {
+  content: "";
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 10px;
+  background: var(--orange); /* the brand dot */
+}
+.t14-cr-file-x {
+  flex: none;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 34px;
+  background: var(--paper);
+  font: 500 13px var(--f);
+  color: var(--ink);
+  cursor: pointer;
+}
+.t14-cr-file-x:hover {
+  border-color: var(--ink);
+}
+.t14-cr-file-chosen small {
+  margin-left: 0;
+}
+.t14-cr-file-chosen .t14-cr-file-x {
+  margin-left: auto;
+}
+
+/* the message field: the form's inputs, taller */
+.t14-form .t14-f textarea {
+  display: block;
+  width: 100%;
+  min-height: 140px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper-2);
+  font: 17px/1.5 var(--f);
+  color: var(--ink);
+  resize: vertical;
+}
+.t14-form .t14-f textarea:focus {
+  outline: 2px solid var(--orange);
+  outline-offset: 0;
+  background: var(--paper);
+}
+
+@media (max-width: 900px) {
+  .t14-cr-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .t14-cr-file-btn {
+    flex-wrap: wrap;
+  }
+  .t14-cr-file-btn small {
+    margin-left: 44px;
+    flex-basis: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t14-cr-file {
+    transition: none;
+  }
+}

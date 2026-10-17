@@ -238,6 +238,8 @@ export const v14Routes = {
   privacy: "/privacy",
   // 17/10 (Mike): what the press wrote about Thynk + the kit for journalists. In the footer, not the menu.
   press: "/press",
+  // 17/10 (Mike): open applications (no open position shown unless one exists). In the footer, not the menu.
+  careers: "/careers",
 } as const;
 
 export const v14Menu = [

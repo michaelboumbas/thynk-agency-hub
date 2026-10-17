@@ -68,6 +68,72 @@ export type Database = {
         }
         Relationships: []
       }
+      career_applications: {
+        Row: {
+          area: string
+          consent: boolean
+          consent_text: string | null
+          created_at: string
+          cv_name: string | null
+          cv_path: string | null
+          email: string
+          engagement: string
+          first_name: string
+          hubspot_ok: boolean | null
+          id: string
+          lang: string | null
+          last_name: string
+          linkedin_url: string | null
+          message: string | null
+          page: string | null
+          phone: string | null
+          portfolio_url: string | null
+          status: string
+        }
+        Insert: {
+          area: string
+          consent: boolean
+          consent_text?: string | null
+          created_at?: string
+          cv_name?: string | null
+          cv_path?: string | null
+          email: string
+          engagement: string
+          first_name: string
+          hubspot_ok?: boolean | null
+          id?: string
+          lang?: string | null
+          last_name: string
+          linkedin_url?: string | null
+          message?: string | null
+          page?: string | null
+          phone?: string | null
+          portfolio_url?: string | null
+          status?: string
+        }
+        Update: {
+          area?: string
+          consent?: boolean
+          consent_text?: string | null
+          created_at?: string
+          cv_name?: string | null
+          cv_path?: string | null
+          email?: string
+          engagement?: string
+          first_name?: string
+          hubspot_ok?: boolean | null
+          id?: string
+          lang?: string | null
+          last_name?: string
+          linkedin_url?: string | null
+          message?: string | null
+          page?: string | null
+          phone?: string | null
+          portfolio_url?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -1,5 +1,6 @@
 /**
  * Privacy Policy, /privacy and /el/privacy (12/10/2026), written for the audit form (our database + HubSpot).
+ * 17/10/2026: + applications from the Careers page (database + private CV storage + HubSpot, kept 12 months).
  * Not legal advice: have it reviewed, and add the legal name / VAT number once the general partnership is registered.
  * If anything changes (new tools, analytics, ads pixels, newsletter), this page changes with it.
  */
@@ -16,7 +17,7 @@ const en: PrivacyCopy = {
   label: "Legal",
   title: "Privacy",
   lead: "What we collect when you contact us, why, where it is kept and what you can ask of us.",
-  updated: "Last updated: 12 October 2026",
+  updated: "Last updated: 17 October 2026",
   sections: [
     {
       h: "Who we are",
@@ -60,6 +61,15 @@ const en: PrivacyCopy = {
       ],
     },
     {
+      h: "Applications through the Careers page",
+      p: [
+        "When you apply through the Careers page, we collect your first and last name, your email, your phone number if you give it, the area and type of collaboration you are interested in, the links you add (portfolio, LinkedIn), your CV if you upload one (PDF), the message you write, the date, page and language of the application, and the consent sentence you accepted.",
+        "We use them only to consider a possible collaboration with you and to reply to you. Legal basis: your consent and steps taken at your request before a possible contract (Art. 6(1)(a) and (b) GDPR).",
+        "Applications are kept in our database and CVs in private file storage on Lovable Cloud (Supabase); neither can be read from the website. We are notified by email through HubSpot, where your application also appears as a contact. Only the founders of Thynk have access.",
+        "We keep an application, together with the CV, for 12 months from the day we receive it and then delete it, unless we have started working together. You can ask us to delete it sooner at any time.",
+      ],
+    },
+    {
       h: "Fonts, cookies and storage",
       p: [
         "The site loads its fonts from Google Fonts, so your browser connects to Google's servers, which receive your IP address. We do not use advertising or analytics cookies. The site uses your browser's own storage only for functional purposes, for example to carry your choice from the footer to the audit form.",
@@ -79,7 +89,7 @@ const el: PrivacyCopy = {
   label: "Νομικά",
   title: "Απόρρητο",
   lead: "Τι συλλέγουμε όταν επικοινωνείτε μαζί μας, γιατί, πού φυλάσσεται και τι μπορείτε να μας ζητήσετε.",
-  updated: "Τελευταία ενημέρωση: 12 Οκτωβρίου 2026",
+  updated: "Τελευταία ενημέρωση: 17 Οκτωβρίου 2026",
   sections: [
     {
       h: "Ποιοι είμαστε",
@@ -120,6 +130,15 @@ const el: PrivacyCopy = {
       h: "Για πόσο τα κρατάμε",
       p: [
         "Αν δεν ξεκινήσουμε συνεργασία, διαγράφουμε το αίτημά σας μέσα σε 24 μήνες από την τελευταία μας επικοινωνία, ή νωρίτερα αν μας το ζητήσετε. Αν συνεργαστούμε, τα στοιχεία σας γίνονται μέρος του αρχείου πελατών μας και φυλάσσονται όσο ορίζει ο νόμος.",
+      ],
+    },
+    {
+      h: "Αιτήσεις μέσω της σελίδας Καριέρα",
+      p: [
+        "Όταν κάνετε αίτηση μέσω της σελίδας Καριέρα, συλλέγουμε το όνομα και το επώνυμό σας, το email σας, το τηλέφωνό σας αν το δώσετε, τον τομέα και τη μορφή συνεργασίας που σας ενδιαφέρει, τους συνδέσμους που προσθέτετε (portfolio, LinkedIn), το βιογραφικό σας αν το ανεβάσετε (PDF), το μήνυμα που γράφετε, την ημερομηνία, τη σελίδα και τη γλώσσα της αίτησης, και τη φράση συναίνεσης που αποδεχτήκατε.",
+        "Τα χρησιμοποιούμε μόνο για να εξετάσουμε μια πιθανή συνεργασία μαζί σας και για να σας απαντήσουμε. Νομική βάση: η συναίνεσή σας και ενέργειες που γίνονται κατόπιν αιτήματός σας πριν από μια πιθανή σύμβαση (άρθρο 6 παρ. 1 στοιχ. α΄ και β΄ ΓΚΠΔ).",
+        "Οι αιτήσεις φυλάσσονται στη βάση δεδομένων μας και τα βιογραφικά σε ιδιωτικό χώρο αρχείων στο Lovable Cloud (Supabase)· κανένα από τα δύο δεν διαβάζεται από το site. Λαμβάνουμε ειδοποίηση με email μέσω του HubSpot, όπου η αίτησή σας εμφανίζεται επίσης ως επαφή. Πρόσβαση έχουν μόνο οι ιδρυτές της Thynk.",
+        "Κρατάμε μια αίτηση, μαζί με το βιογραφικό, για 12 μήνες από την ημέρα που τη λαμβάνουμε και έπειτα τη διαγράφουμε, εκτός αν έχουμε ξεκινήσει συνεργασία. Μπορείτε να μας ζητήσετε να τη διαγράψουμε νωρίτερα οποιαδήποτε στιγμή.",
       ],
     },
     {
