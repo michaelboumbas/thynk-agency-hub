@@ -236,6 +236,8 @@ export const v14Routes = {
   about: "/about",
   contact: "/contact",
   privacy: "/privacy",
+  // 17/10 (Mike): what the press wrote about Thynk + the kit for journalists. In the footer, not the menu.
+  press: "/press",
 } as const;
 
 export const v14Menu = [

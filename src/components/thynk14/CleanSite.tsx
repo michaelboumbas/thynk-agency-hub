@@ -1,6 +1,7 @@
 import { CleanShell } from "./Shell";
 import { AboutPage, AuditPage, ContactPage, HomePage, PrivacyPage, ServicesPage, SolutionsPage } from "./pages";
 import { WorkPage, CasePage } from "./work";
+import { PressPage } from "./press";
 import { v14Routes, type Lang } from "@/content/site-v14";
 import type { CaseStudy } from "@/content/work-v14";
 
@@ -11,6 +12,7 @@ import type { CaseStudy } from "@/content/work-v14";
  * behind every page. Pages: / · /services · /solutions · /audit · /about.
  * 02/10 (Mike): Greek version under /el (/el, /el/services, …), same pages, copy from site-v14-el.ts.
  * 07/10 (Mike): /work + /work/:slug (case studies, copy in src/content/work-v14.ts, page in work.tsx).
+ * 17/10 (Mike): /press (articles about Thynk + kit for journalists, copy in src/content/press-v14.ts, page in press.tsx).
  * Pieces: Shell.tsx (header, field, footer, gate) · pages.tsx · work.tsx · shared.tsx · motion.ts · thynk14.css.
  * Approved prototype: https://claude.ai/artifact/M9Eqtsp9yAaiH1j7uykBJ9
  */
@@ -24,6 +26,7 @@ const PAGES = {
   [v14Routes.about]: AboutPage,
   [v14Routes.contact]: ContactPage,
   [v14Routes.privacy]: PrivacyPage,
+  [v14Routes.press]: PressPage,
 } as const;
 
 export type CleanPath = keyof typeof PAGES;

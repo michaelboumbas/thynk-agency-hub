@@ -17,6 +17,7 @@ import { Route as LabRouteImport } from './routes/lab'
 import { Route as ParadeigmataRouteImport } from './routes/paradeigmata'
 import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PressRouteImport } from './routes/press'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SolutionsRouteImport } from './routes/solutions'
@@ -26,6 +27,7 @@ import { Route as ElAboutRouteImport } from './routes/el/about'
 import { Route as ElAuditRouteImport } from './routes/el/audit'
 import { Route as ElContactRouteImport } from './routes/el/contact'
 import { Route as ElPrivacyRouteImport } from './routes/el/privacy'
+import { Route as ElPressRouteImport } from './routes/el/press'
 import { Route as ElServicesRouteImport } from './routes/el/services'
 import { Route as ElSolutionsRouteImport } from './routes/el/solutions'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
@@ -73,6 +75,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PressRoute = PressRouteImport.update({
+  id: '/press',
+  path: '/press',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
@@ -118,6 +125,11 @@ const ElPrivacyRoute = ElPrivacyRouteImport.update({
   path: '/el/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ElPressRoute = ElPressRouteImport.update({
+  id: '/el/press',
+  path: '/el/press',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ElServicesRoute = ElServicesRouteImport.update({
   id: '/el/services',
   path: '/el/services',
@@ -158,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
   '/privacy': typeof PrivacyRoute
+  '/press': typeof PressRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
@@ -166,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/el/audit': typeof ElAuditRoute
   '/el/contact': typeof ElContactRoute
   '/el/privacy': typeof ElPrivacyRoute
+  '/el/press': typeof ElPressRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -183,6 +197,7 @@ export interface FileRoutesByTo {
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
   '/privacy': typeof PrivacyRoute
+  '/press': typeof PressRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
@@ -191,6 +206,7 @@ export interface FileRoutesByTo {
   '/el/audit': typeof ElAuditRoute
   '/el/contact': typeof ElContactRoute
   '/el/privacy': typeof ElPrivacyRoute
+  '/el/press': typeof ElPressRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -209,6 +225,7 @@ export interface FileRoutesById {
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
   '/privacy': typeof PrivacyRoute
+  '/press': typeof PressRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
@@ -217,6 +234,7 @@ export interface FileRoutesById {
   '/el/audit': typeof ElAuditRoute
   '/el/contact': typeof ElContactRoute
   '/el/privacy': typeof ElPrivacyRoute
+  '/el/press': typeof ElPressRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -236,6 +254,7 @@ export interface FileRouteTypes {
     | '/paradeigmata'
     | '/poioi-eimaste'
     | '/privacy'
+    | '/press'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
@@ -244,6 +263,7 @@ export interface FileRouteTypes {
     | '/el/audit'
     | '/el/contact'
     | '/el/privacy'
+    | '/el/press'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -261,6 +281,7 @@ export interface FileRouteTypes {
     | '/paradeigmata'
     | '/poioi-eimaste'
     | '/privacy'
+    | '/press'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
@@ -269,6 +290,7 @@ export interface FileRouteTypes {
     | '/el/audit'
     | '/el/contact'
     | '/el/privacy'
+    | '/el/press'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -286,6 +308,7 @@ export interface FileRouteTypes {
     | '/paradeigmata'
     | '/poioi-eimaste'
     | '/privacy'
+    | '/press'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
@@ -294,6 +317,7 @@ export interface FileRouteTypes {
     | '/el/audit'
     | '/el/contact'
     | '/el/privacy'
+    | '/el/press'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -312,6 +336,7 @@ export interface RootRouteChildren {
   ParadeigmataRoute: typeof ParadeigmataRoute
   PoioiEimasteRoute: typeof PoioiEimasteRoute
   PrivacyRoute: typeof PrivacyRoute
+  PressRoute: typeof PressRoute
   ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolutionsRoute: typeof SolutionsRoute
@@ -320,6 +345,7 @@ export interface RootRouteChildren {
   ElAuditRoute: typeof ElAuditRoute
   ElContactRoute: typeof ElContactRoute
   ElPrivacyRoute: typeof ElPrivacyRoute
+  ElPressRoute: typeof ElPressRoute
   ElServicesRoute: typeof ElServicesRoute
   ElSolutionsRoute: typeof ElSolutionsRoute
   WorkSlugRoute: typeof WorkSlugRoute
@@ -387,6 +413,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/press': {
+      id: '/press'
+      path: '/press'
+      fullPath: '/press'
+      preLoaderRoute: typeof PressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
@@ -450,6 +483,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ElPrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/el/press': {
+      id: '/el/press'
+      path: '/el/press'
+      fullPath: '/el/press'
+      preLoaderRoute: typeof ElPressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/el/services': {
       id: '/el/services'
       path: '/el/services'
@@ -504,6 +544,7 @@ const rootRouteChildren: RootRouteChildren = {
   ParadeigmataRoute: ParadeigmataRoute,
   PoioiEimasteRoute: PoioiEimasteRoute,
   PrivacyRoute: PrivacyRoute,
+  PressRoute: PressRoute,
   ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolutionsRoute: SolutionsRoute,
@@ -512,6 +553,7 @@ const rootRouteChildren: RootRouteChildren = {
   ElAuditRoute: ElAuditRoute,
   ElContactRoute: ElContactRoute,
   ElPrivacyRoute: ElPrivacyRoute,
+  ElPressRoute: ElPressRoute,
   ElServicesRoute: ElServicesRoute,
   ElSolutionsRoute: ElSolutionsRoute,
   WorkSlugRoute: WorkSlugRoute,

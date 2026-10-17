@@ -23,6 +23,7 @@ import {
 } from "./shared";
 import { WorkStrip } from "./work";
 import { privacyCopy } from "@/content/privacy-v14";
+import { pressCopy, publishedPress } from "@/content/press-v14";
 
 /* ================================ Home ================================ */
 export function HomePage() {
@@ -380,8 +381,10 @@ export function AuditPage() {
 
 /* ================================ About ================================ */
 export function AboutPage() {
-  const { c } = useCopy();
+  const { c, lang } = useCopy();
   const a = c.aboutPage;
+  // 17/10 (Mike): one line under the team that leads to /press («In the press: Marketing Week →»)
+  const outlets = [...new Set(publishedPress.map((it) => it.outlet))].slice(0, 3).join(", ");
   return (
     <>
       <PageHead p={c.pageHeads.about} />
@@ -407,6 +410,11 @@ export function AboutPage() {
             </li>
           ))}
         </ul>
+        {outlets && (
+          <MoreLink to={v14Routes.press}>
+            {pressCopy[lang].aboutLine} {outlets} →
+          </MoreLink>
+        )}
       </section>
 
       {/* how we work: the same fly-in cards as Method */}

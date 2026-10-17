@@ -9,6 +9,7 @@ import { v14Routes, v14Social, type Lang, type V14Path } from "@/content/site-v1
 import { Logo, PAIN_EVENT, PAIN_KEY } from "./shared";
 import { useCleanMotion } from "./motion";
 import { DotIntro, IntroFrame, introPending } from "./intro";
+import { pressCopy } from "@/content/press-v14";
 
 // Inter for text; TikTok Sans (Grilli Type, has Greek, width 75–150%) for titles — Mike 02/10/2026
 const INTER_HREF =
@@ -348,6 +349,8 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
           {c.menu.map((n) => (
             <Link key={n.to} to={href(n.to)} aria-current={pathname === n.to ? "page" : undefined}>{n.label}</Link>
           ))}
+          {/* 17/10 (Mike): Press lives in the footer, not the top menu */}
+          <Link to={href(v14Routes.press)} aria-current={pathname === v14Routes.press ? "page" : undefined}>{pressCopy[lang].head.label}</Link>
           <Link to={href(v14Routes.privacy)} aria-current={pathname === v14Routes.privacy ? "page" : undefined}>{f.privacy}</Link>
         </nav>
         <LangLink pathname={pathname} other={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</LangLink>
