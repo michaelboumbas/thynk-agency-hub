@@ -78,7 +78,7 @@ const en = {
   /** the line on the About page that leads here */
   aboutLine: "In the press:",
   kit: {
-    label: "For journalists",
+    label: "Press kit",
     title: "For journalists",
     intro: "Everything you need to write about Thynk: a contact, a short description and our logo files.",
     spelling: "Our name is written Thynk, with a y.",
@@ -110,7 +110,7 @@ const el: PressCopy = {
   months: ["Ιαν", "Φεβ", "Μαρ", "Απρ", "Μαΐ", "Ιουν", "Ιουλ", "Αυγ", "Σεπ", "Οκτ", "Νοε", "Δεκ"],
   aboutLine: "Στον Τύπο:",
   kit: {
-    label: "Για δημοσιογράφους",
+    label: "Υλικό Τύπου",
     title: "Για δημοσιογράφους",
     intro: "Ό,τι χρειάζεστε για να γράψετε για τη Thynk: επαφή, σύντομη περιγραφή και τα αρχεία του λογότυπου.",
     spelling: "Το όνομά μας γράφεται Thynk, με y.",
