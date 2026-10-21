@@ -423,9 +423,9 @@ export function IrhaPage({ onBook }: { onBook: () => void }) {
         </div>
       </section>
 
-      {/* after the audit: the pilot */}
+      {/* after the audit: agreed and paid build, then the first 30–45 days of operation (no free trial, Mike 21/10) */}
       <section className="t14-wrap">
-        <SecHead label={t.pilot.label} title={t.pilot.title} />
+        <SecHead label={t.pilot.label} title={t.pilot.title} lead={t.pilot.lead} />
         <ol className="t14-ir-pilot">
           {t.pilot.steps.map((s, i) => (
             <li key={s.title} className={i === 2 ? "run" : undefined}>
