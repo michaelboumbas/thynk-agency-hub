@@ -348,9 +348,10 @@ export const PAIN_EVENT = "t14:pain";
 
 type BookKey = "first" | "last" | "email" | "phone" | "biz";
 
-export function BookForm({ idPrefix = "t14" }: { idPrefix?: string }) {
+/** industry: a landing page can start the form with its sector chosen (/irha → hotels, 21/10); must be one of c.book.industry.options */
+export function BookForm({ idPrefix = "t14", industry = "" }: { idPrefix?: string; industry?: string }) {
   const { c, lang, href } = useCopy();
-  const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", biz: "", industry: "", pain: "" });
+  const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", biz: "", industry, pain: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [consent, setConsent] = useState(false);
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");

@@ -19,6 +19,7 @@ import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PressRouteImport } from './routes/press'
 import { Route as CareersRouteImport } from './routes/careers'
+import { Route as IrhaRouteImport } from './routes/irha'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SolutionsRouteImport } from './routes/solutions'
@@ -85,6 +86,11 @@ const PressRoute = PressRouteImport.update({
 const CareersRoute = CareersRouteImport.update({
   id: '/careers',
   path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IrhaRoute = IrhaRouteImport.update({
+  id: '/irha',
+  path: '/irha',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -184,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/press': typeof PressRoute
   '/careers': typeof CareersRoute
+  '/irha': typeof IrhaRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
@@ -213,6 +220,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/press': typeof PressRoute
   '/careers': typeof CareersRoute
+  '/irha': typeof IrhaRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
@@ -243,6 +251,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/press': typeof PressRoute
   '/careers': typeof CareersRoute
+  '/irha': typeof IrhaRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
@@ -274,6 +283,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/press'
     | '/careers'
+    | '/irha'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
@@ -303,6 +313,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/press'
     | '/careers'
+    | '/irha'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
@@ -332,6 +343,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/press'
     | '/careers'
+    | '/irha'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
@@ -362,6 +374,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   PressRoute: typeof PressRoute
   CareersRoute: typeof CareersRoute
+  IrhaRoute: typeof IrhaRoute
   ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolutionsRoute: typeof SolutionsRoute
@@ -451,6 +464,13 @@ declare module '@tanstack/react-router' {
       path: '/careers'
       fullPath: '/careers'
       preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/irha': {
+      id: '/irha'
+      path: '/irha'
+      fullPath: '/irha'
+      preLoaderRoute: typeof IrhaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -586,6 +606,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   PressRoute: PressRoute,
   CareersRoute: CareersRoute,
+  IrhaRoute: IrhaRoute,
   ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolutionsRoute: SolutionsRoute,

@@ -29,6 +29,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
   const burgerRef = useRef<HTMLButtonElement>(null);
   const hash = useRouterState({ select: (s) => s.location.hash });
   const slug = useContext(SlugCtx);
+  const book = useContext(BookCtx);
   useCleanMotion(rootRef, slug ? `${pathname}/${slug}` : pathname);
 
   // the two faces, only for this version
@@ -84,7 +85,11 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
           <LangLink className="t14-lang" pathname={pathname} other={other} aria-label={c.ui.switchAria}>
             {c.ui.switchTo}
           </LangLink>
-          <Link className="t14-pill" to={href(v14Routes.audit)} hash="book">{c.hero.primary}</Link>
+          {book ? (
+            <button type="button" className="t14-pill" onClick={book}>{c.hero.primary}</button>
+          ) : (
+            <Link className="t14-pill" to={href(v14Routes.audit)} hash="book">{c.hero.primary}</Link>
+          )}
           <button
             ref={burgerRef}
             type="button"
@@ -120,6 +125,7 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
 }) {
   const { c, href, lang } = useCopy();
   const other: Lang = lang === "en" ? "el" : "en";
+  const book = useContext(BookCtx);
   const items = [
     { key: "home", label: c.ui.homeLabel, to: v14Routes.home as V14Path, hash: undefined as string | undefined },
     ...c.menu.map((n) => ({ key: n.to, label: n.label, to: n.to as V14Path, hash: undefined as string | undefined })),
@@ -223,7 +229,11 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
         })}
       </nav>
       <div className="t14-menu-foot">
-        <Link className="t14-pill lg" to={href(v14Routes.audit)} hash="book" onClick={onClose}>{c.hero.primary}</Link>
+        {book ? (
+          <button type="button" className="t14-pill lg" onClick={() => { onClose(); book(); }}>{c.hero.primary}</button>
+        ) : (
+          <Link className="t14-pill lg" to={href(v14Routes.audit)} hash="book" onClick={onClose}>{c.hero.primary}</Link>
+        )}
         <LangLink className="t14-menu-lang" pathname={pathname} other={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</LangLink>
         <a className="t14-menu-mail" href={`mailto:${c.footer.contact}`}>{c.footer.contact}</a>
       </div>
@@ -241,6 +251,7 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
   const { c, href, lang } = useCopy();
   const f = c.footer;
   const other: Lang = lang === "en" ? "el" : "en";
+  const book = useContext(BookCtx);
   const [pick, setPick] = useState<number | null>(null);
   const [seen, setSeen] = useState(false);
   const footRef = useRef<HTMLElement>(null);
@@ -306,10 +317,31 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
               </button>
             ))}
           </div>
-          <Link className="t14-pill lg t14-foot-pill" to={href(v14Routes.audit)} hash="book" onClick={go}>
-            {c.final.button}
-            {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
-          </Link>
+          {book ? (
+            // /irha: the form opens on the page; the choice travels through sessionStorage, read when the form mounts
+            <button
+              type="button"
+              className="t14-pill lg t14-foot-pill"
+              onClick={() => {
+                if (pick !== null) {
+                  try {
+                    window.sessionStorage.setItem(PAIN_KEY, String(pick));
+                  } catch {
+                    /* storage blocked: the form simply starts without a choice */
+                  }
+                }
+                book();
+              }}
+            >
+              {c.final.button}
+              {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
+            </button>
+          ) : (
+            <Link className="t14-pill lg t14-foot-pill" to={href(v14Routes.audit)} hash="book" onClick={go}>
+              {c.final.button}
+              {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
+            </Link>
+          )}
         </div>
 
         <div className="t14-foot-grid">
@@ -361,6 +393,10 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
   );
 }
 
+/** 21/10 (Mike): a landing page can take over «Κλείστε audit» and open the form on the page itself (/irha).
+ *  When set, the header, menu and footer buttons call it instead of going to /audit#book. */
+export const BookCtx = createContext<(() => void) | null>(null);
+
 /** a case page (/work/:slug) passes its slug down, so the EL/EN switch lands on the same case (07/10) */
 const SlugCtx = createContext<string | undefined>(undefined);
 
@@ -387,11 +423,13 @@ function LangLink({ pathname, other, children, ...rest }: {
   );
 }
 
-export function CleanShell({ pathname, lang, slug, children }: {
+export function CleanShell({ pathname, lang, slug, onBook, children }: {
   pathname: V14Path;
   lang: Lang;
   /** set on case pages: /work/:slug */
   slug?: string;
+  /** set on landing pages that open the audit form in place (/irha, 21/10) */
+  onBook?: () => void;
   children: ReactNode;
 }) {
   const show = useSiteGate();
@@ -403,7 +441,9 @@ export function CleanShell({ pathname, lang, slug, children }: {
   return (
     <LangProvider lang={lang}>
       <SlugCtx.Provider value={slug}>
-        <Shell pathname={pathname}>{children}</Shell>
+        <BookCtx.Provider value={onBook ?? null}>
+          <Shell pathname={pathname}>{children}</Shell>
+        </BookCtx.Provider>
       </SlugCtx.Provider>
       {intro && <DotIntro onDone={() => setIntro(false)} />}
     </LangProvider>
