@@ -12,14 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuditRouteImport } from './routes/audit'
+import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as IrhaRouteImport } from './routes/irha'
 import { Route as LabRouteImport } from './routes/lab'
 import { Route as ParadeigmataRouteImport } from './routes/paradeigmata'
 import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
-import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PressRouteImport } from './routes/press'
-import { Route as CareersRouteImport } from './routes/careers'
-import { Route as IrhaRouteImport } from './routes/irha'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SolutionsRouteImport } from './routes/solutions'
@@ -27,10 +27,10 @@ import { Route as YpiresiesRouteImport } from './routes/ypiresies'
 import { Route as ElIndexRouteImport } from './routes/el/index'
 import { Route as ElAboutRouteImport } from './routes/el/about'
 import { Route as ElAuditRouteImport } from './routes/el/audit'
-import { Route as ElContactRouteImport } from './routes/el/contact'
-import { Route as ElPrivacyRouteImport } from './routes/el/privacy'
-import { Route as ElPressRouteImport } from './routes/el/press'
 import { Route as ElCareersRouteImport } from './routes/el/careers'
+import { Route as ElContactRouteImport } from './routes/el/contact'
+import { Route as ElPressRouteImport } from './routes/el/press'
+import { Route as ElPrivacyRouteImport } from './routes/el/privacy'
 import { Route as ElServicesRouteImport } from './routes/el/services'
 import { Route as ElSolutionsRouteImport } from './routes/el/solutions'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
@@ -53,9 +53,19 @@ const AuditRoute = AuditRouteImport.update({
   path: '/audit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IrhaRoute = IrhaRouteImport.update({
+  id: '/irha',
+  path: '/irha',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LabRoute = LabRouteImport.update({
@@ -73,24 +83,14 @@ const PoioiEimasteRoute = PoioiEimasteRouteImport.update({
   path: '/poioi-eimaste',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PressRoute = PressRouteImport.update({
   id: '/press',
   path: '/press',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CareersRoute = CareersRouteImport.update({
-  id: '/careers',
-  path: '/careers',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IrhaRoute = IrhaRouteImport.update({
-  id: '/irha',
-  path: '/irha',
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -128,14 +128,14 @@ const ElAuditRoute = ElAuditRouteImport.update({
   path: '/el/audit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ElCareersRoute = ElCareersRouteImport.update({
+  id: '/el/careers',
+  path: '/el/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ElContactRoute = ElContactRouteImport.update({
   id: '/el/contact',
   path: '/el/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ElPrivacyRoute = ElPrivacyRouteImport.update({
-  id: '/el/privacy',
-  path: '/el/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ElPressRoute = ElPressRouteImport.update({
@@ -143,9 +143,9 @@ const ElPressRoute = ElPressRouteImport.update({
   path: '/el/press',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ElCareersRoute = ElCareersRouteImport.update({
-  id: '/el/careers',
-  path: '/el/careers',
+const ElPrivacyRoute = ElPrivacyRouteImport.update({
+  id: '/el/privacy',
+  path: '/el/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ElServicesRoute = ElServicesRouteImport.update({
@@ -183,24 +183,24 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
+  '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/irha': typeof IrhaRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
-  '/privacy': typeof PrivacyRoute
   '/press': typeof PressRoute
-  '/careers': typeof CareersRoute
-  '/irha': typeof IrhaRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
   '/el/about': typeof ElAboutRoute
   '/el/audit': typeof ElAuditRoute
-  '/el/contact': typeof ElContactRoute
-  '/el/privacy': typeof ElPrivacyRoute
-  '/el/press': typeof ElPressRoute
   '/el/careers': typeof ElCareersRoute
+  '/el/contact': typeof ElContactRoute
+  '/el/press': typeof ElPressRoute
+  '/el/privacy': typeof ElPrivacyRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -213,24 +213,24 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
+  '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/irha': typeof IrhaRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
-  '/privacy': typeof PrivacyRoute
   '/press': typeof PressRoute
-  '/careers': typeof CareersRoute
-  '/irha': typeof IrhaRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
   '/el/about': typeof ElAboutRoute
   '/el/audit': typeof ElAuditRoute
-  '/el/contact': typeof ElContactRoute
-  '/el/privacy': typeof ElPrivacyRoute
-  '/el/press': typeof ElPressRoute
   '/el/careers': typeof ElCareersRoute
+  '/el/contact': typeof ElContactRoute
+  '/el/press': typeof ElPressRoute
+  '/el/privacy': typeof ElPrivacyRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -244,24 +244,24 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
+  '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/irha': typeof IrhaRoute
   '/lab': typeof LabRoute
   '/paradeigmata': typeof ParadeigmataRoute
   '/poioi-eimaste': typeof PoioiEimasteRoute
-  '/privacy': typeof PrivacyRoute
   '/press': typeof PressRoute
-  '/careers': typeof CareersRoute
-  '/irha': typeof IrhaRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
   '/ypiresies': typeof YpiresiesRoute
   '/el/about': typeof ElAboutRoute
   '/el/audit': typeof ElAuditRoute
-  '/el/contact': typeof ElContactRoute
-  '/el/privacy': typeof ElPrivacyRoute
-  '/el/press': typeof ElPressRoute
   '/el/careers': typeof ElCareersRoute
+  '/el/contact': typeof ElContactRoute
+  '/el/press': typeof ElPressRoute
+  '/el/privacy': typeof ElPrivacyRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -276,24 +276,24 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/audit'
+    | '/careers'
     | '/contact'
+    | '/irha'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
-    | '/privacy'
     | '/press'
-    | '/careers'
-    | '/irha'
+    | '/privacy'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
     | '/ypiresies'
     | '/el/about'
     | '/el/audit'
-    | '/el/contact'
-    | '/el/privacy'
-    | '/el/press'
     | '/el/careers'
+    | '/el/contact'
+    | '/el/press'
+    | '/el/privacy'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -306,24 +306,24 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/audit'
+    | '/careers'
     | '/contact'
+    | '/irha'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
-    | '/privacy'
     | '/press'
-    | '/careers'
-    | '/irha'
+    | '/privacy'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
     | '/ypiresies'
     | '/el/about'
     | '/el/audit'
-    | '/el/contact'
-    | '/el/privacy'
-    | '/el/press'
     | '/el/careers'
+    | '/el/contact'
+    | '/el/press'
+    | '/el/privacy'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -336,24 +336,24 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/audit'
+    | '/careers'
     | '/contact'
+    | '/irha'
     | '/lab'
     | '/paradeigmata'
     | '/poioi-eimaste'
-    | '/privacy'
     | '/press'
-    | '/careers'
-    | '/irha'
+    | '/privacy'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
     | '/ypiresies'
     | '/el/about'
     | '/el/audit'
-    | '/el/contact'
-    | '/el/privacy'
-    | '/el/press'
     | '/el/careers'
+    | '/el/contact'
+    | '/el/press'
+    | '/el/privacy'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -367,24 +367,24 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AuditRoute: typeof AuditRoute
+  CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
+  IrhaRoute: typeof IrhaRoute
   LabRoute: typeof LabRoute
   ParadeigmataRoute: typeof ParadeigmataRoute
   PoioiEimasteRoute: typeof PoioiEimasteRoute
-  PrivacyRoute: typeof PrivacyRoute
   PressRoute: typeof PressRoute
-  CareersRoute: typeof CareersRoute
-  IrhaRoute: typeof IrhaRoute
+  PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolutionsRoute: typeof SolutionsRoute
   YpiresiesRoute: typeof YpiresiesRoute
   ElAboutRoute: typeof ElAboutRoute
   ElAuditRoute: typeof ElAuditRoute
-  ElContactRoute: typeof ElContactRoute
-  ElPrivacyRoute: typeof ElPrivacyRoute
-  ElPressRoute: typeof ElPressRoute
   ElCareersRoute: typeof ElCareersRoute
+  ElContactRoute: typeof ElContactRoute
+  ElPressRoute: typeof ElPressRoute
+  ElPrivacyRoute: typeof ElPrivacyRoute
   ElServicesRoute: typeof ElServicesRoute
   ElSolutionsRoute: typeof ElSolutionsRoute
   WorkSlugRoute: typeof WorkSlugRoute
@@ -417,11 +417,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuditRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/irha': {
+      id: '/irha'
+      path: '/irha'
+      fullPath: '/irha'
+      preLoaderRoute: typeof IrhaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lab': {
@@ -445,13 +459,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoioiEimasteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/press': {
       id: '/press'
       path: '/press'
@@ -459,18 +466,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PressRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/careers': {
-      id: '/careers'
-      path: '/careers'
-      fullPath: '/careers'
-      preLoaderRoute: typeof CareersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/irha': {
-      id: '/irha'
-      path: '/irha'
-      fullPath: '/irha'
-      preLoaderRoute: typeof IrhaRouteImport
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -522,18 +522,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ElAuditRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/el/careers': {
+      id: '/el/careers'
+      path: '/el/careers'
+      fullPath: '/el/careers'
+      preLoaderRoute: typeof ElCareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/el/contact': {
       id: '/el/contact'
       path: '/el/contact'
       fullPath: '/el/contact'
       preLoaderRoute: typeof ElContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/el/privacy': {
-      id: '/el/privacy'
-      path: '/el/privacy'
-      fullPath: '/el/privacy'
-      preLoaderRoute: typeof ElPrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/el/press': {
@@ -543,11 +543,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ElPressRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/el/careers': {
-      id: '/el/careers'
-      path: '/el/careers'
-      fullPath: '/el/careers'
-      preLoaderRoute: typeof ElCareersRouteImport
+    '/el/privacy': {
+      id: '/el/privacy'
+      path: '/el/privacy'
+      fullPath: '/el/privacy'
+      preLoaderRoute: typeof ElPrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/el/services': {
@@ -599,24 +599,24 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AuditRoute: AuditRoute,
+  CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
+  IrhaRoute: IrhaRoute,
   LabRoute: LabRoute,
   ParadeigmataRoute: ParadeigmataRoute,
   PoioiEimasteRoute: PoioiEimasteRoute,
-  PrivacyRoute: PrivacyRoute,
   PressRoute: PressRoute,
-  CareersRoute: CareersRoute,
-  IrhaRoute: IrhaRoute,
+  PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolutionsRoute: SolutionsRoute,
   YpiresiesRoute: YpiresiesRoute,
   ElAboutRoute: ElAboutRoute,
   ElAuditRoute: ElAuditRoute,
-  ElContactRoute: ElContactRoute,
-  ElPrivacyRoute: ElPrivacyRoute,
-  ElPressRoute: ElPressRoute,
   ElCareersRoute: ElCareersRoute,
+  ElContactRoute: ElContactRoute,
+  ElPressRoute: ElPressRoute,
+  ElPrivacyRoute: ElPrivacyRoute,
   ElServicesRoute: ElServicesRoute,
   ElSolutionsRoute: ElSolutionsRoute,
   WorkSlugRoute: WorkSlugRoute,
