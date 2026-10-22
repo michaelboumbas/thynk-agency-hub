@@ -1,0 +1,2 @@
+- [x] Add the bilingual transactional subscription-confirmation template and authenticated INSERT webhook receiver.
+- [ ] Activate a nonblocking database INSERT webhook and verify a real new signup and repeat signup. Blocked: no supported database-webhook configuration tool is available; email-related SQL migrations are prohibited. The receiver also needs publishing with user approval before production activation.

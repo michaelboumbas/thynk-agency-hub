@@ -35,8 +35,10 @@ import { Route as ElServicesRouteImport } from './routes/el/services'
 import { Route as ElSolutionsRouteImport } from './routes/el/solutions'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
 import { Route as WorkSlugRouteImport } from './routes/work/$slug'
+import { Route as ApiPublicSubscriptionConfirmationRouteImport } from './routes/api/public/subscription-confirmation'
 import { Route as ElWorkIndexRouteImport } from './routes/el/work/index'
 import { Route as ElWorkSlugRouteImport } from './routes/el/work/$slug'
+import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -168,6 +170,12 @@ const WorkSlugRoute = WorkSlugRouteImport.update({
   path: '/work/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicSubscriptionConfirmationRoute =
+  ApiPublicSubscriptionConfirmationRouteImport.update({
+    id: '/api/public/subscription-confirmation',
+    path: '/api/public/subscription-confirmation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ElWorkIndexRoute = ElWorkIndexRouteImport.update({
   id: '/el/work/',
   path: '/el/work/',
@@ -178,6 +186,12 @@ const ElWorkSlugRoute = ElWorkSlugRouteImport.update({
   path: '/el/work/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LovableEmailTransactionalPreviewRoute =
+  LovableEmailTransactionalPreviewRouteImport.update({
+    id: '/lovable/email/transactional/preview',
+    path: '/lovable/email/transactional/preview',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -206,8 +220,10 @@ export interface FileRoutesByFullPath {
   '/work/$slug': typeof WorkSlugRoute
   '/el/': typeof ElIndexRoute
   '/work/': typeof WorkIndexRoute
+  '/api/public/subscription-confirmation': typeof ApiPublicSubscriptionConfirmationRoute
   '/el/work/$slug': typeof ElWorkSlugRoute
   '/el/work/': typeof ElWorkIndexRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -236,8 +252,10 @@ export interface FileRoutesByTo {
   '/work/$slug': typeof WorkSlugRoute
   '/el': typeof ElIndexRoute
   '/work': typeof WorkIndexRoute
+  '/api/public/subscription-confirmation': typeof ApiPublicSubscriptionConfirmationRoute
   '/el/work/$slug': typeof ElWorkSlugRoute
   '/el/work': typeof ElWorkIndexRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -267,8 +285,10 @@ export interface FileRoutesById {
   '/work/$slug': typeof WorkSlugRoute
   '/el/': typeof ElIndexRoute
   '/work/': typeof WorkIndexRoute
+  '/api/public/subscription-confirmation': typeof ApiPublicSubscriptionConfirmationRoute
   '/el/work/$slug': typeof ElWorkSlugRoute
   '/el/work/': typeof ElWorkIndexRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -299,8 +319,10 @@ export interface FileRouteTypes {
     | '/work/$slug'
     | '/el/'
     | '/work/'
+    | '/api/public/subscription-confirmation'
     | '/el/work/$slug'
     | '/el/work/'
+    | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -329,8 +351,10 @@ export interface FileRouteTypes {
     | '/work/$slug'
     | '/el'
     | '/work'
+    | '/api/public/subscription-confirmation'
     | '/el/work/$slug'
     | '/el/work'
+    | '/lovable/email/transactional/preview'
   id:
     | '__root__'
     | '/'
@@ -359,8 +383,10 @@ export interface FileRouteTypes {
     | '/work/$slug'
     | '/el/'
     | '/work/'
+    | '/api/public/subscription-confirmation'
     | '/el/work/$slug'
     | '/el/work/'
+    | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -390,8 +416,10 @@ export interface RootRouteChildren {
   WorkSlugRoute: typeof WorkSlugRoute
   ElIndexRoute: typeof ElIndexRoute
   WorkIndexRoute: typeof WorkIndexRoute
+  ApiPublicSubscriptionConfirmationRoute: typeof ApiPublicSubscriptionConfirmationRoute
   ElWorkSlugRoute: typeof ElWorkSlugRoute
   ElWorkIndexRoute: typeof ElWorkIndexRoute
+  LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -578,6 +606,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/subscription-confirmation': {
+      id: '/api/public/subscription-confirmation'
+      path: '/api/public/subscription-confirmation'
+      fullPath: '/api/public/subscription-confirmation'
+      preLoaderRoute: typeof ApiPublicSubscriptionConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/el/work/': {
       id: '/el/work/'
       path: '/el/work'
@@ -590,6 +625,13 @@ declare module '@tanstack/react-router' {
       path: '/el/work/$slug'
       fullPath: '/el/work/$slug'
       preLoaderRoute: typeof ElWorkSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/transactional/preview': {
+      id: '/lovable/email/transactional/preview'
+      path: '/lovable/email/transactional/preview'
+      fullPath: '/lovable/email/transactional/preview'
+      preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -622,8 +664,11 @@ const rootRouteChildren: RootRouteChildren = {
   WorkSlugRoute: WorkSlugRoute,
   ElIndexRoute: ElIndexRoute,
   WorkIndexRoute: WorkIndexRoute,
+  ApiPublicSubscriptionConfirmationRoute:
+    ApiPublicSubscriptionConfirmationRoute,
   ElWorkSlugRoute: ElWorkSlugRoute,
   ElWorkIndexRoute: ElWorkIndexRoute,
+  LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
