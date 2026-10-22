@@ -26,6 +26,7 @@ function normalizeUrl(v: string) {
 const looksLikeUrl = (s: string) => /^https?:\/\/[^\s/]+\.[^\s]+$/i.test(s);
 
 type TextKey = "first" | "last" | "email" | "phone" | "portfolio" | "linkedin";
+type FormErrors = Partial<Record<TextKey | "area" | "engagement" | "cv" | "consent", string>>;
 
 /** `pick` changes when «Register interest» is pressed: the form selects the planned role */
 function CareerForm({ pick }: { pick: number }) {
@@ -35,7 +36,7 @@ function CareerForm({ pick }: { pick: number }) {
   const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", area: "", portfolio: "", linkedin: "", message: "" });
   const [engagement, setEngagement] = useState<Engagement | "">("");
   const [cv, setCv] = useState<File | null>(null);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [consent, setConsent] = useState(false);
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [trap, setTrap] = useState("");
@@ -71,7 +72,7 @@ function CareerForm({ pick }: { pick: number }) {
     const portfolio = normalizeUrl(form.portfolio);
     const linkedin = normalizeUrl(form.linkedin);
     setForm((x) => ({ ...x, portfolio, linkedin }));
-    const errs: Record<string, string> = {};
+    const errs: FormErrors = {};
     if (!form.first.trim()) errs.first = f.first.error;
     if (!form.last.trim()) errs.last = f.last.error;
     if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) errs.email = f.email.error;
@@ -103,7 +104,7 @@ function CareerForm({ pick }: { pick: number }) {
       last: form.last,
       email: form.email,
       phone: form.phone,
-      area: form.area === PLANNED ? careersCopy.en.planned.option : areaIndex >= 0 ? careersCopy.en.areas[areaIndex] : "Other",
+      area: form.area === PLANNED ? careersCopy.en.planned.option : (careersCopy.en.areas[areaIndex] ?? "Other"),
       engagement: engagement as Engagement,
       portfolio,
       linkedin,
