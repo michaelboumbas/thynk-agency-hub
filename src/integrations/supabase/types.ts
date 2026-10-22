@@ -134,6 +134,48 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_subscribers: {
+        Row: {
+          consent: boolean
+          consent_text: string
+          created_at: string
+          email: string
+          hubspot_ok: boolean | null
+          id: string
+          lang: string
+          page: string | null
+          source: string
+          subscribed_at: string
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          consent?: boolean
+          consent_text: string
+          created_at?: string
+          email: string
+          hubspot_ok?: boolean | null
+          id?: string
+          lang?: string
+          page?: string | null
+          source: string
+          subscribed_at?: string
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          consent?: boolean
+          consent_text?: string
+          created_at?: string
+          email?: string
+          hubspot_ok?: boolean | null
+          id?: string
+          lang?: string
+          page?: string | null
+          source?: string
+          subscribed_at?: string
+          unsubscribed_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

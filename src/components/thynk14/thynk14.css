@@ -3158,6 +3158,222 @@
     font-stretch: 125%;
   }
 }
+
+/* ======================= newsletter (22/10, Mike) =======================
+   Footer: the audit choice on the left, the sign-up on the right (its right edge on Back to top's).
+   The field and the button sit in one rounded bar; the consent box below it, as in the other forms. */
+.t14-foot-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  gap: 40px 72px;
+  align-items: start;
+  margin-top: clamp(28px, 5vh, 44px);
+}
+.t14-foot-row .t14-foot-start {
+  margin-top: 0;
+}
+.t14-foot-nl > p {
+  margin: 0 0 14px;
+  max-width: 44ch;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.t14-nl-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  border: 1px solid var(--ink-3);
+  border-radius: 999px;
+  background: var(--paper);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.t14-nl-row:hover {
+  border-color: var(--ink-2);
+}
+.t14-nl-row:focus-within {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(255, 106, 26, 0.22);
+}
+.t14-nl-row:has(input[aria-invalid="true"]) {
+  border-color: #c92a2a;
+}
+.t14 .t14-nl-row input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 44px;
+  padding: 0 8px 0 16px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 400 16px/1.2 var(--f);
+  outline: none;
+}
+.t14-nl-row input::placeholder {
+  color: var(--ink-2);
+}
+.t14 .t14-nl-row .t14-pill {
+  flex: none;
+  height: 44px;
+  padding: 0 22px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.t14 .t14-nl-row .t14-pill:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.t14-nl > .t14-err {
+  min-height: 0;
+  margin: 6px 0 0 18px;
+}
+.t14-nl .t14-nl-consent {
+  margin-top: 10px;
+}
+.t14-nl .t14-nl-consent label {
+  gap: 10px;
+  font-size: 13px;
+}
+.t14-nl .t14-nl-consent input {
+  width: 18px;
+  height: 18px;
+}
+/* the footer's links have no underline; the Privacy Policy link in the consent sentence keeps it */
+.t14-foot .t14-nl-consent a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.t14-nl .t14-nl-consent .t14-err {
+  min-height: 0;
+  margin-left: 28px;
+}
+.t14-nl .t14-fail {
+  margin-top: 10px;
+}
+.t14-nl-ok {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  font-size: 15px;
+  line-height: 1.35;
+}
+.t14-nl-ok svg {
+  flex: none;
+  color: var(--orange);
+}
+@media (max-width: 900px) {
+  .t14-foot-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+  .t14-foot-nl {
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* the window: a card at the bottom right, a sheet at the bottom on a phone; the page stays usable behind it */
+.t14-nlpop {
+  position: fixed;
+  right: clamp(16px, 2.4vw, 32px);
+  bottom: clamp(16px, 2.4vw, 32px);
+  z-index: 150;
+  width: min(400px, calc(100vw - 32px));
+  padding: 26px 26px 18px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 24px 60px -20px rgba(15, 16, 18, 0.3), 0 2px 8px rgba(15, 16, 18, 0.06);
+  animation: t14-nl-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.t14-nlpop.out {
+  animation: t14-nl-out 0.22s ease both;
+}
+@keyframes t14-nl-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+@keyframes t14-nl-out {
+  to {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+.t14-nlpop-x {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 36px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.t14-nlpop-x:hover {
+  background: var(--paper-2);
+  color: var(--ink);
+}
+.t14-nlpop-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+/* the brand dot: square, orange */
+.t14-nlpop-eyebrow i {
+  width: 8px;
+  height: 8px;
+  background: var(--orange);
+}
+.t14-nlpop h2 {
+  margin: 12px 36px 8px 0;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-stretch: 110%;
+  font-size: 26px;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+.t14-nlpop > p {
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+@media (max-width: 600px) {
+  .t14-nlpop {
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    width: auto;
+    padding: 22px 20px 14px;
+  }
+  .t14-nlpop h2 {
+    font-size: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t14-nlpop,
+  .t14-nlpop.out {
+    animation: none;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .t14-foot-w {
     transition: none;

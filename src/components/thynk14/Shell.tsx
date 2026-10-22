@@ -11,6 +11,8 @@ import { useCleanMotion } from "./motion";
 import { DotIntro, IntroFrame, introPending } from "./intro";
 import { pressCopy } from "@/content/press-v14";
 import { careersCopy } from "@/content/careers-v14";
+import { newsletterCopy } from "@/content/newsletter-v14";
+import { NewsletterForm, NewsletterPopup } from "./newsletter";
 
 // Inter for text; TikTok Sans (Grilli Type, has Greek, width 75–150%) for titles — Mike 02/10/2026
 const INTER_HREF =
@@ -109,6 +111,8 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
         {children}
         <SiteFooter pathname={pathname} />
       </main>
+      {/* 22/10 (Mike): the newsletter window; it decides on its own whether and when to appear */}
+      <NewsletterPopup pathname={pathname} />
     </div>
   );
 }
@@ -250,6 +254,7 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
 function SiteFooter({ pathname }: { pathname: V14Path }) {
   const { c, href, lang } = useCopy();
   const f = c.footer;
+  const nl = newsletterCopy[lang];
   const other: Lang = lang === "en" ? "el" : "en";
   const book = useContext(BookCtx);
   const [pick, setPick] = useState<number | null>(null);
@@ -302,46 +307,54 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
           <p className="t14-foot-lead">{c.final.title}</p>
         </div>
 
-        <div className="t14-foot-start">
-          <span className="t14-foot-label" id="t14-foot-q">{f.startLabel}</span>
-          <div className="t14-foot-chips" role="group" aria-labelledby="t14-foot-q">
-            {c.book.pain.options.map((o, i) => (
+        {/* 22/10 (Mike): the audit choice on the left, the newsletter sign-up on the right, above Back to top */}
+        <div className="t14-foot-row">
+          <div className="t14-foot-start">
+            <span className="t14-foot-label" id="t14-foot-q">{f.startLabel}</span>
+            <div className="t14-foot-chips" role="group" aria-labelledby="t14-foot-q">
+              {c.book.pain.options.map((o, i) => (
+                <button
+                  key={o}
+                  type="button"
+                  className={pick === i ? "on" : undefined}
+                  aria-pressed={pick === i}
+                  onClick={() => setPick(pick === i ? null : i)}
+                >
+                  {o}
+                </button>
+              ))}
+            </div>
+            {book ? (
+              // /irha: the form opens on the page; the choice travels through sessionStorage, read when the form mounts
               <button
-                key={o}
                 type="button"
-                className={pick === i ? "on" : undefined}
-                aria-pressed={pick === i}
-                onClick={() => setPick(pick === i ? null : i)}
-              >
-                {o}
-              </button>
-            ))}
-          </div>
-          {book ? (
-            // /irha: the form opens on the page; the choice travels through sessionStorage, read when the form mounts
-            <button
-              type="button"
-              className="t14-pill lg t14-foot-pill"
-              onClick={() => {
-                if (pick !== null) {
-                  try {
-                    window.sessionStorage.setItem(PAIN_KEY, String(pick));
-                  } catch {
-                    /* storage blocked: the form simply starts without a choice */
+                className="t14-pill lg t14-foot-pill"
+                onClick={() => {
+                  if (pick !== null) {
+                    try {
+                      window.sessionStorage.setItem(PAIN_KEY, String(pick));
+                    } catch {
+                      /* storage blocked: the form simply starts without a choice */
+                    }
                   }
-                }
-                book();
-              }}
-            >
-              {c.final.button}
-              {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
-            </button>
-          ) : (
-            <Link className="t14-pill lg t14-foot-pill" to={href(v14Routes.audit)} hash="book" onClick={go}>
-              {c.final.button}
-              {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
-            </Link>
-          )}
+                  book();
+                }}
+              >
+                {c.final.button}
+                {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
+              </button>
+            ) : (
+              <Link className="t14-pill lg t14-foot-pill" to={href(v14Routes.audit)} hash="book" onClick={go}>
+                {c.final.button}
+                {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
+              </Link>
+            )}
+          </div>
+          <div className="t14-foot-nl">
+            <span className="t14-foot-label">{nl.label}</span>
+            <p>{nl.lead}</p>
+            <NewsletterForm source="footer" />
+          </div>
         </div>
 
         <div className="t14-foot-grid">

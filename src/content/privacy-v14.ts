@@ -1,6 +1,7 @@
 /**
  * Privacy Policy, /privacy and /el/privacy (12/10/2026), written for the audit form (our database + HubSpot).
  * 17/10/2026: + applications from the Careers page (database + private CV storage + HubSpot, kept 12 months).
+ * 22/10/2026: + updates by email (newsletter sign-up in the footer and the window; database + HubSpot, consent).
  * Not legal advice: have it reviewed, and add the legal name / VAT number once the general partnership is registered.
  * If anything changes (new tools, analytics, ads pixels, newsletter), this page changes with it.
  */
@@ -17,7 +18,7 @@ const en: PrivacyCopy = {
   label: "Legal",
   title: "Privacy",
   lead: "What we collect when you contact us, why, where it is kept and what you can ask of us.",
-  updated: "Last updated: 17 October 2026",
+  updated: "Last updated: 22 October 2026",
   sections: [
     {
       h: "Who we are",
@@ -41,7 +42,7 @@ const en: PrivacyCopy = {
       p: [
         "Only to respond to your request: to contact you, arrange the first conversation and prepare the audit or an offer.",
         "Legal basis: steps taken at your request before a possible contract (Art. 6(1)(b) GDPR) and your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time without affecting what was done before.",
-        "We do not send you newsletters or marketing emails unless you ask for them separately, and we never sell your data.",
+        "We do not send you newsletters or marketing emails unless you sign up for them separately (see «Updates by email» below), and we never sell your data.",
       ],
     },
     {
@@ -70,9 +71,18 @@ const en: PrivacyCopy = {
       ],
     },
     {
+      h: "Updates by email",
+      p: [
+        "If you sign up for our updates, in the footer or in the small window on the site, we collect your email address, the language and page you signed up from, the date and time, and the consent sentence you accepted.",
+        "We use your email only to send you our updates: practical ideas on marketing, automation and AI for businesses, and news from Thynk. Legal basis: your consent (Art. 6(1)(a) GDPR).",
+        "Your email is kept in our database on Lovable Cloud (Supabase), which cannot be read from the website, and in our CRM, HubSpot. Only the founders of Thynk have access.",
+        "Every email we send has an unsubscribe link, and you can also unsubscribe by writing to hello@thynkagency.gr. We keep your email for as long as you are subscribed. When you unsubscribe, we stop sending and take you off the list, keeping only a note that you unsubscribed so that you are not added again by mistake.",
+      ],
+    },
+    {
       h: "Fonts, cookies and storage",
       p: [
-        "The site loads its fonts from Google Fonts, so your browser connects to Google's servers, which receive your IP address. We do not use advertising or analytics cookies. The site uses your browser's own storage only for functional purposes, for example to carry your choice from the footer to the audit form.",
+        "The site loads its fonts from Google Fonts, so your browser connects to Google's servers, which receive your IP address. We do not use advertising or analytics cookies. The site uses your browser's own storage only for functional purposes, for example to carry your choice from the footer to the audit form, or to remember that you closed the updates window so that it does not appear again for a while.",
       ],
     },
     {
@@ -89,7 +99,7 @@ const el: PrivacyCopy = {
   label: "Νομικά",
   title: "Απόρρητο",
   lead: "Τι συλλέγουμε όταν επικοινωνείτε μαζί μας, γιατί, πού φυλάσσεται και τι μπορείτε να μας ζητήσετε.",
-  updated: "Τελευταία ενημέρωση: 17 Οκτωβρίου 2026",
+  updated: "Τελευταία ενημέρωση: 22 Οκτωβρίου 2026",
   sections: [
     {
       h: "Ποιοι είμαστε",
@@ -113,7 +123,7 @@ const el: PrivacyCopy = {
       p: [
         "Μόνο για να απαντήσουμε στο αίτημά σας: για να επικοινωνήσουμε μαζί σας, να κανονίσουμε την πρώτη συζήτηση και να ετοιμάσουμε το audit ή μια πρόταση.",
         "Νομική βάση: ενέργειες που γίνονται κατόπιν αιτήματός σας πριν από μια πιθανή σύμβαση (άρθρο 6 παρ. 1 στοιχ. β΄ ΓΚΠΔ) και η συναίνεσή σας (άρθρο 6 παρ. 1 στοιχ. α΄ ΓΚΠΔ), την οποία μπορείτε να ανακαλέσετε οποιαδήποτε στιγμή, χωρίς να επηρεάζεται ό,τι έγινε πριν.",
-        "Δεν σας στέλνουμε newsletter ή διαφημιστικά email, εκτός αν το ζητήσετε χωριστά, και δεν πουλάμε ποτέ τα δεδομένα σας.",
+        "Δεν σας στέλνουμε newsletter ή διαφημιστικά email, εκτός αν εγγραφείτε χωριστά (βλ. «Ενημερώσεις με email» παρακάτω), και δεν πουλάμε ποτέ τα δεδομένα σας.",
       ],
     },
     {
@@ -142,9 +152,18 @@ const el: PrivacyCopy = {
       ],
     },
     {
+      h: "Ενημερώσεις με email",
+      p: [
+        "Αν εγγραφείτε στις ενημερώσεις μας, στο footer ή στο μικρό παράθυρο του site, συλλέγουμε τη διεύθυνση email σας, τη γλώσσα και τη σελίδα από την οποία εγγραφήκατε, την ημερομηνία και ώρα, και τη φράση συναίνεσης που αποδεχτήκατε.",
+        "Χρησιμοποιούμε το email σας μόνο για να σας στέλνουμε τις ενημερώσεις μας: πρακτικές ιδέες για marketing, αυτοματισμούς και AI για επιχειρήσεις, και νέα της Thynk. Νομική βάση: η συναίνεσή σας (άρθρο 6 παρ. 1 στοιχ. α΄ ΓΚΠΔ).",
+        "Το email σας φυλάσσεται στη βάση δεδομένων μας στο Lovable Cloud (Supabase), που δεν διαβάζεται από το site, και στο CRM μας, το HubSpot. Πρόσβαση έχουν μόνο οι ιδρυτές της Thynk.",
+        "Κάθε email που στέλνουμε έχει σύνδεσμο διαγραφής, και μπορείτε επίσης να διαγραφείτε γράφοντάς μας στο hello@thynkagency.gr. Κρατάμε το email σας όσο είστε εγγεγραμμένοι. Όταν διαγραφείτε, σταματάμε τις αποστολές και σας αφαιρούμε από τη λίστα, κρατώντας μόνο μια σημείωση ότι διαγραφήκατε, ώστε να μη σας προσθέσουμε ξανά κατά λάθος.",
+      ],
+    },
+    {
       h: "Γραμματοσειρές, cookies και αποθήκευση",
       p: [
-        "Το site φορτώνει τις γραμματοσειρές του από το Google Fonts, οπότε ο browser σας συνδέεται με servers της Google, που λαμβάνουν τη διεύθυνση IP σας. Δεν χρησιμοποιούμε cookies διαφήμισης ή στατιστικών. Το site χρησιμοποιεί την αποθήκευση του browser σας μόνο για λειτουργικούς σκοπούς, για παράδειγμα για να μεταφέρει την επιλογή σας από το footer στη φόρμα audit.",
+        "Το site φορτώνει τις γραμματοσειρές του από το Google Fonts, οπότε ο browser σας συνδέεται με servers της Google, που λαμβάνουν τη διεύθυνση IP σας. Δεν χρησιμοποιούμε cookies διαφήμισης ή στατιστικών. Το site χρησιμοποιεί την αποθήκευση του browser σας μόνο για λειτουργικούς σκοπούς, για παράδειγμα για να μεταφέρει την επιλογή σας από το footer στη φόρμα audit ή για να θυμάται ότι κλείσατε το παράθυρο των ενημερώσεων, ώστε να μην εμφανιστεί ξανά για ένα διάστημα.",
       ],
     },
     {
