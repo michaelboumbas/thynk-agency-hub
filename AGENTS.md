@@ -9,5 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Subscription confirmations use a signed/secret-authenticated database INSERT webhook with authoritative row lookup and row-ID idempotency; browser signup stays insert-only and never sends email.
+- Newsletter sign-ups (footer + window) POST to the server route `/api/public/newsletter`, which inserts into `newsletter_subscribers` with the service role and, only when a NEW row was inserted (the `newsletter_subscribers_guard` BEFORE INSERT trigger skips repeat sign-ups), sends the transactional `subscription-confirmation` email with row-ID idempotency and reply-to hello@thynkagency.gr. A failed send never fails the sign-up. The browser falls back to a direct anon insert (no email) only if the route is unreachable. Keep it a strict confirmation: no newsletter or promotional content in app emails.
 - Managed app-email delivery uses the scaffolded sender; do not create email queues, polling jobs, or email SQL migrations.

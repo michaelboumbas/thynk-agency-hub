@@ -2,9 +2,11 @@ import { supabase } from "@/integrations/supabase/client";
 
 /**
  * Newsletter / updates sign-ups (22/10/2026, Mike). Same pattern as the audit form (src/lib/audit-leads.ts):
- *   1. our database (table public.newsletter_subscribers): visitors may only INSERT, never read.
- *      A repeat sign-up with the same email refreshes the existing row (trigger), so the list has no duplicates;
- *      more than 20 sign-ups a minute overall are refused.
+ *   1. our database (table public.newsletter_subscribers), through the server route /api/public/newsletter,
+ *      which also sends the confirmation email to new subscribers (Lovable app emails, replies to hello@).
+ *      If that route can't be reached, the row is saved directly from the browser (visitors may only INSERT,
+ *      never read), without the email. A repeat sign-up with the same email refreshes the existing row
+ *      (trigger), so the list has no duplicates and no second email; more than 20 sign-ups a minute are refused.
  *   2. HubSpot (form «Website · Newsletter (thynkagency.gr)», lifecycle stage Subscriber), once the form exists.
  *      HubSpot only accepts submissions from thynkagency.gr. Empty form id → database only.
  * The sign-up counts as received when at least one of the two accepts it.
@@ -46,6 +48,25 @@ function hubspotCookie(): string | undefined {
 }
 
 async function saveToDatabase(s: Signup): Promise<boolean> {
+  try {
+    const res = await fetch("/api/public/newsletter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: s.email.trim(),
+        lang: s.lang,
+        source: s.source,
+        page: window.location.pathname.slice(0, 200),
+        consentText: s.consentText.slice(0, 600),
+      }),
+    });
+    if (res.ok) return true;
+    // a bad address or too many sign-ups: a direct save would be refused the same way
+    if (res.status === 400 || res.status === 429) return false;
+  } catch {
+    /* the route is unreachable: save directly below */
+  }
+  // fallback (e.g. a deployment without the route): save the row directly, no confirmation email
   const { error } = await supabase.from("newsletter_subscribers").insert({
     email: s.email.trim(),
     lang: s.lang,
