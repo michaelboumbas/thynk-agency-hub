@@ -32,6 +32,9 @@ export const Route = createFileRoute("/irha")({
       { property: "og:description", content: description },
       { property: "og:locale", content: "el_GR" },
       { property: "og:url", content: "https://thynkagency.gr/irha" },
+      // 22/10 (Mike): on the site and open to anyone with the link, but kept out of Google results.
+      // noindex (not a robots.txt block): Google must still be able to read the page to see this tag.
+      { name: "robots", content: "noindex, follow" },
     ],
   }),
   component: IrhaRoute,
