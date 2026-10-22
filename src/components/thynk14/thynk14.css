@@ -3365,7 +3365,13 @@
     padding: 22px 20px 14px;
   }
   .t14-nlpop h2 {
+    margin-bottom: 14px;
     font-size: 22px;
+  }
+  /* 22/10: it now appears 5 s after arrival, so on a phone it stays compact (Google frowns on pop-ups that
+     cover the content on mobile): no lead line, the title says it */
+  .t14-nlpop > p {
+    display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -124,11 +124,8 @@ export function NewsletterForm({ source, onDone }: { source: NewsletterSource; o
 
 /** pages where the visitor is already filling in a form or reading the legal text: no window there */
 const NO_WINDOW: V14Path[] = [v14Routes.audit, v14Routes.careers, v14Routes.privacy, v14Routes.contact];
-/** at least this long on the site (this visit, across pages) … */
-const MIN_MS = 25_000;
-/** … and this far down the current page; or, on a desktop, the pointer leaving the top of the window after EXIT_MS */
-const MIN_SCROLL = 0.4;
-const EXIT_MS = 12_000;
+/** 22/10 (Mike): it appears 5 s after the visitor arrives on the site (this visit, across pages), no scrolling needed */
+const MIN_MS = 5_000;
 /** closed → not again for 30 days; signed up → never */
 const QUIET_MS = 30 * 24 * 60 * 60 * 1000;
 const T0_KEY = "thynk:newsletter-t0";
@@ -169,9 +166,9 @@ function clear(): boolean {
 /**
  * The newsletter window (22/10/2026, Mike: «ένα παράθυρο να κάνει εγγραφή»). Not a centred pop-up that blocks
  * the page: a small card slides in at the bottom right (a sheet at the bottom on a phone) and the page stays usable.
- * It appears once per visit at most, after 25 s on the site and 40 % of the page read (or the pointer leaving the
- * window on a desktop), never on the audit, careers, contact or privacy pages, never over the menu or a form
- * dialog, and not while the footer, which has the same form, is in view.
+ * It appears once per visit at most, 5 s after the visitor arrives (22/10, Mike; it was 25 s + 40 % of the page),
+ * never on the audit, careers, contact or privacy pages, never over the menu, the home intro or a form dialog
+ * (it waits until they are gone), and not while the footer, which has the same form, is in view.
  */
 export function NewsletterPopup({ pathname }: { pathname: V14Path }) {
   const { lang } = useCopy();
@@ -195,21 +192,9 @@ export function NewsletterPopup({ pathname }: { pathname: V14Path }) {
       return true;
     };
     const tick = window.setInterval(() => {
-      if (Date.now() - t0 < MIN_MS) return;
-      const room = document.documentElement.scrollHeight - window.innerHeight;
-      const ratio = room > 40 ? window.scrollY / room : 1;
-      if (ratio >= MIN_SCROLL && show()) window.clearInterval(tick);
-    }, 1000);
-    const fine = window.matchMedia?.("(pointer: fine)").matches;
-    const exit = (e: MouseEvent) => {
-      if (!fine || e.relatedTarget || e.clientY > 0 || Date.now() - t0 < EXIT_MS) return;
-      if (show()) window.clearInterval(tick);
-    };
-    document.addEventListener("mouseout", exit);
-    return () => {
-      window.clearInterval(tick);
-      document.removeEventListener("mouseout", exit);
-    };
+      if (Date.now() - t0 >= MIN_MS && show()) window.clearInterval(tick);
+    }, 250);
+    return () => window.clearInterval(tick);
   }, [pathname, open]);
 
   // another page: a window left open closes quietly (it was seen; no 30-day pause)
