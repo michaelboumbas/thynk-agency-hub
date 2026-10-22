@@ -111,11 +111,16 @@ export function useCleanMotion(rootRef: RefObject<HTMLElement | null>, key: stri
           const gut = 20;
           const spread = Math.max(0, W - cw - gut * 2);
           const exit = reduced ? 0 : ease(clamp((p - 0.88) / 0.12, 0, 1));
+          // 22/10 (Mike): the cards sat too close (7.5% of the screen apart). Now up to 11%, so each card's stage and
+          // title read comfortably, while the last card still ends above the ghost word (its top is at ~76% of H)
+          const y0 = H * 0.12;
+          const lastH = cards[n - 1]?.offsetHeight ?? 0;
+          const step = n > 1 ? clamp((H * 0.76 - y0 - lastH) / (n - 1), H * 0.085, H * 0.11) : 0;
           cards.forEach((c, i) => {
             const start = 0.1 + i * 0.18;
             const k = reduced ? 1 : ease(clamp((p - start) / 0.16, 0, 1));
             const x = gut + (n > 1 ? (i * spread) / (n - 1) : 0);
-            const y = H * 0.12 + i * H * 0.075;
+            const y = y0 + i * step;
             c.style.transform = `translate3d(${x - (1 - k) * (x + cw + 40)}px,${y - exit * H * 1.1}px,0)`;
           });
           return;
