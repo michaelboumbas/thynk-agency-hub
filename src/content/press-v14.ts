@@ -130,6 +130,6 @@ export const pressCopy: Record<Lang, PressCopy> = { en, el };
 
 /** "15 Oct 2026" / "15 Οκτ 2026", without Intl, so server and browser always agree */
 export function pressDate(iso: string, lang: Lang) {
-  const [y, m, d] = iso.split("-").map(Number);
+  const [y, m = 0, d] = iso.split("-").map(Number);
   return `${d} ${pressCopy[lang].months[m - 1]} ${y}`;
 }
