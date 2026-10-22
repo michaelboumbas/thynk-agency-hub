@@ -1,7 +1,6 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { Link } from "@tanstack/react-router";
 import { useCopy } from "./i18n";
-import { introPending } from "./intro";
 import { newsletterCopy } from "@/content/newsletter-v14";
 import { v14Routes, type V14Path } from "@/content/site-v14";
 import {
@@ -159,8 +158,9 @@ function quiet(): boolean {
 
 /** nothing else on screen asks for attention: no menu, no dialog, footer (with its own form) not in view */
 function clear(): boolean {
-  if (document.visibilityState !== "visible" || introPending()) return false;
-  if (document.querySelector('.t14-menu.open, [aria-modal="true"]')) return false;
+  if (document.visibilityState !== "visible") return false;
+  // the home page intro (it only plays on the home page, so look for it on screen rather than ask if it has played)
+  if (document.querySelector('.t14-intro, .t14-menu.open, [aria-modal="true"]')) return false;
   const foot = document.getElementById("contact");
   if (foot && foot.getBoundingClientRect().top < window.innerHeight) return false;
   return true;
