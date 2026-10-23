@@ -57,10 +57,10 @@ export const publishedPress = pressItems
   .filter((p) => p.published)
   .sort((a, b) => b.date.localeCompare(a.date));
 
-/** the press kit (contact: hello@, so both founders see it — Mike 17/10) */
+/** the press kit (contact: hello@, so both founders see it — Mike 17/10). 23/10/2026: the 2026 logo family; new file name so no cached old kit is served */
 export const pressKit = {
   email: "hello@thynkagency.gr",
-  zip: "/press/thynk-press-kit.zip",
+  zip: "/press/thynk-press-kit-2026.zip",
 };
 
 const en = {
@@ -90,7 +90,7 @@ const en = {
     copied: "Copied",
     logosLabel: "Logo pack",
     download: "Download the logo pack",
-    logosNote: "ZIP, about 150 KB. The wordmark in dark and white, on transparent and solid backgrounds, and the icon. PNG.",
+    logosNote: "ZIP, about 240 KB. The logo for light and dark backgrounds, with and without “Digital Agency”, on transparent and solid backgrounds, the icon and the brand colours. PNG and SVG.",
   },
 };
 
@@ -122,7 +122,7 @@ const el: PressCopy = {
     copied: "Αντιγράφηκε",
     logosLabel: "Λογότυπα",
     download: "Λήψη των λογοτύπων",
-    logosNote: "ZIP, περίπου 150 KB. Το λογότυπο σε σκούρο και λευκό, σε διάφανο και συμπαγές φόντο, και το εικονίδιο. PNG.",
+    logosNote: "ZIP, περίπου 240 KB. Το λογότυπο για ανοιχτά και σκούρα φόντα, με και χωρίς «Digital Agency», σε διάφανο και συμπαγές φόντο, το εικονίδιο και τα χρώματα του brand. PNG και SVG.",
   },
 };
 
