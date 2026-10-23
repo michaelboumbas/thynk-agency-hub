@@ -6156,3 +6156,8 @@
     display: none;
   }
 }
+/* lake grounds: no orange text on lake (brand rule); the highlight there is light lake */
+.t14-chours li b,
+.t14-calc-out .t14-calc-opps li span:last-child {
+  color: var(--lake-light);
+}
