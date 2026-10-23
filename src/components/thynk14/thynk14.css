@@ -6150,3 +6150,9 @@
   font-weight: 880;
   transition-duration: 0.9s;
 }
+/* phones: the empty middle cell of the header pushed EN + menu onto a second row; one row again */
+@media (max-width: 900px) {
+  .t14-hdr > span:empty {
+    display: none;
+  }
+}
