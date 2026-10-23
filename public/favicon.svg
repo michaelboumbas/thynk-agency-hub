@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <!-- Thynk favicon (12/10/2026, Mike): «η τελεία» — the square orange brand dot at the end of a dark tile,
-       like the full stop of «THYNK.». No letter. In dark mode a hairline edge keeps the tile from melting
-       into a dark tab bar. -->
+  <!-- Thynk favicon «η τελεία» (12/10/2026, Mike). 2026 brand (23/10/2026, Mike + Dimitris, option B):
+       lake tile #1d5866, the square orange dot at the bottom right, like the full stop of «THYNK.». No letter.
+       In dark mode a hairline edge keeps the tile from melting into a dark tab bar. -->
   <style>
     .edge { fill: none; stroke: none; }
     @media (prefers-color-scheme: dark) { .edge { stroke: rgba(255, 255, 255, 0.22); stroke-width: 3; } }
   </style>
-  <rect x="0" y="0" width="120" height="120" rx="26" fill="#0f1012"/>
+  <rect x="0" y="0" width="120" height="120" rx="26" fill="#1d5866"/>
   <rect class="edge" x="1.5" y="1.5" width="117" height="117" rx="24.5"/>
   <rect x="67" y="67" width="36" height="36" rx="3.6" fill="#ff6a1a"/>
 </svg>

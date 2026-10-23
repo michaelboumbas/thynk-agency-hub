@@ -105,12 +105,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      // favicon (12/10/2026, Mike): «η τελεία», the square orange brand dot on a dark tile, no letter. Browsers that read SVG icons
+      // favicon (12/10/2026, Mike): «η τελεία», the square orange brand dot on a tile, no letter. 23/10/2026 (2026 brand, option B):
+      // the tile is lake #1d5866 instead of black, the dot stays orange. Browsers that read SVG icons
       // (Chrome, Edge, Firefox) get favicon.svg, which adds a hairline edge in dark mode; the rest get the .ico.
       // Bump ?v= whenever the icon changes, browsers cache favicons hard.
-      { rel: "icon", href: "/favicon.ico?v=3", sizes: "32x32" },
-      { rel: "icon", href: "/favicon.svg?v=3", type: "image/svg+xml" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=3" },
+      { rel: "icon", href: "/favicon.ico?v=4", sizes: "32x32" },
+      { rel: "icon", href: "/favicon.svg?v=4", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=4" },
     ],
   }),
 
