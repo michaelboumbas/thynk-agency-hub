@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
 /**
+ * 23/10/2026 (2026 brand): the colour is lake, the colour of the logo's dot now; the move is unchanged.
  * «Η τελεία» intro (12/10/2026, Mike, v4): on the first load of the home page the whole screen is orange,
  * as if we were inside the dot. Then, in one continuous move, the orange shrinks straight towards the header
  * and lands as the full stop of «THYNK.» (it becomes the logo's dot), while the white site appears around it.
@@ -15,7 +16,7 @@ let played = false;
 export const introPending = () => !played;
 
 const DOT = 26; // px, the dot at rest in the middle (the same proportions as the favicon)
-const ORANGE = "#ff6a1a";
+const ORANGE = "#1d5866"; // 2026 brand: the logo's dot is lake (the name stays, the colour changed)
 
 /** the first frame, also what the server sends: the whole screen orange */
 export function IntroFrame() {
@@ -30,6 +31,9 @@ export function IntroFrame() {
 function logoDotBox(): DOMRect | null {
   const b = document.querySelector<HTMLElement>(".t14-hdr .t14-logo b");
   if (!b) return null;
+  // 2026 logo: the dot is a box of its own, so its rectangle is the landing spot
+  const own = b.getBoundingClientRect();
+  if (own.width > 0 && own.height > 0) return own;
   const cs = getComputedStyle(b);
   const ctx = document.createElement("canvas").getContext("2d");
   if (!ctx) return null;

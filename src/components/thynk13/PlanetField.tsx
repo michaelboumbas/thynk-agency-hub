@@ -104,7 +104,7 @@ void main(){
   vec2 c = gl_PointCoord-0.5; float r = length(c);
   if(r>0.5) discard;
   float a = smoothstep(0.5,0.15,r)*vA;
-  vec3 ink = vec3(0.063,0.067,0.078);      /* --ink #101114 */
+  vec3 ink = vec3(0.114,0.345,0.400);      /* 2026 brand: lake #1d5866 (was ink #101114) */
   vec3 orange = vec3(1.0,0.416,0.102);     /* --orange #ff6a1a */
   gl_FragColor = vec4(mix(ink,orange,vOr), clamp(a,0.0,1.0));
 }`;

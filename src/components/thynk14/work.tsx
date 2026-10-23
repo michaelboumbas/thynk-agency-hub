@@ -102,7 +102,7 @@ function StatusLine({ cs }: { cs: CaseStudy }) {
 }
 
 /* ================================ /work ================================ */
-const NO_THEME: CaseTheme = { bg: "#0f1012", fg: "#ffffff", logo: "#ffffff", accent: "#ff6a1a" };
+const NO_THEME: CaseTheme = { bg: "#1d5866", fg: "#ffffff", logo: "#ffffff", accent: "#ff6a1a" };
 const pad2 = (n: number) => String(n).padStart(2, "0");
 /** the brand's colours as CSS variables (--c-bg, --c-fg, --c-logo, --c-accent) */
 function themeStyle(theme?: CaseTheme): CSSProperties {

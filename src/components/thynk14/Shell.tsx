@@ -14,9 +14,10 @@ import { careersCopy } from "@/content/careers-v14";
 import { newsletterCopy } from "@/content/newsletter-v14";
 import { NewsletterForm, NewsletterPopup } from "./newsletter";
 
-// Inter for text; TikTok Sans (Grilli Type, has Greek, width 75–150%) for titles — Mike 02/10/2026
+// 2026 brand (23/10): Commissioner for text and titles (full Greek), variable weight + the Flair axis.
+// (Before: Inter for text, TikTok Sans for titles — Mike 02/10/2026.)
 const INTER_HREF =
-  "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=TikTok+Sans:opsz,wdth,wght@12..36,75..150,300..900&display=swap";
+  "https://fonts.googleapis.com/css2?family=Commissioner:wght,FLAR@100..900,0..100&display=swap";
 
 /**
  * v14 shell: header (logo · pages · EL/EN · Book an audit), the v13 dot planet behind every page, footer.
