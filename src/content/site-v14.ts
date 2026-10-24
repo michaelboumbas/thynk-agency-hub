@@ -163,10 +163,11 @@ export const v14Footer = {
   privacy: "Privacy",
 };
 
-/* social profiles in the footer (the same handles as the Coming Soon page) */
+/* social profiles: the footer «Follow» and the Social media card on /contact (LinkedIn added 24/10, Mike) */
 export const v14Social = [
-  { label: "Instagram", href: "https://www.instagram.com/thynkagency.gr/" },
-  { label: "Facebook", href: "https://www.facebook.com/thynkagency.gr/" },
+  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/thynkagency.gr/" },
+  { id: "facebook", label: "Facebook", href: "https://www.facebook.com/thynkagency.gr/" },
+  { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/thynk-digital-agency/" },
 ] as const;
 
 /* the small UI screens that peek over the solutions list (from the site-v9 examples) */
@@ -300,6 +301,8 @@ export const v14ContactPage = {
     { id: "phone", kicker: "Phone", value: "+30 698 388 7522", sub: "Mon–Fri, 09:00–17:00", action: "Call us" },
     { id: "email", kicker: "Email", value: "hello@thynkagency.gr", sub: "For questions and proposals", action: "Send an email" },
   ],
+  // 24/10 (Mike): a fourth card, so people find us on social media too; the links come from v14Social
+  social: { kicker: "Social media", value: "Follow us", sub: "Our news, ideas and work" },
   mapsQuery: "Papazoglou 14D, 454 44 Ioannina",
   hoursTitle: "Office hours",
   hours: [

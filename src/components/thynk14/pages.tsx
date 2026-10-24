@@ -5,6 +5,7 @@ import { calculator as C } from "@/content/site-v5";
 import {
   en,
   v14Routes,
+  v14Social,
 } from "@/content/site-v14";
 import {
   AuditPanels,
@@ -22,6 +23,7 @@ import {
   go,
 } from "./shared";
 import { WorkStrip } from "./work";
+import { ThynkMap } from "./map";
 import { privacyCopy } from "@/content/privacy-v14";
 import { pressCopy, publishedPress } from "@/content/press-v14";
 
@@ -432,12 +434,35 @@ export function AboutPage() {
   );
 }
 
-/* ---------- contact (02/10, Mike): office, phone, email, hours, map, the audit button ---------- */
-/** the office on the map: Papazoglou 14D, 454 44 Ioannina (Mike 10/10; Google Maps point for Papazoglou 14) */
-const MAP_LL = "39.66813,20.85431";
+/* ---------- contact (02/10, Mike): office, phone, email, social media (24/10), hours, map, the audit button ---------- */
+
+/** small line icons for the Social media card (24/10) */
+function SocialIcon({ id }: { id: (typeof v14Social)[number]["id"] }) {
+  const p = { fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  return (
+    <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+      {id === "instagram" && (
+        <>
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5" {...p} />
+          <circle cx="12" cy="12" r="3.8" {...p} />
+          <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
+        </>
+      )}
+      {id === "facebook" && (
+        <path d="M13.6 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.6-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H8v3h2.6V21z" fill="currentColor" />
+      )}
+      {id === "linkedin" && (
+        <>
+          <rect x="3.5" y="3.5" width="17" height="17" rx="3.5" {...p} />
+          <path d="M8.3 10.6v5.6M8.3 7.9v.1M11.7 16.2v-5.6M11.7 13.1c0-1.6.9-2.6 2.1-2.6s1.9.9 1.9 2.6v3.1" {...p} />
+        </>
+      )}
+    </svg>
+  );
+}
 
 export function ContactPage() {
-  const { c, href } = useCopy();
+  const { c, lang } = useCopy();
   const k = c.contactPage;
   const link = (id: string, value: string) =>
     id === "phone"
@@ -465,18 +490,29 @@ export function ContactPage() {
               </li>
             );
           })}
+          {/* 24/10 (Mike): social media next to office / phone / email, the same profiles as the footer */}
+          <li className="t14-ccard t14-ccard-social">
+            <small>0{k.cards.length + 1} · {k.social.kicker}</small>
+            <b>{k.social.value}</b>
+            <span>{k.social.sub}</span>
+            <ul className="t14-csocial">
+              {v14Social.map((s) => (
+                <li key={s.id}>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer">
+                    <SocialIcon id={s.id} />
+                    {s.label} <i aria-hidden="true">↗</i>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
         </ul>
 
         <div className="t14-cmap-row">
           <div className="t14-cmap">
-            {/* Google's own pin can't be recoloured inside the embed: the map is centred on the office with no
-                marker (ll=…) and our orange brand pin sits on top, exactly in the middle (Mike 03/10). */}
-            <iframe
-              title={k.mapTitle}
-              src={`https://www.google.com/maps?ll=${MAP_LL}&z=16&hl=${c.lang}&output=embed`}
-              loading="lazy"
-              tabIndex={-1}
-            />
+            {/* 24/10 (Mike): the map in our colours (lake, sky), centred on the office with no marker of its own;
+                our orange brand pin sits on top, exactly in the middle (Mike 03/10). See map.tsx. */}
+            <ThynkMap lang={lang} title={k.mapTitle} />
             <span className="t14-cmap-pin" aria-hidden="true">
               <svg viewBox="0 0 40 52" width="40" height="52">
                 <path d="M20 51C20 51 38 31.5 38 19A18 18 0 0 0 2 19C2 31.5 20 51 20 51Z" fill="#ff6a1a" stroke="#fff" strokeWidth="2.5" />

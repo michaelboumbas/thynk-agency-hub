@@ -479,6 +479,7 @@ export const el: Copy = {
       { id: "phone", kicker: "Τηλέφωνο", value: "+30 698 388 7522", sub: "Δευτέρα–Παρασκευή, 09:00–17:00", action: "Καλέστε μας" },
       { id: "email", kicker: "Email", value: "hello@thynkagency.gr", sub: "Για ερωτήσεις και προτάσεις", action: "Στείλτε email" },
     ],
+    social: { kicker: "Social media", value: "Ακολουθήστε μας", sub: "Τα νέα, οι ιδέες και η δουλειά μας" },
     mapsQuery: "Παπάζογλου 14Δ, 454 44 Ιωάννινα",
     hoursTitle: "Ωράριο γραφείου",
     hours: [

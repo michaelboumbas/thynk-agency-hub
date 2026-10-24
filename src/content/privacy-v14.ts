@@ -18,7 +18,7 @@ const en: PrivacyCopy = {
   label: "Legal",
   title: "Privacy",
   lead: "What we collect when you contact us, why, where it is kept and what you can ask of us.",
-  updated: "Last updated: 22 October 2026",
+  updated: "Last updated: 24 October 2026",
   sections: [
     {
       h: "Who we are",
@@ -84,6 +84,7 @@ const en: PrivacyCopy = {
       h: "Fonts, cookies and storage",
       p: [
         "The site loads its fonts from Google Fonts, so your browser connects to Google's servers, which receive your IP address. We do not use advertising or analytics cookies. The site uses your browser's own storage only for functional purposes, for example to carry your choice from the footer to the audit form, or to remember that you closed the updates window so that it does not appear again for a while.",
+        "The map on the Contact page is drawn in your browser from OpenStreetMap data served by OpenFreeMap, with the MapLibre library loaded from jsDelivr; if it cannot load, a Google Maps map is shown instead. In each case your browser connects to those servers, which receive your IP address.",
       ],
     },
     {
@@ -100,7 +101,7 @@ const el: PrivacyCopy = {
   label: "Νομικά",
   title: "Απόρρητο",
   lead: "Τι συλλέγουμε όταν επικοινωνείτε μαζί μας, γιατί, πού φυλάσσεται και τι μπορείτε να μας ζητήσετε.",
-  updated: "Τελευταία ενημέρωση: 22 Οκτωβρίου 2026",
+  updated: "Τελευταία ενημέρωση: 24 Οκτωβρίου 2026",
   sections: [
     {
       h: "Ποιοι είμαστε",
@@ -166,6 +167,7 @@ const el: PrivacyCopy = {
       h: "Γραμματοσειρές, cookies και αποθήκευση",
       p: [
         "Το site φορτώνει τις γραμματοσειρές του από το Google Fonts, οπότε ο browser σας συνδέεται με servers της Google, που λαμβάνουν τη διεύθυνση IP σας. Δεν χρησιμοποιούμε cookies διαφήμισης ή στατιστικών. Το site χρησιμοποιεί την αποθήκευση του browser σας μόνο για λειτουργικούς σκοπούς, για παράδειγμα για να μεταφέρει την επιλογή σας από το footer στη φόρμα audit ή για να θυμάται ότι κλείσατε το παράθυρο των ενημερώσεων, ώστε να μην εμφανιστεί ξανά για ένα διάστημα.",
+        "Ο χάρτης της σελίδας Επικοινωνίας σχεδιάζεται στον browser σας με δεδομένα του OpenStreetMap από το OpenFreeMap και τη βιβλιοθήκη MapLibre από το jsDelivr· αν δεν φορτώσει, εμφανίζεται στη θέση του χάρτης του Google Maps. Σε κάθε περίπτωση ο browser σας συνδέεται με αυτούς τους servers, που λαμβάνουν τη διεύθυνση IP σας.",
       ],
     },
     {
