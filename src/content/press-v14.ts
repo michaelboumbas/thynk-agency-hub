@@ -36,6 +36,21 @@ export type PressItem = {
 
 export const pressItems: PressItem[] = [
   {
+    id: "its-possible-2026-11",
+    outlet: "It's Possible",
+    site: "itspossible.gr",
+    url: "https://www.itspossible.gr/gyrisa-apo-tin-athina-sto-chorio-kai-stisame-agency-exigei-o-michalis-boubas/",
+    date: "2026-11-04",
+    type: "interview",
+    lang: "el",
+    headline: "«Γύρισα από την Αθήνα στο χωριό και στήσαμε agency»: Εξηγεί ο Μιχάλης Μπούμπας",
+    note: {
+      en: "An interview with co-founder Michael Boumpas on running Thynk from Epirus: how we work with businesses in the region, how AI fits into our work with a person signing off on everything, and why trust is what matters most outside the big city.",
+      el: "Συνέντευξη του συνιδρυτή Μιχάλη Μπούμπα για το πώς τρέχει η Thynk από την Ήπειρο: πώς δουλεύουμε με τις επιχειρήσεις της περιοχής, πώς χρησιμοποιούμε το AI με τον άνθρωπο να εγκρίνει κάθε δουλειά, και γιατί στην επαρχία μετράει πρώτα απ' όλα η εμπιστοσύνη.",
+    },
+    published: true,
+  },
+  {
     id: "marketing-week-2026-10",
     outlet: "Marketing Week",
     site: "marketingweek.gr",
