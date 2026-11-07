@@ -7022,3 +7022,108 @@
     height: 44px;
   }
 }
+
+/* ======================= type scale, 07/11/2026 (Mike) =======================
+   One scale for the whole site, all Commissioner. Measured before: ~20 h2 sizes (30–89px, weights 400–800),
+   h3 13–40px, body text in 10 sizes (12–17px). Now:
+     display   page titles (.t15-svc-h1), the footer «Let's Thynk.», the giant / ghost words   (special, unchanged)
+     h2        section titles                    36 → 64px · 700 · -0.035em · 1.0
+     h3-lg     big card / row titles             24 → 32px · 650 · -0.02em  · 1.15
+     h3        card / step titles                19 → 22px · 650 · -0.01em  · 1.25
+     overline  small labels over groups          12px · 600 · uppercase · 0.1em
+     lead      the paragraph under a title       18 → 21px · 450 · 1.5
+     body      running text                      16px · 450 · 1.5
+     small     notes, captions, card text        14px · 450 · 1.5
+   `.t14.t14` doubles the class only to win over the older per-section rules above. */
+.t14 {
+  --t-h2: clamp(36px, 4.4vw, 64px);
+  --t-h3l: clamp(24px, 2.2vw, 32px);
+  --t-h3: clamp(19px, 1.5vw, 22px);
+  --t-lead: clamp(18px, 1.5vw, 21px);
+  --t-body: 16px;
+  --t-small: 14px;
+  --t-over: 12px;
+}
+
+/* h2 · section titles */
+.t14.t14 .t14-h2,
+.t14.t14 .t14-faq-side h2,
+.t14.t14 .t14-wk-title,
+.t14.t14 .t14-final h2,
+.t14.t14 .t14-book-side h2,
+.t14.t14 .t14-form-head h2,
+.t14.t14 .t14-example-text h2,
+.t14.t14 .t14-pr-kit-intro h2,
+.t14.t14 .t14-cr-role-title,
+.t14.t14 .t15-unsure h2 {
+  font-size: var(--t-h2);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+/* h3-lg · big card and row titles */
+.t14.t14 .t14-panel h3,
+.t14.t14 .t14-founder-name,
+.t14.t14 .t14-case-row h2,
+.t14.t14 .t14-pr-head,
+.t14.t14 .t14-legal-body h2 {
+  font-size: var(--t-h3l);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* h3 · card and step titles */
+.t14.t14 .t14-mcard h3,
+.t14.t14 .t14-flow h3,
+.t14.t14 .t14-cnext h3,
+.t14.t14 .t14-chours h3 {
+  font-size: var(--t-h3);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+/* overline · small labels over groups (same look as the eyebrows) */
+.t14.t14 .t14-foot-grid h4,
+.t14.t14 .t14-pr-block h3,
+.t14.t14 .t14-ideas h3 {
+  font-size: var(--t-over);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* lead · under titles */
+.t14.t14 .t15-svc-lead,
+.t14.t14 .t14-lead {
+  font-size: var(--t-lead);
+  line-height: 1.5;
+}
+
+/* body · running text */
+.t14.t14 .t14-example-text p,
+.t14.t14 .t15-items li,
+.t14.t14 .t14-foot-nl p,
+.t14.t14 .t14-foot-lead,
+.t14.t14 .t14-flow p,
+.t14.t14 .t14-cnext p,
+.t14.t14 .t14-legal-body p,
+.t14.t14 .t14-legal-body li {
+  font-size: var(--t-body);
+  line-height: 1.5;
+}
+
+/* small · notes, captions, card text (nothing under 14px for reading) */
+.t14.t14 .t14-sol-note,
+.t14.t14 .t14-calc-how,
+.t14.t14 .t14-mcard p,
+.t14.t14 .t14-sol-top p,
+.t14.t14 .t14-pr-small,
+.t14.t14 .t14-chours p,
+.t14.t14 .t14-chours li {
+  font-size: var(--t-small);
+  line-height: 1.5;
+}
