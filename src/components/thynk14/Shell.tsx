@@ -93,18 +93,13 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
 
   return (
     <div className="t14" ref={rootRef} lang={lang}>
-      <PlanetField reduced={reduced} />
+      {/* 07/11 (Mike): no dot planet behind the pages any more: minimal */}
       <a className="t14-skip" href="#main">{c.ui.skip}</a>
       {/* 07/11 (Mike): no header bar. The logo and a glass «dock» float over the page; the dock hides while you
           scroll down and comes back as soon as you scroll up (after thetetrahub.com) */}
       <header className={`t14-hdr t15-hdr${hideHdr && !menu ? " hide" : ""}`}>
         <Link className="t15-brand" to={href(v14Routes.home)} aria-label={c.ui.home}><Logo /></Link>
         <div className="t14-hdr-r t15-dock">
-          <nav className="t15-dock-nav" aria-label={c.ui.mainMenu}>
-            {c.menu.map((n) => (
-              <Link key={n.to} to={href(n.to)} aria-current={pathname === n.to ? "page" : undefined}>{n.label}</Link>
-            ))}
-          </nav>
           <LangLink className="t14-lang" pathname={pathname} other={other} aria-label={c.ui.switchAria}>
             {c.ui.switchTo}
           </LangLink>
@@ -132,8 +127,7 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
         {children}
         <SiteFooter pathname={pathname} />
       </main>
-      {/* 22/10 (Mike): the newsletter window; it decides on its own whether and when to appear */}
-      <NewsletterPopup pathname={pathname} />
+      {/* 07/11 (Mike): no newsletter window any more; the sign-up stays in the footer */}
       {/* 07/11 (Mike): «Let's talk» stays at the bottom left on every page: a 30' call */}
       <TalkWidget />
     </div>
@@ -511,9 +505,7 @@ function SiteFooter({ pathname }: { pathname: V14Path }) {
       <div className="t14-foot-legal">
         <span>© 2026 Thynk Digital Agency · {f.rights}</span>
         <nav aria-label={f.pagesLabel}>
-          {c.menu.map((n) => (
-            <Link key={n.to} to={href(n.to)} aria-current={pathname === n.to ? "page" : undefined}>{n.label}</Link>
-          ))}
+          {/* 07/11 (Mike): only the pages that are not in the menu */}
           {/* 17/10 (Mike): Press lives in the footer, not the top menu */}
           <Link to={href(v14Routes.press)} aria-current={pathname === v14Routes.press ? "page" : undefined}>{pressCopy[lang].head.label}</Link>
           <Link to={href(v14Routes.careers)} aria-current={pathname === v14Routes.careers ? "page" : undefined}>{careersCopy[lang].head.label}</Link>

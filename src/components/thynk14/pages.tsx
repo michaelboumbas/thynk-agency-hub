@@ -44,38 +44,26 @@ export function HomePage() {
           </p>
           <div className="t14-ctas">
             <Link className="t14-pill lg" to={href(v14Routes.audit)} hash="book">{c.hero.primary}</Link>
-            <a className="t14-pill lg ghost" href="#method" onClick={(e) => go(e, "method")}>{c.hero.secondary}</a>
+            <Link className="t14-pill lg ghost" to={href(v14Routes.services)} hash="method">{c.hero.secondary}</Link>
           </div>
         </div>
       </section>
 
-      <section className="t14-about t14-about-c t14-wrap" id="about">
-        <Label>{c.about.label}</Label>
-        <Reveal text={c.about.text} />
-      </section>
-
-      <MethodSection />
-      <div className="t14-wrap"><MoreLink to={v14Routes.services}>{c.more.method}</MoreLink></div>
-
+      {/* 07/11 (Mike): a minimal home in five parts: hero → what we build → clients → the audit → the form.
+          The method, the calculator and the FAQ live on their own pages (/services, /audit). */}
       <section className="t14-wrap" id="solutions">
         <SolutionsList />
         <MoreLink to={v14Routes.solutions}>{c.more.solutions}</MoreLink>
       </section>
 
-      {/* 07/10 (Mike): the work, between what we build and how we start */}
       <WorkStrip />
 
       <AuditPanels />
       <div className="t14-wrap"><MoreLink to={v14Routes.audit}>{c.more.audit}</MoreLink></div>
 
-      {/* 02/10 (Mike): the cost calculator on the home page too, right before the form: see the cost, then book */}
-      <CalcSection className="t14-calc-sec" />
-
       <section className="t14-book t14-wrap" id="book">
         <BookForm idPrefix="home" />
       </section>
-
-      <Faq title={c.faq.title} grey={c.faq.titleGrey} note={c.faq.note} items={c.faq.items} />
     </>
   );
 }
@@ -143,17 +131,6 @@ export function ServicesPage() {
         </h1>
         <div className="t15-svc-row">
           <p className="t15-svc-lead">{p.lead}</p>
-          <Link className="t15-sticker" to={href(v14Routes.audit)} hash="book" aria-label={c.hero.primary}>
-            <svg viewBox="0 0 132 132" aria-hidden="true">
-              <defs>
-                <path id="t15-ring" d="M66,66 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0" />
-              </defs>
-              <text>
-                <textPath href="#t15-ring" textLength="312" lengthAdjust="spacingAndGlyphs">{x.sticker}</textPath>
-              </text>
-            </svg>
-            <span aria-hidden="true">↘</span>
-          </Link>
         </div>
         <div className="t15-chips" role="group" aria-label={x.filter}>
           {(["all", "marketing", "transformation"] as const).map((f) => (
@@ -173,14 +150,6 @@ export function ServicesPage() {
           ))}
         </div>
       </section>
-
-      <div className="t15-marquee" aria-hidden="true">
-        <div className="t15-mq">
-          {[...x.marquee, ...x.marquee].map((w, i) => (
-            <span key={i}>{w}</span>
-          ))}
-        </div>
-      </div>
 
       <ol className="t15-svc-list t14-wrap" key={filter} onPointerLeave={() => { window.clearTimeout(timer.current); setHover(null); }}>
         {shown.map((r, k) => {
