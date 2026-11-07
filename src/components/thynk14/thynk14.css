@@ -7009,3 +7009,16 @@
 .t14 .t15-head .t15-svc-lead {
   margin-top: 40px;
 }
+
+/* contact cards: the action links and social links get a full tap area on phones; map button 44px */
+@media (max-width: 640px) {
+  .t14 .t14-ccard a,
+  .t14 .t14-csocial a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .t14 .t14-cmap-open {
+    height: 44px;
+  }
+}
