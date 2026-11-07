@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode, type CSSProperties } from "react";
 import { useCopy } from "./i18n";
 import { Link } from "@tanstack/react-router";
 import {
@@ -79,7 +79,7 @@ export function PageHead({ p, k }: { p: { label: string; title: string; lead: st
   return (
     <section className="t14-wrap t15-head">
       <span className="t15-eyebrow">{eyebrow}</span>
-      <h1 className="t15-svc-h1">
+      <h1 className="t15-svc-h1" style={{ ["--len" as string]: [...p.title].length } as CSSProperties}>
         <span className="t15-mk">{p.title}</span>
         <span className="t15-dot">.</span>
       </h1>

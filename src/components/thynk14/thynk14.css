@@ -6995,3 +6995,17 @@
     gap: 0 22px;
   }
 }
+
+/* page titles fit one line: the size follows the title's length (--len, set by PageHead / ServicesPage),
+   so the orange dot never drops to its own line; the marker line sits below Greek descenders */
+.t14 .t15-svc-h1 {
+  white-space: nowrap;
+  font-size: min(232px, 15vw, calc((100vw - 2 * var(--gut)) / (var(--len, 8) * 0.6 + 0.45)));
+}
+.t14 .t15-svc-h1 .t15-mk::after {
+  bottom: -0.13em;
+}
+.t14 .t15-svc-h1 + .t15-svc-row,
+.t14 .t15-head .t15-svc-lead {
+  margin-top: 40px;
+}

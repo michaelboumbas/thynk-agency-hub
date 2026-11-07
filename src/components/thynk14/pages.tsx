@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent, type CSSProperties } from "react";
 import { useCopy } from "./i18n";
 import { Link } from "@tanstack/react-router";
 import { calculator as C } from "@/content/site-v5";
@@ -137,7 +137,7 @@ export function ServicesPage() {
     <>
       <section className="t15-svc-hero t14-wrap">
         <span className="t15-eyebrow">{x.eyebrow}</span>
-        <h1 className="t15-svc-h1">
+        <h1 className="t15-svc-h1" style={{ ["--len" as string]: [...p.title].length } as CSSProperties}>
           <span className="t15-mk">{p.title}</span>
           <span className="t15-dot">.</span>
         </h1>
