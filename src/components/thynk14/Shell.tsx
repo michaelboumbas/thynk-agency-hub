@@ -35,6 +35,20 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
   const book = useContext(BookCtx);
   useCleanMotion(rootRef, slug ? `${pathname}/${slug}` : pathname);
 
+  // the floating header hides while scrolling down, returns on the way up
+  const [hideHdr, setHideHdr] = useState(false);
+  useEffect(() => {
+    let last = window.scrollY;
+    const on = () => {
+      const y = window.scrollY;
+      if (Math.abs(y - last) < 6) return;
+      setHideHdr(y > last && y > 140);
+      last = y;
+    };
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
+
   // the two faces, only for this version
   useEffect(() => {
     if (document.querySelector(`link[href="${INTER_HREF}"]`)) return;
@@ -81,10 +95,16 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
     <div className="t14" ref={rootRef} lang={lang}>
       <PlanetField reduced={reduced} />
       <a className="t14-skip" href="#main">{c.ui.skip}</a>
-      <header className="t14-hdr">
-        <Link to={href(v14Routes.home)} aria-label={c.ui.home}><Logo /></Link>
-        <span aria-hidden="true" />
-        <div className="t14-hdr-r">
+      {/* 07/11 (Mike): no header bar. The logo and a glass «dock» float over the page; the dock hides while you
+          scroll down and comes back as soon as you scroll up (after thetetrahub.com) */}
+      <header className={`t14-hdr t15-hdr${hideHdr && !menu ? " hide" : ""}`}>
+        <Link className="t15-brand" to={href(v14Routes.home)} aria-label={c.ui.home}><Logo /></Link>
+        <div className="t14-hdr-r t15-dock">
+          <nav className="t15-dock-nav" aria-label={c.ui.mainMenu}>
+            {c.menu.map((n) => (
+              <Link key={n.to} to={href(n.to)} aria-current={pathname === n.to ? "page" : undefined}>{n.label}</Link>
+            ))}
+          </nav>
           <LangLink className="t14-lang" pathname={pathname} other={other} aria-label={c.ui.switchAria}>
             {c.ui.switchTo}
           </LangLink>
@@ -114,7 +134,105 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
       </main>
       {/* 22/10 (Mike): the newsletter window; it decides on its own whether and when to appear */}
       <NewsletterPopup pathname={pathname} />
+      {/* 07/11 (Mike): «Let's talk» stays at the bottom left on every page: a 30' call */}
+      <TalkWidget />
     </div>
+  );
+}
+
+/* ---------- «Let's talk» (07/11, Mike: option A, the typing bubble) ---------- */
+const TALK_URL = "https://calendar.app.google/XDKnpqbbuHpARVxRA";
+const TALK_KEY = "t15-talk-min";
+const talkCopy = {
+  en: {
+    text: "A 30-minute call with our team. Tell us what you're after and we'll tell you honestly if we can help.",
+    button: "Book a 30' call",
+    min: "Minimise",
+    open: "Let's talk: book a 30-minute call",
+  },
+  el: {
+    text: "Μια κλήση 30 λεπτών με την ομάδα μας. Πείτε μας τι ψάχνετε και θα σας πούμε ειλικρινά αν μπορούμε να βοηθήσουμε.",
+    button: "Κλείστε κλήση 30'",
+    min: "Ελαχιστοποίηση",
+    open: "Let's talk: κλείστε κλήση 30 λεπτών",
+  },
+} as const;
+
+function TalkBubble() {
+  return (
+    <span className="t15-bubble" aria-hidden="true">
+      <i />
+      <i />
+      <i />
+    </span>
+  );
+}
+
+/**
+ * The card greets you at the bottom left; once you start reading (or on a phone) it folds into the «Let's talk»
+ * pill. Minimised by hand, it stays a pill on every page after (localStorage).
+ */
+function TalkWidget() {
+  const { lang } = useCopy();
+  const t = talkCopy[lang];
+  const [mini, setMini] = useState<boolean | null>(null);
+  const touched = useRef(false);
+  useEffect(() => {
+    let m = window.matchMedia("(max-width: 640px)").matches || window.scrollY > 480;
+    try {
+      if (window.localStorage.getItem(TALK_KEY) === "1") m = true;
+    } catch {
+      /* storage blocked: decide by width */
+    }
+    setMini(m);
+    const on = () => {
+      if (!touched.current && window.scrollY > 480) setMini(true);
+    };
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
+  if (mini === null) return null;
+  const fold = () => {
+    touched.current = true;
+    setMini(true);
+    try {
+      window.localStorage.setItem(TALK_KEY, "1");
+    } catch {
+      /* fine */
+    }
+  };
+  const unfold = () => {
+    touched.current = true;
+    setMini(false);
+    try {
+      window.localStorage.removeItem(TALK_KEY);
+    } catch {
+      /* fine */
+    }
+  };
+  return (
+    <aside className={`t15-talk${mini ? " min" : ""}`} aria-label="Let's talk">
+      {mini ? (
+        <button type="button" className="t15-talk-mini" onClick={unfold} aria-label={t.open}>
+          <TalkBubble />
+          <span lang="en">Let's talk</span>
+        </button>
+      ) : (
+        <>
+          <div className="t15-talk-h">
+            <TalkBubble />
+            <span className="t15-talk-t" lang="en">Let's talk</span>
+            <button type="button" className="t15-talk-x" onClick={fold} aria-label={t.min}>
+              <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 12h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+            </button>
+          </div>
+          <p>{t.text}</p>
+          <a className="t14-pill t15-talk-go" href={TALK_URL} target="_blank" rel="noopener noreferrer">
+            {t.button} <i aria-hidden="true">↗</i>
+          </a>
+        </>
+      )}
+    </aside>
   );
 }
 

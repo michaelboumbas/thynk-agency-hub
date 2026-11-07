@@ -81,36 +81,169 @@ export function HomePage() {
 }
 
 /* ================================ Services ================================ */
+/* 07/11 (Mike, after thetetrahub.com): one big numbered list of the six service groups across both pillars.
+   A row opens on hover (mouse) or tap and shows what it includes; chips filter by pillar. */
+const svcCopy = {
+  en: {
+    eyebrow: "What we do",
+    sticker: "every engagement starts with an audit · ",
+    all: "All",
+    rowCta: "Book an audit for this",
+    filter: "Filter by service",
+    unsureA: "Not sure which one you need?",
+    unsureB: "That's what the audit is for.",
+    unsureText:
+      "We look at where your business is today and tell you which services make sense, in what order, and how we'll measure them.",
+    marquee: ["Performance marketing", "Social media", "Content", "Email & SMS", "AI chatbots", "Voice assistants", "AI agents", "Automation", "GEO", "Dashboards", "Workshops", "Landing pages"],
+  },
+  el: {
+    eyebrow: "Τι κάνουμε",
+    sticker: "κάθε συνεργασία ξεκινά με audit · ",
+    all: "Όλες",
+    rowCta: "Κλείστε audit γι' αυτό",
+    filter: "Φίλτρο υπηρεσιών",
+    unsureA: "Δεν ξέρετε τι χρειάζεστε;",
+    unsureB: "Γι' αυτό υπάρχει το audit.",
+    unsureText:
+      "Βλέπουμε πού βρίσκεται σήμερα η επιχείρησή σας και σας λέμε ποιες υπηρεσίες έχουν νόημα, με ποια σειρά και πώς θα τις μετρήσουμε.",
+    marquee: ["Performance marketing", "Social media", "Περιεχόμενο", "Email & SMS", "AI chatbots", "Φωνητικοί βοηθοί", "AI agents", "Αυτοματισμοί", "GEO", "Dashboards", "Workshops", "Landing pages"],
+  },
+} as const;
+
+type SvcFilter = "all" | "marketing" | "transformation";
+
 export function ServicesPage() {
-  const { c } = useCopy();
+  const { c, href, lang } = useCopy();
+  const x = svcCopy[lang];
+  const p = c.pageHeads.services;
+  const rows = useMemo(
+    () => c.pillars.items.flatMap((pl) => pl.groups.map((g) => ({ pillar: pl.id, pillarTitle: pl.title, title: g.title, items: g.items }))),
+    [c],
+  );
+  const [filter, setFilter] = useState<SvcFilter>("all");
+  const [pinned, setPinned] = useState<number | null>(null);
+  const [hover, setHover] = useState<number | null>(null);
+  const [canHover, setCanHover] = useState(false);
+  const timer = useRef(0);
+  useEffect(() => {
+    setCanHover(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+    return () => window.clearTimeout(timer.current);
+  }, []);
+  const open = hover ?? pinned;
+  const shown = rows.map((r, i) => ({ ...r, i })).filter((r) => filter === "all" || r.pillar === filter);
+  const count = (f: SvcFilter) => String(f === "all" ? rows.length : rows.filter((r) => r.pillar === f).length).padStart(2, "0");
+
   return (
     <>
-      <PageHead p={c.pageHeads.services} />
-      {c.pillars.items.map((pl, k) => (
-        <section key={pl.id} className="t14-pillar t14-wrap" id={pl.id}>
-          <div className="t14-pillar-head">
-            <span className="t14-pillar-n"><sup>#.</sup>0{k + 1}</span>
-            <div>
-              <small>{pl.tag}</small>
-              <h2>{pl.title}</h2>
-              <p>{pl.sub}</p>
-            </div>
+      <section className="t15-svc-hero t14-wrap">
+        <span className="t15-eyebrow">{x.eyebrow}</span>
+        <h1 className="t15-svc-h1">
+          <span className="t15-mk">{p.title}</span>
+          <span className="t15-dot">.</span>
+        </h1>
+        <div className="t15-svc-row">
+          <p className="t15-svc-lead">{p.lead}</p>
+          <Link className="t15-sticker" to={href(v14Routes.audit)} hash="book" aria-label={c.hero.primary}>
+            <svg viewBox="0 0 132 132" aria-hidden="true">
+              <defs>
+                <path id="t15-ring" d="M66,66 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0" />
+              </defs>
+              <text>
+                <textPath href="#t15-ring" textLength="312" lengthAdjust="spacingAndGlyphs">{x.sticker}</textPath>
+              </text>
+            </svg>
+            <span aria-hidden="true">↘</span>
+          </Link>
+        </div>
+        <div className="t15-chips" role="group" aria-label={x.filter}>
+          {(["all", "marketing", "transformation"] as const).map((f) => (
+            <button
+              key={f}
+              type="button"
+              aria-pressed={filter === f}
+              onClick={() => {
+                setFilter(f);
+                setPinned(null);
+                setHover(null);
+              }}
+            >
+              {f === "all" ? x.all : c.pillars.items.find((pl) => pl.id === f)?.title}
+              <small>{count(f)}</small>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <div className="t15-marquee" aria-hidden="true">
+        <div className="t15-mq">
+          {[...x.marquee, ...x.marquee].map((w, i) => (
+            <span key={i}>{w}</span>
+          ))}
+        </div>
+      </div>
+
+      <ol className="t15-svc-list t14-wrap" key={filter} onPointerLeave={() => { window.clearTimeout(timer.current); setHover(null); }}>
+        {shown.map((r, k) => {
+          const on = open === r.i;
+          return (
+            <li
+              key={r.title}
+              className={`t15-row${on ? " open" : ""}`}
+              style={{ animationDelay: `${0.08 + k * 0.08}s` }}
+              onPointerEnter={() => {
+                if (!canHover) return;
+                window.clearTimeout(timer.current);
+                timer.current = window.setTimeout(() => setHover(r.i), 140);
+              }}
+            >
+              <button
+                type="button"
+                className="t15-rh"
+                aria-expanded={on}
+                aria-controls={`t15-p${r.i}`}
+                onClick={() => {
+                  setHover(null);
+                  setPinned(pinned === r.i ? null : r.i);
+                }}
+              >
+                <span className="t15-num">{k + 1}</span>
+                <span className="t15-nm">{r.title}</span>
+                <span className={`t15-tag ${r.pillar}`}>{r.pillarTitle}</span>
+                <span className="t15-plus" aria-hidden="true" />
+              </button>
+              <div className="t15-panel" id={`t15-p${r.i}`}>
+                <div>
+                  <div className="t15-pin">
+                    <ul className="t15-items">
+                      {r.items.map((it) => (
+                        <li key={it}>{it}</li>
+                      ))}
+                    </ul>
+                    <Link className="t14-pill t15-go" to={href(v14Routes.audit)} hash="book" tabIndex={on ? undefined : -1}>
+                      {x.rowCta} <i aria-hidden="true">→</i>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+
+      <section className="t14-wrap">
+        <div className="t15-unsure">
+          <h2>
+            {x.unsureA} <em>{x.unsureB}</em>
+          </h2>
+          <div>
+            <p>{x.unsureText}</p>
+            <Link className="t14-pill lg t15-go-light" to={href(v14Routes.audit)} hash="book">
+              {c.hero.primary} <i aria-hidden="true">→</i>
+            </Link>
           </div>
-          <ul className="t14-list t14-groups">
-            {pl.groups.map((g) => (
-              <li key={g.title}>
-                <span className="n">{g.title}</span>
-                <ul className="t14-items">
-                  {g.items.map((it) => (
-                    <li key={it}>{it}</li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-          {pl.id === "transformation" && <p className="t14-sol-note">{c.pillars.note}</p>}
-        </section>
-      ))}
+        </div>
+      </section>
+
       <MethodSection />
     </>
   );
