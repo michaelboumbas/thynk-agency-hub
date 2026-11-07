@@ -46,14 +46,44 @@ export function Label({ children }: { children: ReactNode }) {
   return <div className="t14-lbl">{children}</div>;
 }
 
-/** page opener: small label, a word that fills the width, the lead on the right */
-export function PageHead({ p }: { p: { label: string; title: string; lead: string } }) {
+/* 07/11 (Mike): every page opens like /services: a small eyebrow, the title in lake with the orange marker
+   line and the orange dot, the lead below. (Before: a giant word fitted to the width, lead top right.) */
+const headEyebrows = {
+  en: {
+    solutions: "What we build",
+    work: "Who we work with",
+    audit: "Where every engagement starts",
+    about: "Who we are",
+    contact: "Let's talk",
+    press: "Thynk in the news",
+    careers: "Work with us",
+    privacy: "The fine print",
+  },
+  el: {
+    solutions: "Τι χτίζουμε",
+    work: "Με ποιους δουλεύουμε",
+    audit: "Από εδώ ξεκινά κάθε συνεργασία",
+    about: "Η ομάδα πίσω από τη Thynk",
+    contact: "Ας μιλήσουμε",
+    press: "Η Thynk στον Τύπο",
+    careers: "Δουλέψτε μαζί μας",
+    privacy: "Τα ψιλά γράμματα",
+  },
+} as const;
+export type HeadKey = keyof (typeof headEyebrows)["en"];
+
+/** page opener: eyebrow, title with the marker line + dot, lead */
+export function PageHead({ p, k }: { p: { label: string; title: string; lead: string }; k?: HeadKey }) {
+  const { lang } = useCopy();
+  const eyebrow = k ? headEyebrows[lang][k] : p.label;
   return (
-    <section className="t14-wrap t14-phead">
-      <div className="t14-sol-top">
-        <p>{p.lead}</p>
-      </div>
-      <h1 className="t14-giant">{p.title}</h1>
+    <section className="t14-wrap t15-head">
+      <span className="t15-eyebrow">{eyebrow}</span>
+      <h1 className="t15-svc-h1">
+        <span className="t15-mk">{p.title}</span>
+        <span className="t15-dot">.</span>
+      </h1>
+      <p className="t15-svc-lead">{p.lead}</p>
     </section>
   );
 }

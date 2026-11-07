@@ -125,7 +125,7 @@ export function PressPage() {
 
   return (
     <>
-      <PageHead p={p.head} />
+      <PageHead p={p.head} k="press" />
 
       {first && (
         <section className="t14-wrap t14-press" aria-label={p.listLabel}>

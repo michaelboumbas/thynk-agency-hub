@@ -154,7 +154,7 @@ export function WorkPage() {
   const total = publishedCases.length;
   return (
     <>
-      <PageHead p={c.pageHeads.work} />
+      <PageHead p={c.pageHeads.work} k="work" />
       <section className="t14-wrap t14-wk">
         <h2 className="t14-wk-title">
           {w.title} <span>{w.titleGrey}</span>

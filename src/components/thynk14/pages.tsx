@@ -254,7 +254,7 @@ export function SolutionsPage() {
   const { c } = useCopy();
   return (
     <>
-      <PageHead p={c.pageHeads.solutions} />
+      <PageHead p={c.pageHeads.solutions} k="solutions" />
       <section className="t14-wrap t14-examples">
         {c.examples.items.map((ex, i) => (
           <article key={ex.id} className={`t14-example${i % 2 ? " flip" : ""}`}>
@@ -456,7 +456,7 @@ export function AuditPage() {
   const s = c.auditPage;
   return (
     <>
-      <PageHead p={c.pageHeads.audit} />
+      <PageHead p={c.pageHeads.audit} k="audit" />
       <AuditPanels id="looks" />
 
       <section className="t14-wrap t14-sample-sec">
@@ -522,7 +522,7 @@ export function AboutPage() {
   const outlets = [...new Set(publishedPress.map((it) => it.outlet))].slice(0, 3).join(", ");
   return (
     <>
-      <PageHead p={c.pageHeads.about} />
+      <PageHead p={c.pageHeads.about} k="about" />
 
       {/* founders (Mike 02/10): a photo each (placeholder until the photos arrive), the name, LinkedIn */}
       <section className="t14-wrap t14-team-sec">
@@ -605,7 +605,7 @@ export function ContactPage() {
         : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(k.mapsQuery)}`;
   return (
     <>
-      <PageHead p={c.pageHeads.contact} />
+      <PageHead p={c.pageHeads.contact} k="contact" />
 
       <section className="t14-wrap t14-contact">
         <Label>{k.cardsLabel}</Label>
@@ -691,7 +691,7 @@ export function PrivacyPage() {
   const p = privacyCopy[lang];
   return (
     <>
-      <PageHead p={p} />
+      <PageHead p={p} k="privacy" />
       <section className="t14-wrap t14-legal">
         <div className="t14-legal-body">
           <p className="t14-legal-updated">{p.updated}</p>

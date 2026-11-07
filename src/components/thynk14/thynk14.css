@@ -6916,3 +6916,82 @@
     transform: rotate(-1.2deg);
   }
 }
+
+/* ======================= UI/UX check-up, 07/11/2026 =======================
+   One page opener everywhere, readable small orange text, one button scale, 44px tap targets on phones. */
+.t14 {
+  /* orange for small text: the brand orange is 2.6:1 on the sky; this one passes 4.5:1 (AA) */
+  --orange-ink: #b8470d;
+}
+
+/* page opener (PageHead): the /services hero on every page */
+.t14 .t15-head {
+  padding-top: clamp(130px, 19vh, 190px);
+  padding-bottom: clamp(28px, 4vw, 56px);
+}
+.t14 .t15-head .t15-svc-lead {
+  margin-top: 28px;
+}
+
+/* small orange text → the darker orange (large titles, dots and shapes keep the brand orange) */
+.t14 sup,
+.t14-foot-legal nav a:hover,
+.t14-foot-legal nav a[aria-current="page"],
+.t14-foot-legal > a:hover,
+.t14-more a:hover {
+  color: var(--orange-ink);
+}
+/* no white text on orange (brand rule) */
+.t14 .t14-sample .t14-tag.o {
+  color: var(--ink);
+}
+/* nothing readable under 12px */
+.t14 .t14-sample .t14-tag,
+.t14 .t14-card-f,
+.t14 .t14-ir-ov-g {
+  font-size: 12px;
+}
+
+/* «more» links: a real tap area, the line drawn as an underline */
+.t14 .t14-more a {
+  display: inline-block;
+  padding: 10px 0;
+  border-bottom: 0;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+/* one button scale: regular 44px, large 52px (was 40 / 46 / 52 / 58) */
+.t14 .t14-pill {
+  height: 44px;
+}
+.t14 .t14-pill.lg {
+  height: 52px;
+  padding: 0 24px !important;
+  font-size: 16px;
+}
+.t14 .t15-dock .t14-pill {
+  height: 40px;
+}
+
+/* phones: every control at least 44×44 */
+@media (max-width: 640px) {
+  .t14 .t15-dock .t14-lang,
+  .t14 .t15-dock .t14-burger {
+    min-width: 44px;
+    height: 44px;
+  }
+  .t15-chips button {
+    min-height: 44px;
+  }
+  .t14 .t14-foot-grid li a,
+  .t14 .t14-foot-legal nav a,
+  .t14 .t14-foot-legal > a {
+    display: inline-block;
+    padding: 12px 0;
+  }
+  .t14 .t14-foot-legal nav {
+    gap: 0 22px;
+  }
+}

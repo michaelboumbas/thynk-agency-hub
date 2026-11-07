@@ -291,7 +291,7 @@ export function CareersPage() {
   };
   return (
     <>
-      <PageHead p={p.head} />
+      <PageHead p={p.head} k="careers" />
 
       <section className="t14-wrap t14-cr-areas" aria-label={p.areasLabel}>
         <Label>{p.areasLabel}</Label>
