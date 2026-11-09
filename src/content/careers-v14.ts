@@ -18,7 +18,7 @@ const en = {
   head: {
     label: "Careers",
     title: "Careers",
-    lead: "Thynk is hiring a Content Creator & Social Media Manager based in Ioannina. We also accept applications in the other areas listed below.",
+    lead: "We're hiring a Content Creator & Social Media Manager based in Ioannina. We also accept applications in the other areas listed below.",
   },
   areasLabel: "Who we work with",
   /** Mike 17/10: these six, in this order */
@@ -35,7 +35,7 @@ const en = {
     badge: "Open · accepting applications",
     title: "Content Creation & Social Media Management",
     meta: "Ioannina · Hybrid (remote & on-location shoots)",
-    text: "Thynk Digital Agency is looking for a Content Creator & Social Media Manager based in Ioannina. The role covers planning and managing our clients' social media accounts and producing their content: short-form video, photography and posts. The work is hybrid: remote, with shoots at client locations in Ioannina, Metsovo and the wider area.",
+    text: "We're looking for a Content Creator & Social Media Manager based in Ioannina. The role covers planning and managing our clients' social media accounts and producing their content: short-form video, photography and posts. The work is hybrid: remote, with shoots at our clients' locations in Ioannina, Metsovo and the wider area.",
     doLabel: "Responsibilities",
     tasks: [
       "Planning monthly content calendars for client accounts on Instagram, Facebook, TikTok and LinkedIn",
@@ -115,7 +115,7 @@ const el: CareersCopy = {
   head: {
     label: "Καριέρα",
     title: "Careers",
-    lead: "Η Thynk αναζητά Content Creator & Social Media Manager με έδρα τα Ιωάννινα. Δεχόμαστε επίσης αιτήσεις συνεργασίας στους τομείς που θα βρείτε πιο κάτω.",
+    lead: "Αναζητούμε Content Creator & Social Media Manager με έδρα τα Ιωάννινα. Δεχόμαστε επίσης αιτήσεις συνεργασίας στους τομείς που θα βρείτε πιο κάτω.",
   },
   areasLabel: "Τομείς συνεργασίας",
   areas: ["Performance marketing", "Social media management", "Design", "Video editing", "Web development", "AI automation"],
@@ -125,7 +125,7 @@ const el: CareersCopy = {
     badge: "Ανοιχτή · δεχόμαστε αιτήσεις",
     title: "Content Creation & Social Media Management",
     meta: "Ιωάννινα · Υβριδική εργασία (εξ αποστάσεως & γυρίσματα)",
-    text: "Η Thynk Digital Agency αναζητά Content Creator & Social Media Manager με έδρα τα Ιωάννινα. Ο ρόλος καλύπτει τον σχεδιασμό και τη διαχείριση των λογαριασμών social media των πελατών μας, καθώς και την παραγωγή του περιεχομένου τους: short-form βίντεο, φωτογραφία και posts. Η εργασία είναι υβριδική: εξ αποστάσεως, με γυρίσματα στους χώρους των πελατών σε Ιωάννινα, Μέτσοβο και την ευρύτερη περιοχή.",
+    text: "Αναζητούμε Content Creator & Social Media Manager με έδρα τα Ιωάννινα. Ο ρόλος καλύπτει τον σχεδιασμό και τη διαχείριση των λογαριασμών social media των πελατών μας, καθώς και την παραγωγή του περιεχομένου τους: short-form βίντεο, φωτογραφία και posts. Η εργασία είναι υβριδική: εξ αποστάσεως, με γυρίσματα στους χώρους των πελατών μας σε Ιωάννινα, Μέτσοβο και την ευρύτερη περιοχή.",
     doLabel: "Αρμοδιότητες",
     tasks: [
       "Σχεδιασμός μηνιαίου πλάνου περιεχομένου για τους λογαριασμούς των πελατών σε Instagram, Facebook, TikTok και LinkedIn",
