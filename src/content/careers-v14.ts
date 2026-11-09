@@ -26,7 +26,7 @@ const en = {
   areasNote: "Freelance, part-time or full-time. Choose your area in the form above.",
   /**
    * 09/11/2026 (Mike): the role is open (it was «planned» since 17/10). Based in Ioannina: from home
-   * and on shoots with clients in Ioannina, Metsovo and the area. Part- or full-time. No pay range (Mike's call).
+   * and on shoots with clients in Ioannina, Metsovo and the area. Part/full-time not shown and not pre-selected in the form (Mike 09/11). No pay range (Mike's call).
    * The LinkedIn post links to /el/careers?role=content: that pre-selects this role in the form.
    * When the role closes, change it here.
    */
@@ -34,7 +34,7 @@ const en = {
     label: "Open role",
     badge: "Open · accepting applications",
     title: "Content Creation & Social Media Management",
-    meta: "Ioannina · Hybrid (remote & on-location shoots) · Part- or full-time",
+    meta: "Ioannina · Hybrid (remote & on-location shoots)",
     text: "Thynk Digital Agency is looking for a Content Creator & Social Media Manager based in Ioannina. The role covers planning and managing our clients' social media accounts and producing their content: short-form video, photography and posts. The work is hybrid: remote, with shoots at client locations in Ioannina, Metsovo and the wider area.",
     doLabel: "Responsibilities",
     tasks: [
@@ -124,7 +124,7 @@ const el: CareersCopy = {
     label: "Ανοιχτή θέση",
     badge: "Ανοιχτή · δεχόμαστε αιτήσεις",
     title: "Content Creation & Social Media Management",
-    meta: "Ιωάννινα · Υβριδική εργασία (εξ αποστάσεως & γυρίσματα) · Μερική ή πλήρης απασχόληση",
+    meta: "Ιωάννινα · Υβριδική εργασία (εξ αποστάσεως & γυρίσματα)",
     text: "Η Thynk Digital Agency αναζητά Content Creator & Social Media Manager με έδρα τα Ιωάννινα. Ο ρόλος καλύπτει τον σχεδιασμό και τη διαχείριση των λογαριασμών social media των πελατών μας, καθώς και την παραγωγή του περιεχομένου τους: short-form βίντεο, φωτογραφία και posts. Η εργασία είναι υβριδική: εξ αποστάσεως, με γυρίσματα στους χώρους των πελατών σε Ιωάννινα, Μέτσοβο και την ευρύτερη περιοχή.",
     doLabel: "Αρμοδιότητες",
     tasks: [
