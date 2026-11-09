@@ -18,7 +18,7 @@ const en = {
   head: {
     label: "Careers",
     title: "Careers",
-    lead: "We're hiring for our first role, based in Ioannina. Below it you'll find the other areas we work with: every good application is kept for when a project opens up.",
+    lead: "We're hiring for content creation and social media management, based in Ioannina. Further down you'll find the other areas we work with; we keep every good application for future projects.",
   },
   areasLabel: "Who we work with",
   /** Mike 17/10: these six, in this order */
@@ -35,7 +35,7 @@ const en = {
     badge: "Open · we're hiring",
     title: "Content Creation & Social Media Management",
     meta: "Ioannina · from home and on shoots with our clients · part- or full-time",
-    text: "Our first hire. You'll run our clients' social media and create the content behind it: short videos, photos, posts. You'll work from home and on location with our clients in Ioannina, Metsovo and the wider area.",
+    text: "We're looking for someone to manage our clients' social media and create their content: short videos, photos, posts. The work is done from home and on shoots with our clients in Ioannina, Metsovo and the wider area.",
     doLabel: "What you'll do",
     tasks: [
       "Plan and run our clients' monthly content on Instagram, Facebook, TikTok and LinkedIn",
@@ -107,7 +107,7 @@ const el: CareersCopy = {
   head: {
     label: "Καριέρα",
     title: "Careers",
-    lead: "Ανοίγουμε την πρώτη μας θέση, με βάση τα Ιωάννινα. Πιο κάτω θα βρείτε και τους άλλους τομείς με τους οποίους συνεργαζόμαστε: κρατάμε κάθε καλή αίτηση για όταν ανοίξει ένα έργο.",
+    lead: "Αναζητούμε συνεργάτη για content creation και social media management, με βάση τα Ιωάννινα. Πιο κάτω θα βρείτε και τους υπόλοιπους τομείς συνεργασίας· κρατάμε κάθε καλή αίτηση για μελλοντικά έργα.",
   },
   areasLabel: "Τομείς συνεργασίας",
   areas: ["Performance marketing", "Social media management", "Design", "Video editing", "Web development", "AI automation"],
@@ -117,7 +117,7 @@ const el: CareersCopy = {
     badge: "Ανοιχτή · δεχόμαστε αιτήσεις",
     title: "Content Creation & Social Media Management",
     meta: "Ιωάννινα · από το σπίτι και σε γυρίσματα στους πελάτες μας · μερική ή πλήρης απασχόληση",
-    text: "Η πρώτη μας πρόσληψη. Θα τρέχετε τα social media των πελατών μας και θα δημιουργείτε το περιεχόμενο πίσω από αυτά: σύντομα βίντεο, φωτογραφίες, posts. Η δουλειά γίνεται από το σπίτι και σε γυρίσματα στους πελάτες μας, στα Ιωάννινα, στο Μέτσοβο και στη γύρω περιοχή.",
+    text: "Αναζητούμε άνθρωπο για τη διαχείριση των social media των πελατών μας και τη δημιουργία του περιεχομένου τους: σύντομα βίντεο, φωτογραφίες, posts. Η εργασία γίνεται από το σπίτι και σε γυρίσματα στους πελάτες μας, στα Ιωάννινα, στο Μέτσοβο και στη γύρω περιοχή.",
     doLabel: "Τι θα κάνετε",
     tasks: [
       "Θα σχεδιάζετε και θα τρέχετε το μηνιαίο περιεχόμενο των πελατών μας σε Instagram, Facebook, TikTok και LinkedIn",
