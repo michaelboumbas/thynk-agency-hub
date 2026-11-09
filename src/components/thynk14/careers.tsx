@@ -14,8 +14,8 @@ import { submitCareerApplication } from "@/lib/career-applications";
 
 const ENGAGEMENTS: Engagement[] = ["freelance", "part-time", "full-time"];
 const OTHER = "__other";
-/** the planned role (17/10, Mike) as a choice in the AREA list */
-const PLANNED = "__planned";
+/** the open role (09/11, Mike; planned since 17/10) as a choice in the AREA list */
+const ROLE = "__role";
 
 /** "linkedin.com/in/x" → "https://linkedin.com/in/x"; empty stays empty */
 function normalizeUrl(v: string) {
@@ -28,7 +28,7 @@ const looksLikeUrl = (s: string) => /^https?:\/\/[^\s/]+\.[^\s]+$/i.test(s);
 type TextKey = "first" | "last" | "email" | "phone" | "portfolio" | "linkedin";
 type FormErrors = Partial<Record<TextKey | "area" | "engagement" | "cv" | "consent", string>>;
 
-/** `pick` changes when «Register interest» is pressed: the form selects the planned role */
+/** `pick` changes when «Apply for this role» is pressed or the page opens with ?role=…: the form selects the open role */
 function CareerForm({ pick }: { pick: number }) {
   const { lang, href } = useCopy();
   const f = careersCopy[lang].form;
@@ -44,7 +44,7 @@ function CareerForm({ pick }: { pick: number }) {
   const fileRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (!pick) return;
-    setForm((x) => ({ ...x, area: PLANNED }));
+    setForm((x) => ({ ...x, area: ROLE }));
     setErrors((x) => ({ ...x, area: "" }));
   }, [pick]);
 
@@ -104,7 +104,7 @@ function CareerForm({ pick }: { pick: number }) {
       last: form.last,
       email: form.email,
       phone: form.phone,
-      area: form.area === PLANNED ? careersCopy.en.planned.option : (careersCopy.en.areas[areaIndex] ?? "Other"),
+      area: form.area === ROLE ? careersCopy.en.role.option : (careersCopy.en.areas[areaIndex] ?? "Other"),
       engagement: engagement as Engagement,
       portfolio,
       linkedin,
@@ -164,7 +164,7 @@ function CareerForm({ pick }: { pick: number }) {
             onChange={(e) => setForm({ ...form, area: e.target.value })}
           >
             <option value="">{f.area.placeholder}</option>
-            <option value={PLANNED}>{careersCopy[lang].planned.option}</option>
+            <option value={ROLE}>{careersCopy[lang].role.option}</option>
             {careersCopy[lang].areas.map((a) => (
               <option key={a} value={a}>{a}</option>
             ))}
@@ -281,43 +281,50 @@ function CareerForm({ pick }: { pick: number }) {
 export function CareersPage() {
   const { lang } = useCopy();
   const p = careersCopy[lang];
+  const r = p.role;
   const [pick, setPick] = useState(0);
-  // «Register interest»: pick the planned role in the form, then bring the form into view
-  const registerInterest = () => {
-    setPick((n) => n + 1);
+  const toForm = () => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     document.getElementById("apply")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     window.setTimeout(() => document.getElementById("careers-first")?.focus({ preventScroll: true }), reduce ? 0 : 700);
   };
+  // «Apply for this role»: pick the open role in the form, then bring the form into view
+  const applyForRole = () => {
+    setPick((n) => n + 1);
+    toForm();
+  };
+  // from LinkedIn (09/11, Mike): /el/careers?role=content pre-selects the role; #apply also scrolls to the form
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    if (q.has("role")) setPick((n) => n + 1);
+    if (window.location.hash === "#apply") window.setTimeout(() => document.getElementById("apply")?.scrollIntoView({ block: "start" }), 300);
+  }, []);
   return (
     <>
       <PageHead p={p.head} k="careers" />
 
-      <section className="t14-wrap t14-cr-areas" aria-label={p.areasLabel}>
-        <Label>{p.areasLabel}</Label>
-        <ol className="t14-cr-list">
-          {p.areas.map((a, i) => (
-            <li key={a}>
-              <span className="t14-cr-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-              <span className="t14-cr-name">{a}</span>
-            </li>
-          ))}
-        </ol>
-        <p className="t14-cr-note">{p.areasNote}</p>
-      </section>
-
-      {/* 17/10 (Mike): the first hire we plan — labelled as planned, never as an open position */}
-      <section className="t14-wrap t14-cr-planned" aria-labelledby="t14-cr-role">
-        <Label>{p.planned.label}</Label>
+      {/* 09/11 (Mike): order is open role → apply → who we work with */}
+      <section className="t14-wrap t14-cr-planned t14-cr-open" aria-labelledby="t14-cr-role">
+        <Label>{r.label}</Label>
         <article className="t14-cr-role">
           <div className="t14-cr-role-l">
-            <span className="t14-cr-badge">{p.planned.badge}</span>
-            <h2 id="t14-cr-role" className="t14-cr-role-title">{p.planned.title}</h2>
-            <p className="t14-cr-role-meta">{p.planned.meta}</p>
+            <span className="t14-cr-badge is-open">{r.badge}</span>
+            <h2 id="t14-cr-role" className="t14-cr-role-title">{r.title}</h2>
+            <p className="t14-cr-role-meta">{r.meta}</p>
           </div>
           <div className="t14-cr-role-r">
-            <p>{p.planned.text}</p>
-            <button type="button" className="t14-pill lg" onClick={registerInterest}>{p.planned.button}</button>
+            <p>{r.text}</p>
+            <button type="button" className="t14-pill lg" onClick={applyForRole}>{r.button}</button>
+          </div>
+          <div className="t14-cr-role-lists">
+            <div>
+              <h3>{r.doLabel}</h3>
+              <ul>{r.tasks.map((x) => <li key={x}>{x}</li>)}</ul>
+            </div>
+            <div>
+              <h3>{r.needLabel}</h3>
+              <ul>{r.need.map((x) => <li key={x}>{x}</li>)}</ul>
+            </div>
           </div>
         </article>
       </section>
@@ -336,6 +343,19 @@ export function CareersPage() {
           </p>
         </div>
         <CareerForm pick={pick} />
+      </section>
+
+      <section className="t14-wrap t14-cr-areas t14-cr-areas-last" aria-label={p.areasLabel}>
+        <Label>{p.areasLabel}</Label>
+        <ol className="t14-cr-list">
+          {p.areas.map((a, i) => (
+            <li key={a}>
+              <span className="t14-cr-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <span className="t14-cr-name">{a}</span>
+            </li>
+          ))}
+        </ol>
+        <p className="t14-cr-note">{p.areasNote}</p>
       </section>
     </>
   );

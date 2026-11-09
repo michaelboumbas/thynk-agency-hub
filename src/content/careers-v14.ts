@@ -2,7 +2,7 @@ import type { Lang } from "./site-v14";
 
 /**
  * Careers (17/10/2026, Mike): open applications. No open position is shown unless one really exists
- * (Mike 17/10: no «fake» roles). We reply to every applicant, whether or not we move forward.
+ * (Mike 17/10: no «fake» roles). 09/11/2026: the first real role is open (Content Creation & Social Media Management). We reply to every applicant, whether or not we move forward.
  * The CV (PDF) and the phone number are required (Mike 17/10); portfolio and LinkedIn links are optional.
  * Applications: our database (public.career_applications) + CV in the private bucket «career-cvs»
  * + HubSpot for the email notification. Kept 12 months (privacy policy).
@@ -18,25 +18,43 @@ const en = {
   head: {
     label: "Careers",
     title: "Careers",
-    lead: "We don't have an open position right now. We work with a network of collaborators and keep every good application for when a project or a role opens up.",
+    lead: "We're hiring for our first role, based in Ioannina. Below it you'll find the other areas we work with: every good application is kept for when a project opens up.",
   },
   areasLabel: "Who we work with",
   /** Mike 17/10: these six, in this order */
   areas: ["Performance marketing", "Social media management", "Design", "Video editing", "Web development", "AI automation"],
-  areasNote: "Freelance, part-time or full-time.",
+  areasNote: "Freelance, part-time or full-time. Choose your area in the form above.",
   /**
-   * 17/10 (Mike): the first hire we plan, shown as planned, never as open. Remote; type not set yet.
-   * Remove or change it here when the plan changes; set `open: true` only when the role really opens.
+   * 09/11/2026 (Mike): the role is open (it was «planned» since 17/10). Based in Ioannina: from home
+   * and on shoots with clients in Ioannina, Metsovo and the area. Part- or full-time. No pay range (Mike's call).
+   * The LinkedIn post links to /el/careers?role=content: that pre-selects this role in the form.
+   * When the role closes, change it here.
    */
-  planned: {
-    label: "Planned role",
-    badge: "Planned · not open yet",
-    title: "Social Media & Content",
-    meta: "Remote",
-    text: "Our first hire, when our numbers allow it. Someone who runs our clients' social media and creates the everyday content behind it: short videos, photos, posts. We'll open the role here when it's ready. Until then, you can register your interest.",
-    button: "Register interest",
+  role: {
+    label: "Open role",
+    badge: "Open · we're hiring",
+    title: "Content Creation & Social Media Management",
+    meta: "Ioannina · from home and on shoots with our clients · part- or full-time",
+    text: "Our first hire. You'll run our clients' social media and create the content behind it: short videos, photos, posts. You'll work from home and on location with our clients in Ioannina, Metsovo and the wider area.",
+    doLabel: "What you'll do",
+    tasks: [
+      "Plan and run our clients' monthly content on Instagram, Facebook, TikTok and LinkedIn",
+      "Shoot and edit short videos and photos on location",
+      "Write clear posts and captions in Greek",
+      "Schedule and publish, and reply to comments and messages",
+      "Follow the results and tell us what works",
+    ],
+    needLabel: "What we're looking for",
+    need: [
+      "You live in Ioannina or nearby and can get to shoots in the area",
+      "You shoot and edit with a phone or a camera (CapCut, Premiere or similar)",
+      "You write well in Greek",
+      "A portfolio, even from your own accounts",
+      "You organise your week and keep your deadlines",
+    ],
+    button: "Apply for this role",
     /** the choice in the form's AREA list; stored in English */
-    option: "Planned role: Social Media & Content",
+    option: "Open role: Content Creation & Social Media Management",
   },
   side: {
     title: "Apply",
@@ -89,19 +107,35 @@ const el: CareersCopy = {
   head: {
     label: "Καριέρα",
     title: "Careers",
-    lead: "Αυτή τη στιγμή δεν έχουμε ανοιχτή θέση. Συνεργαζόμαστε με ένα δίκτυο συνεργατών και κρατάμε κάθε καλή αίτηση για όταν ανοίξει ένα έργο ή μια θέση.",
+    lead: "Ανοίγουμε την πρώτη μας θέση, με βάση τα Ιωάννινα. Πιο κάτω θα βρείτε και τους άλλους τομείς με τους οποίους συνεργαζόμαστε: κρατάμε κάθε καλή αίτηση για όταν ανοίξει ένα έργο.",
   },
   areasLabel: "Τομείς συνεργασίας",
   areas: ["Performance marketing", "Social media management", "Design", "Video editing", "Web development", "AI automation"],
-  areasNote: "Freelance, μερική ή πλήρης απασχόληση.",
-  planned: {
-    label: "Προγραμματισμένη θέση",
-    badge: "Προγραμματισμένη · δεν είναι ανοιχτή ακόμα",
-    title: "Social Media & Content",
-    meta: "Remote",
-    text: "Η πρώτη μας πρόσληψη, όταν το επιτρέψουν τα νούμερά μας. Κάποιος που θα τρέχει τα social media των πελατών μας και θα δημιουργεί το καθημερινό περιεχόμενο πίσω από αυτά: σύντομα βίντεο, φωτογραφίες, posts. Θα ανοίξουμε τη θέση εδώ όταν είναι έτοιμη. Μέχρι τότε, μπορείτε να δηλώσετε ενδιαφέρον.",
-    button: "Δήλωση ενδιαφέροντος",
-    option: "Προγραμματισμένη θέση: Social Media & Content",
+  areasNote: "Freelance, μερική ή πλήρης απασχόληση. Επιλέξτε τον τομέα σας στη φόρμα παραπάνω.",
+  role: {
+    label: "Ανοιχτή θέση",
+    badge: "Ανοιχτή · δεχόμαστε αιτήσεις",
+    title: "Content Creation & Social Media Management",
+    meta: "Ιωάννινα · από το σπίτι και σε γυρίσματα στους πελάτες μας · μερική ή πλήρης απασχόληση",
+    text: "Η πρώτη μας πρόσληψη. Θα τρέχετε τα social media των πελατών μας και θα δημιουργείτε το περιεχόμενο πίσω από αυτά: σύντομα βίντεο, φωτογραφίες, posts. Η δουλειά γίνεται από το σπίτι και σε γυρίσματα στους πελάτες μας, στα Ιωάννινα, στο Μέτσοβο και στη γύρω περιοχή.",
+    doLabel: "Τι θα κάνετε",
+    tasks: [
+      "Θα σχεδιάζετε και θα τρέχετε το μηνιαίο περιεχόμενο των πελατών μας σε Instagram, Facebook, TikTok και LinkedIn",
+      "Θα γυρίζετε και θα μοντάρετε σύντομα βίντεο και φωτογραφίες, επί τόπου",
+      "Θα γράφετε καθαρά posts και λεζάντες στα ελληνικά",
+      "Θα προγραμματίζετε τις αναρτήσεις και θα απαντάτε σε σχόλια και μηνύματα",
+      "Θα παρακολουθείτε τα αποτελέσματα και θα μας λέτε τι δουλεύει",
+    ],
+    needLabel: "Τι ζητάμε",
+    need: [
+      "Μένετε στα Ιωάννινα ή κοντά και μπορείτε να πηγαίνετε σε γυρίσματα στην περιοχή",
+      "Γυρίζετε και μοντάρετε με κινητό ή κάμερα (CapCut, Premiere ή κάτι αντίστοιχο)",
+      "Γράφετε καλά ελληνικά",
+      "Portfolio, έστω και από δικούς σας λογαριασμούς",
+      "Οργανώνετε την εβδομάδα σας και τηρείτε τις προθεσμίες",
+    ],
+    button: "Κάντε αίτηση για τη θέση",
+    option: "Ανοιχτή θέση: Content Creation & Social Media Management",
   },
   side: {
     title: "Αίτηση",
