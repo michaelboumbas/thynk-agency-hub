@@ -324,6 +324,8 @@ export function CareersPage() {
             <div>
               <h3>{r.needLabel}</h3>
               <ul>{r.need.map((x) => <li key={x}>{x}</li>)}</ul>
+              <h3 className="t14-cr-nice">{r.niceLabel}</h3>
+              <ul>{r.nice.map((x) => <li key={x}>{x}</li>)}</ul>
             </div>
           </div>
         </article>

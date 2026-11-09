@@ -4979,6 +4979,9 @@
   height: 8px;
   background: var(--orange); /* the brand dot */
 }
+.t14 .t14-cr-role-lists h3.t14-cr-nice {
+  margin-top: 26px;
+}
 .t14-cr-areas-last {
   margin-top: clamp(56px, 10vh, 110px);
   margin-bottom: clamp(40px, 8vh, 90px);
