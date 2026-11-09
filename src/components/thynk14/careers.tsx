@@ -320,6 +320,10 @@ export function CareersPage() {
             <div>
               <h3>{r.doLabel}</h3>
               <ul>{r.tasks.map((x) => <li key={x}>{x}</li>)}</ul>
+              <h3 className="t14-cr-nice">{r.alsoLabel}</h3>
+              <ul>{r.also.map((x) => <li key={x}>{x}</li>)}</ul>
+              <h3 className="t14-cr-nice">{r.offerLabel}</h3>
+              <ul>{r.offer.map((x) => <li key={x}>{x}</li>)}</ul>
             </div>
             <div>
               <h3>{r.needLabel}</h3>
