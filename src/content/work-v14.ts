@@ -148,8 +148,8 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    // 12/11/2026 (Mike): added as a Thynk collaboration. Scope (Mike, 12/11): the strategy behind the marketing,
-    // content creation, advertising (performance marketing) and the new website (design + UX; hosting/platform stay with WEBST).
+    // 12/11/2026 (Mike): added as a Thynk collaboration. Scope (Mike, 12/11): the strategy behind the marketing (incl.
+    // content direction), advertising and the new website. NOT ours: shooting, editing, social media management (other people) (design + UX; hosting/platform stay with WEBST).
     slug: "kalliopi-taxidou",
     status: "ongoing",
     since: "2026",
@@ -165,27 +165,27 @@ export const caseStudies: CaseStudy[] = [
       client: "Kalliopi Taxidou",
       sector: "Fashion label & online store",
       location: "Athens",
-      cardLine: "Strategy, content, advertising and a new website for a Greek designer label.",
-      tags: ["Strategy", "Content Creation", "Performance Marketing", "Web Design"],
+      cardLine: "Strategy, advertising and a new website for a Greek designer label.",
+      tags: ["Strategy", "Performance Marketing", "Web Design"],
       context:
         "Kalliopi Taxidou is an Athens fashion label with a contemporary take on Greek elegance: clothes made from natural materials, finished by hand and inspired by Greek cultural heritage, with an emblem drawn from Linear B. Alongside its collections it offers limited editions, made-to-order and custom-made pieces, all through its own online store.",
       brief:
         "A designer label that sells through its own store needs two things working together: ads that reach the right buyers, and a store that makes ordering effortless once they arrive.",
       work:
-        "We set the strategy behind the label's marketing, create its content and run its advertising, with campaigns optimised against sales in the online store. We are also designing its new website: more modern, faster and easier to order from.",
+        "We set the strategy behind the label's marketing, including the direction for its content, and run its advertising, with campaigns optimised against sales in the online store. We are also designing its new website: more modern, faster and easier to order from.",
     },
     el: {
       client: "Kalliopi Taxidou",
       sector: "Brand μόδας & ηλεκτρονικό κατάστημα",
       location: "Αθήνα",
-      cardLine: "Στρατηγική, περιεχόμενο, διαφήμιση και νέο website για ένα ελληνικό brand σχεδιάστριας.",
-      tags: ["Στρατηγική", "Content Creation", "Performance Marketing", "Web Design"],
+      cardLine: "Στρατηγική, διαφήμιση και νέο website για ένα ελληνικό brand σχεδιάστριας.",
+      tags: ["Στρατηγική", "Performance Marketing", "Web Design"],
       context:
         "Η Kalliopi Taxidou είναι brand μόδας από την Αθήνα με μια σύγχρονη εκδοχή της ελληνικής κομψότητας: ρούχα από φυσικά υλικά, με χειροποίητο φινίρισμα και έμπνευση από την ελληνική πολιτιστική κληρονομιά, με έμβλημα εμπνευσμένο από τη Γραμμική Β. Δίπλα στις συλλογές προσφέρει limited editions, κομμάτια κατά παραγγελία και custom made, όλα μέσα από το δικό της ηλεκτρονικό κατάστημα.",
       brief:
         "Ένα brand σχεδιάστριας που πουλά από το δικό του κατάστημα χρειάζεται δύο πράγματα να δουλεύουν μαζί: διαφήμιση που φτάνει στους σωστούς αγοραστές, και ένα κατάστημα που κάνει την παραγγελία εύκολη μόλις φτάσουν.",
       work:
-        "Χαράζουμε τη στρατηγική πίσω από το marketing του brand, δημιουργούμε το περιεχόμενό του και τρέχουμε τη διαφήμισή του, με καμπάνιες που βελτιστοποιούνται με βάση τις πωλήσεις στο e-shop. Παράλληλα σχεδιάζουμε το νέο του website: πιο σύγχρονο, πιο γρήγορο και πιο εύκολο στην παραγγελία.",
+        "Χαράζουμε τη στρατηγική πίσω από το marketing του brand, μαζί με την κατεύθυνση για το περιεχόμενό του, και τρέχουμε τη διαφήμισή του, με καμπάνιες που βελτιστοποιούνται με βάση τις πωλήσεις στο e-shop. Παράλληλα σχεδιάζουμε το νέο του website: πιο σύγχρονο, πιο γρήγορο και πιο εύκολο στην παραγγελία.",
     },
   },
   {
