@@ -7,6 +7,7 @@
 // 09/10 (Mike): the brands are shown as logos, not names (home strip, cards, case head). Files in public/clients/,
 // captured from each brand's own site and turned into one-colour marks; `ratio` (width/height) sizes them to the same visual weight.
 // 09/10 (Mike): θamõn is off the site until the engagement is final.
+// 12/11 (Mike): Kalliopi Taxidou added (performance marketing + online store redesign).
 // 08/10 (Mike): services per case confirmed; Meta/Google/TikTok and Pixel/CAPI are implied by Performance Marketing, never listed.
 import type { Lang } from "@/content/site-v14";
 
@@ -337,6 +338,47 @@ export const caseStudies: CaseStudy[] = [
         "Η πρώτη διοργάνωση ξεκίνησε από το μηδέν: να γεμίσει μια δωρεάν εκδήλωση με μαθητές και γονείς, και να δώσει σε χορηγούς και εκπαιδευτικούς φορείς λόγο να είναι εκεί.",
       work:
         "Χτίσαμε τη στρατηγική του λανσαρίσματος και κάναμε το social media management και τις διαφημιστικές καμπάνιες του forum, φέρνοντας προεγγραφές μαθητών και γονέων από όλη την Ήπειρο. Τώρα συνεχίζουμε την ίδια δουλειά για το forum του 2027.",
+    },
+  },
+  {
+    // 12/11/2026 (Mike): added as a Thynk collaboration. Scope: performance marketing (ads) and the online
+    // store's redesign (design + UX on staging; hosting, platform, payments and integrations stay with WEBST).
+    slug: "kalliopi-taxidou",
+    status: "ongoing",
+    since: "2026",
+    published: true,
+    url: "https://www.kalliopitaxidou.com",
+    domain: "kalliopitaxidou.com",
+    // the label's own palette: warm stone ground, black ink (sampled from kalliopitaxidou.com)
+    theme: { bg: "#e8e4dd", fg: "#141414", logo: "#141414", accent: "#6b5a44" },
+    logos: [
+      { src: "/clients/kalliopi-taxidou.png", alt: "Kalliopi Taxidou", ratio: 1.032 },
+    ],
+    en: {
+      client: "Kalliopi Taxidou",
+      sector: "Fashion label & online store",
+      location: "Athens",
+      cardLine: "Performance marketing and a new online store experience for a Greek designer label.",
+      tags: ["Performance Marketing", "Web Design"],
+      context:
+        "Kalliopi Taxidou is an Athens fashion label with a contemporary take on Greek elegance: clothes made from natural materials, finished by hand and inspired by Greek cultural heritage, with an emblem drawn from Linear B. Alongside its collections it offers limited editions, made-to-order and custom-made pieces, all through its own online store.",
+      brief:
+        "A designer label that sells through its own store needs two things working together: ads that reach the right buyers, and a store that makes ordering effortless once they arrive.",
+      work:
+        "We run the label's performance marketing, with campaigns optimised against sales in the online store. We are also redesigning the store's look and user experience so it becomes more modern, faster and easier to order from, while the platform, payments and integrations stay exactly as they are.",
+    },
+    el: {
+      client: "Kalliopi Taxidou",
+      sector: "Brand μόδας & ηλεκτρονικό κατάστημα",
+      location: "Αθήνα",
+      cardLine: "Performance marketing και νέα εμπειρία e-shop για ένα ελληνικό brand σχεδιάστριας.",
+      tags: ["Performance Marketing", "Web Design"],
+      context:
+        "Η Kalliopi Taxidou είναι brand μόδας από την Αθήνα με μια σύγχρονη εκδοχή της ελληνικής κομψότητας: ρούχα από φυσικά υλικά, με χειροποίητο φινίρισμα και έμπνευση από την ελληνική πολιτιστική κληρονομιά, με έμβλημα εμπνευσμένο από τη Γραμμική Β. Δίπλα στις συλλογές προσφέρει limited editions, κομμάτια κατά παραγγελία και custom made, όλα μέσα από το δικό της ηλεκτρονικό κατάστημα.",
+      brief:
+        "Ένα brand σχεδιάστριας που πουλά από το δικό του κατάστημα χρειάζεται δύο πράγματα να δουλεύουν μαζί: διαφήμιση που φτάνει στους σωστούς αγοραστές, και ένα κατάστημα που κάνει την παραγγελία εύκολη μόλις φτάσουν.",
+      work:
+        "Τρέχουμε το performance marketing του brand, με καμπάνιες που βελτιστοποιούνται με βάση τις πωλήσεις στο e-shop. Παράλληλα σχεδιάζουμε από την αρχή την εικόνα και την εμπειρία χρήσης του καταστήματος, ώστε να γίνει πιο σύγχρονο, πιο γρήγορο και πιο εύκολο στην παραγγελία, ενώ η πλατφόρμα, οι πληρωμές και οι συνδέσεις μένουν ακριβώς όπως είναι.",
     },
   },
   {
