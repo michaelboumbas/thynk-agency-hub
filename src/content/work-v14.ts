@@ -7,6 +7,8 @@
 // 09/10 (Mike): the brands are shown as logos, not names (home strip, cards, case head). Files in public/clients/,
 // captured from each brand's own site and turned into one-colour marks; `ratio` (width/height) sizes them to the same visual weight.
 // 09/10 (Mike): θamõn is off the site until the engagement is final.
+// 12/11 (Mike): order on the site = MOTY, Shipping Finance, Kalliopi Taxidou, Imperator, Youth Choice, Anadelta, μάιμέτσοβο
+// (the array order is the site order; hidden cases sit at the end).
 // 12/11 (Mike): Kalliopi Taxidou added (performance marketing + online store redesign).
 // 08/10 (Mike): services per case confirmed; Meta/Google/TikTok and Pixel/CAPI are implied by Performance Marketing, never listed.
 import type { Lang } from "@/content/site-v14";
@@ -146,41 +148,44 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    slug: "eel-hellenic-logistics-association",
+    // 12/11/2026 (Mike): added as a Thynk collaboration. Scope (Mike, 12/11): content & advertising strategy,
+    // advertising (performance marketing) and the new website (design + UX; hosting/platform stay with WEBST).
+    slug: "kalliopi-taxidou",
     status: "ongoing",
     since: "2026",
-    published: false, // 12/10 (Mike): off the site for now, to be added later
-    url: "https://eel.gr",
-    domain: "eel.gr",
-    theme: { bg: "#364e8a", fg: "#ffffff", logo: "#ffffff", accent: "#e9c43b" },
+    published: true,
+    url: "https://www.kalliopitaxidou.com",
+    domain: "kalliopitaxidou.com",
+    // the label's own palette: warm stone ground, black ink (sampled from kalliopitaxidou.com)
+    theme: { bg: "#e8e4dd", fg: "#141414", logo: "#141414", accent: "#6b5a44" },
     logos: [
-      { src: "/clients/eel-hellenic-logistics-association.png", alt: "EEL – Hellenic Logistics Association", ratio: 4.295 },
+      { src: "/clients/kalliopi-taxidou.png", alt: "Kalliopi Taxidou", ratio: 1.032 },
     ],
     en: {
-      client: "EEL – Hellenic Logistics Association",
-      sector: "Professional association, logistics & supply chain",
+      client: "Kalliopi Taxidou",
+      sector: "Fashion label & online store",
       location: "Athens",
-      cardLine: "Digital campaign for the 27th Panhellenic Supply Chain Conference.",
-      tags: ["Strategy", "Social Media Management", "Performance Marketing", "Event Coverage"],
+      cardLine: "Strategy, advertising and a new website for a Greek designer label.",
+      tags: ["Strategy", "Performance Marketing", "Web Design"],
       context:
-        "Founded in 1994, the Hellenic Logistics Association (EEL) is one of Greece's leading scientific bodies for logistics and the supply chain. Its annual Panhellenic Conference is produced together with Slide2Open.",
+        "Kalliopi Taxidou is an Athens fashion label with a contemporary take on Greek elegance: clothes made from natural materials, finished by hand and inspired by Greek cultural heritage, with an emblem drawn from Linear B. Alongside its collections it offers limited editions, made-to-order and custom-made pieces, all through its own online store.",
       brief:
-        "Turn a respected, industry-insider conference into a must-attend event for the wider supply-chain community, on a tight timeline.",
+        "A designer label that sells through its own store needs two things working together: ads that reach the right buyers, and a store that makes ordering effortless once they arrive.",
       work:
-        "We set the conference's digital strategy, run its social media management and paid campaigns that drive registrations from across the supply-chain community, and cover the conference itself.",
+        "We are building the label's content and advertising strategy, run its advertising with campaigns optimised against sales in the online store, and are designing its new website: more modern, faster and easier to order from.",
     },
     el: {
-      client: "EEL – Ελληνική Εταιρεία Logistics",
-      sector: "Επιστημονικός φορέας, logistics & εφοδιαστική αλυσίδα",
+      client: "Kalliopi Taxidou",
+      sector: "Brand μόδας & ηλεκτρονικό κατάστημα",
       location: "Αθήνα",
-      cardLine: "Ψηφιακή καμπάνια για το 27ο Πανελλήνιο Συνέδριο Εφοδιαστικής Αλυσίδας.",
-      tags: ["Στρατηγική", "Social Media Management", "Performance Marketing", "Κάλυψη εκδηλώσεων"],
+      cardLine: "Στρατηγική, διαφήμιση και νέο website για ένα ελληνικό brand σχεδιάστριας.",
+      tags: ["Στρατηγική", "Performance Marketing", "Web Design"],
       context:
-        "Η Ελληνική Εταιρεία Logistics (EEL), που ιδρύθηκε το 1994, είναι από τους σημαντικότερους επιστημονικούς φορείς για τα logistics και την εφοδιαστική αλυσίδα στην Ελλάδα. Το ετήσιο Πανελλήνιο Συνέδριό της υλοποιείται σε συνεργασία με τη Slide2Open.",
+        "Η Kalliopi Taxidou είναι brand μόδας από την Αθήνα με μια σύγχρονη εκδοχή της ελληνικής κομψότητας: ρούχα από φυσικά υλικά, με χειροποίητο φινίρισμα και έμπνευση από την ελληνική πολιτιστική κληρονομιά, με έμβλημα εμπνευσμένο από τη Γραμμική Β. Δίπλα στις συλλογές προσφέρει limited editions, κομμάτια κατά παραγγελία και custom made, όλα μέσα από το δικό της ηλεκτρονικό κατάστημα.",
       brief:
-        "Ένα καταξιωμένο συνέδριο του κλάδου να γίνει το ραντεβού που δεν χάνει κανείς στην ευρύτερη κοινότητα της εφοδιαστικής αλυσίδας, σε σύντομο χρονικό διάστημα.",
+        "Ένα brand σχεδιάστριας που πουλά από το δικό του κατάστημα χρειάζεται δύο πράγματα να δουλεύουν μαζί: διαφήμιση που φτάνει στους σωστούς αγοραστές, και ένα κατάστημα που κάνει την παραγγελία εύκολη μόλις φτάσουν.",
       work:
-        "Χαράζουμε την ψηφιακή στρατηγική του συνεδρίου, κάνουμε social media management, τρέχουμε διαφημιστικές καμπάνιες που φέρνουν εγγραφές από όλη την κοινότητα της εφοδιαστικής αλυσίδας και καλύπτουμε το ίδιο το συνέδριο.",
+        "Χτίζουμε τη στρατηγική περιεχομένου και διαφήμισης του brand, τρέχουμε τη διαφήμισή του με καμπάνιες που βελτιστοποιούνται με βάση τις πωλήσεις στο e-shop, και σχεδιάζουμε το νέο του website: πιο σύγχρονο, πιο γρήγορο και πιο εύκολο στην παραγγελία.",
     },
   },
   {
@@ -224,43 +229,42 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    slug: "mymetsovo",
+    slug: "youth-choice-epirus-forum",
+    // 09/10 (Mike): the case is the 2027 forum we are working on; the first edition (8 July 2026) is its history
     status: "ongoing",
-    since: "2026",
+    edition: "2027",
     published: true,
-    url: "https://mymetsovo.gr",
-    domain: "mymetsovo.gr",
-    theme: { bg: "#1c2266", fg: "#ffffff", logo: "#ffffff", accent: "#e4a853" },
+    url: "https://youthchoice.gr",
+    domain: "youthchoice.gr",
+    theme: { bg: "#ae96c6", fg: "#0f1012", logo: "#0f1012", accent: "#ffffff" },
     logos: [
-      { src: "/clients/mymetsovo.png", alt: "μάιμέτσοβο", ratio: 4.776 },
+      { src: "/clients/youth-choice-epirus-forum.png", alt: "Youth Choice Epirus Forum", ratio: 4.324 },
     ],
     en: {
-      client: "μάιμέτσοβο",
-      sector: "Place branding & sustainable tourism",
-      location: "Metsovo, Epirus",
-      cardLine: "The digital guide to the highest village in Epirus.",
-      tags: ["Web Design", "Strategy", "Social Media Management", "Performance Marketing"],
+      client: "Youth Choice Epirus Forum",
+      sector: "Education & career event",
+      location: "Ioannina",
+      cardLine: "A forum connecting the next generation of Epirus with education and careers.",
+      tags: ["Strategy", "Social Media Management", "Performance Marketing"],
       context:
-        "μάιμέτσοβο is the digital guide to Metsovo, bringing stays, food, sights, the Anilio ski centre and activities together in one place for visitors.",
+        "Youth Choice Epirus Forum, powered by Anadelta Education, brings universities, colleges, career experts and the business community of Epirus together for high-school students and parents. The first edition took place on 8 July 2026 at the Epirus Palace in Ioannina.",
       brief:
-        "Give a destination one coherent digital voice, so a visitor finds everything they need in one place and local businesses gain visibility.",
+        "The first edition started from zero: fill a free event with students and parents, and give sponsors and educational partners a reason to be there.",
       work:
-        "We designed and built the guide's website, set the destination's digital strategy, and run its social media management and paid campaigns, putting Metsovo in front of the travellers planning their next mountain escape.",
-      deliverables: ["Website: design & build", "Digital strategy", "Social media management", "Paid campaigns"],
+        "We built the launch strategy and ran the forum's social media management and paid campaigns, driving pre-registrations from students and parents across Epirus. Now we carry the same work into the 2027 forum.",
     },
     el: {
-      client: "μάιμέτσοβο",
-      sector: "Place branding & βιώσιμος τουρισμός",
-      location: "Μέτσοβο, Ήπειρος",
-      cardLine: "Ο ψηφιακός οδηγός για το ορεινότερο χωριό της Ηπείρου.",
-      tags: ["Web Design", "Στρατηγική", "Social Media Management", "Performance Marketing"],
+      client: "Youth Choice Epirus Forum",
+      sector: "Εκδήλωση εκπαίδευσης & καριέρας",
+      location: "Ιωάννινα",
+      cardLine: "Ένα forum που συνδέει τη νέα γενιά της Ηπείρου με την εκπαίδευση και την καριέρα.",
+      tags: ["Στρατηγική", "Social Media Management", "Performance Marketing"],
       context:
-        "Το μάιμέτσοβο είναι ο ψηφιακός οδηγός του Μετσόβου: διαμονή, φαγητό, αξιοθέατα, το χιονοδρομικό Ανηλίου και δραστηριότητες, όλα σε ένα σημείο.",
+        "Το Youth Choice Epirus Forum, με τη στήριξη της Anadelta Education, φέρνει κοντά πανεπιστήμια, κολέγια, συμβούλους καριέρας και την επιχειρηματική κοινότητα της Ηπείρου για μαθητές Λυκείου και γονείς. Η πρώτη διοργάνωση έγινε στις 8 Ιουλίου 2026 στο Epirus Palace στα Ιωάννινα.",
       brief:
-        "Ένας προορισμός να αποκτήσει μία ενιαία ψηφιακή φωνή, ώστε ο επισκέπτης να βρίσκει ό,τι χρειάζεται σε ένα σημείο και οι τοπικές επιχειρήσεις να κερδίζουν προβολή.",
+        "Η πρώτη διοργάνωση ξεκίνησε από το μηδέν: να γεμίσει μια δωρεάν εκδήλωση με μαθητές και γονείς, και να δώσει σε χορηγούς και εκπαιδευτικούς φορείς λόγο να είναι εκεί.",
       work:
-        "Σχεδιάσαμε και κατασκευάσαμε το website του οδηγού, χαράζουμε την ψηφιακή στρατηγική του προορισμού κάνουμε social media management και τρέχουμε τις διαφημιστικές καμπάνιες του, φέρνοντας το Μέτσοβο μπροστά στους ταξιδιώτες που σχεδιάζουν την επόμενη απόδρασή τους στο βουνό.",
-      deliverables: ["Website: σχεδιασμός & κατασκευή", "Ψηφιακή στρατηγική", "Social media management", "Διαφημιστικές καμπάνιες"],
+        "Χτίσαμε τη στρατηγική του λανσαρίσματος και κάναμε το social media management και τις διαφημιστικές καμπάνιες του forum, φέρνοντας προεγγραφές μαθητών και γονέων από όλη την Ήπειρο. Τώρα συνεχίζουμε την ίδια δουλειά για το forum του 2027.",
     },
   },
   {
@@ -302,83 +306,81 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    slug: "youth-choice-epirus-forum",
-    // 09/10 (Mike): the case is the 2027 forum we are working on; the first edition (8 July 2026) is its history
-    status: "ongoing",
-    edition: "2027",
-    published: true,
-    url: "https://youthchoice.gr",
-    domain: "youthchoice.gr",
-    theme: { bg: "#ae96c6", fg: "#0f1012", logo: "#0f1012", accent: "#ffffff" },
-    logos: [
-      { src: "/clients/youth-choice-epirus-forum.png", alt: "Youth Choice Epirus Forum", ratio: 4.324 },
-    ],
-    en: {
-      client: "Youth Choice Epirus Forum",
-      sector: "Education & career event",
-      location: "Ioannina",
-      cardLine: "A forum connecting the next generation of Epirus with education and careers.",
-      tags: ["Strategy", "Social Media Management", "Performance Marketing"],
-      context:
-        "Youth Choice Epirus Forum, powered by Anadelta Education, brings universities, colleges, career experts and the business community of Epirus together for high-school students and parents. The first edition took place on 8 July 2026 at the Epirus Palace in Ioannina.",
-      brief:
-        "The first edition started from zero: fill a free event with students and parents, and give sponsors and educational partners a reason to be there.",
-      work:
-        "We built the launch strategy and ran the forum's social media management and paid campaigns, driving pre-registrations from students and parents across Epirus. Now we carry the same work into the 2027 forum.",
-    },
-    el: {
-      client: "Youth Choice Epirus Forum",
-      sector: "Εκδήλωση εκπαίδευσης & καριέρας",
-      location: "Ιωάννινα",
-      cardLine: "Ένα forum που συνδέει τη νέα γενιά της Ηπείρου με την εκπαίδευση και την καριέρα.",
-      tags: ["Στρατηγική", "Social Media Management", "Performance Marketing"],
-      context:
-        "Το Youth Choice Epirus Forum, με τη στήριξη της Anadelta Education, φέρνει κοντά πανεπιστήμια, κολέγια, συμβούλους καριέρας και την επιχειρηματική κοινότητα της Ηπείρου για μαθητές Λυκείου και γονείς. Η πρώτη διοργάνωση έγινε στις 8 Ιουλίου 2026 στο Epirus Palace στα Ιωάννινα.",
-      brief:
-        "Η πρώτη διοργάνωση ξεκίνησε από το μηδέν: να γεμίσει μια δωρεάν εκδήλωση με μαθητές και γονείς, και να δώσει σε χορηγούς και εκπαιδευτικούς φορείς λόγο να είναι εκεί.",
-      work:
-        "Χτίσαμε τη στρατηγική του λανσαρίσματος και κάναμε το social media management και τις διαφημιστικές καμπάνιες του forum, φέρνοντας προεγγραφές μαθητών και γονέων από όλη την Ήπειρο. Τώρα συνεχίζουμε την ίδια δουλειά για το forum του 2027.",
-    },
-  },
-  {
-    // 12/11/2026 (Mike): added as a Thynk collaboration. Scope (Mike, 12/11): content & advertising strategy,
-    // advertising (performance marketing) and the new website (design + UX; hosting/platform stay with WEBST).
-    slug: "kalliopi-taxidou",
+    slug: "mymetsovo",
     status: "ongoing",
     since: "2026",
     published: true,
-    url: "https://www.kalliopitaxidou.com",
-    domain: "kalliopitaxidou.com",
-    // the label's own palette: warm stone ground, black ink (sampled from kalliopitaxidou.com)
-    theme: { bg: "#e8e4dd", fg: "#141414", logo: "#141414", accent: "#6b5a44" },
+    url: "https://mymetsovo.gr",
+    domain: "mymetsovo.gr",
+    theme: { bg: "#1c2266", fg: "#ffffff", logo: "#ffffff", accent: "#e4a853" },
     logos: [
-      { src: "/clients/kalliopi-taxidou.png", alt: "Kalliopi Taxidou", ratio: 1.032 },
+      { src: "/clients/mymetsovo.png", alt: "μάιμέτσοβο", ratio: 4.776 },
     ],
     en: {
-      client: "Kalliopi Taxidou",
-      sector: "Fashion label & online store",
-      location: "Athens",
-      cardLine: "Strategy, advertising and a new website for a Greek designer label.",
-      tags: ["Strategy", "Performance Marketing", "Web Design"],
+      client: "μάιμέτσοβο",
+      sector: "Place branding & sustainable tourism",
+      location: "Metsovo, Epirus",
+      cardLine: "The digital guide to the highest village in Epirus.",
+      tags: ["Web Design", "Strategy", "Social Media Management", "Performance Marketing"],
       context:
-        "Kalliopi Taxidou is an Athens fashion label with a contemporary take on Greek elegance: clothes made from natural materials, finished by hand and inspired by Greek cultural heritage, with an emblem drawn from Linear B. Alongside its collections it offers limited editions, made-to-order and custom-made pieces, all through its own online store.",
+        "μάιμέτσοβο is the digital guide to Metsovo, bringing stays, food, sights, the Anilio ski centre and activities together in one place for visitors.",
       brief:
-        "A designer label that sells through its own store needs two things working together: ads that reach the right buyers, and a store that makes ordering effortless once they arrive.",
+        "Give a destination one coherent digital voice, so a visitor finds everything they need in one place and local businesses gain visibility.",
       work:
-        "We are building the label's content and advertising strategy, run its advertising with campaigns optimised against sales in the online store, and are designing its new website: more modern, faster and easier to order from.",
+        "We designed and built the guide's website, set the destination's digital strategy, and run its social media management and paid campaigns, putting Metsovo in front of the travellers planning their next mountain escape.",
+      deliverables: ["Website: design & build", "Digital strategy", "Social media management", "Paid campaigns"],
     },
     el: {
-      client: "Kalliopi Taxidou",
-      sector: "Brand μόδας & ηλεκτρονικό κατάστημα",
-      location: "Αθήνα",
-      cardLine: "Στρατηγική, διαφήμιση και νέο website για ένα ελληνικό brand σχεδιάστριας.",
-      tags: ["Στρατηγική", "Performance Marketing", "Web Design"],
+      client: "μάιμέτσοβο",
+      sector: "Place branding & βιώσιμος τουρισμός",
+      location: "Μέτσοβο, Ήπειρος",
+      cardLine: "Ο ψηφιακός οδηγός για το ορεινότερο χωριό της Ηπείρου.",
+      tags: ["Web Design", "Στρατηγική", "Social Media Management", "Performance Marketing"],
       context:
-        "Η Kalliopi Taxidou είναι brand μόδας από την Αθήνα με μια σύγχρονη εκδοχή της ελληνικής κομψότητας: ρούχα από φυσικά υλικά, με χειροποίητο φινίρισμα και έμπνευση από την ελληνική πολιτιστική κληρονομιά, με έμβλημα εμπνευσμένο από τη Γραμμική Β. Δίπλα στις συλλογές προσφέρει limited editions, κομμάτια κατά παραγγελία και custom made, όλα μέσα από το δικό της ηλεκτρονικό κατάστημα.",
+        "Το μάιμέτσοβο είναι ο ψηφιακός οδηγός του Μετσόβου: διαμονή, φαγητό, αξιοθέατα, το χιονοδρομικό Ανηλίου και δραστηριότητες, όλα σε ένα σημείο.",
       brief:
-        "Ένα brand σχεδιάστριας που πουλά από το δικό του κατάστημα χρειάζεται δύο πράγματα να δουλεύουν μαζί: διαφήμιση που φτάνει στους σωστούς αγοραστές, και ένα κατάστημα που κάνει την παραγγελία εύκολη μόλις φτάσουν.",
+        "Ένας προορισμός να αποκτήσει μία ενιαία ψηφιακή φωνή, ώστε ο επισκέπτης να βρίσκει ό,τι χρειάζεται σε ένα σημείο και οι τοπικές επιχειρήσεις να κερδίζουν προβολή.",
       work:
-        "Χτίζουμε τη στρατηγική περιεχομένου και διαφήμισης του brand, τρέχουμε τη διαφήμισή του με καμπάνιες που βελτιστοποιούνται με βάση τις πωλήσεις στο e-shop, και σχεδιάζουμε το νέο του website: πιο σύγχρονο, πιο γρήγορο και πιο εύκολο στην παραγγελία.",
+        "Σχεδιάσαμε και κατασκευάσαμε το website του οδηγού, χαράζουμε την ψηφιακή στρατηγική του προορισμού κάνουμε social media management και τρέχουμε τις διαφημιστικές καμπάνιες του, φέρνοντας το Μέτσοβο μπροστά στους ταξιδιώτες που σχεδιάζουν την επόμενη απόδρασή τους στο βουνό.",
+      deliverables: ["Website: σχεδιασμός & κατασκευή", "Ψηφιακή στρατηγική", "Social media management", "Διαφημιστικές καμπάνιες"],
+    },
+  },
+  {
+    slug: "eel-hellenic-logistics-association",
+    status: "ongoing",
+    since: "2026",
+    published: false, // 12/10 (Mike): off the site for now, to be added later
+    url: "https://eel.gr",
+    domain: "eel.gr",
+    theme: { bg: "#364e8a", fg: "#ffffff", logo: "#ffffff", accent: "#e9c43b" },
+    logos: [
+      { src: "/clients/eel-hellenic-logistics-association.png", alt: "EEL – Hellenic Logistics Association", ratio: 4.295 },
+    ],
+    en: {
+      client: "EEL – Hellenic Logistics Association",
+      sector: "Professional association, logistics & supply chain",
+      location: "Athens",
+      cardLine: "Digital campaign for the 27th Panhellenic Supply Chain Conference.",
+      tags: ["Strategy", "Social Media Management", "Performance Marketing", "Event Coverage"],
+      context:
+        "Founded in 1994, the Hellenic Logistics Association (EEL) is one of Greece's leading scientific bodies for logistics and the supply chain. Its annual Panhellenic Conference is produced together with Slide2Open.",
+      brief:
+        "Turn a respected, industry-insider conference into a must-attend event for the wider supply-chain community, on a tight timeline.",
+      work:
+        "We set the conference's digital strategy, run its social media management and paid campaigns that drive registrations from across the supply-chain community, and cover the conference itself.",
+    },
+    el: {
+      client: "EEL – Ελληνική Εταιρεία Logistics",
+      sector: "Επιστημονικός φορέας, logistics & εφοδιαστική αλυσίδα",
+      location: "Αθήνα",
+      cardLine: "Ψηφιακή καμπάνια για το 27ο Πανελλήνιο Συνέδριο Εφοδιαστικής Αλυσίδας.",
+      tags: ["Στρατηγική", "Social Media Management", "Performance Marketing", "Κάλυψη εκδηλώσεων"],
+      context:
+        "Η Ελληνική Εταιρεία Logistics (EEL), που ιδρύθηκε το 1994, είναι από τους σημαντικότερους επιστημονικούς φορείς για τα logistics και την εφοδιαστική αλυσίδα στην Ελλάδα. Το ετήσιο Πανελλήνιο Συνέδριό της υλοποιείται σε συνεργασία με τη Slide2Open.",
+      brief:
+        "Ένα καταξιωμένο συνέδριο του κλάδου να γίνει το ραντεβού που δεν χάνει κανείς στην ευρύτερη κοινότητα της εφοδιαστικής αλυσίδας, σε σύντομο χρονικό διάστημα.",
+      work:
+        "Χαράζουμε την ψηφιακή στρατηγική του συνεδρίου, κάνουμε social media management, τρέχουμε διαφημιστικές καμπάνιες που φέρνουν εγγραφές από όλη την κοινότητα της εφοδιαστικής αλυσίδας και καλύπτουμε το ίδιο το συνέδριο.",
     },
   },
   {
