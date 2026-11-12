@@ -341,8 +341,8 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    // 12/11/2026 (Mike): added as a Thynk collaboration. Scope: performance marketing (ads) and the online
-    // store's redesign (design + UX on staging; hosting, platform, payments and integrations stay with WEBST).
+    // 12/11/2026 (Mike): added as a Thynk collaboration. Scope (Mike, 12/11): content & advertising strategy,
+    // advertising (performance marketing) and the new website (design + UX; hosting/platform stay with WEBST).
     slug: "kalliopi-taxidou",
     status: "ongoing",
     since: "2026",
@@ -358,27 +358,27 @@ export const caseStudies: CaseStudy[] = [
       client: "Kalliopi Taxidou",
       sector: "Fashion label & online store",
       location: "Athens",
-      cardLine: "Performance marketing and a new online store experience for a Greek designer label.",
-      tags: ["Performance Marketing", "Web Design"],
+      cardLine: "Strategy, advertising and a new website for a Greek designer label.",
+      tags: ["Strategy", "Performance Marketing", "Web Design"],
       context:
         "Kalliopi Taxidou is an Athens fashion label with a contemporary take on Greek elegance: clothes made from natural materials, finished by hand and inspired by Greek cultural heritage, with an emblem drawn from Linear B. Alongside its collections it offers limited editions, made-to-order and custom-made pieces, all through its own online store.",
       brief:
         "A designer label that sells through its own store needs two things working together: ads that reach the right buyers, and a store that makes ordering effortless once they arrive.",
       work:
-        "We run the label's performance marketing, with campaigns optimised against sales in the online store. We are also redesigning the store's look and user experience so it becomes more modern, faster and easier to order from, while the platform, payments and integrations stay exactly as they are.",
+        "We are building the label's content and advertising strategy, run its advertising with campaigns optimised against sales in the online store, and are designing its new website: more modern, faster and easier to order from.",
     },
     el: {
       client: "Kalliopi Taxidou",
       sector: "Brand μόδας & ηλεκτρονικό κατάστημα",
       location: "Αθήνα",
-      cardLine: "Performance marketing και νέα εμπειρία e-shop για ένα ελληνικό brand σχεδιάστριας.",
-      tags: ["Performance Marketing", "Web Design"],
+      cardLine: "Στρατηγική, διαφήμιση και νέο website για ένα ελληνικό brand σχεδιάστριας.",
+      tags: ["Στρατηγική", "Performance Marketing", "Web Design"],
       context:
         "Η Kalliopi Taxidou είναι brand μόδας από την Αθήνα με μια σύγχρονη εκδοχή της ελληνικής κομψότητας: ρούχα από φυσικά υλικά, με χειροποίητο φινίρισμα και έμπνευση από την ελληνική πολιτιστική κληρονομιά, με έμβλημα εμπνευσμένο από τη Γραμμική Β. Δίπλα στις συλλογές προσφέρει limited editions, κομμάτια κατά παραγγελία και custom made, όλα μέσα από το δικό της ηλεκτρονικό κατάστημα.",
       brief:
         "Ένα brand σχεδιάστριας που πουλά από το δικό του κατάστημα χρειάζεται δύο πράγματα να δουλεύουν μαζί: διαφήμιση που φτάνει στους σωστούς αγοραστές, και ένα κατάστημα που κάνει την παραγγελία εύκολη μόλις φτάσουν.",
       work:
-        "Τρέχουμε το performance marketing του brand, με καμπάνιες που βελτιστοποιούνται με βάση τις πωλήσεις στο e-shop. Παράλληλα σχεδιάζουμε από την αρχή την εικόνα και την εμπειρία χρήσης του καταστήματος, ώστε να γίνει πιο σύγχρονο, πιο γρήγορο και πιο εύκολο στην παραγγελία, ενώ η πλατφόρμα, οι πληρωμές και οι συνδέσεις μένουν ακριβώς όπως είναι.",
+        "Χτίζουμε τη στρατηγική περιεχομένου και διαφήμισης του brand, τρέχουμε τη διαφήμισή του με καμπάνιες που βελτιστοποιούνται με βάση τις πωλήσεις στο e-shop, και σχεδιάζουμε το νέο του website: πιο σύγχρονο, πιο γρήγορο και πιο εύκολο στην παραγγελία.",
     },
   },
   {
