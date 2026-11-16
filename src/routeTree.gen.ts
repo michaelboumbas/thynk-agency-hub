@@ -170,12 +170,11 @@ const WorkSlugRoute = WorkSlugRouteImport.update({
   path: '/work/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicNewsletterRoute =
-  ApiPublicNewsletterRouteImport.update({
-    id: '/api/public/newsletter',
-    path: '/api/public/newsletter',
-    getParentRoute: () => rootRouteImport,
-  } as any)
+const ApiPublicNewsletterRoute = ApiPublicNewsletterRouteImport.update({
+  id: '/api/public/newsletter',
+  path: '/api/public/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ElWorkIndexRoute = ElWorkIndexRouteImport.update({
   id: '/el/work/',
   path: '/el/work/',
@@ -664,8 +663,7 @@ const rootRouteChildren: RootRouteChildren = {
   WorkSlugRoute: WorkSlugRoute,
   ElIndexRoute: ElIndexRoute,
   WorkIndexRoute: WorkIndexRoute,
-  ApiPublicNewsletterRoute:
-    ApiPublicNewsletterRoute,
+  ApiPublicNewsletterRoute: ApiPublicNewsletterRoute,
   ElWorkSlugRoute: ElWorkSlugRoute,
   ElWorkIndexRoute: ElWorkIndexRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
