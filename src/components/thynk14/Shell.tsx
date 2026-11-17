@@ -535,16 +535,37 @@ function LangLink({ pathname, other, children, ...rest }: {
   const slug = useContext(SlugCtx);
   if (slug) {
     return (
-      <Link to={other === "el" ? "/el/work/$slug" : "/work/$slug"} params={{ slug }} hrefLang={other} {...rest}>
+      <Link
+        to={other === "el" ? "/el/work/$slug" : "/work/$slug"}
+        params={{ slug }}
+        hrefLang={other}
+        onClick={() => rememberLang(other)}
+        {...rest}
+      >
         {children}
       </Link>
     );
   }
   return (
-    <Link to={localPath(pathname, other)} hrefLang={other} {...rest}>
+    <Link to={localPath(pathname, other)} hrefLang={other} onClick={() => rememberLang(other)} {...rest}>
       {children}
     </Link>
   );
+}
+
+/**
+ * 17/11 (Mike): the site opens in Greek. thynkagency.gr/ sends a first-time visitor to /el (routes/index.tsx).
+ * A visitor who picks EN on the switch keeps English (localStorage), and one browsing the English pages
+ * stays in English when they go back home (sessionStorage).
+ */
+export const LANG_PICK_KEY = "thynk-lang";
+export const LANG_NOW_KEY = "thynk-lang-now";
+function rememberLang(lang: Lang) {
+  try {
+    window.localStorage.setItem(LANG_PICK_KEY, lang);
+  } catch {
+    /* storage blocked: the choice just isn't remembered */
+  }
 }
 
 export function CleanShell({ pathname, lang, slug, onBook, children }: {
@@ -557,6 +578,14 @@ export function CleanShell({ pathname, lang, slug, onBook, children }: {
   children: ReactNode;
 }) {
   const show = useSiteGate();
+  // 17/11: the language of the page being read, so «/» keeps an English reader in English
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(LANG_NOW_KEY, lang);
+    } catch {
+      /* storage blocked */
+    }
+  }, [lang]);
   // 12/10 (Mike): «η τελεία» intro on the first load of the home page (see intro.tsx)
   const isHome = pathname === v14Routes.home;
   const [intro, setIntro] = useState(() => isHome && introPending());

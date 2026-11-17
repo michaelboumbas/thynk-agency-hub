@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ThynkSite } from "@/components/thynk5/ThynkSite";
 import { ThynkSiteV6 } from "@/components/thynk6/ThynkSiteV6";
@@ -7,12 +7,14 @@ import { ThynkSiteV8 } from "@/components/thynk8/ThynkSiteV8";
 import { ThynkSiteV9 } from "@/components/thynk9/ThynkSiteV9";
 import { SitePage, setFieldChoice } from "@/components/thynk11/Site";
 import { CleanSite } from "@/components/thynk14/CleanSite";
+import { LANG_NOW_KEY, LANG_PICK_KEY } from "@/components/thynk14/Shell";
 import type { HeadlineId } from "@/content/site-v12";
 
 
-const title = "Thynk Digital Agency — The future of Super Intelligence";
+// 17/11 (Mike): «/» opens in Greek (it forwards to /el), so the link preview of thynkagency.gr is Greek too
+const title = "Thynk Digital Agency — Το μέλλον της Super Intelligence";
 const description =
-  "Marketing and digital transformation with AI for businesses across Greece and abroad. Based in Ioannina. Every engagement starts with an audit.";
+  "Marketing και Digital Transformation με AI για επιχειρήσεις σε όλη την Ελλάδα και στο εξωτερικό. Έδρα Ιωάννινα. Κάθε συνεργασία ξεκινά με audit.";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
@@ -23,6 +25,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "el_GR" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
@@ -48,7 +51,41 @@ function shouldShowSite(): boolean {
   );
 }
 
+/**
+ * 17/11/2026 (Mike): the site opens in Greek. «/» stays English only when the visitor asked for it:
+ * ?lang=en (remembered), EN picked on the switch, or they were just reading the English pages.
+ * The preview overrides (?v=, ?site, ?soon) also keep «/» as it is.
+ */
+function keepEnglish(): boolean {
+  const q = new URLSearchParams(window.location.search);
+  if (q.has("v") || q.has("site") || q.has("soon")) return true;
+  try {
+    if (q.get("lang") === "en") {
+      window.localStorage.setItem(LANG_PICK_KEY, "en");
+      return true;
+    }
+    if (q.get("lang") === "el") window.localStorage.setItem(LANG_PICK_KEY, "el");
+    if (window.localStorage.getItem(LANG_PICK_KEY) === "en") return true;
+    if (window.sessionStorage.getItem(LANG_NOW_KEY) === "en") return true;
+  } catch {
+    /* storage blocked: Greek */
+  }
+  return false;
+}
+
 function Index() {
+  const navigate = useNavigate();
+  // null until we know whether «/» stays English or goes to /el (nothing English flashes first)
+  const [english, setEnglish] = useState<boolean | null>(null);
+  useEffect(() => {
+    if (keepEnglish()) {
+      setEnglish(true);
+      return;
+    }
+    const { search, hash } = window.location;
+    void navigate({ href: `/el${search}${hash}`, replace: true });
+  }, [navigate]);
+
   // Default: v14 (see below). Older versions stay reachable for comparison with ?v=5 … ?v=13
   // (preview hosts only, as before).
   const [face, setFace] = useState<"site" | "v5" | "v6" | "v7" | "v8" | "v9" | "v10">("site");
@@ -79,6 +116,7 @@ function Index() {
     if (v && map[v]) setFace(map[v]);
   }, []);
 
+  if (!english) return null;
   if (clean) return <CleanSite />;
   if (face === "v10") return <ThynkSiteV9 handsHero />;
   if (face === "v9") return <ThynkSiteV9 />;
