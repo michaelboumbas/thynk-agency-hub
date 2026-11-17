@@ -7184,3 +7184,187 @@
   font-size: var(--t-small);
   line-height: 1.5;
 }
+
+/* ======================= /work logo wall (17/11/2026, Mike) =======================
+   Replaces the stack: all clients as equal tiles, logo in lake on white, the town underneath.
+   Hover/focus: the tile takes the brand's colours (--c-bg / --c-fg / --c-logo / --c-accent from themeStyle). */
+.t14-wall {
+  list-style: none;
+  margin: clamp(28px, 5vh, 52px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.t14-wall > li {
+  display: flex;
+  min-width: 0;
+}
+.t14 .t14-wall-tile {
+  flex: 1;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 24px;
+  border-radius: 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
+}
+.t14-wall-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+  transition: color 0.35s ease;
+}
+.t14-wall-logo {
+  flex: 1;
+  min-height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lake);
+  transition: color 0.35s ease;
+  --u: 1.2;
+}
+.t14-wall-logo b {
+  font: 700 24px/1.15 var(--f-display);
+  text-align: center;
+}
+.t14-wall-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.t14-wall-foot strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+.t14-wall-tagline {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink-2);
+  transition: color 0.35s ease;
+}
+.t14-wall-area {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--ink-2);
+  transition: color 0.35s ease;
+}
+.t14-wall-area i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+.t14-wall-cta {
+  margin-top: 6px;
+  display: inline-flex;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--c-accent, var(--orange));
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.t14 .t14-wall-tile:hover,
+.t14 .t14-wall-tile:focus-visible {
+  background: var(--c-bg);
+  border-color: var(--c-bg);
+  color: var(--c-fg);
+  transform: translateY(-4px);
+}
+.t14-wall-tile:hover .t14-wall-top,
+.t14-wall-tile:hover .t14-wall-area,
+.t14-wall-tile:hover .t14-wall-tagline,
+.t14-wall-tile:focus-visible .t14-wall-tagline,
+.t14-wall-tile:focus-visible .t14-wall-top,
+.t14-wall-tile:focus-visible .t14-wall-area,
+.t14-wall-tile:hover .t14-wk-status,
+.t14-wall-tile:focus-visible .t14-wk-status {
+  color: var(--c-fg);
+}
+.t14-wall-tile:hover .t14-wall-logo,
+.t14-wall-tile:focus-visible .t14-wall-logo {
+  color: var(--c-logo);
+}
+.t14-wall-tile:hover .t14-wall-cta,
+.t14-wall-tile:focus-visible .t14-wall-cta {
+  opacity: 1;
+  transform: none;
+}
+/* the 8th cell: the audit call */
+.t14-wall-next {
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  min-height: 300px;
+  padding: 26px 24px;
+  border-radius: 20px;
+  background: var(--lake);
+  color: var(--paper);
+  box-sizing: border-box;
+}
+.t14-wall-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lake-light);
+}
+.t14 .t14-wall-next p {
+  margin: 0;
+  font: 600 21px/1.3 var(--f);
+  color: var(--paper);
+}
+.t14 .t14-wall-next .t14-pill {
+  align-self: flex-start;
+  background: var(--orange);
+  color: var(--ink) !important;
+  font-weight: 700;
+}
+.t14 .t14-wall-next .t14-pill:hover {
+  background: var(--paper);
+}
+@media (max-width: 1080px) {
+  .t14-wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .t14-wall {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .t14 .t14-wall-tile,
+  .t14-wall-next {
+    min-height: 240px;
+  }
+  /* no hover on touch: show the link so the tile reads as tappable */
+  .t14-wall-cta {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t14 .t14-wall-tile,
+  .t14-wall-cta {
+    transition: none;
+  }
+  .t14 .t14-wall-tile:hover,
+  .t14 .t14-wall-tile:focus-visible {
+    transform: none;
+  }
+}

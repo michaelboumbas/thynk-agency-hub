@@ -579,6 +579,8 @@ export const v14Work = {
   // 09/10 (Mike): «Since 2026», no month, no «Ongoing»; an event shows its edition
   sinceLabel: "Since {year}",
   editionLabel: "{year} edition",
+  // 17/11 (Mike): the 8th tile of the logo wall, next to the audit button
+  nextLabel: "Next project",
 };
 
 

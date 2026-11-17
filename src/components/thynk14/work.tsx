@@ -1,7 +1,7 @@
-import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { useCopy } from "./i18n";
-import { FinalBand, Label, MoreLink, PageHead } from "./shared";
+import { Label, MoreLink, PageHead } from "./shared";
 import { v14Routes } from "@/content/site-v14";
 import {
   caseText,
@@ -111,46 +111,14 @@ function themeStyle(theme?: CaseTheme): CSSProperties {
 }
 
 /**
- * Clients page (rebuilt 09/10, Mike): a stack. Each client is one large card in its own brand colours
- * (theme in work-v14.ts) with its logo big; the cards stick near the top and the next one rises over the
- * last, which settles back a little and dims (--p, 0 → 1, set on scroll below). Without motion the cards
- * still stack, they just do not shrink.
+ * Clients page, logo wall (17/11/2026, Mike; replaces the 09/10 stack, where the last clients got lost
+ * ~4,500px down). Every client is an equal tile in one grid: the logo in the lake colour on white, the town
+ * underneath, with one line on what the brand is (its `sector`). On hover/focus the tile takes the brand's own colours (theme in work-v14.ts). The 8th cell is the
+ * audit call. The case pages keep the full brand-colour treatment.
  */
 export function WorkPage() {
-  const { c, lang } = useCopy();
+  const { c, lang, href } = useCopy();
   const w = c.work;
-  const stack = useRef<HTMLOListElement>(null);
-
-  useEffect(() => {
-    const ol = stack.current;
-    if (!ol || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const items = Array.from(ol.querySelectorAll<HTMLElement>(":scope > li"));
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      for (let i = 0; i < items.length - 1; i++) {
-        const item = items[i]; const nextItem = items[i+1];
-        if (item && nextItem) {
-          const cur = item.getBoundingClientRect();
-          const next = nextItem.getBoundingClientRect();
-          const p = Math.min(1, Math.max(0, (cur.bottom - next.top) / cur.height));
-          item.style.setProperty("--p", p.toFixed(3));
-        }
-      }
-    };
-    const onScroll = () => {
-      if (!raf) raf = window.requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) window.cancelAnimationFrame(raf);
-    };
-  }, []);
-
   const total = publishedCases.length;
   return (
     <>
@@ -159,52 +127,46 @@ export function WorkPage() {
         <h2 className="t14-wk-title">
           {w.title} <span>{w.titleGrey}</span>
         </h2>
-        <ol className="t14-stack" ref={stack}>
+        <ul className="t14-wall">
           {publishedCases.map((cs, i) => {
             const t = caseText(cs, lang);
-            const ghost = cs.logos?.[0];
-            const style = { "--i": i, ...themeStyle(cs.theme) } as CSSProperties;
+            const logo = cs.logos?.[0];
             return (
-              <li key={cs.slug} style={style}>
-                <CaseLink cs={cs} className="t14-stack-card">
-                  {ghost ? (
-                    <span className="t14-stack-ghost" aria-hidden="true">
-                      <Logo l={ghost} decorative />
-                    </span>
-                  ) : null}
-                  <div className="t14-stack-top">
-                    <span className="t14-stack-n">
-                      {pad2(i + 1)}
-                      <i> / {pad2(total)}</i>
-                    </span>
-                    <span className="t14-stack-sector">
-                      {t.sector} · {t.location}
+              <li key={cs.slug} style={themeStyle(cs.theme)}>
+                <CaseLink cs={cs} className="t14-wall-tile">
+                  <span className="t14-wall-top">
+                    <span>
+                      {pad2(i + 1)} / {pad2(total)}
                     </span>
                     <StatusLine cs={cs} />
-                  </div>
-                  <h3 className="t14-stack-logos">
-                    <ClientMark cs={cs} name={t.client} />
-                  </h3>
-                  <div className="t14-stack-foot">
-                    <div>
-                      <p>{t.cardLine}</p>
-                      <ul className="t14-stack-tags" aria-label={w.labels.services}>
-                        {t.tags.map((tag) => (
-                          <li key={tag}>{tag}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <b className="t14-stack-cta">
+                  </span>
+                  <span className="t14-wall-logo">
+                    {logo ? <Logo l={logo} decorative /> : <b>{t.client}</b>}
+                  </span>
+                  <span className="t14-wall-foot">
+                    <strong>{t.client}</strong>
+                    <span className="t14-wall-tagline">{t.sector}</span>
+                    <span className="t14-wall-area">
+                      <i aria-hidden="true" />
+                      {t.area}
+                    </span>
+                    <b className="t14-wall-cta">
                       {w.view} <i aria-hidden="true">→</i>
                     </b>
-                  </div>
+                  </span>
                 </CaseLink>
               </li>
             );
           })}
-        </ol>
+          <li className="t14-wall-next">
+            <span className="t14-wall-kicker">{w.nextLabel}</span>
+            <p>{c.final.title}</p>
+            <Link to={href(v14Routes.audit)} hash="book" className="t14-pill">
+              {c.final.button} <i aria-hidden="true">→</i>
+            </Link>
+          </li>
+        </ul>
       </section>
-      <FinalBand />
     </>
   );
 }

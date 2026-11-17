@@ -523,6 +523,7 @@ export const el: Copy = {
     },
     sinceLabel: "Από το {year}",
     editionLabel: "Διοργάνωση {year}",
+    nextLabel: "Επόμενο έργο",
   },
   final: {
     title: "Το πρώτο βήμα είναι μια σαφής εικόνα της σημερινής κατάστασης.",

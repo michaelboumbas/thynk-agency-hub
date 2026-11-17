@@ -19,6 +19,8 @@ export interface CaseText {
   client: string;
   sector: string;
   location: string;
+  /** the town only, shown on the /work tiles so every client reads the same way (17/11, Mike) */
+  area: string;
   cardLine: string;
   tags: string[];
   context: string;
@@ -85,6 +87,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Manager of the Year & Thought Leaders Club",
       sector: "Business awards & executive network",
       location: "Athens",
+      area: "Athens",
       cardLine: "Year-round digital presence for Greece's institution of excellence in management.",
       tags: ["Strategy", "Social Media Management", "Performance Marketing", "Event Coverage"],
       context:
@@ -98,6 +101,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Manager of the Year & Thought Leaders Club",
       sector: "Βραβεία επιχειρηματικότητας & δίκτυο στελεχών",
       location: "Αθήνα",
+      area: "Αθήνα",
       cardLine: "Ψηφιακή παρουσία όλο τον χρόνο για τον θεσμό αριστείας στο management στην Ελλάδα.",
       tags: ["Στρατηγική", "Social Media Management", "Performance Marketing", "Κάλυψη εκδηλώσεων"],
       context:
@@ -124,6 +128,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Slide2Open Shipping Finance",
       sector: "International shipping & finance conference",
       location: "Athens",
+      area: "Athens",
       cardLine: "Digital communication for one of Athens' leading shipping-finance conferences.",
       tags: ["Strategy", "Social Media Management", "Performance Marketing", "Event Coverage"],
       context:
@@ -137,6 +142,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Slide2Open Shipping Finance",
       sector: "Διεθνές συνέδριο ναυτιλίας & χρηματοδότησης",
       location: "Αθήνα",
+      area: "Αθήνα",
       cardLine: "Ψηφιακή επικοινωνία για ένα από τα κορυφαία συνέδρια ναυτιλιακής χρηματοδότησης στην Αθήνα.",
       tags: ["Στρατηγική", "Social Media Management", "Performance Marketing", "Κάλυψη εκδηλώσεων"],
       context:
@@ -165,6 +171,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Kalliopi Taxidou",
       sector: "Fashion label & online store",
       location: "Athens",
+      area: "Athens",
       cardLine: "Strategy, advertising and a new website for a Greek designer label.",
       tags: ["Strategy", "Performance Marketing", "Web Design"],
       context:
@@ -178,6 +185,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Kalliopi Taxidou",
       sector: "Brand μόδας & ηλεκτρονικό κατάστημα",
       location: "Αθήνα",
+      area: "Αθήνα",
       cardLine: "Στρατηγική, διαφήμιση και νέο website για ένα ελληνικό brand σχεδιάστριας.",
       tags: ["Στρατηγική", "Performance Marketing", "Web Design"],
       context:
@@ -203,6 +211,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Imperator Winery",
       sector: "Monastic winery",
       location: "Metsovo & East Zagori, Epirus",
+      area: "Metsovo",
       cardLine: "A new website and voice for Greece's highest monastic vineyards.",
       tags: ["Web Design", "Brand Voice", "Social Media Management", "Content Creation", "Performance Marketing"],
       context:
@@ -217,6 +226,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Imperator Winery",
       sector: "Μοναστηριακό οινοποιείο",
       location: "Μέτσοβο & Ανατολικό Ζαγόρι, Ήπειρος",
+      area: "Μέτσοβο",
       cardLine: "Νέο website και φωνή για τους ορεινότερους μοναστηριακούς αμπελώνες της Ελλάδας.",
       tags: ["Web Design", "Brand Voice", "Social Media Management", "Content Creation", "Performance Marketing"],
       context:
@@ -244,6 +254,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Youth Choice Epirus Forum",
       sector: "Education & career event",
       location: "Ioannina",
+      area: "Ioannina",
       cardLine: "A forum connecting the next generation of Epirus with education and careers.",
       tags: ["Strategy", "Social Media Management", "Performance Marketing"],
       context:
@@ -257,6 +268,7 @@ export const caseStudies: CaseStudy[] = [
       client: "Youth Choice Epirus Forum",
       sector: "Εκδήλωση εκπαίδευσης & καριέρας",
       location: "Ιωάννινα",
+      area: "Ιωάννινα",
       cardLine: "Ένα forum που συνδέει τη νέα γενιά της Ηπείρου με την εκπαίδευση και την καριέρα.",
       tags: ["Στρατηγική", "Social Media Management", "Performance Marketing"],
       context:
@@ -282,6 +294,7 @@ export const caseStudies: CaseStudy[] = [
       client: "The Anadelta Edu",
       sector: "Education & career guidance",
       location: "Greece",
+      area: "Ioannina",
       cardLine: "Performance marketing that turns interest in education into enrolments.",
       tags: ["Strategy", "Social Media Management", "Performance Marketing", "Tracking & Data"],
       context:
@@ -295,6 +308,7 @@ export const caseStudies: CaseStudy[] = [
       client: "The Anadelta Edu",
       sector: "Εκπαίδευση & επαγγελματικός προσανατολισμός",
       location: "Ελλάδα",
+      area: "Ιωάννινα",
       cardLine: "Performance marketing που μετατρέπει το ενδιαφέρον για την εκπαίδευση σε εγγραφές.",
       tags: ["Στρατηγική", "Social Media Management", "Performance Marketing", "Tracking & δεδομένα"],
       context:
@@ -320,6 +334,7 @@ export const caseStudies: CaseStudy[] = [
       client: "μάιμέτσοβο",
       sector: "Place branding & sustainable tourism",
       location: "Metsovo, Epirus",
+      area: "Metsovo",
       cardLine: "The digital guide to the highest village in Epirus.",
       tags: ["Web Design", "Strategy", "Social Media Management", "Performance Marketing"],
       context:
@@ -334,6 +349,7 @@ export const caseStudies: CaseStudy[] = [
       client: "μάιμέτσοβο",
       sector: "Place branding & βιώσιμος τουρισμός",
       location: "Μέτσοβο, Ήπειρος",
+      area: "Μέτσοβο",
       cardLine: "Ο ψηφιακός οδηγός για το ορεινότερο χωριό της Ηπείρου.",
       tags: ["Web Design", "Στρατηγική", "Social Media Management", "Performance Marketing"],
       context:
@@ -360,6 +376,7 @@ export const caseStudies: CaseStudy[] = [
       client: "EEL – Hellenic Logistics Association",
       sector: "Professional association, logistics & supply chain",
       location: "Athens",
+      area: "Athens",
       cardLine: "Digital campaign for the 27th Panhellenic Supply Chain Conference.",
       tags: ["Strategy", "Social Media Management", "Performance Marketing", "Event Coverage"],
       context:
@@ -373,6 +390,7 @@ export const caseStudies: CaseStudy[] = [
       client: "EEL – Ελληνική Εταιρεία Logistics",
       sector: "Επιστημονικός φορέας, logistics & εφοδιαστική αλυσίδα",
       location: "Αθήνα",
+      area: "Αθήνα",
       cardLine: "Ψηφιακή καμπάνια για το 27ο Πανελλήνιο Συνέδριο Εφοδιαστικής Αλυσίδας.",
       tags: ["Στρατηγική", "Social Media Management", "Performance Marketing", "Κάλυψη εκδηλώσεων"],
       context:
@@ -394,6 +412,7 @@ export const caseStudies: CaseStudy[] = [
       client: "θamõn",
       sector: "Restaurant, Epirote cuisine",
       location: "Ioannina",
+      area: "Ioannina",
       cardLine: "Rooting a contemporary restaurant in the gastronomic tradition of Ioannina.",
       // ⚠️ "Podcast" is a new service: not yet on the Services page
       tags: ["Strategy", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation", "Podcast"],
@@ -408,6 +427,7 @@ export const caseStudies: CaseStudy[] = [
       client: "θamõn",
       sector: "Εστιατόριο, ηπειρώτικη κουζίνα",
       location: "Ιωάννινα",
+      area: "Ιωάννινα",
       cardLine: "Ένα σύγχρονο εστιατόριο με ρίζες στη γαστρονομική παράδοση των Ιωαννίνων.",
       tags: ["Στρατηγική", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation", "Podcast"],
       context:
