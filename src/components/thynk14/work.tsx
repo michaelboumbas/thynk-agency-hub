@@ -1,7 +1,7 @@
 import { type CSSProperties, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { useCopy } from "./i18n";
-import { Label, MoreLink, PageHead } from "./shared";
+import { FinalBand, Label, MoreLink, PageHead } from "./shared";
 import { v14Routes } from "@/content/site-v14";
 import {
   caseText,
