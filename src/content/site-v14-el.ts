@@ -448,9 +448,9 @@ export const el: Copy = {
   },
   aboutPage: {
     founders: [
-      { initials: "ΔΧ", name: "Δημήτρης Χρυσοχόου", photo: "/team/dimitris-chrysochoou.webp", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
-      { initials: "ΜΜ", name: "Μιχαήλ Μπούμπας", photo: "/team/michael-boumpas.webp", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
-      { initials: "RL", name: "Romanna Lobach", photo: "/team/romanna-lobach.webp", linkedin: "https://www.linkedin.com/in/romanna-lobach-56627393/" },
+      { initials: "ΔΧ", name: "Δημήτρης Χρυσοχόου", role: "Co-founder · AI & Automation Lead", photo: "/team/dimitris-chrysochoou.webp", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
+      { initials: "ΜΜ", name: "Μιχαήλ Μπούμπας", role: "Co-founder · Marketing & Growth Lead", photo: "/team/michael-boumpas.webp", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
+      { initials: "RL", name: "Romanna Lobach", role: "Creative Director", photo: "/team/romanna-lobach.webp", linkedin: "https://www.linkedin.com/in/romanna-lobach-56627393/" },
     ],
     teamLabel: "Η ομάδα",
     linkedinLabel: "LinkedIn",
