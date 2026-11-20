@@ -530,6 +530,7 @@ export const v14AboutPage = {
   founders: [
     { initials: "DC", name: "Dimitris Chrysochoou", photo: "/team/dimitris-chrysochoou.webp", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
     { initials: "MB", name: "Michael Boumpas", photo: "/team/michael-boumpas.webp", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
+    { initials: "RL", name: "Romanna Lobach", photo: "/team/romanna-lobach.webp", linkedin: "https://www.linkedin.com/in/romanna-lobach-56627393/" },
   ],
   teamLabel: "The team",
   linkedinLabel: "LinkedIn",

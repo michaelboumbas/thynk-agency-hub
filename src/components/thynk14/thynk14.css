@@ -2581,9 +2581,9 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(20px, 3vw, 44px);
-  max-width: 940px;
+  max-width: 1180px;
   margin-inline: auto;
 }
 .t14-team-sec .t14-lbl {
@@ -2647,10 +2647,16 @@
   height: 42px;
   padding: 0 16px 0 13px;
 }
-/* phones: still side by side, smaller; name over a compact LinkedIn button */
+/* phones: two side by side, smaller; an odd last person sits centred below; name over a compact LinkedIn button */
 @media (max-width: 700px) {
   .t14-team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
+  }
+  .t14-team-grid > .t14-person:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 7px);
   }
   .t14-photo span {
     font-size: 40px;

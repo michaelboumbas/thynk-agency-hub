@@ -450,6 +450,7 @@ export const el: Copy = {
     founders: [
       { initials: "ΔΧ", name: "Δημήτρης Χρυσοχόου", photo: "/team/dimitris-chrysochoou.webp", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
       { initials: "ΜΜ", name: "Μιχαήλ Μπούμπας", photo: "/team/michael-boumpas.webp", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
+      { initials: "RL", name: "Romanna Lobach", photo: "/team/romanna-lobach.webp", linkedin: "https://www.linkedin.com/in/romanna-lobach-56627393/" },
     ],
     teamLabel: "Η ομάδα",
     linkedinLabel: "LinkedIn",
