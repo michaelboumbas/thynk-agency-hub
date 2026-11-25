@@ -500,7 +500,7 @@ export function AboutPage() {
           {a.founders.map((f) => (
             <li key={f.name} className="t14-person">
               <div className="t14-photo">
-                {f.photo ? <img src={f.photo} alt={f.name} loading="lazy" /> : <span aria-hidden="true">{f.initials}</span>}
+                {f.photo ? <img src={f.photo} alt={f.name} loading="lazy" style={"photoPosition" in f && f.photoPosition ? { objectPosition: f.photoPosition } : undefined} /> : <span aria-hidden="true">{f.initials}</span>}
               </div>
               <div className="t14-person-row">
                 <div className="t14-person-id">
