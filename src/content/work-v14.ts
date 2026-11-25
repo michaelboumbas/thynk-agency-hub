@@ -10,6 +10,7 @@
 // 12/11 (Mike): order on the site = MOTY, Shipping Finance, Kalliopi Taxidou, Imperator, Youth Choice, Anadelta, μάιμέτσοβο
 // (the array order is the site order; hidden cases sit at the end).
 // 12/11 (Mike): Kalliopi Taxidou added (performance marketing + online store redesign).
+// 25/11 (Mike): θamõn is live again, after μάιμέτσοβο (no logo file yet, so the tile shows the name).
 // 08/10 (Mike): services per case confirmed; Meta/Google/TikTok and Pixel/CAPI are implied by Performance Marketing, never listed.
 import type { Lang } from "@/content/site-v14";
 
@@ -362,6 +363,44 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
+    slug: "thamon",
+    status: "ongoing",
+    since: "2026",
+    // 09/10 (Mike): off the site until the engagement was final · 25/11 (Mike): back on the site
+    published: true,
+    url: "https://www.thamon.gr",
+    domain: "thamon.gr",
+    en: {
+      client: "θamõn",
+      sector: "Restaurant, Epirote cuisine",
+      location: "Ioannina",
+      area: "Ioannina",
+      cardLine: "Rooting a contemporary restaurant in the gastronomic tradition of Ioannina.",
+      // ⚠️ "Podcast" is a new service: not yet on the Services page
+      tags: ["Strategy", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation", "Podcast"],
+      context:
+        "θamõn is a restaurant in the heart of Ioannina that cooks the best local produce of Epirus, from farm to table, with cooking lessons, catering and private dining alongside it.",
+      brief:
+        "Connect θamõn with the city it cooks for: make it the restaurant most closely tied to the traditional cuisine of Ioannina and to the authenticity of Epirus.",
+      work:
+        "We set the brand positioning and strategy, run social media management, content creation and paid campaigns, and produce a podcast that tells the story of Epirote gastronomy through θamõn's kitchen.",
+    },
+    el: {
+      client: "θamõn",
+      sector: "Εστιατόριο, ηπειρώτικη κουζίνα",
+      location: "Ιωάννινα",
+      area: "Ιωάννινα",
+      cardLine: "Ένα σύγχρονο εστιατόριο με ρίζες στη γαστρονομική παράδοση των Ιωαννίνων.",
+      tags: ["Στρατηγική", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation", "Podcast"],
+      context:
+        "Το θamõn είναι εστιατόριο στην καρδιά των Ιωαννίνων που μαγειρεύει τα καλύτερα τοπικά προϊόντα της Ηπείρου, από το χωράφι στο τραπέζι, με μαθήματα μαγειρικής, catering και ιδιωτικά δείπνα.",
+      brief:
+        "Το θamõn να συνδεθεί με την πόλη για την οποία μαγειρεύει: να γίνει το εστιατόριο που δένεται περισσότερο με την παραδοσιακή κουζίνα των Ιωαννίνων και την αυθεντικότητα της Ηπείρου.",
+      work:
+        "Χαράζουμε το brand positioning και τη στρατηγική, κάνουμε social media management, content creation και διαφημιστικές καμπάνιες, και παράγουμε ένα podcast που αφηγείται την ηπειρώτικη γαστρονομία μέσα από την κουζίνα του θamõn.",
+    },
+  },
+  {
     slug: "eel-hellenic-logistics-association",
     status: "ongoing",
     since: "2026",
@@ -399,43 +438,6 @@ export const caseStudies: CaseStudy[] = [
         "Ένα καταξιωμένο συνέδριο του κλάδου να γίνει το ραντεβού που δεν χάνει κανείς στην ευρύτερη κοινότητα της εφοδιαστικής αλυσίδας, σε σύντομο χρονικό διάστημα.",
       work:
         "Χαράζουμε την ψηφιακή στρατηγική του συνεδρίου, κάνουμε social media management, τρέχουμε διαφημιστικές καμπάνιες που φέρνουν εγγραφές από όλη την κοινότητα της εφοδιαστικής αλυσίδας και καλύπτουμε το ίδιο το συνέδριο.",
-    },
-  },
-  {
-    slug: "thamon",
-    status: "onboarding",
-    // 09/10 (Mike): off the site until the engagement is final (was live 08/10)
-    published: false,
-    url: "https://www.thamon.gr",
-    domain: "thamon.gr",
-    en: {
-      client: "θamõn",
-      sector: "Restaurant, Epirote cuisine",
-      location: "Ioannina",
-      area: "Ioannina",
-      cardLine: "Rooting a contemporary restaurant in the gastronomic tradition of Ioannina.",
-      // ⚠️ "Podcast" is a new service: not yet on the Services page
-      tags: ["Strategy", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation", "Podcast"],
-      context:
-        "θamõn is a restaurant in the heart of Ioannina that cooks the best local produce of Epirus, from farm to table, with cooking lessons, catering and private dining alongside it.",
-      brief:
-        "Connect θamõn with the city it cooks for: make it the restaurant most closely tied to the traditional cuisine of Ioannina and to the authenticity of Epirus.",
-      work:
-        "We set the brand positioning and strategy, run social media management, content creation and paid campaigns, and produce a podcast that tells the story of Epirote gastronomy through θamõn's kitchen.",
-    },
-    el: {
-      client: "θamõn",
-      sector: "Εστιατόριο, ηπειρώτικη κουζίνα",
-      location: "Ιωάννινα",
-      area: "Ιωάννινα",
-      cardLine: "Ένα σύγχρονο εστιατόριο με ρίζες στη γαστρονομική παράδοση των Ιωαννίνων.",
-      tags: ["Στρατηγική", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation", "Podcast"],
-      context:
-        "Το θamõn είναι εστιατόριο στην καρδιά των Ιωαννίνων που μαγειρεύει τα καλύτερα τοπικά προϊόντα της Ηπείρου, από το χωράφι στο τραπέζι, με μαθήματα μαγειρικής, catering και ιδιωτικά δείπνα.",
-      brief:
-        "Το θamõn να συνδεθεί με την πόλη για την οποία μαγειρεύει: να γίνει το εστιατόριο που δένεται περισσότερο με την παραδοσιακή κουζίνα των Ιωαννίνων και την αυθεντικότητα της Ηπείρου.",
-      work:
-        "Χαράζουμε το brand positioning και τη στρατηγική, κάνουμε social media management, content creation και διαφημιστικές καμπάνιες, και παράγουμε ένα podcast που αφηγείται την ηπειρώτικη γαστρονομία μέσα από την κουζίνα του θamõn.",
     },
   },
 ];
