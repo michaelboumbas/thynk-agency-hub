@@ -530,7 +530,7 @@ export const v14AboutPage = {
   founders: [
     { initials: "DC", name: "Dimitris Chrysochoou", role: "Co-founder · AI & Automation Lead", photo: "/team/dimitris-chrysochoou.webp", linkedin: "https://www.linkedin.com/in/dimitris-chrysochoou/" },
     { initials: "MB", name: "Michael Boumpas", role: "Co-founder · Marketing & Growth Lead", photo: "/team/michael-boumpas.webp", linkedin: "https://www.linkedin.com/in/michael-boumpas/" },
-    { initials: "RL", name: "Romanna Lobach", role: "Creative Director", photo: "/team/romanna-lobach.webp", linkedin: "https://www.linkedin.com/in/romanna-lobach-56627393/" },
+    { initials: "RL", name: "Romanna Lobach", role: "Creative Director", photo: "/team/romanna-lobach-v2.webp", linkedin: "https://www.linkedin.com/in/romanna-lobach-56627393/" },
   ],
   teamLabel: "The team",
   linkedinLabel: "LinkedIn",
