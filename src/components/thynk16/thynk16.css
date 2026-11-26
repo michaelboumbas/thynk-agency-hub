@@ -481,3 +481,28 @@
 .t14 .t14-wrap { max-width: 1280px; margin-left: auto; margin-right: auto; padding-left: 40px; padding-right: 40px; box-sizing: border-box; }
 @media (max-width: 720px) { .t14 .t14-wrap { padding-left: 20px; padding-right: 20px; } }
 .t16-filled-wrap { padding-top: 0; }
+
+/* ---------- link colours (26/11/2026, Mike: «σκούρο με σκούρο») ----------
+   `.t14 a { color: inherit }` outranks a single class, so every v16 link set its colour under `.t14` too.
+   Rule: text always keeps strong contrast with its ground (white on lake/ink, lake or ink on white/sky). */
+.t14 a.t16-btn, .t14 button.t16-btn { color: #fff; }
+.t14 a.t16-btn:hover, .t14 button.t16-btn:hover { color: #fff; }
+.t14 a.t16-btn.light { color: var(--t16-lake); }
+.t14 a.t16-btn.light:hover { color: var(--t16-ink); }
+.t14 a.t16-ghost { color: var(--t16-lake); }
+.t14 a.t16-ghost:hover { color: var(--t16-ink); }
+.t14 .t16-nav a { color: var(--t16-lake); }
+.t14 .t16-nav a:hover, .t14 .t16-nav a[aria-current="page"] { color: var(--t16-ink); }
+.t14 a.t16-lang { color: var(--t16-lake); }
+.t14 a.t16-lang:hover { color: var(--t16-ink); }
+.t14 a.t16-brand { color: var(--t16-ink); }
+.t14 a.t16-back { color: var(--t16-mute); }
+.t14 a.t16-back:hover { color: var(--t16-lake); }
+.t14 .t16-chips a { color: var(--t16-lake); }
+.t14 a.t16-row, .t14 a.t16-card { color: var(--t16-ink); }
+.t14 a.t16-row:hover { color: var(--t16-lake); }
+.t14 .t16-consent a, .t14 .t16-legal-body a, .t14 .t16-legal-toc a { color: var(--t16-lake); }
+.t14 .t16-info a, .t14 .t16-foot-grid a { color: var(--t16-lake); }
+.t14 .t16-info a:hover, .t14 .t16-foot-grid a:hover, .t14 .t16-legal-toc a:hover { color: var(--t16-ink); }
+.t14 .t16-foot-legal a { color: var(--t16-mute); }
+.t14 .t16-foot-legal a:hover, .t14 .t16-foot-legal a[aria-current="page"] { color: var(--t16-lake); }
