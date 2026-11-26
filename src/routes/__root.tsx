@@ -102,9 +102,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700;900&display=swap",
       },
       {
-        // client names written in each brand's own type on /work (26/11/2026, Mike): θamõn, Ma Belle, Στυλ cafe
+        // client names written in each brand's own type on /work (26/11/2026, Mike): θamõn, Στυλ cafe
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Rye&family=Kurale&family=Sofia+Sans+Extra+Condensed:wght@100&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Kurale&family=Sofia+Sans+Extra+Condensed:wght@100&display=swap",
       },
       {
         rel: "stylesheet",

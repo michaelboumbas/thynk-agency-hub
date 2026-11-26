@@ -11,7 +11,8 @@
 // (the array order is the site order; hidden cases sit at the end).
 // 12/11 (Mike): Kalliopi Taxidou added (performance marketing + online store redesign).
 // 25/11 (Mike): θamõn is live again, after μάιμέτσοβο.
-// 26/11 (Mike): θamõn, Ma Belle and Στυλ cafe are shown as names in their own type (`wordmark`), not logo files.
+// 26/11 (Mike): θamõn and Στυλ cafe are shown as names in their own type (`wordmark`); Ma Belle uses its real lettering as a logo file.
+// 26/11 (Mike): no «winter» in the Στυλ copy (that is our internal angle, not how the café is described).
 // 08/10 (Mike): services per case confirmed; Meta/Google/TikTok and Pixel/CAPI are implied by Performance Marketing, never listed.
 import type { Lang } from "@/content/site-v14";
 
@@ -432,8 +433,8 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://www.instagram.com/ma_belle_metsovo/",
     domain: "@ma_belle_metsovo",
-    // the logo's western/Tuscan display caps in yellow on black (MA BELLE LOGO.pdf); Rye is the closest free face
-    wordmark: { text: "MA BELLE", font: "'Rye', serif", weight: 400, tracking: "0.02em", scale: 0.9 },
+    // 26/11 (Mike): the real lettering, not a font: «MA BELLE» cut from MA BELLE LOGO.pdf (its yellow parts as the mask)
+    logos: [{ src: "/clients/ma-belle.png", alt: "Ma Belle", ratio: 5.556 }],
     theme: { bg: "#231f20", fg: "#ffffff", logo: "#ffd800", accent: "#ffd800" },
     en: {
       client: "Ma Belle",
@@ -480,12 +481,12 @@ export const caseStudies: CaseStudy[] = [
       sector: "Café & traditional sweets",
       location: "Central square, Metsovo",
       area: "Metsovo",
-      cardLine: "Social media and ads for a winter café on Metsovo's main square.",
+      cardLine: "Social media and ads for a café on Metsovo's main square.",
       tags: ["Strategy", "Social Media Management", "Content Creation", "Performance Marketing"],
       context:
         "Στυλ is a café on the central square of Metsovo, with coffee and traditional sweets: a warm place to stop in the middle of the village.",
       brief:
-        "Make Στυλ the cosy winter stop for people who come to Metsovo, couples above all, whether they stay in the village or pass through for a coffee.",
+        "Make Στυλ the cosy stop for people who come to Metsovo, couples above all, whether they stay in the village or pass through for a coffee.",
       work:
         "We set the strategy for its social media, run its Facebook and Instagram, produce photo and video content every month and run its advertising in the months that matter.",
     },
@@ -494,12 +495,12 @@ export const caseStudies: CaseStudy[] = [
       sector: "Καφέ & παραδοσιακά γλυκά",
       location: "Κεντρική πλατεία, Μέτσοβο",
       area: "Μέτσοβο",
-      cardLine: "Social media και διαφήμιση για ένα χειμωνιάτικο καφέ στην πλατεία του Μετσόβου.",
+      cardLine: "Social media και διαφήμιση για ένα καφέ στην πλατεία του Μετσόβου.",
       tags: ["Στρατηγική", "Social Media Management", "Content Creation", "Performance Marketing"],
       context:
         "Το Στυλ είναι καφέ στην κεντρική πλατεία του Μετσόβου, με καφέ και παραδοσιακά γλυκά: ένα ζεστό σημείο για στάση στη μέση του χωριού.",
       brief:
-        "Το Στυλ να γίνει η ζεστή χειμωνιάτικη στάση για όσους έρχονται στο Μέτσοβο, πάνω απ' όλα για τα ζευγάρια, είτε μένουν στο χωριό είτε περνούν για έναν καφέ.",
+        "Το Στυλ να γίνει η ζεστή στάση για όσους έρχονται στο Μέτσοβο, πάνω απ' όλα για τα ζευγάρια, είτε μένουν στο χωριό είτε περνούν για έναν καφέ.",
       work:
         "Χαράζουμε τη στρατηγική των social media του, τρέχουμε το Facebook και το Instagram του, παράγουμε κάθε μήνα φωτογραφικό και video περιεχόμενο και τρέχουμε τη διαφήμισή του τους μήνες που μετράνε.",
     },

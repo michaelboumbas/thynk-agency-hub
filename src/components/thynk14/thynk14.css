@@ -7398,8 +7398,12 @@
   font-size: calc(var(--wms, 1) * var(--wm-size, 44px));
   font-synthesis: none;
 }
+.t14-wm > span {
+  line-height: 0.9;
+}
+/* the second line sits close under the name (26/11, Mike: «cafe» nearer to «Στυλ») */
 .t14-wm small {
-  margin-top: 0.08em;
+  margin-top: -0.12em;
   font-size: 0.36em;
   letter-spacing: 0.32em;
   padding-left: 0.32em;
