@@ -16,7 +16,7 @@ export const v14Hero = {
   last: " Intelligence.",
   formulaStrong: "Human Intelligence + Artificial Intelligence.",
   formula: "Your team's judgment and experience, combined with the speed of artificial intelligence.",
-  primary: "Book an audit",
+  primary: "Let's talk", // 26/11 (Mike, v16): one button everywhere
   secondary: "Our method →",
 };
 
@@ -241,13 +241,14 @@ export const v14Routes = {
   press: "/press",
   // 17/10 (Mike): open applications (no open position shown unless one exists). In the footer, not the menu.
   careers: "/careers",
+  // 26/11/2026 (Mike): the cookie policy, next to Privacy in the footer
+  cookies: "/cookies",
 } as const;
 
+// 26/11 (Mike, v16): four pages. Solutions now live inside Services; the audit is the AI Audit under Services.
 export const v14Menu = [
   { to: v14Routes.services, label: "Services" },
-  { to: v14Routes.solutions, label: "Solutions" },
   { to: v14Routes.work, label: "Clients" },
-  { to: v14Routes.audit, label: "Audit" },
   { to: v14Routes.about, label: "About" },
   { to: v14Routes.contact, label: "Contact" },
 ] as const;
@@ -586,8 +587,8 @@ export const v14Work = {
 
 
 export const v14Final = {
-  title: "The first step is a clear picture of where you are today.",
-  button: "Book an audit",
+  title: "Tell us where your business is today.",
+  button: "Let's talk",
 };
 
 

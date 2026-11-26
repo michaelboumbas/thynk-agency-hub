@@ -1,20 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// 17/10/2026 (Mike): Careers, open applications. 09/11: title/description lead with the open role. Copy: src/content/careers-v14.ts, page: src/components/thynk14/careers.tsx.
-const title = "Careers — Thynk Digital Agency";
-const description =
-  "Work with Thynk Digital Agency in Ioannina, Greece. We accept applications in performance marketing, social media, design, video editing, web development and AI automation.";
-
+// 26/11/2026 (v16 + SEO): title/description approved by Mike; canonical + hreflang from seoHead (src/lib/seo.ts).
 export const Route = createFileRoute("/careers")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-    ],
-  }),
+  head: () =>
+    seoHead({
+      path: "/careers",
+      lang: "en",
+      title: "Careers · Thynk Digital Agency",
+      description: "Work with Thynk Digital Agency in Ioannina, Greece. We accept applications in performance marketing, social media, design, video editing, web development and AI automation.",
+    }),
   component: () => <CleanPage path="/careers" />,
 });

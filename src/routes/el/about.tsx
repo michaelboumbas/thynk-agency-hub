@@ -1,21 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// v14 Greek version (02/10/2026). Same page as "/about", copy from src/content/site-v14-el.ts.
-const title = "Ποιοι είμαστε — Thynk Digital Agency";
-const description =
-  "Thynk Digital Agency, Ιωάννινα. Ιδρυτές: Δημήτρης Χρυσοχόου και Μιχαήλ Μπούμπας. Μιλάτε απευθείας με τους ιδρυτές.";
-
+// 26/11/2026 (v16 + SEO): title/description approved by Mike; canonical + hreflang from seoHead (src/lib/seo.ts).
 export const Route = createFileRoute("/el/about")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:locale", content: "el_GR" },
-    ],
-  }),
+  head: () =>
+    seoHead({
+      path: "/about",
+      lang: "el",
+      title: "Ποιοι είμαστε · Thynk Digital Agency, Ιωάννινα",
+      description: "Η ομάδα της Thynk Digital Agency: digital marketing και AI αυτοματισμοί για επιχειρήσεις σε όλη την Ελλάδα, με έδρα τα Ιωάννινα.",
+    }),
   component: () => <CleanPage path="/about" lang="el" />,
 });

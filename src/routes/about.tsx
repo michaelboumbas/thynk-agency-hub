@@ -1,19 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// v14 (02/10/2026): English page in the «Thynk Clean» style.
-const title = "About — Thynk Digital Agency";
-const description = "Thynk Digital Agency, Ioannina, Greece. Founded by Dimitris Chrysochoou and Michael Boumpas. You talk to the founders directly.";
-
+// 26/11/2026 (v16 + SEO): title/description approved by Mike; canonical + hreflang from seoHead (src/lib/seo.ts).
 export const Route = createFileRoute("/about")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-    ],
-  }),
+  head: () =>
+    seoHead({
+      path: "/about",
+      lang: "en",
+      title: "About · Thynk Digital Agency, Ioannina",
+      description: "The team behind Thynk Digital Agency: digital marketing and AI automation for businesses across Greece, based in Ioannina.",
+    }),
   component: () => <CleanPage path="/about" />,
 });

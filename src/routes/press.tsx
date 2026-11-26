@@ -1,20 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// 17/10/2026 (Mike): Press. Entries and copy: src/content/press-v14.ts, page: src/components/thynk14/press.tsx.
-const title = "Press — Thynk Digital Agency";
-const description =
-  "Articles about Thynk Digital Agency, each linking to the original publication, and a kit for journalists: press contact, a short company description and the logo files.";
-
+// 26/11/2026 (v16 + SEO): title/description approved by Mike; canonical + hreflang from seoHead (src/lib/seo.ts).
 export const Route = createFileRoute("/press")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-    ],
-  }),
+  head: () =>
+    seoHead({
+      path: "/press",
+      lang: "en",
+      title: "Press · Thynk Digital Agency",
+      description: "Articles about Thynk Digital Agency, each linking to the original, and a kit for journalists: press contact, a short description and the logo files.",
+    }),
   component: () => <CleanPage path="/press" />,
 });

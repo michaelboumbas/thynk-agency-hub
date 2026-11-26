@@ -20,6 +20,7 @@ import { Route as ParadeigmataRouteImport } from './routes/paradeigmata'
 import { Route as PoioiEimasteRouteImport } from './routes/poioi-eimaste'
 import { Route as PressRouteImport } from './routes/press'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SolutionsRouteImport } from './routes/solutions'
@@ -31,6 +32,7 @@ import { Route as ElCareersRouteImport } from './routes/el/careers'
 import { Route as ElContactRouteImport } from './routes/el/contact'
 import { Route as ElPressRouteImport } from './routes/el/press'
 import { Route as ElPrivacyRouteImport } from './routes/el/privacy'
+import { Route as ElCookiesRouteImport } from './routes/el/cookies'
 import { Route as ElServicesRouteImport } from './routes/el/services'
 import { Route as ElSolutionsRouteImport } from './routes/el/solutions'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
@@ -96,6 +98,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
@@ -149,6 +156,11 @@ const ElPressRoute = ElPressRouteImport.update({
 const ElPrivacyRoute = ElPrivacyRouteImport.update({
   id: '/el/privacy',
   path: '/el/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElCookiesRoute = ElCookiesRouteImport.update({
+  id: '/el/cookies',
+  path: '/el/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ElServicesRoute = ElServicesRouteImport.update({
@@ -210,6 +222,7 @@ export interface FileRoutesByFullPath {
   '/poioi-eimaste': typeof PoioiEimasteRoute
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
+  '/cookies': typeof CookiesRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
@@ -220,6 +233,7 @@ export interface FileRoutesByFullPath {
   '/el/contact': typeof ElContactRoute
   '/el/press': typeof ElPressRoute
   '/el/privacy': typeof ElPrivacyRoute
+  '/el/cookies': typeof ElCookiesRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -243,6 +257,7 @@ export interface FileRoutesByTo {
   '/poioi-eimaste': typeof PoioiEimasteRoute
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
+  '/cookies': typeof CookiesRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
@@ -253,6 +268,7 @@ export interface FileRoutesByTo {
   '/el/contact': typeof ElContactRoute
   '/el/press': typeof ElPressRoute
   '/el/privacy': typeof ElPrivacyRoute
+  '/el/cookies': typeof ElCookiesRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -277,6 +293,7 @@ export interface FileRoutesById {
   '/poioi-eimaste': typeof PoioiEimasteRoute
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
+  '/cookies': typeof CookiesRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRoute
@@ -287,6 +304,7 @@ export interface FileRoutesById {
   '/el/contact': typeof ElContactRoute
   '/el/press': typeof ElPressRoute
   '/el/privacy': typeof ElPrivacyRoute
+  '/el/cookies': typeof ElCookiesRoute
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -312,6 +330,7 @@ export interface FileRouteTypes {
     | '/poioi-eimaste'
     | '/press'
     | '/privacy'
+    | '/cookies'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
@@ -322,6 +341,7 @@ export interface FileRouteTypes {
     | '/el/contact'
     | '/el/press'
     | '/el/privacy'
+    | '/el/cookies'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -345,6 +365,7 @@ export interface FileRouteTypes {
     | '/poioi-eimaste'
     | '/press'
     | '/privacy'
+    | '/cookies'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
@@ -355,6 +376,7 @@ export interface FileRouteTypes {
     | '/el/contact'
     | '/el/press'
     | '/el/privacy'
+    | '/el/cookies'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -378,6 +400,7 @@ export interface FileRouteTypes {
     | '/poioi-eimaste'
     | '/press'
     | '/privacy'
+    | '/cookies'
     | '/services'
     | '/sitemap.xml'
     | '/solutions'
@@ -388,6 +411,7 @@ export interface FileRouteTypes {
     | '/el/contact'
     | '/el/press'
     | '/el/privacy'
+    | '/el/cookies'
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
@@ -412,6 +436,7 @@ export interface RootRouteChildren {
   PoioiEimasteRoute: typeof PoioiEimasteRoute
   PressRoute: typeof PressRoute
   PrivacyRoute: typeof PrivacyRoute
+  CookiesRoute: typeof CookiesRoute
   ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolutionsRoute: typeof SolutionsRoute
@@ -422,6 +447,7 @@ export interface RootRouteChildren {
   ElContactRoute: typeof ElContactRoute
   ElPressRoute: typeof ElPressRoute
   ElPrivacyRoute: typeof ElPrivacyRoute
+  ElCookiesRoute: typeof ElCookiesRoute
   ElServicesRoute: typeof ElServicesRoute
   ElSolutionsRoute: typeof ElSolutionsRoute
   WorkSlugRoute: typeof WorkSlugRoute
@@ -513,6 +539,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
@@ -588,6 +621,13 @@ declare module '@tanstack/react-router' {
       path: '/el/privacy'
       fullPath: '/el/privacy'
       preLoaderRoute: typeof ElPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/el/cookies': {
+      id: '/el/cookies'
+      path: '/el/cookies'
+      fullPath: '/el/cookies'
+      preLoaderRoute: typeof ElCookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/el/services': {
@@ -668,6 +708,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoioiEimasteRoute: PoioiEimasteRoute,
   PressRoute: PressRoute,
   PrivacyRoute: PrivacyRoute,
+  CookiesRoute: CookiesRoute,
   ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolutionsRoute: SolutionsRoute,
@@ -678,6 +719,7 @@ const rootRouteChildren: RootRouteChildren = {
   ElContactRoute: ElContactRoute,
   ElPressRoute: ElPressRoute,
   ElPrivacyRoute: ElPrivacyRoute,
+  ElCookiesRoute: ElCookiesRoute,
   ElServicesRoute: ElServicesRoute,
   ElSolutionsRoute: ElSolutionsRoute,
   WorkSlugRoute: WorkSlugRoute,

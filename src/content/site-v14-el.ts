@@ -23,11 +23,9 @@ export const el: Copy = {
   },
   menu: [
     { to: v14Menu[0].to, label: "Υπηρεσίες" },
-    { to: v14Menu[1].to, label: "Λύσεις" },
-    { to: v14Menu[2].to, label: "Πελάτες" },
-    { to: v14Menu[3].to, label: "Audit" },
-    { to: v14Menu[4].to, label: "Ποιοι είμαστε" },
-    { to: v14Menu[5].to, label: "Επικοινωνία" },
+    { to: v14Menu[1].to, label: "Πελάτες" },
+    { to: v14Menu[2].to, label: "Ποιοι είμαστε" },
+    { to: v14Menu[3].to, label: "Επικοινωνία" },
   ],
   more: {
     method: "Όλες οι υπηρεσίες →",
@@ -42,7 +40,7 @@ export const el: Copy = {
     last: " Intelligence.",
     formulaStrong: "Human Intelligence + Artificial Intelligence.",
     formula: "Η κρίση και η εμπειρία της ομάδας σας, μαζί με την ταχύτητα της τεχνητής νοημοσύνης.",
-    primary: "Κλείστε audit",
+    primary: "Let's talk",
     secondary: "Η μεθοδολογία →",
   },
   about: {
@@ -527,7 +525,7 @@ export const el: Copy = {
     nextLabel: "Επόμενο έργο",
   },
   final: {
-    title: "Το πρώτο βήμα είναι μια σαφής εικόνα της σημερινής κατάστασης.",
-    button: "Κλείστε audit",
+    title: "Πείτε μας πού βρίσκεται η επιχείρησή σας σήμερα.",
+    button: "Let's talk",
   },
 };

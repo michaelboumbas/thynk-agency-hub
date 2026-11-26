@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { CleanCasePage } from "@/components/thynk14/CleanSite";
 import { getCase } from "@/content/work-v14";
+import { seoHead } from "@/lib/seo";
 
 // v14 (07/10/2026, Mike): one case study. Unknown or hidden cases (published: false) are a 404.
 export const Route = createFileRoute("/work/$slug")({
@@ -12,15 +13,8 @@ export const Route = createFileRoute("/work/$slug")({
   head: ({ params }) => {
     const t = getCase(params.slug)?.en;
     if (!t) return {};
-    const title = `${t.client} — Clients — Thynk Digital Agency`;
-    return {
-      meta: [
-        { title },
-        { name: "description", content: t.cardLine },
-        { property: "og:title", content: title },
-        { property: "og:description", content: t.cardLine },
-      ],
-    };
+    // 26/11/2026 (SEO): canonical + hreflang; the case pages are now in the sitemap (routes/sitemap[.]xml.ts)
+    return seoHead({ path: `/work/${params.slug}`, lang: "en", title: `${t.client} · Clients · Thynk Digital Agency`, description: t.cardLine });
   },
   component: CaseRoute,
 });

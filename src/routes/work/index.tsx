@@ -1,20 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// v14 (07/10/2026, Mike): the case studies. Cases and copy: src/content/work-v14.ts.
-const title = "Clients — Thynk Digital Agency";
-const description =
-  "Brands we Thynk with: business awards, international conferences, a monastic winery, a destination guide, education and events. Every account runs through Thynk.";
-
+// 26/11/2026 (v16 + SEO): the clients wall. Cases and copy: src/content/work-v14.ts.
 export const Route = createFileRoute("/work/")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-    ],
-  }),
+  head: () => seoHead({ path: "/work", lang: "en", title: "Clients · Thynk Digital Agency", description: "Brands we Thynk with: Manager of the Year, Imperator Winery, Kalliopi Taxidou, θamõn, μάιμέτσοβο and the other clients of Thynk Digital Agency." }),
   component: () => <CleanPage path="/work" />,
 });

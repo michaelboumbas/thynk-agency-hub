@@ -1,21 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// 17/10/2026 (Mike): Careers, Greek version. 09/11: title led with the open role; 26/11 the role is filled, so a general title. Same page as "/careers", copy from src/content/careers-v14.ts.
-const title = "Καριέρα — Thynk Digital Agency";
-const description =
-  "Δουλέψτε με τη Thynk Digital Agency στα Ιωάννινα. Δεχόμαστε αιτήσεις συνεργασίας για performance marketing, social media, design, video editing, web development και AI αυτοματισμούς.";
-
+// 26/11/2026 (v16 + SEO): title/description approved by Mike; canonical + hreflang from seoHead (src/lib/seo.ts).
 export const Route = createFileRoute("/el/careers")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:locale", content: "el_GR" },
-    ],
-  }),
+  head: () =>
+    seoHead({
+      path: "/careers",
+      lang: "el",
+      title: "Καριέρα · Thynk Digital Agency",
+      description: "Δουλέψτε με τη Thynk Digital Agency στα Ιωάννινα. Δεχόμαστε αιτήσεις συνεργασίας για performance marketing, social media, design, video editing, web development και AI αυτοματισμούς.",
+    }),
   component: () => <CleanPage path="/careers" lang="el" />,
 });

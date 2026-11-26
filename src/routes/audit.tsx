@@ -1,20 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// v14 (02/10/2026): English page in the «Thynk Clean» style (the v11 Greek audit page is no longer routed).
-const title = "Audit — Thynk Digital Agency";
-const description =
-  "Find out where your business loses time and customers. A short, paid audit with a prioritized action plan that stays yours.";
-
+// 26/11/2026 (v16 + SEO): title/description approved by Mike; canonical + hreflang from seoHead (src/lib/seo.ts).
 export const Route = createFileRoute("/audit")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-    ],
-  }),
+  head: () =>
+    seoHead({
+      path: "/audit",
+      lang: "en",
+      title: "AI Audit: what to automate first · Thynk",
+      description: "A paid analysis of your processes, tools and data with a concrete deliverable: what to automate first, what next and what not.",
+    }),
   component: () => <CleanPage path="/audit" />,
 });

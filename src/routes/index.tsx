@@ -9,26 +9,19 @@ import { SitePage, setFieldChoice } from "@/components/thynk11/Site";
 import { CleanSite } from "@/components/thynk14/CleanSite";
 import { LANG_NOW_KEY, LANG_PICK_KEY } from "@/components/thynk14/Shell";
 import type { HeadlineId } from "@/content/site-v12";
+import { seoHead } from "@/lib/seo";
 
 
 // 17/11 (Mike): «/» opens in Greek (it forwards to /el), so the link preview of thynkagency.gr is Greek too
-const title = "Thynk Digital Agency — Το μέλλον της Super Intelligence";
+// 26/11/2026 (v16 + SEO): «/» forwards first-time visitors to /el, so it keeps Greek meta (the link preview of
+// thynkagency.gr, Mike 17/11) and points its canonical at /el.
+const title = "Thynk Digital Agency · Digital Marketing & AI αυτοματισμοί, Ιωάννινα";
 const description =
-  "Marketing και Digital Transformation με AI για επιχειρήσεις σε όλη την Ελλάδα και στο εξωτερικό. Έδρα Ιωάννινα. Κάθε συνεργασία ξεκινά με audit.";
+  "Digital marketing και AI αυτοματισμοί από τα Ιωάννινα: διαφήμιση σε Google, Meta, TikTok και ChatGPT, social media, περιεχόμενο, websites και AI Audit.";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
-      { property: "og:locale", content: "el_GR" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () => seoHead({ path: "/", lang: "el", title, description, schema: true }),
   component: Index,
 });
 

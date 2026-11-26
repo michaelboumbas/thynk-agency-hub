@@ -1,0 +1,42 @@
+# Thynk Digital Agency
+
+> Thynk Digital Agency is a digital marketing and AI automation agency based in Ioannina, Greece (Papazoglou 14D, 454 44 Ioannina). Founded in 2026 by Dimitris Chrysochoou and Michael Boumpas. It works with businesses across Greece and abroad. The name is written "Thynk", with a y. Not to be confused with similarly named agencies elsewhere.
+
+Contact: hello@thynkagency.gr · +30 698 388 7522 · Monday–Friday 09:00–17:00 · https://thynkagency.gr
+Languages: Greek (default, under /el) and English.
+
+## Services
+
+### Digital Marketing
+- Performance Marketing: advertising on Google, Meta, TikTok and ChatGPT, with campaigns measured in sales and leads, not just clicks.
+- Social Media Management: Facebook, Instagram, TikTok and LinkedIn, with a monthly content calendar and a monthly report.
+- Strategy: goals, the metrics we track and an action plan in order of priority.
+- Content Creation: photo, video (Reels, TikTok, Shorts), UGC, copy and graphic design.
+- Email & SMS Marketing: automated flows (abandoned cart, upsell, repeat purchase), newsletters and SMS.
+- Websites & Landing Pages: company websites and campaign landing pages, measured from day one.
+
+### AI & Automations
+- AI Audit: a paid analysis of processes, tools and data, with a deliverable that says what to automate first, what next and what not. The deliverable belongs to the client.
+- AI automation: chatbots that answer and book appointments, voice assistants for out-of-hours calls, connecting existing tools, AI agents on the client's own data.
+- Data & reporting: website measurement, dashboards, visibility in ChatGPT and Google AI Overviews.
+- Consulting: a roadmap from manual processes to automation, and workshops on everyday use of AI.
+
+## How an engagement starts
+1. A first conversation about where the business is and where it wants to go.
+2. A proposal and plan with a clear scope and cost.
+3. Delivery and measurement, with results shown in numbers.
+
+## Pages
+- [Home (Greek)](https://thynkagency.gr/el)
+- [Services](https://thynkagency.gr/el/services)
+- [AI Audit](https://thynkagency.gr/el/audit)
+- [Clients](https://thynkagency.gr/el/work)
+- [About](https://thynkagency.gr/el/about)
+- [Contact](https://thynkagency.gr/el/contact)
+- [Press](https://thynkagency.gr/el/press)
+- [English home](https://thynkagency.gr/?lang=en)
+
+## Profiles
+- Instagram: https://www.instagram.com/thynkagency.gr/
+- Facebook: https://www.facebook.com/thynkagency.gr/
+- LinkedIn: https://www.linkedin.com/company/thynk-digital-agency/

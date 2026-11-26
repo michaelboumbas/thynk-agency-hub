@@ -6,13 +6,22 @@ import { GatePending, useSiteGate } from "@/components/thynk11/Site";
 import { PlanetField } from "@/components/thynk13/PlanetField";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { v14Routes, v14Social, type Lang, type V14Path } from "@/content/site-v14";
-import { Logo, PAIN_EVENT, PAIN_KEY } from "./shared";
+import { Logo } from "./shared";
 import { useCleanMotion } from "./motion";
 import { DotIntro, IntroFrame, introPending } from "./intro";
-import { pressCopy } from "@/content/press-v14";
-import { careersCopy } from "@/content/careers-v14";
 import { newsletterCopy } from "@/content/newsletter-v14";
 import { NewsletterForm, NewsletterPopup } from "./newsletter";
+import { useV16Reveal } from "@/components/thynk16/v16";
+import { v16Copy } from "@/content/site-v16";
+import { companyLine } from "@/content/company";
+
+/** 26/11 (Mike, v16): the four pages in the header, in this order */
+const NAV = [
+  { to: v14Routes.services, k: "services" },
+  { to: v14Routes.work, k: "work" },
+  { to: v14Routes.about, k: "about" },
+  { to: v14Routes.contact, k: "contact" },
+] as const;
 
 // 2026 brand (23/10): Commissioner for text and titles (full Greek), variable weight + the Flair axis.
 // (Before: Inter for text, TikTok Sans for titles — Mike 02/10/2026.)
@@ -34,13 +43,17 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
   const slug = useContext(SlugCtx);
   const book = useContext(BookCtx);
   useCleanMotion(rootRef, slug ? `${pathname}/${slug}` : pathname);
+  useV16Reveal(rootRef, slug ? `${pathname}/${slug}` : pathname);
+  const v = v16Copy[lang];
 
   // the floating header hides while scrolling down, returns on the way up
   const [hideHdr, setHideHdr] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     let last = window.scrollY;
     const on = () => {
       const y = window.scrollY;
+      setScrolled(y > 8);
       if (Math.abs(y - last) < 6) return;
       setHideHdr(y > last && y > 140);
       last = y;
@@ -97,28 +110,37 @@ function Shell({ children, pathname }: { children: ReactNode; pathname: V14Path 
       <a className="t14-skip" href="#main">{c.ui.skip}</a>
       {/* 07/11 (Mike): no header bar. The logo and a glass «dock» float over the page; the dock hides while you
           scroll down and comes back as soon as you scroll up (after thetetrahub.com) */}
-      <header className={`t14-hdr t15-hdr${hideHdr && !menu ? " hide" : ""}`}>
-        <Link className="t15-brand" to={href(v14Routes.home)} aria-label={c.ui.home}><Logo /></Link>
-        <div className="t14-hdr-r t15-dock">
-          <LangLink className="t14-lang" pathname={pathname} other={other} aria-label={c.ui.switchAria}>
-            {c.ui.switchTo}
-          </LangLink>
-          {book ? (
-            <button type="button" className="t14-pill" onClick={book}>{c.hero.primary}</button>
-          ) : (
-            <Link className="t14-pill" to={href(v14Routes.audit)} hash="book">{c.hero.primary}</Link>
-          )}
-          <button
-            ref={burgerRef}
-            type="button"
-            className="t14-burger"
-            aria-expanded={menu}
-            aria-label={menu ? c.ui.closeMenu : c.ui.openMenu}
-            onClick={() => setMenu((v) => !v)}
-          >
-            <span />
-            <span />
-          </button>
+      {/* 26/11 (Mike, v16): a plain header from the canvas: logo · four pages · EN · «Let's talk». It hides while
+          scrolling down and comes back on the way up; on phones and tablets the pages move into the menu. */}
+      <header className={`t16-hdr${hideHdr && !menu ? " hide" : ""}${scrolled ? " scrolled" : ""}`}>
+        <div className="t16-hdr-in">
+          <Link className="t16-brand" to={href(v14Routes.home)} aria-label={c.ui.home}><Logo /></Link>
+          <nav className="t16-nav" aria-label={v.nav.main}>
+            {NAV.map((n) => (
+              <Link key={n.to} to={href(n.to)} aria-current={pathname === n.to ? "page" : undefined}>{v.nav[n.k]}</Link>
+            ))}
+          </nav>
+          <div className="t16-hdr-r">
+            <LangLink className="t16-lang" pathname={pathname} other={other} aria-label={c.ui.switchAria}>
+              {other.toUpperCase()}
+            </LangLink>
+            {book ? (
+              <button type="button" className="t16-btn" onClick={book}>{c.hero.primary}</button>
+            ) : (
+              <Link className="t16-btn" to={href(v14Routes.contact)} hash="talk">{v.nav.talk}</Link>
+            )}
+            <button
+              ref={burgerRef}
+              type="button"
+              className="t16-burger"
+              aria-expanded={menu}
+              aria-label={menu ? c.ui.closeMenu : c.ui.openMenu}
+              onClick={() => setMenu((x) => !x)}
+            >
+              <span />
+              <span />
+            </button>
+          </div>
         </div>
       </header>
       <MenuOverlay open={menu} pathname={pathname} onClose={() => setMenu(false)} returnRef={burgerRef} />
@@ -349,7 +371,7 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
         {book ? (
           <button type="button" className="t14-pill lg" onClick={() => { onClose(); book(); }}>{c.hero.primary}</button>
         ) : (
-          <Link className="t14-pill lg" to={href(v14Routes.audit)} hash="book" onClick={onClose}>{c.hero.primary}</Link>
+          <Link className="t14-pill lg" to={href(v14Routes.contact)} hash="talk" onClick={onClose}>{c.hero.primary}</Link>
         )}
         <LangLink className="t14-menu-lang" pathname={pathname} other={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</LangLink>
         <a className="t14-menu-mail" href={`mailto:${c.footer.contact}`}>{c.footer.contact}</a>
@@ -359,159 +381,52 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
 }
 
 /**
- * The footer v2 (10/10, Mike: the old one felt mechanical). White like the rest of the site; no ticker, clock
- * or particle wordmark. «Let's Thynk. / Together» set large: the width of the letters opens up when the footer
- * comes into view, and fully on hover (TikTok Sans width axis). Below it the audit form's «what should we look
- * at first» choices: the button names the choice and the audit form opens with it already selected.
+ * The footer v3 (26/11/2026, Mike, v16 canvas): logo + tagline · contact · follow us · updates (newsletter),
+ * then one quiet line: © + the pages that are not in the menu (Press, Careers, Privacy, Cookies) and the
+ * company's legal details (src/content/company.ts). Replaces the big «Let's Thynk. Together» footer.
  */
 function SiteFooter({ pathname }: { pathname: V14Path }) {
   const { c, href, lang } = useCopy();
-  const f = c.footer;
+  const v = v16Copy[lang].footer;
   const nl = newsletterCopy[lang];
   const other: Lang = lang === "en" ? "el" : "en";
-  const book = useContext(BookCtx);
-  const [pick, setPick] = useState<number | null>(null);
-  const [seen, setSeen] = useState(false);
-  const footRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const el = footRef.current;
-    if (!el || seen) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setSeen(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setSeen(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.2 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [seen]);
-  // hand the choice to the audit form: on the audit page directly, elsewhere when the form mounts
-  const go = () => {
-    if (pick === null) return;
-    if (pathname === v14Routes.audit) {
-      window.dispatchEvent(new CustomEvent(PAIN_EVENT, { detail: pick }));
-      return;
-    }
-    try {
-      window.sessionStorage.setItem(PAIN_KEY, String(pick));
-    } catch {
-      /* storage blocked: the form simply starts without a choice */
-    }
-  };
+  const phone = c.footer.phone;
+  const legal = companyLine(lang);
   return (
-    <footer ref={footRef} className={`t14-foot${seen ? " in" : ""}`} id="contact">
-      <div className="t14-foot-in">
-        <div className="t14-foot-head">
-          <h2 className="t14-foot-title" lang="en">
-            <span className="t14-foot-line">
-              <span className="t14-foot-w">{f.ctaA}<span className="t14-foot-dot">.</span></span>
-            </span>
-            <span className="t14-foot-line">
-              <span className="t14-foot-w">{f.ctaB}</span>
-            </span>
-          </h2>
-          <p className="t14-foot-lead">{c.final.title}</p>
+    <footer className="t16-foot" id="contact">
+      <div className="t16-wrap t16-foot-grid">
+        <div className="t16-foot-brand">
+          <Link to={href(v14Routes.home)} aria-label={c.ui.home}><Logo /></Link>
+          <span lang="en">{v16Copy[lang].tagline}</span>
         </div>
-
-        {/* 22/10 (Mike): the audit choice on the left, the newsletter sign-up on the right, above Back to top */}
-        <div className="t14-foot-row">
-          <div className="t14-foot-start">
-            <span className="t14-foot-label" id="t14-foot-q">{f.startLabel}</span>
-            <div className="t14-foot-chips" role="group" aria-labelledby="t14-foot-q">
-              {c.book.pain.options.map((o, i) => (
-                <button
-                  key={o}
-                  type="button"
-                  className={pick === i ? "on" : undefined}
-                  aria-pressed={pick === i}
-                  onClick={() => setPick(pick === i ? null : i)}
-                >
-                  {o}
-                </button>
-              ))}
-            </div>
-            {book ? (
-              // /irha: the form opens on the page; the choice travels through sessionStorage, read when the form mounts
-              <button
-                type="button"
-                className="t14-pill lg t14-foot-pill"
-                onClick={() => {
-                  if (pick !== null) {
-                    try {
-                      window.sessionStorage.setItem(PAIN_KEY, String(pick));
-                    } catch {
-                      /* storage blocked: the form simply starts without a choice */
-                    }
-                  }
-                  book();
-                }}
-              >
-                {c.final.button}
-                {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
-              </button>
-            ) : (
-              <Link className="t14-pill lg t14-foot-pill" to={href(v14Routes.audit)} hash="book" onClick={go}>
-                {c.final.button}
-                {pick !== null && <span className="t14-foot-pick"> · {f.picks[pick]}</span>} <i aria-hidden="true">→</i>
-              </Link>
-            )}
-          </div>
-          <div className="t14-foot-nl">
-            <span className="t14-foot-label">{nl.label}</span>
-            <p>{nl.lead}</p>
-            <NewsletterForm source="footer" />
-          </div>
+        <div>
+          <span className="t16-lbl">{v.contact}</span>
+          <a href="mailto:hello@thynkagency.gr">hello@thynkagency.gr</a>
+          {phone && <a href={`tel:${phone.replace(/\s+/g, "")}`}>{phone}</a>}
+          <span>{v.address}</span>
         </div>
-
-        <div className="t14-foot-grid">
-          <div>
-            <h4>{f.contactLabel}</h4>
-            <ul>
-              <li><a href={`mailto:${f.contact}`}>{f.contact}</a></li>
-              {f.phone && <li><a href={`tel:${f.phone.replace(/\s+/g, "")}`} aria-label={`${f.phoneLabel} ${f.phone}`}>{f.phone}</a></li>}
-            </ul>
-          </div>
-          <div>
-            <h4>{f.officeLabel}</h4>
-            <ul>
-              <li>{f.address}</li>
-              <li className="t14-addr">{f.visits}</li>
-            </ul>
-          </div>
-          <div>
-            <h4>{f.followLabel}</h4>
-            <ul className="t14-foot-social">
-              {v14Social.map((s) => (
-                <li key={s.href}><a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a></li>
-              ))}
-            </ul>
-          </div>
-          <div className="t14-foot-top">
-            <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label={f.backTop}>
-              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </button>
-            <span>{f.backTop}</span>
-          </div>
+        <div>
+          <span className="t16-lbl">{v.follow}</span>
+          {v14Social.map((s) => (
+            <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
+          ))}
+        </div>
+        <div className="t16-foot-nl">
+          <span className="t16-lbl">{v.news}</span>
+          <span>{nl.lead}</span>
+          <NewsletterForm source="footer" />
         </div>
       </div>
-
-      <div className="t14-foot-legal">
-        <span>© 2026 Thynk Digital Agency · {f.rights}</span>
-        <nav aria-label={f.pagesLabel}>
-          {/* 07/11 (Mike): only the pages that are not in the menu */}
-          {/* 17/10 (Mike): Press lives in the footer, not the top menu */}
-          <Link to={href(v14Routes.press)} aria-current={pathname === v14Routes.press ? "page" : undefined}>{pressCopy[lang].head.label}</Link>
-          <Link to={href(v14Routes.careers)} aria-current={pathname === v14Routes.careers ? "page" : undefined}>{careersCopy[lang].head.label}</Link>
-          <Link to={href(v14Routes.privacy)} aria-current={pathname === v14Routes.privacy ? "page" : undefined}>{f.privacy}</Link>
+      <div className="t16-wrap t16-foot-legal">
+        <nav aria-label={v.pages}>
+          <span>© 2026 Thynk Digital Agency</span>
+          <Link to={href(v14Routes.press)} aria-current={pathname === v14Routes.press ? "page" : undefined}>{v.press}</Link>
+          <Link to={href(v14Routes.careers)} aria-current={pathname === v14Routes.careers ? "page" : undefined}>{v.careers}</Link>
+          <Link to={href(v14Routes.privacy)} aria-current={pathname === v14Routes.privacy ? "page" : undefined}>{v.privacy}</Link>
+          <Link to={href(v14Routes.cookies)} aria-current={pathname === v14Routes.cookies ? "page" : undefined}>{v.cookies}</Link>
+          <LangLink pathname={pathname} other={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</LangLink>
         </nav>
-        <LangLink pathname={pathname} other={other} aria-label={c.ui.switchAria}>{c.ui.switchTo}</LangLink>
+        {legal && <p className="t16-company">{legal}</p>}
       </div>
     </footer>
   );

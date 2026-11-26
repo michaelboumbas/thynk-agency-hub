@@ -563,7 +563,7 @@ export function FinalBand() {
   return (
     <section className="t14-final t14-wrap">
       <h2>{c.final.title}</h2>
-      <Link to={href(v14Routes.audit)} hash="book" className="t14-pill lg">
+      <Link to={href(v14Routes.contact)} hash="talk" className="t14-pill lg">
         {c.final.button}
       </Link>
     </section>

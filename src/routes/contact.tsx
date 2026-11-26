@@ -1,19 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// v14 (02/10/2026): contact page. Address + phone are real (10/10). ⚠️ office hours are still demo values in site-v14.ts.
-const title = "Contact — Thynk Digital Agency";
-const description = "Contact Thynk Digital Agency in Ioannina, Greece: office, phone, email and office hours. Start with an audit.";
-
+// 26/11/2026 (v16 + SEO): title/description approved by Mike; canonical + hreflang from seoHead (src/lib/seo.ts).
 export const Route = createFileRoute("/contact")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-    ],
-  }),
+  head: () =>
+    seoHead({
+      path: "/contact",
+      lang: "en",
+      title: "Contact · Thynk Digital Agency, Ioannina",
+      description: "Papazoglou 14D, Ioannina, Greece · hello@thynkagency.gr · +30 698 388 7522. Tell us about your business and we'll arrange a first conversation.",
+    }),
   component: () => <CleanPage path="/contact" />,
 });

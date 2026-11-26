@@ -1,6 +1,8 @@
 import { type CSSProperties, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { useCopy } from "./i18n";
+import { Head16, Mk } from "@/components/thynk16/bits";
+import { v16Copy } from "@/content/site-v16";
 import { FinalBand, Label, MoreLink, PageHead } from "./shared";
 import { v14Routes } from "@/content/site-v14";
 import {
@@ -29,7 +31,7 @@ function logoHeight(ratio: number) {
 }
 
 /** a client logo drawn in the current text colour (CSS mask), so it greys out, inks or turns orange with its parent */
-function Logo({ l, decorative = false }: { l: ClientLogo; decorative?: boolean }) {
+export function Logo({ l, decorative = false }: { l: ClientLogo; decorative?: boolean }) {
   const mask = `url("${l.src}")`;
   const style = {
     "--lh": logoHeight(l.ratio),
@@ -45,7 +47,7 @@ function Logo({ l, decorative = false }: { l: ClientLogo; decorative?: boolean }
 }
 
 /** a client's name in its own type (26/11/2026, Mike), in the current text colour like the logos */
-function Wordmark({ wm }: { wm: ClientWordmark }) {
+export function Wordmark({ wm }: { wm: ClientWordmark }) {
   const style = {
     fontFamily: wm.font,
     fontWeight: wm.weight ?? 400,
@@ -82,7 +84,7 @@ function ClientMark({ cs, name }: { cs: CaseStudy; name: string }) {
 }
 
 /** link to a case page in the current language */
-function CaseLink({
+export function CaseLink({
   cs,
   className,
   tabIndex,
@@ -130,7 +132,7 @@ function StatusLine({ cs }: { cs: CaseStudy }) {
 const NO_THEME: CaseTheme = { bg: "#1d5866", fg: "#ffffff", logo: "#ffffff", accent: "#ff6a1a" };
 const pad2 = (n: number) => String(n).padStart(2, "0");
 /** the brand's colours as CSS variables (--c-bg, --c-fg, --c-logo, --c-accent) */
-function themeStyle(theme?: CaseTheme): CSSProperties {
+export function themeStyle(theme?: CaseTheme): CSSProperties {
   const th = theme ?? NO_THEME;
   return { "--c-bg": th.bg, "--c-fg": th.fg, "--c-logo": th.logo, "--c-accent": th.accent } as CSSProperties;
 }
@@ -144,13 +146,12 @@ function themeStyle(theme?: CaseTheme): CSSProperties {
 export function WorkPage() {
   const { c, lang, href } = useCopy();
   const w = c.work;
+  const v = v16Copy[lang].work;
   return (
     <>
-      <PageHead p={c.pageHeads.work} k="work" />
+      {/* 26/11 (Mike, v16): the canvas heading «Brands we Thynk with.» */}
+      <Head16 eyebrow={v.eyebrow} title={<span lang="en">{v.h1a} <Mk>{v.h1b}</Mk> {v.h1c}</span>} lead={v.lead} />
       <section className="t14-wrap t14-wk">
-        <h2 className="t14-wk-title">
-          {w.title} <span>{w.titleGrey}</span>
-        </h2>
         <ul className="t14-wall">
           {publishedCases.map((cs) => {
             const t = caseText(cs, lang);
@@ -188,8 +189,8 @@ export function WorkPage() {
           })}
           <li className="t14-wall-next">
             <span className="t14-wall-kicker">{w.nextLabel}</span>
-            <p>{c.final.title}</p>
-            <Link to={href(v14Routes.audit)} hash="book" className="t14-pill">
+            <p>{v.next}</p>
+            <Link to={href(v14Routes.contact)} hash="talk" className="t14-pill">
               {c.final.button} <i aria-hidden="true">→</i>
             </Link>
           </li>

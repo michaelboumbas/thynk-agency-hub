@@ -1,19 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { CleanPage } from "@/components/thynk14/CleanSite";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-// v14 (02/10/2026): English page in the «Thynk Clean» style.
-const title = "Solutions — Thynk Digital Agency";
-const description = "Illustrative AI solutions by Thynk: booking assistant, quote follow-up, weekly performance report, automatic invoice entry and more.";
-
+// 26/11/2026 (Mike, v16): Solutions are now «Παραδείγματα αυτοματισμών» on the services page. Old links land there.
 export const Route = createFileRoute("/solutions")({
-  staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-    ],
-  }),
-  component: () => <CleanPage path="/solutions" />,
+  staticData: { sitemap: false },
+  beforeLoad: () => {
+    throw redirect({ to: "/services", hash: "examples", statusCode: 301 });
+  },
 });

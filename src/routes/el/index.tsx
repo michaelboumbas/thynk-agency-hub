@@ -1,21 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// v14 Greek version (02/10/2026). Same page as "/", copy from src/content/site-v14-el.ts.
-const title = "Thynk Digital Agency — Το μέλλον της Super Intelligence";
-const description =
-  "Marketing και Digital Transformation με AI για επιχειρήσεις σε όλη την Ελλάδα και στο εξωτερικό. Έδρα Ιωάννινα. Κάθε συνεργασία ξεκινά με audit.";
-
+// 26/11/2026 (v16 + SEO): title/description approved by Mike; canonical + hreflang from seoHead (src/lib/seo.ts).
 export const Route = createFileRoute("/el/")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:locale", content: "el_GR" },
-    ],
-  }),
+  head: () =>
+    seoHead({
+      path: "/",
+      lang: "el",
+      title: "Thynk Digital Agency · Digital Marketing & AI αυτοματισμοί, Ιωάννινα",
+      description: "Digital marketing και AI αυτοματισμοί από τα Ιωάννινα: διαφήμιση σε Google, Meta, TikTok και ChatGPT, social media, περιεχόμενο, websites και AI Audit.",
+      schema: true,
+    }),
   component: () => <CleanPage path="/" lang="el" />,
 });

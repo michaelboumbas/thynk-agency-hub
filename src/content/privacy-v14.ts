@@ -2,7 +2,10 @@
  * Privacy Policy, /privacy and /el/privacy (12/10/2026), written for the audit form (our database + HubSpot).
  * 17/10/2026: + applications from the Careers page (database + private CV storage + HubSpot, kept 12 months).
  * 22/10/2026: + updates by email (newsletter sign-up in the footer and the window; database + HubSpot, consent).
- * Not legal advice: have it reviewed, and add the legal name / VAT number once the general partnership is registered.
+ * 26/11/2026 (Mike, v16): the request form is now «Let's talk» (full name, business, email, phone, what to look at
+ * first); cookies and browser storage have their own page (/cookies); the company's legal details come from
+ * src/content/company.ts and show under «Who we are».
+ * Not legal advice: have it reviewed.
  * If anything changes (new tools, analytics, ads pixels, newsletter), this page changes with it.
  */
 export type PrivacyCopy = {
@@ -18,7 +21,7 @@ const en: PrivacyCopy = {
   label: "Legal",
   title: "Privacy",
   lead: "What we collect when you contact us, why, where it is kept and what you can ask of us.",
-  updated: "Last updated: 24 October 2026",
+  updated: "Last updated: 26 November 2026",
   sections: [
     {
       h: "Who we are",
@@ -29,10 +32,10 @@ const en: PrivacyCopy = {
     },
     {
       h: "What we collect",
-      p: ["When you send an audit request through the form on this site, we collect:"],
+      p: ["When you send a request through the «Let's talk» form on this site, we collect:"],
       list: [
-        "first and last name, email and phone number",
-        "the name of your business and its industry",
+        "your full name, email and phone number",
+        "the name of your business",
         "what you would like us to look at first",
         "the date and time of the request, the page and language you sent it from, and the consent sentence you accepted",
       ],
@@ -40,7 +43,7 @@ const en: PrivacyCopy = {
     {
       h: "Why we use it",
       p: [
-        "Only to respond to your request: to contact you, arrange the first conversation and prepare the audit or an offer.",
+        "Only to respond to your request: to contact you, arrange the first conversation and prepare a proposal.",
         "Legal basis: steps taken at your request before a possible contract (Art. 6(1)(b) GDPR) and your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time without affecting what was done before.",
         "We do not send you newsletters or marketing emails unless you sign up for them separately (see «Updates by email» below), and we never sell your data.",
       ],
@@ -83,8 +86,7 @@ const en: PrivacyCopy = {
     {
       h: "Fonts, cookies and storage",
       p: [
-        "The site loads its fonts from Google Fonts, so your browser connects to Google's servers, which receive your IP address. We do not use advertising or analytics cookies. The site uses your browser's own storage only for functional purposes, for example to carry your choice from the footer to the audit form, or to remember that you closed the updates window so that it does not appear again for a while.",
-        "The map on the Contact page is drawn in your browser from OpenStreetMap data served by OpenFreeMap, with the MapLibre library loaded from jsDelivr; if it cannot load, a Google Maps map is shown instead. In each case your browser connects to those servers, which receive your IP address.",
+        "We do not use advertising or analytics cookies. The site uses your browser's own storage only for functional purposes, such as remembering your language. The full list, and the services your browser connects to (Google Fonts for the fonts, the map on the Contact page), is on our Cookies page.",
       ],
     },
     {
@@ -101,7 +103,7 @@ const el: PrivacyCopy = {
   label: "Νομικά",
   title: "Απόρρητο",
   lead: "Τι συλλέγουμε όταν επικοινωνείτε μαζί μας, γιατί, πού φυλάσσεται και τι μπορείτε να μας ζητήσετε.",
-  updated: "Τελευταία ενημέρωση: 24 Οκτωβρίου 2026",
+  updated: "Τελευταία ενημέρωση: 26 Νοεμβρίου 2026",
   sections: [
     {
       h: "Ποιοι είμαστε",
@@ -112,10 +114,10 @@ const el: PrivacyCopy = {
     },
     {
       h: "Τι συλλέγουμε",
-      p: ["Όταν στέλνετε αίτημα για audit μέσω της φόρμας του site, συλλέγουμε:"],
+      p: ["Όταν μας στέλνετε αίτημα μέσω της φόρμας «Let's talk» του site, συλλέγουμε:"],
       list: [
-        "όνομα και επώνυμο, email και τηλέφωνο",
-        "την επωνυμία της επιχείρησής σας και τον κλάδο της",
+        "το ονοματεπώνυμό σας, το email και το τηλέφωνό σας",
+        "την επωνυμία της επιχείρησής σας",
         "τι θέλετε να κοιτάξουμε πρώτα",
         "την ημερομηνία και ώρα του αιτήματος, τη σελίδα και τη γλώσσα από την οποία στάλθηκε, και τη φράση συναίνεσης που αποδεχτήκατε",
       ],
@@ -123,7 +125,7 @@ const el: PrivacyCopy = {
     {
       h: "Γιατί τα χρησιμοποιούμε",
       p: [
-        "Μόνο για να απαντήσουμε στο αίτημά σας: για να επικοινωνήσουμε μαζί σας, να κανονίσουμε την πρώτη συζήτηση και να ετοιμάσουμε το audit ή μια πρόταση.",
+        "Μόνο για να απαντήσουμε στο αίτημά σας: για να επικοινωνήσουμε μαζί σας, να κανονίσουμε την πρώτη συζήτηση και να ετοιμάσουμε μια πρόταση.",
         "Νομική βάση: ενέργειες που γίνονται κατόπιν αιτήματός σας πριν από μια πιθανή σύμβαση (άρθρο 6 παρ. 1 στοιχ. β΄ ΓΚΠΔ) και η συναίνεσή σας (άρθρο 6 παρ. 1 στοιχ. α΄ ΓΚΠΔ), την οποία μπορείτε να ανακαλέσετε οποιαδήποτε στιγμή, χωρίς να επηρεάζεται ό,τι έγινε πριν.",
         "Δεν σας στέλνουμε newsletter ή διαφημιστικά email, εκτός αν εγγραφείτε χωριστά (βλ. «Ενημερώσεις με email» παρακάτω), και δεν πουλάμε ποτέ τα δεδομένα σας.",
       ],
@@ -166,8 +168,7 @@ const el: PrivacyCopy = {
     {
       h: "Γραμματοσειρές, cookies και αποθήκευση",
       p: [
-        "Το site φορτώνει τις γραμματοσειρές του από το Google Fonts, οπότε ο browser σας συνδέεται με servers της Google, που λαμβάνουν τη διεύθυνση IP σας. Δεν χρησιμοποιούμε cookies διαφήμισης ή στατιστικών. Το site χρησιμοποιεί την αποθήκευση του browser σας μόνο για λειτουργικούς σκοπούς, για παράδειγμα για να μεταφέρει την επιλογή σας από το footer στη φόρμα audit ή για να θυμάται ότι κλείσατε το παράθυρο των ενημερώσεων, ώστε να μην εμφανιστεί ξανά για ένα διάστημα.",
-        "Ο χάρτης της σελίδας Επικοινωνίας σχεδιάζεται στον browser σας με δεδομένα του OpenStreetMap από το OpenFreeMap και τη βιβλιοθήκη MapLibre από το jsDelivr· αν δεν φορτώσει, εμφανίζεται στη θέση του χάρτης του Google Maps. Σε κάθε περίπτωση ο browser σας συνδέεται με αυτούς τους servers, που λαμβάνουν τη διεύθυνση IP σας.",
+        "Δεν χρησιμοποιούμε cookies διαφήμισης ή στατιστικών. Το site χρησιμοποιεί την αποθήκευση του browser σας μόνο για λειτουργικούς σκοπούς, όπως για να θυμάται τη γλώσσα σας. Την πλήρη λίστα, και τις υπηρεσίες με τις οποίες συνδέεται ο browser σας (Google Fonts για τις γραμματοσειρές, ο χάρτης της σελίδας Επικοινωνίας), θα τη βρείτε στη σελίδα Cookies.",
       ],
     },
     {

@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useRouterState,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
@@ -127,8 +128,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  // 26/11/2026 (SEO): the page's language in the server HTML too: English pages are «en», /el and «/» are «el»
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const lang = path === "/" || path === "/el" || path.startsWith("/el/") ? "el" : "en";
   return (
-    <html lang="el">
+    <html lang={lang}>
       <head>
         <HeadContent />
       </head>

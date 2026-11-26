@@ -403,14 +403,14 @@ export const caseStudies: CaseStudy[] = [
       location: "Ioannina",
       area: "Ioannina",
       cardLine: "Rooting a contemporary restaurant in the gastronomic tradition of Ioannina.",
-      // ⚠️ "Podcast" is a new service: not yet on the Services page
-      tags: ["Strategy", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation", "Podcast"],
+      // 26/11/2026 (Mike): no podcast for θamõn, so it is out of the tags and the text
+      tags: ["Strategy", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation"],
       context:
         "θamõn is a restaurant in the heart of Ioannina that cooks the best local produce of Epirus, from farm to table, with cooking lessons, catering and private dining alongside it.",
       brief:
         "Connect θamõn with the city it cooks for: make it the restaurant most closely tied to the traditional cuisine of Ioannina and to the authenticity of Epirus.",
       work:
-        "We set the brand positioning and strategy, run social media management, content creation and paid campaigns, and produce a podcast that tells the story of Epirote gastronomy through θamõn's kitchen.",
+        "We set the brand positioning and strategy, and run social media management, content creation and paid campaigns that tell the story of Epirote gastronomy through θamõn's kitchen.",
     },
     el: {
       client: "θamõn",
@@ -418,13 +418,13 @@ export const caseStudies: CaseStudy[] = [
       location: "Ιωάννινα",
       area: "Ιωάννινα",
       cardLine: "Ένα σύγχρονο εστιατόριο με ρίζες στη γαστρονομική παράδοση των Ιωαννίνων.",
-      tags: ["Στρατηγική", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation", "Podcast"],
+      tags: ["Στρατηγική", "Brand Positioning", "Social Media Management", "Performance Marketing", "Content Creation"],
       context:
         "Το θamõn είναι εστιατόριο στην καρδιά των Ιωαννίνων που μαγειρεύει τα καλύτερα τοπικά προϊόντα της Ηπείρου, από το χωράφι στο τραπέζι, με μαθήματα μαγειρικής, catering και ιδιωτικά δείπνα.",
       brief:
         "Το θamõn να συνδεθεί με την πόλη για την οποία μαγειρεύει: να γίνει το εστιατόριο που δένεται περισσότερο με την παραδοσιακή κουζίνα των Ιωαννίνων και την αυθεντικότητα της Ηπείρου.",
       work:
-        "Χαράζουμε το brand positioning και τη στρατηγική, κάνουμε social media management, content creation και διαφημιστικές καμπάνιες, και παράγουμε ένα podcast που αφηγείται την ηπειρώτικη γαστρονομία μέσα από την κουζίνα του θamõn.",
+        "Χαράζουμε το brand positioning και τη στρατηγική, και κάνουμε social media management, content creation και διαφημιστικές καμπάνιες που αφηγούνται την ηπειρώτικη γαστρονομία μέσα από την κουζίνα του θamõn.",
     },
   },
   {

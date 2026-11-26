@@ -1,20 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
+import { seoHead } from "@/lib/seo";
 
-// Greek Privacy Policy (12/10/2026). Same page as "/privacy", copy from src/content/privacy-v14.ts.
-const title = "Πολιτική Απορρήτου — Thynk Digital Agency";
-const description = "Πώς διαχειρίζεται η Thynk Digital Agency τα στοιχεία που στέλνετε μέσω της φόρμας audit: τι συλλέγουμε, γιατί, πού φυλάσσονται και τα δικαιώματά σας.";
-
+// 26/11/2026 (v16 + SEO): title/description approved by Mike; canonical + hreflang from seoHead (src/lib/seo.ts).
 export const Route = createFileRoute("/el/privacy")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:locale", content: "el_GR" },
-    ],
-  }),
+  head: () =>
+    seoHead({
+      path: "/privacy",
+      lang: "el",
+      title: "Πολιτική Απορρήτου · Thynk Digital Agency",
+      description: "Τι στοιχεία συλλέγει η Thynk Digital Agency μέσω του site, γιατί, πού φυλάσσονται και ποια είναι τα δικαιώματά σας.",
+    }),
   component: () => <CleanPage path="/privacy" lang="el" />,
 });

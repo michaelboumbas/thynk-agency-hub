@@ -1,5 +1,5 @@
 import { CleanShell } from "./Shell";
-import { AboutPage, AuditPage, ContactPage, HomePage, PrivacyPage, ServicesPage, SolutionsPage } from "./pages";
+import { About16, Audit16, Contact16, Cookies16, Home16, Privacy16, Services16 } from "@/components/thynk16/v16";
 import { WorkPage, CasePage } from "./work";
 import { PressPage } from "./press";
 import { CareersPage } from "./careers";
@@ -19,15 +19,19 @@ import type { CaseStudy } from "@/content/work-v14";
  * Approved prototype: https://claude.ai/artifact/M9Eqtsp9yAaiH1j7uykBJ9
  */
 
+// 26/11/2026 (Mike, v16): home, services, AI audit, about, contact and the legal pages are the canvas redesign
+// (components/thynk16). /solutions redirects to /services#examples (see its route); it maps to Services here only
+// so the type stays complete. The old v14 pages stay in pages.tsx for reference.
 const PAGES = {
-  [v14Routes.home]: HomePage,
-  [v14Routes.services]: ServicesPage,
-  [v14Routes.solutions]: SolutionsPage,
+  [v14Routes.home]: Home16,
+  [v14Routes.services]: Services16,
+  [v14Routes.solutions]: Services16,
   [v14Routes.work]: WorkPage,
-  [v14Routes.audit]: AuditPage,
-  [v14Routes.about]: AboutPage,
-  [v14Routes.contact]: ContactPage,
-  [v14Routes.privacy]: PrivacyPage,
+  [v14Routes.audit]: Audit16,
+  [v14Routes.about]: About16,
+  [v14Routes.contact]: Contact16,
+  [v14Routes.privacy]: Privacy16,
+  [v14Routes.cookies]: Cookies16,
   [v14Routes.press]: PressPage,
   [v14Routes.careers]: CareersPage,
 } as const;
