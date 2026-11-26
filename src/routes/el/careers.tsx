@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CleanPage } from "@/components/thynk14/CleanSite";
 
-// 17/10/2026 (Mike): Careers, Greek version. 09/11: title/description lead with the open role (LinkedIn preview). Same page as "/careers", copy from src/content/careers-v14.ts.
-const title = "Ανοιχτή θέση: Social Media Storyteller — Thynk";
+// 17/10/2026 (Mike): Careers, Greek version. 09/11: title led with the open role; 26/11 the role is filled, so a general title. Same page as "/careers", copy from src/content/careers-v14.ts.
+const title = "Καριέρα — Thynk Digital Agency";
 const description =
-  "Η Thynk Digital Agency αναζητά Social Media Storyteller (Content Creator & Social Media Manager) στα Ιωάννινα. Δεχόμαστε και αιτήσεις για performance marketing, design, video editing, web development και AI automation.";
+  "Δουλέψτε με τη Thynk Digital Agency στα Ιωάννινα. Δεχόμαστε αιτήσεις συνεργασίας για performance marketing, social media, design, video editing, web development και AI αυτοματισμούς.";
 
 export const Route = createFileRoute("/el/careers")({
   staticData: { sitemap: true },
