@@ -3,8 +3,7 @@ import type { Lang } from "./site-v14";
 /**
  * The company's legal details (26/11/2026, Mike: «φτιάξαμε πλέον εταιρεία»). Thynk is a general partnership (Ο.Ε.).
  * Shown in the footer's last line, on the Privacy and Cookies pages (the controller) and in the Organization schema.
- * 26/11/2026: from the GEMI record Mike sent (registered 12/11/2026, active). Tax office (ΔΟΥ) not in that record:
- * left empty until Mike confirms it; empty values are simply left out (nothing is invented).
+ * 26/11/2026: from the GEMI record Mike sent (registered 12/11/2026, active); tax office (ΔΟΥ Ιωαννίνων) from Mike.
  */
 export const company = {
   /** registered name, exactly as in the articles of association, e.g. «… Ο.Ε.» */
@@ -12,7 +11,7 @@ export const company = {
   /** the registered trade name (διακριτικός τίτλος); the brand on the site stays «Thynk Digital Agency» */
   tradeName: "THYNK. AI",
   vat: "803464140",
-  taxOffice: "",
+  taxOffice: { el: "Ιωαννίνων", en: "Ioannina" },
   gemi: "197425329000",
   address: { el: "Παπάζογλου 14Δ, 454 44 Ιωάννινα", en: "Papazoglou 14D, 454 44 Ioannina, Greece" },
   email: "hello@thynkagency.gr",
@@ -30,7 +29,7 @@ export function companyLine(lang: Lang): string {
   const parts = [
     company.legalName[lang],
     company.vat && `${l.vat} ${company.vat}`,
-    company.taxOffice && `${l.taxOffice} ${company.taxOffice}`,
+    `${l.taxOffice} ${company.taxOffice[lang]}`,
     company.gemi && `${l.gemi} ${company.gemi}`,
   ].filter(Boolean);
   return parts.join(" · ");
@@ -43,7 +42,7 @@ export function companyRows(lang: Lang): { k: string; v: string }[] {
     { k: l.legalName, v: company.legalName[lang] },
     { k: l.tradeName, v: company.tradeName },
     { k: l.vat, v: company.vat },
-    { k: l.taxOffice, v: company.taxOffice },
+    { k: l.taxOffice, v: company.taxOffice[lang] },
     { k: l.gemi, v: company.gemi },
     { k: l.address, v: company.address[lang] },
     { k: l.email, v: company.email },
