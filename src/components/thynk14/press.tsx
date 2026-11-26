@@ -159,7 +159,7 @@ export function PressPage() {
             </div>
             <div className="t14-pr-block">
               <h3>{k.logosLabel}</h3>
-              <a className="t14-pill" href={pressKit.zip} download>
+              <a className="t14-pill" href={pressKit.download} download="Thynk-press-kit-2026.zip">
                 {k.download}
                 <i aria-hidden="true">↓</i>
               </a>

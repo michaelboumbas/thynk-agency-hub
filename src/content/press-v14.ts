@@ -76,6 +76,8 @@ export const publishedPress = pressItems
 export const pressKit = {
   email: "hello@thynkagency.gr",
   zip: "/press/thynk-press-kit-2026.zip",
+  /** 26/11/2026: the button links here (served as an attachment, so it also downloads on iPhone and in-app browsers) */
+  download: "/api/public/press-kit",
 };
 
 const en = {
@@ -100,7 +102,7 @@ const en = {
     contactLabel: "Press contact",
     aboutLabel: "About Thynk",
     about:
-      "Thynk Digital Agency is a marketing and digital transformation agency based in Ioannina, Greece. It was founded in 2026 by Dimitris Chrysochoou and Michael Boumpas and works with businesses across Greece and abroad. Its services cover digital marketing (advertising, social media, content and email) and digital transformation with AI (automation, data and reporting), along with consulting and web design. Every collaboration starts with an audit that shows where a business stands today and which steps will make the biggest difference first. thynkagency.gr",
+      "Thynk Digital Agency is a digital marketing and AI automation agency based in Ioannina, Greece. It was founded in 2026 by Dimitris Chrysochoou and Michael Boumpas and works with businesses across Greece and abroad. Its services cover advertising on Google, Meta, TikTok and ChatGPT, social media management, strategy, content creation, email & SMS marketing and websites, as well as AI automation, data and reporting, and consulting. With its AI Audit, it shows each business what is worth automating first. thynkagency.gr",
     copy: "Copy text",
     copied: "Copied",
     logosLabel: "Logo pack",
@@ -132,7 +134,7 @@ const el: PressCopy = {
     contactLabel: "Επικοινωνία για τον Τύπο",
     aboutLabel: "Σχετικά με τη Thynk",
     about:
-      "Η Thynk Digital Agency είναι εταιρεία marketing και ψηφιακού μετασχηματισμού με έδρα τα Ιωάννινα. Ιδρύθηκε το 2026 από τον Δημήτρη Χρυσοχόου και τον Μιχαήλ Μπούμπα και συνεργάζεται με επιχειρήσεις σε όλη την Ελλάδα και στο εξωτερικό. Οι υπηρεσίες της καλύπτουν το digital marketing (διαφήμιση, social media, περιεχόμενο και email) και τον ψηφιακό μετασχηματισμό με AI (αυτοματισμοί, δεδομένα και αναφορές), καθώς και συμβουλευτική και κατασκευή ιστοσελίδων. Κάθε συνεργασία ξεκινά με ένα audit, που δείχνει πού βρίσκεται σήμερα η επιχείρηση και ποια βήματα θα κάνουν πρώτα τη μεγαλύτερη διαφορά. thynkagency.gr",
+      "Η Thynk Digital Agency είναι εταιρεία digital marketing και AI αυτοματισμών με έδρα τα Ιωάννινα. Ιδρύθηκε το 2026 από τον Δημήτρη Χρυσοχόου και τον Μιχαήλ Μπούμπα και συνεργάζεται με επιχειρήσεις σε όλη την Ελλάδα και στο εξωτερικό. Οι υπηρεσίες της καλύπτουν διαφήμιση σε Google, Meta, TikTok και ChatGPT, διαχείριση social media, στρατηγική, παραγωγή περιεχομένου, email & SMS marketing και κατασκευή ιστοσελίδων, καθώς και AI αυτοματισμούς, δεδομένα και αναφορές, και συμβουλευτική. Με το AI Audit δείχνει σε κάθε επιχείρηση τι αξίζει να αυτοματοποιηθεί πρώτο. thynkagency.gr",
     copy: "Αντιγραφή κειμένου",
     copied: "Αντιγράφηκε",
     logosLabel: "Λογότυπα",

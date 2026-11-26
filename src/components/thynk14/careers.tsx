@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useCopy } from "./i18n";
 import { Label, PageHead } from "./shared";
 import { v14Routes } from "@/content/site-v14";
-import { careersCopy, CV_MAX_BYTES, type Engagement } from "@/content/careers-v14";
+import { careersCopy, CV_MAX_BYTES, ROLE_OPEN, type Engagement } from "@/content/careers-v14";
 import { submitCareerApplication } from "@/lib/career-applications";
 
 /**
@@ -164,7 +164,7 @@ function CareerForm({ pick }: { pick: number }) {
             onChange={(e) => setForm({ ...form, area: e.target.value })}
           >
             <option value="">{f.area.placeholder}</option>
-            <option value={ROLE}>{careersCopy[lang].role.option}</option>
+            {ROLE_OPEN && <option value={ROLE}>{careersCopy[lang].role.option}</option>}
             {careersCopy[lang].areas.map((a) => (
               <option key={a} value={a}>{a}</option>
             ))}
@@ -283,6 +283,7 @@ export function CareersPage() {
   const p = careersCopy[lang];
   const r = p.role;
   const [pick, setPick] = useState(0);
+  const [cameForRole, setCameForRole] = useState(false);
   const toForm = () => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     document.getElementById("apply")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
@@ -296,13 +297,22 @@ export function CareersPage() {
   // from LinkedIn (09/11, Mike): /el/careers?role=content pre-selects the role; #apply also scrolls to the form
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    if (q.has("role")) setPick((n) => n + 1);
+    if (q.has("role")) {
+      if (ROLE_OPEN) setPick((n) => n + 1);
+      else setCameForRole(true);
+    }
     if (window.location.hash === "#apply") window.setTimeout(() => document.getElementById("apply")?.scrollIntoView({ block: "start" }), 300);
   }, []);
   return (
     <>
       <PageHead p={p.head} k="careers" />
 
+      {cameForRole && !ROLE_OPEN && (
+        <p className="t14-wrap t14-cr-filled" role="status">{p.filled}</p>
+      )}
+
+      {ROLE_OPEN ? (
+        <>
       {/* 09/11 (Mike): order is open role → apply → who we work with */}
       <section className="t14-wrap t14-cr-planned t14-cr-open" aria-labelledby="t14-cr-role">
         <Label>{r.label}</Label>
@@ -363,6 +373,40 @@ export function CareersPage() {
         </ol>
         <p className="t14-cr-note">{p.areasNote}</p>
       </section>
+        </>
+      ) : (
+        <>
+          {/* 26/11 (Mike): no open role, so the areas come first and the form follows */}
+      <section className="t14-wrap t14-cr-areas" aria-label={p.areasLabel}>
+        <Label>{p.areasLabel}</Label>
+        <ol className="t14-cr-list">
+          {p.areas.map((a, i) => (
+            <li key={a}>
+              <span className="t14-cr-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <span className="t14-cr-name">{a}</span>
+            </li>
+          ))}
+        </ol>
+        <p className="t14-cr-note">{p.areasNote}</p>
+      </section>
+      <section className="t14-book t14-book-stack t14-wrap" id="apply">
+        <div className="t14-book-side">
+          <h2>{p.side.title}</h2>
+          <p>{p.side.text}</p>
+          <ol>
+            {p.side.steps.map((st, i) => (
+              <li key={st}><span>0{i + 1}</span>{st}</li>
+            ))}
+          </ol>
+          <p className="t14-book-mail">
+            {p.side.mail} <a href="mailto:hello@thynkagency.gr">hello@thynkagency.gr</a>
+          </p>
+        </div>
+        <CareerForm pick={pick} />
+      </section>
+
+        </>
+      )}
     </>
   );
 }

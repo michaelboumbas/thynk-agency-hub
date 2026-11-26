@@ -36,6 +36,7 @@ import { Route as ElSolutionsRouteImport } from './routes/el/solutions'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
 import { Route as WorkSlugRouteImport } from './routes/work/$slug'
 import { Route as ApiPublicNewsletterRouteImport } from './routes/api/public/newsletter'
+import { Route as ApiPublicPressKitRouteImport } from './routes/api/public/press-kit'
 import { Route as ElWorkIndexRouteImport } from './routes/el/work/index'
 import { Route as ElWorkSlugRouteImport } from './routes/el/work/$slug'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -175,6 +176,11 @@ const ApiPublicNewsletterRoute = ApiPublicNewsletterRouteImport.update({
   path: '/api/public/newsletter',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPressKitRoute = ApiPublicPressKitRouteImport.update({
+  id: '/api/public/press-kit',
+  path: '/api/public/press-kit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ElWorkIndexRoute = ElWorkIndexRouteImport.update({
   id: '/el/work/',
   path: '/el/work/',
@@ -220,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/el/': typeof ElIndexRoute
   '/work/': typeof WorkIndexRoute
   '/api/public/newsletter': typeof ApiPublicNewsletterRoute
+  '/api/public/press-kit': typeof ApiPublicPressKitRoute
   '/el/work/$slug': typeof ElWorkSlugRoute
   '/el/work/': typeof ElWorkIndexRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -252,6 +259,7 @@ export interface FileRoutesByTo {
   '/el': typeof ElIndexRoute
   '/work': typeof WorkIndexRoute
   '/api/public/newsletter': typeof ApiPublicNewsletterRoute
+  '/api/public/press-kit': typeof ApiPublicPressKitRoute
   '/el/work/$slug': typeof ElWorkSlugRoute
   '/el/work': typeof ElWorkIndexRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -285,6 +293,7 @@ export interface FileRoutesById {
   '/el/': typeof ElIndexRoute
   '/work/': typeof WorkIndexRoute
   '/api/public/newsletter': typeof ApiPublicNewsletterRoute
+  '/api/public/press-kit': typeof ApiPublicPressKitRoute
   '/el/work/$slug': typeof ElWorkSlugRoute
   '/el/work/': typeof ElWorkIndexRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -319,6 +328,7 @@ export interface FileRouteTypes {
     | '/el/'
     | '/work/'
     | '/api/public/newsletter'
+    | '/api/public/press-kit'
     | '/el/work/$slug'
     | '/el/work/'
     | '/lovable/email/transactional/preview'
@@ -351,6 +361,7 @@ export interface FileRouteTypes {
     | '/el'
     | '/work'
     | '/api/public/newsletter'
+    | '/api/public/press-kit'
     | '/el/work/$slug'
     | '/el/work'
     | '/lovable/email/transactional/preview'
@@ -383,6 +394,7 @@ export interface FileRouteTypes {
     | '/el/'
     | '/work/'
     | '/api/public/newsletter'
+    | '/api/public/press-kit'
     | '/el/work/$slug'
     | '/el/work/'
     | '/lovable/email/transactional/preview'
@@ -416,6 +428,7 @@ export interface RootRouteChildren {
   ElIndexRoute: typeof ElIndexRoute
   WorkIndexRoute: typeof WorkIndexRoute
   ApiPublicNewsletterRoute: typeof ApiPublicNewsletterRoute
+  ApiPublicPressKitRoute: typeof ApiPublicPressKitRoute
   ElWorkSlugRoute: typeof ElWorkSlugRoute
   ElWorkIndexRoute: typeof ElWorkIndexRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -612,6 +625,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicNewsletterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/press-kit': {
+      id: '/api/public/press-kit'
+      path: '/api/public/press-kit'
+      fullPath: '/api/public/press-kit'
+      preLoaderRoute: typeof ApiPublicPressKitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/el/work/': {
       id: '/el/work/'
       path: '/el/work'
@@ -664,6 +684,7 @@ const rootRouteChildren: RootRouteChildren = {
   ElIndexRoute: ElIndexRoute,
   WorkIndexRoute: WorkIndexRoute,
   ApiPublicNewsletterRoute: ApiPublicNewsletterRoute,
+  ApiPublicPressKitRoute: ApiPublicPressKitRoute,
   ElWorkSlugRoute: ElWorkSlugRoute,
   ElWorkIndexRoute: ElWorkIndexRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,

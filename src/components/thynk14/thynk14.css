@@ -7420,3 +7420,11 @@
 .t14-cl-strip .t14-wm {
   --wm-size: clamp(26px, 2.4vw, 38px);
 }
+
+/* Careers without an open role (26/11/2026): the areas come first, then the form; ?role=… shows a short «filled» note */
+.t14-cr-areas { margin-bottom: clamp(40px, 7vh, 80px); }
+.t14-cr-filled {
+  margin-top: 8px; margin-bottom: 24px; padding: 14px 18px;
+  background: var(--paper, #fff); border-left: 3px solid var(--orange, #ff6a1a); border-radius: 10px;
+  color: var(--ink, #14262e); font-size: 16px; line-height: 1.5; max-width: 760px;
+}

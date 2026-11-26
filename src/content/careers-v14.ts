@@ -9,6 +9,13 @@ import type { Lang } from "./site-v14";
  * Page: src/components/thynk14/careers.tsx · sending: src/lib/career-applications.ts.
  */
 
+/**
+ * 26/11/2026 (Mike): the Social Media Storyteller role is filled. `false` hides the role block, takes it out of
+ * the form's AREA list and turns ?role=… (the old LinkedIn link) into a short «filled» note. Back to `true`
+ * (with new `role` copy) the next time a real role opens.
+ */
+export const ROLE_OPEN = false;
+
 export type Engagement = "freelance" | "part-time" | "full-time";
 
 /** the CV limit, the same as the bucket's (10 MB, PDF only — raised from 5 MB, Mike 17/10) */
@@ -18,12 +25,13 @@ const en = {
   head: {
     label: "Careers",
     title: "Careers",
-    lead: "We're hiring a Social Media Storyteller (Content Creator & Social Media Manager) based in Ioannina. We also accept applications in the other areas listed below.",
+    lead: "We have no open role right now, but we always want to meet good people. Send us an application in one of the areas below.",
   },
+  filled: "The Social Media Storyteller role has been filled. Thank you to everyone who applied. You can still send us an application below.",
   areasLabel: "Who we work with",
   /** Mike 17/10: these six, in this order */
   areas: ["Performance marketing", "Social media management", "Design", "Video editing", "Web development", "AI automation"],
-  areasNote: "Freelance, part-time or full-time. Choose your area in the form above.",
+  areasNote: "Freelance, part-time or full-time. Choose your area in the form below.",
   /**
    * 09/11/2026 (Mike): the role is open (it was «planned» since 17/10). Based in Ioannina: from home
    * and on shoots with clients in Ioannina, Metsovo and the area. Part/full-time not shown and not pre-selected in the form (Mike 09/11). No pay range (Mike's call).
@@ -142,11 +150,12 @@ const el: CareersCopy = {
   head: {
     label: "Καριέρα",
     title: "Careers",
-    lead: "Αναζητούμε Social Media Storyteller (Content Creator & Social Media Manager) με έδρα τα Ιωάννινα. Δεχόμαστε επίσης αιτήσεις συνεργασίας στους τομείς που θα βρείτε πιο κάτω.",
+    lead: "Αυτή τη στιγμή δεν έχουμε ανοιχτή θέση, αλλά θέλουμε πάντα να γνωρίζουμε ανθρώπους που κάνουν καλή δουλειά. Στείλτε μας αίτηση σε έναν από τους παρακάτω τομείς.",
   },
+  filled: "Η θέση Social Media Storyteller έχει καλυφθεί. Ευχαριστούμε όλους όσοι έκαναν αίτηση. Μπορείτε να μας στείλετε αίτηση συνεργασίας παρακάτω.",
   areasLabel: "Τομείς συνεργασίας",
   areas: ["Performance marketing", "Social media management", "Design", "Video editing", "Web development", "AI automation"],
-  areasNote: "Freelance, μερική ή πλήρης απασχόληση. Επιλέξτε τον τομέα σας στη φόρμα παραπάνω.",
+  areasNote: "Freelance, μερική ή πλήρης απασχόληση. Επιλέξτε τον τομέα σας στη φόρμα παρακάτω.",
   role: {
     label: "Ανοιχτή θέση",
     badge: "Ανοιχτή · δεχόμαστε αιτήσεις",
