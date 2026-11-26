@@ -144,7 +144,6 @@ function themeStyle(theme?: CaseTheme): CSSProperties {
 export function WorkPage() {
   const { c, lang, href } = useCopy();
   const w = c.work;
-  const total = publishedCases.length;
   return (
     <>
       <PageHead p={c.pageHeads.work} k="work" />
@@ -153,16 +152,14 @@ export function WorkPage() {
           {w.title} <span>{w.titleGrey}</span>
         </h2>
         <ul className="t14-wall">
-          {publishedCases.map((cs, i) => {
+          {publishedCases.map((cs) => {
             const t = caseText(cs, lang);
             const logo = cs.logos?.[0];
             return (
               <li key={cs.slug} style={themeStyle(cs.theme)}>
                 <CaseLink cs={cs} className="t14-wall-tile">
+                  {/* 26/11 (Mike): no «01 / 11» numbering on the tiles, only the status */}
                   <span className="t14-wall-top">
-                    <span>
-                      {pad2(i + 1)} / {pad2(total)}
-                    </span>
                     <StatusLine cs={cs} />
                   </span>
                   <span className="t14-wall-logo">
