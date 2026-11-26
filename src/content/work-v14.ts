@@ -10,7 +10,8 @@
 // 12/11 (Mike): order on the site = MOTY, Shipping Finance, Kalliopi Taxidou, Imperator, Youth Choice, Anadelta, μάιμέτσοβο
 // (the array order is the site order; hidden cases sit at the end).
 // 12/11 (Mike): Kalliopi Taxidou added (performance marketing + online store redesign).
-// 25/11 (Mike): θamõn is live again, after μάιμέτσοβο (no logo file yet, so the tile shows the name).
+// 25/11 (Mike): θamõn is live again, after μάιμέτσοβο.
+// 26/11 (Mike): θamõn, Ma Belle and Στυλ cafe are shown as names in their own type (`wordmark`), not logo files.
 // 08/10 (Mike): services per case confirmed; Meta/Google/TikTok and Pixel/CAPI are implied by Performance Marketing, never listed.
 import type { Lang } from "@/content/site-v14";
 
@@ -45,6 +46,24 @@ export interface ClientLogo {
  * The brand's own colours for its card on /work (09/10, Mike): sampled from the brand's logo and site.
  * bg: the card, fg: text on it, logo: the logo's colour, accent: small marks (index, dot, arrow).
  */
+/**
+ * A client shown by its name in its own type instead of a logo file (26/11/2026, Mike): for brands whose
+ * logo we don't have as a clean file, or that are moving to a simpler mark. Drawn in the current text colour
+ * like the logos. Fonts are loaded in __root.tsx.
+ */
+export interface ClientWordmark {
+  text: string;
+  /** CSS font-family, e.g. "'Rye', serif" */
+  font: string;
+  weight?: number;
+  /** extra letter-spacing, e.g. "0.04em" */
+  tracking?: string;
+  /** relative size, 1 = default */
+  scale?: number;
+  /** a small second line under the name, e.g. «cafe» */
+  sub?: string;
+}
+
 export interface CaseTheme {
   bg: string;
   fg: string;
@@ -65,6 +84,8 @@ export interface CaseStudy {
   domain: string;
   /** the brand's logo(s), one-colour PNG in public/clients/ (MOTY carries two: the awards and the club) */
   logos?: ClientLogo[];
+  /** the name in the brand's own type, used when there is no logo file */
+  wordmark?: ClientWordmark;
   theme?: CaseTheme;
   images?: string[];
   en: CaseText;
@@ -370,6 +391,10 @@ export const caseStudies: CaseStudy[] = [
     published: true,
     url: "https://www.thamon.gr",
     domain: "thamon.gr",
+    // the logo is custom thin, tall condensed lettering in grey-green #505848 (thamon.gr); Sofia Sans Extra Condensed
+    // at its thinnest is the closest free face that also has the Greek θ. Site text is Manrope.
+    wordmark: { text: "θamõn", font: "'Sofia Sans Extra Condensed', sans-serif", weight: 100, tracking: "0.06em", scale: 1.35 },
+    theme: { bg: "#f1ede4", fg: "#2f342d", logo: "#505848", accent: "#505848" },
     en: {
       client: "θamõn",
       sector: "Restaurant, Epirote cuisine",
@@ -398,6 +423,85 @@ export const caseStudies: CaseStudy[] = [
         "Το θamõn να συνδεθεί με την πόλη για την οποία μαγειρεύει: να γίνει το εστιατόριο που δένεται περισσότερο με την παραδοσιακή κουζίνα των Ιωαννίνων και την αυθεντικότητα της Ηπείρου.",
       work:
         "Χαράζουμε το brand positioning και τη στρατηγική, κάνουμε social media management, content creation και διαφημιστικές καμπάνιες, και παράγουμε ένα podcast που αφηγείται την ηπειρώτικη γαστρονομία μέσα από την κουζίνα του θamõn.",
+    },
+  },
+  {
+    slug: "ma-belle",
+    status: "ongoing",
+    since: "2026",
+    published: true,
+    url: "https://www.instagram.com/ma_belle_metsovo/",
+    domain: "@ma_belle_metsovo",
+    // the logo's western/Tuscan display caps in yellow on black (MA BELLE LOGO.pdf); Rye is the closest free face
+    wordmark: { text: "MA BELLE", font: "'Rye', serif", weight: 400, tracking: "0.02em", scale: 0.9 },
+    theme: { bg: "#231f20", fg: "#ffffff", logo: "#ffd800", accent: "#ffd800" },
+    en: {
+      client: "Ma Belle",
+      sector: "Coffee delivery & take away",
+      location: "Metsovo, Epirus",
+      area: "Metsovo",
+      cardLine: "Content, social media and ads for Metsovo's delivery café.",
+      tags: ["Content Creation", "Social Media Management", "Performance Marketing"],
+      context:
+        "Ma Belle is a street café in the centre of Metsovo built around delivery and take away: coffee and snacks that come to you, or that you pick up on your walk. Its coffee is what it does best.",
+      brief:
+        "Make a small shop the first name people think of for coffee in Metsovo: for the locals' morning coffee, for the shops and offices in the centre, and for visitors, including the guests of the village's guesthouses and rentals.",
+      work:
+        "We shoot fresh photo and video content every month, run its social media and run its advertising on Meta and Google, aimed at more delivery calls and more take away.",
+    },
+    el: {
+      client: "Ma Belle",
+      sector: "Καφές σε delivery & take away",
+      location: "Μέτσοβο, Ήπειρος",
+      area: "Μέτσοβο",
+      cardLine: "Περιεχόμενο, social media και διαφήμιση για το delivery café του Μετσόβου.",
+      tags: ["Content Creation", "Social Media Management", "Performance Marketing"],
+      context:
+        "Το Ma Belle είναι street café στο κέντρο του Μετσόβου, χτισμένο γύρω από το delivery και το take away: καφές και σνακ που έρχονται σε σένα ή που τα παίρνεις στη βόλτα σου. Ο καφές του είναι αυτό που κάνει καλύτερα.",
+      brief:
+        "Ένα μικρό μαγαζί να γίνει το πρώτο όνομα που σκέφτεσαι για καφέ στο Μέτσοβο: για τον πρωινό καφέ των ντόπιων, για τα μαγαζιά και τα γραφεία του κέντρου και για τους επισκέπτες, μαζί και τους φιλοξενούμενους των ξενώνων και των καταλυμάτων του χωριού.",
+      work:
+        "Κάθε μήνα γυρίζουμε νέο φωτογραφικό και video περιεχόμενο, τρέχουμε τα social media του και τη διαφήμισή του σε Meta και Google, με στόχο περισσότερες κλήσεις για delivery και περισσότερο take away.",
+    },
+  },
+  {
+    slug: "styl-cafe",
+    status: "ongoing",
+    since: "2026",
+    published: true,
+    url: "https://www.facebook.com/Stylecafe",
+    domain: "facebook.com/Stylecafe",
+    // a simpler mark than the old logo (Mike): «Στυλ» with «cafe» under it, in a calligraphic Greek face (Kurale) close
+    // to the logo's lettering, in the logo's orange on its burgundy
+    wordmark: { text: "Στυλ", font: "'Kurale', serif", weight: 400, scale: 1.15, sub: "cafe" },
+    theme: { bg: "#5e1a22", fg: "#ffffff", logo: "#f2a93b", accent: "#f2a93b" },
+    en: {
+      client: "Στυλ cafe",
+      sector: "Café & traditional sweets",
+      location: "Central square, Metsovo",
+      area: "Metsovo",
+      cardLine: "Social media and ads for a winter café on Metsovo's main square.",
+      tags: ["Strategy", "Social Media Management", "Content Creation", "Performance Marketing"],
+      context:
+        "Στυλ is a café on the central square of Metsovo, with coffee and traditional sweets: a warm place to stop in the middle of the village.",
+      brief:
+        "Make Στυλ the cosy winter stop for people who come to Metsovo, couples above all, whether they stay in the village or pass through for a coffee.",
+      work:
+        "We set the strategy for its social media, run its Facebook and Instagram, produce photo and video content every month and run its advertising in the months that matter.",
+    },
+    el: {
+      client: "Στυλ cafe",
+      sector: "Καφέ & παραδοσιακά γλυκά",
+      location: "Κεντρική πλατεία, Μέτσοβο",
+      area: "Μέτσοβο",
+      cardLine: "Social media και διαφήμιση για ένα χειμωνιάτικο καφέ στην πλατεία του Μετσόβου.",
+      tags: ["Στρατηγική", "Social Media Management", "Content Creation", "Performance Marketing"],
+      context:
+        "Το Στυλ είναι καφέ στην κεντρική πλατεία του Μετσόβου, με καφέ και παραδοσιακά γλυκά: ένα ζεστό σημείο για στάση στη μέση του χωριού.",
+      brief:
+        "Το Στυλ να γίνει η ζεστή χειμωνιάτικη στάση για όσους έρχονται στο Μέτσοβο, πάνω απ' όλα για τα ζευγάρια, είτε μένουν στο χωριό είτε περνούν για έναν καφέ.",
+      work:
+        "Χαράζουμε τη στρατηγική των social media του, τρέχουμε το Facebook και το Instagram του, παράγουμε κάθε μήνα φωτογραφικό και video περιεχόμενο και τρέχουμε τη διαφήμισή του τους μήνες που μετράνε.",
     },
   },
   {

@@ -10,6 +10,7 @@ import {
   type CaseStudy,
   type CaseTheme,
   type ClientLogo,
+  type ClientWordmark,
 } from "@/content/work-v14";
 
 /**
@@ -43,9 +44,33 @@ function Logo({ l, decorative = false }: { l: ClientLogo; decorative?: boolean }
   );
 }
 
-/** the case's logo(s) with its name for screen readers; the plain name when a case has no logo yet */
+/** a client's name in its own type (26/11/2026, Mike), in the current text colour like the logos */
+function Wordmark({ wm }: { wm: ClientWordmark }) {
+  const style = {
+    fontFamily: wm.font,
+    fontWeight: wm.weight ?? 400,
+    letterSpacing: wm.tracking,
+    "--wms": wm.scale ?? 1,
+  } as CSSProperties;
+  return (
+    <span className="t14-wm" style={style} aria-hidden="true">
+      <span>{wm.text}</span>
+      {wm.sub ? <small>{wm.sub}</small> : null}
+    </span>
+  );
+}
+
+/** the case's logo(s) with its name for screen readers; its wordmark, or the plain name, when it has no logo file */
 function ClientMark({ cs, name }: { cs: CaseStudy; name: string }) {
-  if (!cs.logos?.length) return <>{name}</>;
+  if (!cs.logos?.length) {
+    if (!cs.wordmark) return <>{name}</>;
+    return (
+      <>
+        <Wordmark wm={cs.wordmark} />
+        <span className="t14-sr">{name}</span>
+      </>
+    );
+  }
   return (
     <>
       {cs.logos.map((l) => (
@@ -141,7 +166,13 @@ export function WorkPage() {
                     <StatusLine cs={cs} />
                   </span>
                   <span className="t14-wall-logo">
-                    {logo ? <Logo l={logo} decorative /> : <b>{t.client}</b>}
+                    {logo ? (
+                      <Logo l={logo} decorative />
+                    ) : cs.wordmark ? (
+                      <Wordmark wm={cs.wordmark} />
+                    ) : (
+                      <b>{t.client}</b>
+                    )}
                   </span>
                   <span className="t14-wall-foot">
                     <strong>{t.client}</strong>
@@ -314,7 +345,16 @@ export function WorkStrip() {
   const round = (copy: boolean, k: string) => marks.map(({ cs, l, key }) => (
       <li key={k + key} aria-hidden={copy || undefined}>
         <CaseLink cs={cs} {...(copy ? { tabIndex: -1 } : {})}>
-          {l ? <Logo l={l} decorative={copy} /> : <span className="t14-cl-name">{caseText(cs, lang).client}</span>}
+          {l ? (
+            <Logo l={l} decorative={copy} />
+          ) : cs.wordmark ? (
+            <>
+              <Wordmark wm={cs.wordmark} />
+              {copy ? null : <span className="t14-sr">{caseText(cs, lang).client}</span>}
+            </>
+          ) : (
+            <span className="t14-cl-name">{caseText(cs, lang).client}</span>
+          )}
         </CaseLink>
         <b className="t14-cl-dot" aria-hidden="true" />
       </li>

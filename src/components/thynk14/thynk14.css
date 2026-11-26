@@ -7385,3 +7385,34 @@
     transform: none;
   }
 }
+
+/* ======================= clients as names in their own type (26/11/2026, Mike) =======================
+   For clients without a logo file (work-v14.ts `wordmark`): the name in the brand's font, in currentColor
+   like the logo masks, so it takes the same lake / brand / white colour as the logos around it. */
+.t14-wm {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
+  font-size: calc(var(--wms, 1) * var(--wm-size, 44px));
+  font-synthesis: none;
+}
+.t14-wm small {
+  margin-top: 0.08em;
+  font-size: 0.36em;
+  letter-spacing: 0.32em;
+  padding-left: 0.32em;
+}
+.t14-wall-logo .t14-wm {
+  --wm-size: 46px;
+}
+.t14 .t14-ch-logos .t14-wm {
+  --wm-size: clamp(64px, 9vw, 150px);
+}
+.t14 .t14-cn-logos .t14-wm {
+  --wm-size: clamp(44px, 6vw, 96px);
+}
+.t14-cl-strip .t14-wm {
+  --wm-size: clamp(26px, 2.4vw, 38px);
+}
