@@ -36,3 +36,8 @@ export function Head16({ eyebrow, title, lead, children, back }: {
   );
 }
 
+
+/** capitals for eyebrows: Greek capitals carry no accents (Δουλέψτε → ΔΟΥΛΕΨΤΕ) */
+export function caps(s: string) {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().normalize("NFC");
+}

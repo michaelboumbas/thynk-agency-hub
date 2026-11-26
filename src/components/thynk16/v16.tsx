@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState, type FormEvent, type PointerEvent, type ReactNode, type RefObject } from "react";
 import { Link } from "@tanstack/react-router";
 import { useCopy } from "@/components/thynk14/i18n";
-import { Head16, Mk } from "./bits";
+import { Head16, Mk, caps } from "./bits";
 export { Head16, Mk };
 import { CaseLink, Logo, Wordmark } from "@/components/thynk14/work";
 import { ThynkMap } from "@/components/thynk14/map";
@@ -831,7 +831,7 @@ function LegalPage({ label, title, lead, updated, toc, sections, companyAt }: {
   const rows = companyRows(lang);
   return (
     <>
-      <Head16 eyebrow={label.toUpperCase()} title={<><Mk>{title}</Mk>.</>} lead={lead} />
+      <Head16 eyebrow={caps(label)} title={<><Mk>{title}</Mk>.</>} lead={lead} />
       <div className="t16-wrap t16-legal">
         <nav className="t16-legal-toc" aria-label={toc}>
           <b>{toc}</b>

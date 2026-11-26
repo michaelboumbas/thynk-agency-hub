@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode, type CSSProperties } from "react";
 import { useCopy } from "./i18n";
+import { Head16, Mk, caps } from "@/components/thynk16/bits";
 import { Link } from "@tanstack/react-router";
 import {
   v14Routes,
@@ -72,20 +73,11 @@ const headEyebrows = {
 } as const;
 export type HeadKey = keyof (typeof headEyebrows)["en"];
 
-/** page opener: eyebrow, title with the marker line + dot, lead */
+/** page opener (26/11/2026, v16): the canvas heading for every page that still uses PageHead (press, careers, solutions) */
 export function PageHead({ p, k }: { p: { label: string; title: string; lead: string }; k?: HeadKey }) {
   const { lang } = useCopy();
-  const eyebrow = k ? headEyebrows[lang][k] : p.label;
-  return (
-    <section className="t14-wrap t15-head">
-      <span className="t15-eyebrow">{eyebrow}</span>
-      <h1 className="t15-svc-h1" style={{ ["--len" as string]: [...p.title].length } as CSSProperties}>
-        <span className="t15-mk">{p.title}</span>
-        <span className="t15-dot">.</span>
-      </h1>
-      <p className="t15-svc-lead">{p.lead}</p>
-    </section>
-  );
+  const eyebrow = caps(k ? headEyebrows[lang][k] : p.label);
+  return <Head16 eyebrow={eyebrow} title={<><Mk>{p.title}</Mk>.</>} lead={p.lead} />;
 }
 
 /** words light up as the paragraph scrolls past (see motion.ts) */

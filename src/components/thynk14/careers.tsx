@@ -308,7 +308,7 @@ export function CareersPage() {
       <PageHead p={p.head} k="careers" />
 
       {cameForRole && !ROLE_OPEN && (
-        <p className="t14-wrap t14-cr-filled" role="status">{p.filled}</p>
+        <div className="t16-wrap"><p className="t14-cr-filled" role="status">{p.filled}</p></div>
       )}
 
       {ROLE_OPEN ? (

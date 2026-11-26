@@ -476,3 +476,8 @@
   .t16-company-card { grid-template-columns: 1fr; }
   .t16-company-card dd { margin-bottom: 8px; }
 }
+
+/* the older sections (clients wall, press, careers, case pages) sit in the same 1280px column as v16 (26/11) */
+.t14 .t14-wrap { max-width: 1280px; margin-left: auto; margin-right: auto; padding-left: 40px; padding-right: 40px; box-sizing: border-box; }
+@media (max-width: 720px) { .t14 .t14-wrap { padding-left: 20px; padding-right: 20px; } }
+.t16-filled-wrap { padding-top: 0; }
