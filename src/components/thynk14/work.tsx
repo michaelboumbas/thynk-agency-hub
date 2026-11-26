@@ -274,9 +274,11 @@ export function CasePage({ cs }: { cs: CaseStudy }) {
                 ))}
               </ul>
             </div>
-            <a className="t14-stack-cta t14-ch-visit" href={cs.url} target="_blank" rel="noopener noreferrer">
-              {w.visit} {cs.domain} <i aria-hidden="true">↗</i>
-            </a>
+            {cs.url ? (
+              <a className="t14-stack-cta t14-ch-visit" href={cs.url} target="_blank" rel="noopener noreferrer">
+                {w.visit} {cs.domain} <i aria-hidden="true">↗</i>
+              </a>
+            ) : null}
           </div>
         </div>
       </section>

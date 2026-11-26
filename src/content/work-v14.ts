@@ -80,9 +80,10 @@ export interface CaseStudy {
   /** for an event: the edition we are working on, shown as «2027 edition» instead of «Since» */
   edition?: string;
   published: boolean;
-  url: string;
+  /** the brand's own site or profile; leave out when there is none to link to (26/11) */
+  url?: string;
   /** shown as the link text, e.g. "manageroftheyear.gr" */
-  domain: string;
+  domain?: string;
   /** the brand's logo(s), one-colour PNG in public/clients/ (MOTY carries two: the awards and the club) */
   logos?: ClientLogo[];
   /** the name in the brand's own type, used when there is no logo file */
@@ -503,6 +504,44 @@ export const caseStudies: CaseStudy[] = [
         "Το Στυλ να γίνει η ζεστή στάση για όσους έρχονται στο Μέτσοβο, πάνω απ' όλα για τα ζευγάρια, είτε μένουν στο χωριό είτε περνούν για έναν καφέ.",
       work:
         "Χαράζουμε τη στρατηγική των social media του, τρέχουμε το Facebook και το Instagram του, παράγουμε κάθε μήνα φωτογραφικό και video περιεχόμενο και τρέχουμε τη διαφήμισή του τους μήνες που μετράνε.",
+    },
+  },
+  {
+    slug: "trikalini-zymi",
+    status: "ongoing",
+    since: "2026",
+    published: true,
+    // 26/11 (Mike): the Epirus distributor of Τρικαλινή Ζύμη; we run social media, content and performance for B2B partnerships.
+    // No link yet (no site/profile confirmed). Logo: the wheat and the script name cut from the badge (light parts as the mask).
+    logos: [{ src: "/clients/trikalini-zymi.png", alt: "Τρικαλινή Ζύμη", ratio: 0.919 }],
+    theme: { bg: "#2e2c2d", fg: "#ffffff", logo: "#d9a86c", accent: "#d9a86c" },
+    en: {
+      client: "Τρικαλινή Ζύμη",
+      sector: "Food distributor, Epirus",
+      location: "Epirus",
+      area: "Epirus",
+      cardLine: "Social media, content and ads for the Epirus distributor of Τρικαλινή Ζύμη, built for B2B partnerships.",
+      tags: ["Social Media Management", "Content Creation", "Performance Marketing"],
+      context:
+        "This is the Epirus distributorship of Τρικαλινή Ζύμη, the brand behind «the taste of our place». It brings Τρικαλινή Ζύμη's products to businesses across the region.",
+      brief:
+        "Reach the businesses of Epirus that could stock or serve the brand, and give the distributor a steady, professional presence they recognise.",
+      work:
+        "We run its social media, produce its content and run its advertising, all aimed at new B2B partnerships across Epirus.",
+    },
+    el: {
+      client: "Τρικαλινή Ζύμη",
+      sector: "Αντιπροσωπεία τροφίμων Ηπείρου",
+      location: "Ήπειρος",
+      area: "Ήπειρος",
+      cardLine: "Social media, περιεχόμενο και διαφήμιση για την αντιπροσωπεία Ηπείρου της Τρικαλινής Ζύμης, με στόχο τις B2B συνεργασίες.",
+      tags: ["Social Media Management", "Content Creation", "Performance Marketing"],
+      context:
+        "Είναι η αντιπροσωπεία Ηπείρου της Τρικαλινής Ζύμης, του brand με το «Η γεύση του τόπου μας». Φέρνει τα προϊόντα της Τρικαλινής Ζύμης σε επιχειρήσεις σε όλη την περιοχή.",
+      brief:
+        "Να φτάσουμε στις επιχειρήσεις της Ηπείρου που μπορούν να διαθέσουν ή να σερβίρουν τα προϊόντα, και να δώσουμε στην αντιπροσωπεία μια σταθερή, επαγγελματική παρουσία που αναγνωρίζουν.",
+      work:
+        "Τρέχουμε τα social media της, παράγουμε το περιεχόμενό της και τρέχουμε τη διαφήμισή της, όλα με στόχο νέες B2B συνεργασίες σε όλη την Ήπειρο.",
     },
   },
   {
