@@ -506,3 +506,8 @@
 .t14 .t16-info a:hover, .t14 .t16-foot-grid a:hover, .t14 .t16-legal-toc a:hover { color: var(--t16-ink); }
 .t14 .t16-foot-legal a { color: var(--t16-mute); }
 .t14 .t16-foot-legal a:hover, .t14 .t16-foot-legal a[aria-current="page"] { color: var(--t16-lake); }
+/* contrast audit (26/11): small numbers and hints that fell below 4.5:1 */
+.t14 .t16-tiles.dark .t16-n { color: #d3e7ee; }
+.t14 .t14-wall-kicker { color: #d3e7ee; }
+.t14 .t14-book-side li span { color: var(--t16-lake); }
+.t14 .t14-opt { color: var(--t16-mute); }
