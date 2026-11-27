@@ -176,7 +176,7 @@
 }
 .t16-card-in.tilt { box-shadow: 0 30px 60px -28px rgba(20, 38, 46, .45); }
 .t16-card-logo { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--t16-lake); --u: .62; transform: translateZ(40px); }
-.t16-card-logo .t14-wm { font-size: 34px; }
+.t16-card-logo .t14-wm { --wm-size: 34px; }
 .t16-card strong { font-size: 18px; transform: translateZ(24px); }
 .t16-card-meta { font-size: 15px; color: var(--t16-mute); transform: translateZ(16px); }
 .t16-card:focus-visible { outline: none; }
