@@ -98,6 +98,8 @@ export function orgSchema(lang: Lang) {
       "Content Creation",
       "Email & SMS Marketing",
       "Websites & Landing Pages",
+      "Agentic AI",
+      "Custom AI agents",
       "AI Automation",
       "AI Audit",
     ],

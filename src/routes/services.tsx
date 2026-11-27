@@ -10,7 +10,7 @@ export const Route = createFileRoute("/services")({
       path: "/services",
       lang: "en",
       title: "Digital Marketing & AI Automation Services · Thynk",
-      description: "Performance marketing on Google, Meta, TikTok and ChatGPT, social media management, strategy, content creation, email & SMS marketing, websites and AI automation.",
+      description: "Performance marketing on Google, Meta, TikTok and ChatGPT, social media management, strategy, content creation, email & SMS marketing, websites, agentic AI and AI automation.",
     }),
   component: () => <CleanPage path="/services" />,
 });

@@ -521,3 +521,18 @@
   .t16-tick-logo { height: 52px; --u: .56; font-size: 17px; }
   .t16-tick-logo .t14-wm { --wm-size: 30px; }
 }
+
+/* header, more on-brand (27/11/2026, Mike): the orange marker is drawn under the current page and under a page on
+   hover (left to right), the same hand-drawn stroke as in the titles; the «Let's talk» button carries the square dot */
+.t16-nav a { padding: 10px 2px; }
+.t16-nav a[aria-current="page"]::after { content: none; }
+.t16-nav a::before {
+  content: ""; position: absolute; left: -6%; right: -6%; bottom: 0; height: 9px; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M4 10 C 60 5, 120 13, 180 8 S 268 5, 296 9' fill='none' stroke='%23ff6a1a' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  clip-path: inset(0 100% 0 0); transition: clip-path .4s cubic-bezier(.2, .7, .2, 1);
+}
+.t16-nav a:hover::before, .t16-nav a:focus-visible::before, .t16-nav a[aria-current="page"]::before { clip-path: inset(0 0 0 0); }
+.t16-nav a[aria-current="page"] { font-weight: 600; }
+.t16-hdr-r .t16-btn::before { content: ""; width: 7px; height: 7px; background: var(--t16-orange); flex: none; transition: transform .25s; }
+.t16-hdr-r .t16-btn:hover::before { transform: rotate(45deg); }
+@media (prefers-reduced-motion: reduce) { .t16-nav a::before { transition: none; } }

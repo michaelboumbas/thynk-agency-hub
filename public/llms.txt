@@ -16,8 +16,9 @@ Languages: Greek (default, under /el) and English.
 - Websites & Landing Pages: company websites and campaign landing pages, measured from day one.
 
 ### AI & Automations
+- Agentic AI: custom AI agents and models adapted to the client's business (built on existing models, not trained from scratch), working with the client's own data, documents and tools; a person approves every sensitive action.
 - AI Audit: a paid analysis of processes, tools and data, with a deliverable that says what to automate first, what next and what not. The deliverable belongs to the client.
-- AI automation: chatbots that answer and book appointments, voice assistants for out-of-hours calls, connecting existing tools, AI agents on the client's own data.
+- AI automation: chatbots that answer and book appointments, voice assistants for out-of-hours calls, connecting existing tools.
 - Data & reporting: website measurement, dashboards, visibility in ChatGPT and Google AI Overviews.
 - Consulting: a roadmap from manual processes to automation, and workshops on everyday use of AI.
 

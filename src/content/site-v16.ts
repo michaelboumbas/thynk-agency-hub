@@ -112,6 +112,19 @@ const el = {
   ] as Service[],
   ai: [
     {
+      // 27/11/2026 (Mike): Agentic AI first in the AI pillar. Agents on existing models, adapted to the client;
+      // we do not train our own model, so the copy never says so.
+      id: "agentic",
+      name: "Agentic AI",
+      line: "Custom AI agents και μοντέλα προσαρμοσμένα στην επιχείρησή σας, που δουλεύουν με τα δικά σας δεδομένα, έγγραφα και εργαλεία.",
+      items: [
+        "Custom agents που εκτελούν εργασίες από άκρη σε άκρη",
+        "LLMs προσαρμοσμένα στη γνώση της επιχείρησής σας",
+        "Σύνδεση με CRM, email, ημερολόγιο και λογιστικό",
+        "Άνθρωπος εγκρίνει κάθε ευαίσθητη ενέργεια",
+      ],
+    },
+    {
       id: "ai-audit",
       name: "AI Audit",
       line: "Αμειβόμενη ανάλυση των διαδικασιών σας: τι αξίζει να αυτοματοποιηθεί πρώτο, τι μετά, τι όχι.",
@@ -130,7 +143,6 @@ const el = {
         "Chatbot που απαντά και κλείνει ραντεβού",
         "Φωνητικός βοηθός για κλήσεις εκτός ωραρίου",
         "Διασύνδεση των εργαλείων που ήδη χρησιμοποιείτε",
-        "AI agents πάνω στα δικά σας δεδομένα",
       ],
     },
     {
@@ -408,6 +420,17 @@ const en: V16Copy = {
   ],
   ai: [
     {
+      id: "agentic",
+      name: "Agentic AI",
+      line: "Custom AI agents and models adapted to your business, working with your own data, documents and tools.",
+      items: [
+        "Custom agents that carry out tasks end to end",
+        "LLMs adapted to your business's knowledge",
+        "Connected to your CRM, email, calendar and accounting",
+        "A person approves every sensitive action",
+      ],
+    },
+    {
       id: "ai-audit",
       name: "AI Audit",
       line: "A paid analysis of your processes: what is worth automating first, what next, and what not.",
@@ -426,7 +449,6 @@ const en: V16Copy = {
         "A chatbot that answers and books appointments",
         "A voice assistant for out-of-hours calls",
         "Connecting the tools you already use",
-        "AI agents on your own data",
       ],
     },
     {
