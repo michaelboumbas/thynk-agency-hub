@@ -131,13 +131,13 @@
 .t16-ribbon { background: var(--t16-ink); overflow: hidden; padding: 26px 0; }
 .t16-tick { display: flex; width: max-content; animation: t16-tick 40s linear infinite; }
 .t16-tick-set { display: flex; flex: none; }
-.t16-tick-set span { display: inline-flex; align-items: center; gap: 56px; padding-right: 56px; font-size: 22px; font-weight: 600; color: #fff; white-space: nowrap; }
+.t16-tick-set > span { display: inline-flex; align-items: center; gap: 56px; padding-right: 56px; font-size: 22px; font-weight: 600; color: #fff; white-space: nowrap; }
 @keyframes t16-tick { to { transform: translateX(-50%); } }
 .t16-ribbon:hover .t16-tick { animation-play-state: paused; }
 @media (max-width: 720px) {
   .t16-ribbon { padding: 18px 0; }
   .t16-tick { animation-duration: 30s; }
-  .t16-tick-set span { font-size: 17px; gap: 36px; padding-right: 36px; }
+  .t16-tick-set > span { font-size: 17px; gap: 36px; padding-right: 36px; }
   .t16-dot { width: 7px; height: 7px; }
 }
 
@@ -515,9 +515,9 @@
 /* ribbon with the clients' logos (27/11/2026, Mike), white on ink, all at one visual size */
 .t16-tick-item { display: inline-flex; align-items: center; gap: 56px; padding-right: 56px; color: #fff; }
 .t16-tick-logo { display: inline-flex; align-items: center; height: 72px; --u: .78; color: #fff; white-space: nowrap; font-size: 22px; font-weight: 600; }
-.t16-tick-logo .t14-wm { font-size: 44px; line-height: 1; }
+.t16-tick-logo .t14-wm { --wm-size: 40px; }
 @media (max-width: 720px) {
   .t16-tick-item { gap: 36px; padding-right: 36px; }
   .t16-tick-logo { height: 52px; --u: .56; font-size: 17px; }
-  .t16-tick-logo .t14-wm { font-size: 32px; }
+  .t16-tick-logo .t14-wm { --wm-size: 30px; }
 }
