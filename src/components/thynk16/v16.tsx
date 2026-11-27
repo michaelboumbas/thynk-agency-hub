@@ -370,13 +370,10 @@ function ServiceLinks({ n, name, list }: { n: string; name: string; list: Servic
 }
 
 /* ================================ Home ================================ */
-/** the ribbon's short names, in the order of the canvas (26/11) */
-const RIBBON = ["Manager of the Year", "Shipping Finance", "Kalliopi Taxidou", "Imperator Winery", "Youth Choice", "μάιμέτσοβο", "θamõn", "Ma Belle", "Στυλ cafe", "Τρικαλινή Ζύμη"];
 
 export function Home16() {
   const { t, href } = useV16();
   const h = t.home;
-  const names = RIBBON;
   return (
     <>
       <section className="t16-hero t16-wrap">
@@ -396,17 +393,23 @@ export function Home16() {
         </div>
       </section>
 
-      {/* the client ribbon: it keeps moving, also on phones (Mike) */}
+      {/* the client ribbon: it keeps moving, also on phones (Mike). 27/11 (Mike): the brands' logos, not their names */}
       <section className="t16-ribbon" aria-label={h.clientsAria}>
         <div className="t16-tick">
           {[0, 1].map((k) => (
             <div key={k} className="t16-tick-set" aria-hidden={k === 1 ? true : undefined}>
-              {names.map((nm) => (
-                <span key={nm}>
-                  {nm}
-                  <b className="t16-dot" aria-hidden="true" />
-                </span>
-              ))}
+              {publishedCases.map((cs) => {
+                const name = caseText(cs, "en").client;
+                const logo = cs.logos?.[0];
+                return (
+                  <span key={cs.slug} className="t16-tick-item">
+                    <span className="t16-tick-logo">
+                      {logo ? <Logo l={logo} decorative={k === 1} /> : cs.wordmark ? <Wordmark wm={cs.wordmark} /> : name}
+                    </span>
+                    <b className="t16-dot" aria-hidden="true" />
+                  </span>
+                );
+              })}
             </div>
           ))}
         </div>
