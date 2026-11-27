@@ -514,10 +514,10 @@
 
 /* ribbon with the clients' logos (27/11/2026, Mike), white on ink, all at one visual size */
 .t16-tick-item { display: inline-flex; align-items: center; gap: 56px; padding-right: 56px; color: #fff; }
-.t16-tick-logo { display: inline-flex; align-items: center; height: 56px; --u: .55; color: #fff; white-space: nowrap; font-size: 22px; font-weight: 600; }
-.t16-tick-logo .t14-wm { font-size: 30px; line-height: 1; }
+.t16-tick-logo { display: inline-flex; align-items: center; height: 72px; --u: .78; color: #fff; white-space: nowrap; font-size: 22px; font-weight: 600; }
+.t16-tick-logo .t14-wm { font-size: 44px; line-height: 1; }
 @media (max-width: 720px) {
   .t16-tick-item { gap: 36px; padding-right: 36px; }
-  .t16-tick-logo { height: 42px; --u: .42; font-size: 17px; }
-  .t16-tick-logo .t14-wm { font-size: 24px; }
+  .t16-tick-logo { height: 52px; --u: .56; font-size: 17px; }
+  .t16-tick-logo .t14-wm { font-size: 32px; }
 }
