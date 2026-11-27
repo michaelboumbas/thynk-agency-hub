@@ -31,7 +31,7 @@ export const Route = createFileRoute("/el/articles/$slug")({
             description: a.excerpt,
             datePublished: a.date,
             inLanguage: a.lang,
-            author: { "@type": "Person", name: authors[a.author].name.el },
+            author: a.author === "thynk" ? { "@type": "Organization", name: "Thynk Digital Agency", url: "https://thynkagency.gr" } : { "@type": "Person", name: authors[a.author].name.el },
             publisher: { "@id": `${SITE}/#organization` },
             mainEntityOfPage: self,
           }),

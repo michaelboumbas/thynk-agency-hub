@@ -71,10 +71,10 @@ function Author({ a, small = false }: { a: Article; small?: boolean }) {
   const au = authors[a.author];
   return (
     <span className={`t16-ar-au${small ? " sm" : ""}`}>
-      <img src={au.photo} alt="" loading="lazy" />
+      <img className={a.author === "thynk" ? "brand" : undefined} src={au.photo} alt="" loading="lazy" />
       <span>
         <b>{au.name[lang]}</b>
-        {!small && <small lang="en">{au.role}</small>}
+        {!small && au.role && <small lang="en">{au.role}</small>}
       </span>
     </span>
   );

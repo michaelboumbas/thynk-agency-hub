@@ -561,6 +561,8 @@
 .t16-ar-au b { font-size: 15px; color: var(--t16-ink); }
 .t16-ar-au small { font-size: 13px; color: var(--t16-mute); }
 .t16-ar-au.sm img { width: 28px; height: 28px; }
+/* 27/11/2026: company byline, the brand dot tile in its own colours */
+.t16-ar-au img.brand { border-radius: 8px; filter: none; object-fit: contain; }
 .t16-ar-au.sm b { font-size: 13px; }
 .t14 a.t16-ar-feature { display: grid; grid-template-columns: 1.1fr 1fr; background: #fff; border-radius: 22px; overflow: hidden; color: var(--t16-ink); text-decoration: none; margin-bottom: 24px; }
 .t16-ar-cover, .t16-ar-hero { position: relative; display: block; background: var(--t16-lake); overflow: hidden; isolation: isolate; min-height: 340px; }

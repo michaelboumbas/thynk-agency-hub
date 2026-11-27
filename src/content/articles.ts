@@ -8,7 +8,7 @@ import type { Lang } from "./site-v14";
  * Body: sections of paragraphs; an optional pull quote after a section's paragraphs.
  * ⚠️ Write real articles only, signed by whoever actually wrote or approved them.
  */
-export type AuthorId = "dimitris" | "michael" | "romanna";
+export type AuthorId = "thynk" | "dimitris" | "michael" | "romanna";
 export type ArticleSection = { id: string; h: string; p: string[]; quote?: string };
 export type Article = {
   slug: string;
@@ -31,6 +31,8 @@ export type Article = {
 };
 
 export const authors: Record<AuthorId, { name: Record<Lang, string>; role: string; photo: string }> = {
+  // 27/11/2026, Mike: articles are signed by the company, no people on them.
+  thynk: { name: { el: "Thynk Digital Agency", en: "Thynk Digital Agency" }, role: "", photo: "/favicon.svg" },
   dimitris: { name: { el: "Δημήτρης Χρυσοχόου", en: "Dimitris Chrysochoou" }, role: "Co-founder · AI & Automation Lead", photo: "/team/dimitris-chrysochoou.webp" },
   michael: { name: { el: "Μιχαήλ Μπούμπας", en: "Michael Boumpas" }, role: "Co-founder · Marketing & Growth Lead", photo: "/team/michael-boumpas.webp" },
   romanna: { name: { el: "Romanna Lobach", en: "Romanna Lobach" }, role: "Creative Director", photo: "/team/romanna-lobach-v2.webp" },
@@ -38,7 +40,7 @@ export const authors: Record<AuthorId, { name: Record<Lang, string>; role: strin
 
 export const articles: Article[] = [
   {
-    // 27/11/2026: first four articles (Mike set the bylines: marketing → Michael, AI → Dimitris, content → Romanna).
+    // 27/11/2026: first four articles, signed «Thynk Digital Agency» (Mike: no people on the articles).
     slug: "posa-na-xodevei-mia-topiki-epiheirisi-se-diafimisi",
     lang: "el",
     published: true,
@@ -46,7 +48,7 @@ export const articles: Article[] = [
     title: "Πόσα να ξοδεύει μια τοπική επιχείρηση σε διαφήμιση τον μήνα;",
     mark: "Πόσα να ξοδεύει",
     excerpt: "Δεν υπάρχει ένα σωστό ποσό για όλους. Υπάρχει όμως ένας απλός τρόπος να βρείτε το δικό σας, με τα δικά σας νούμερα.",
-    author: "michael",
+    author: "thynk",
     date: "2026-11-27",
     minutes: 6,
     cover: "Budget",
@@ -123,7 +125,7 @@ export const articles: Article[] = [
     title: "Πότε δεν χρειάζεστε AI agent",
     mark: "Πότε δεν χρειάζεστε",
     excerpt: "Πολλές φορές αυτό που χρειάζεται μια επιχείρηση είναι ένας απλός αυτοματισμός. Ένα τεστ τεσσάρων ερωτήσεων για να το ξεχωρίσετε.",
-    author: "dimitris",
+    author: "thynk",
     date: "2026-11-27",
     minutes: 5,
     cover: "Όχι agent",
@@ -184,7 +186,7 @@ export const articles: Article[] = [
     title: "Ρωτήσαμε το AI πού να φάμε στα Γιάννενα. Να τι μάθαμε",
     mark: "Ρωτήσαμε το AI",
     excerpt: "Έξι ερωτήσεις για επιχειρήσεις της Ηπείρου. Το AI ήξερε καλά τον τόπο, αλλά σχεδόν καθόλου τις επιχειρήσεις του. Τι σημαίνει αυτό για εσάς.",
-    author: "dimitris",
+    author: "thynk",
     date: "2026-11-27",
     minutes: 6,
     cover: "Ρωτήσαμε το AI",
@@ -246,7 +248,7 @@ export const articles: Article[] = [
     title: "Content με το κινητό: τι ανεβάζει μια μικρή επιχείρηση όταν «δεν έχει τι να δείξει»",
     mark: "Content με το κινητό",
     excerpt: "Ό,τι για εσάς είναι ρουτίνα, για τον πελάτη είναι κάτι που δεν έχει δει. Πέντε ιδέες που δεν τελειώνουν και πώς τις γυρίζετε σωστά με το κινητό.",
-    author: "romanna",
+    author: "thynk",
     date: "2026-11-27",
     minutes: 5,
     cover: "Content",
@@ -307,7 +309,7 @@ export const articles: Article[] = [
     title: "Agentic AI για μικρές επιχειρήσεις: τι είναι και τι όχι",
     mark: "Agentic AI",
     excerpt: "Τι κάνει ένας AI agent στην πράξη, πού βοηθά μια επιχείρηση στην Ήπειρο και πού δεν αξίζει ακόμα.",
-    author: "dimitris",
+    author: "thynk",
     date: "2026-11-27",
     minutes: 6,
     cover: "Agentic AI",
