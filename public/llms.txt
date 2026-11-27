@@ -37,6 +37,13 @@ Languages: Greek (default, under /el) and English.
 - [Press](https://thynkagency.gr/el/press)
 - [English home](https://thynkagency.gr/?lang=en)
 
+## Articles (Thynk Notes, Greek)
+- [All articles](https://thynkagency.gr/el/articles)
+- [Πόσα να ξοδεύει μια τοπική επιχείρηση σε διαφήμιση τον μήνα;](https://thynkagency.gr/el/articles/posa-na-xodevei-mia-topiki-epiheirisi-se-diafimisi): how to set a monthly ad budget from the profit one new customer leaves (Michael Boumpas)
+- [Πότε δεν χρειάζεστε AI agent](https://thynkagency.gr/el/articles/pote-den-xreiazeste-ai-agent): when a simple automation is enough, and a four-question test (Dimitris Chrysochoou)
+- [Ρωτήσαμε το AI πού να φάμε στα Γιάννενα](https://thynkagency.gr/el/articles/rotisame-to-ai-pou-na-fame-sta-giannena): why AI assistants rarely name local Epirus businesses and what to do about it (Dimitris Chrysochoou)
+- [Content με το κινητό](https://thynkagency.gr/el/articles/content-me-to-kinito): five content ideas for small businesses and how to shoot them on a phone (Romanna Lobach)
+
 ## Profiles
 - Instagram: https://www.instagram.com/thynkagency.gr/
 - Facebook: https://www.facebook.com/thynkagency.gr/
