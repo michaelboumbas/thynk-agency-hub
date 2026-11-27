@@ -622,3 +622,8 @@
   .t16-ar-body h2 { font-size: 24px; }
   .t16-ar-body blockquote { font-size: 21px; }
 }
+/* newsletter on the lake band: every line of text light on lake (contrast, Mike's rule) */
+.t14 .t16-ar-nl .t14-nl-consent, .t14 .t16-ar-nl .t14-nl-consent * { color: #dcebf0; }
+.t14 .t16-ar-nl .t14-nl-consent a { color: #fff; }
+.t14 .t16-ar-nl .t14-err, .t14 .t16-ar-nl .t14-fail { color: #ffd2bd; }
+.t14 .t16-ar-nl .t14-nl-ok { color: #fff; }
