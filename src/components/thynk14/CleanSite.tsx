@@ -1,5 +1,7 @@
 import { CleanShell } from "./Shell";
 import { About16, Audit16, Contact16, Cookies16, Home16, Privacy16, Services16 } from "@/components/thynk16/v16";
+import { ArticlePage, ArticlesPage } from "@/components/thynk16/articles";
+import type { Article } from "@/content/articles";
 import { WorkPage, CasePage } from "./work";
 import { PressPage } from "./press";
 import { CareersPage } from "./careers";
@@ -32,6 +34,7 @@ const PAGES = {
   [v14Routes.contact]: Contact16,
   [v14Routes.privacy]: Privacy16,
   [v14Routes.cookies]: Cookies16,
+  [v14Routes.articles]: ArticlesPage,
   [v14Routes.press]: PressPage,
   [v14Routes.careers]: CareersPage,
 } as const;
@@ -43,6 +46,15 @@ export function CleanPage({ path, lang = "en" }: { path: CleanPath; lang?: Lang 
   return (
     <CleanShell pathname={path} lang={lang}>
       <Page />
+    </CleanShell>
+  );
+}
+
+/** an article, /articles/:slug (27/11): the shell keeps «Άρθρα» active and the EL/EN switch on the list */
+export function CleanArticlePage({ a, lang = "en" }: { a: Article; lang?: Lang }) {
+  return (
+    <CleanShell pathname={v14Routes.articles} lang={lang} slug={a.slug}>
+      <ArticlePage a={a} />
     </CleanShell>
   );
 }

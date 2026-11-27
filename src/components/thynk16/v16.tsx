@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState, type FormEvent, type PointerEvent, type ReactNode, type RefObject } from "react";
 import { Link } from "@tanstack/react-router";
 import { useCopy } from "@/components/thynk14/i18n";
-import { Head16, Mk, caps } from "./bits";
+import { Head16, Mk, MkCircle, caps } from "./bits";
 export { Head16, Mk };
 import { CaseLink, Logo, Wordmark } from "@/components/thynk14/work";
 import { ThynkMap } from "@/components/thynk14/map";
@@ -385,7 +385,7 @@ export function Home16() {
           {h.h1a} <Mk>{h.h1b}</Mk>
         </h1>
         <div className="t16-head-row">
-          <p className="t16-lead">{h.lead}</p>
+          <p className="t16-lead t16-hero-lead">{h.leadA}<MkCircle>{h.leadWord}</MkCircle>.</p>
           <div className="t16-ctas">
             <a className="t16-btn" href="#talk">{t.nav.talk} <i aria-hidden="true">→</i></a>
             <Link className="t16-ghost" to={href(v14Routes.services)}>{h.seeServices}</Link>

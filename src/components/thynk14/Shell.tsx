@@ -14,12 +14,15 @@ import { NewsletterForm, NewsletterPopup } from "./newsletter";
 import { useV16Reveal } from "@/components/thynk16/v16";
 import { v16Copy } from "@/content/site-v16";
 import { companyLine } from "@/content/company";
+import { ARTICLES_LIVE } from "@/content/articles";
 
 /** 26/11 (Mike, v16): the four pages in the header, in this order */
 const NAV = [
   { to: v14Routes.services, k: "services" },
   { to: v14Routes.work, k: "work" },
   { to: v14Routes.about, k: "about" },
+  // 27/11 (Mike): «Άρθρα» joins the menu by itself once the first article is published (ARTICLES_LIVE)
+  ...(ARTICLES_LIVE ? ([{ to: v14Routes.articles, k: "articles" }] as const) : []),
   { to: v14Routes.contact, k: "contact" },
 ] as const;
 
@@ -268,6 +271,9 @@ function MenuOverlay({ open, pathname, onClose, returnRef }: {
   const items = [
     { key: "home", label: c.ui.homeLabel, to: v14Routes.home as V14Path, hash: undefined as string | undefined },
     ...c.menu.map((n) => ({ key: n.to, label: n.label, to: n.to as V14Path, hash: undefined as string | undefined })),
+    ...(ARTICLES_LIVE
+      ? [{ key: v14Routes.articles, label: v16Copy[lang].nav.articles, to: v14Routes.articles as V14Path, hash: undefined as string | undefined }]
+      : []),
   ];
   const current = Math.max(0, items.findIndex((it) => !it.hash && it.to === pathname));
   // the wheel's position, in rows (0 = first item in the middle); turned by scroll / swipe, never by hover
@@ -448,7 +454,8 @@ function LangLink({ pathname, other, children, ...rest }: {
   "aria-label"?: string;
 }) {
   const slug = useContext(SlugCtx);
-  if (slug) {
+  // an article has one language, so its switch goes to the other language's list (27/11)
+  if (slug && pathname === v14Routes.work) {
     return (
       <Link
         to={other === "el" ? "/el/work/$slug" : "/work/$slug"}

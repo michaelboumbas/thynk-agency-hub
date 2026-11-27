@@ -241,6 +241,8 @@ export const v14Routes = {
   press: "/press",
   // 17/10 (Mike): open applications (no open position shown unless one exists). In the footer, not the menu.
   careers: "/careers",
+  // 27/11/2026 (Mike): Thynk Notes, the articles (content: src/content/articles.ts)
+  articles: "/articles",
   // 26/11/2026 (Mike): the cookie policy, next to Privacy in the footer
   cookies: "/cookies",
 } as const;

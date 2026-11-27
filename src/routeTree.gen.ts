@@ -36,11 +36,15 @@ import { Route as ElCookiesRouteImport } from './routes/el/cookies'
 import { Route as ElServicesRouteImport } from './routes/el/services'
 import { Route as ElSolutionsRouteImport } from './routes/el/solutions'
 import { Route as WorkIndexRouteImport } from './routes/work/index'
+import { Route as ArticlesIndexRouteImport } from './routes/articles/index'
 import { Route as WorkSlugRouteImport } from './routes/work/$slug'
+import { Route as ArticlesSlugRouteImport } from './routes/articles/$slug'
 import { Route as ApiPublicNewsletterRouteImport } from './routes/api/public/newsletter'
 import { Route as ApiPublicPressKitRouteImport } from './routes/api/public/press-kit'
 import { Route as ElWorkIndexRouteImport } from './routes/el/work/index'
+import { Route as ElArticlesIndexRouteImport } from './routes/el/articles/index'
 import { Route as ElWorkSlugRouteImport } from './routes/el/work/$slug'
+import { Route as ElArticlesSlugRouteImport } from './routes/el/articles/$slug'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
@@ -178,9 +182,19 @@ const WorkIndexRoute = WorkIndexRouteImport.update({
   path: '/work/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArticlesIndexRoute = ArticlesIndexRouteImport.update({
+  id: '/articles/',
+  path: '/articles/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkSlugRoute = WorkSlugRouteImport.update({
   id: '/work/$slug',
   path: '/work/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticlesSlugRoute = ArticlesSlugRouteImport.update({
+  id: '/articles/$slug',
+  path: '/articles/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicNewsletterRoute = ApiPublicNewsletterRouteImport.update({
@@ -198,9 +212,19 @@ const ElWorkIndexRoute = ElWorkIndexRouteImport.update({
   path: '/el/work/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ElArticlesIndexRoute = ElArticlesIndexRouteImport.update({
+  id: '/el/articles/',
+  path: '/el/articles/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ElWorkSlugRoute = ElWorkSlugRouteImport.update({
   id: '/el/work/$slug',
   path: '/el/work/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElArticlesSlugRoute = ElArticlesSlugRouteImport.update({
+  id: '/el/articles/$slug',
+  path: '/el/articles/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LovableEmailTransactionalPreviewRoute =
@@ -237,12 +261,16 @@ export interface FileRoutesByFullPath {
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
+  '/articles/$slug': typeof ArticlesSlugRoute
   '/el/': typeof ElIndexRoute
   '/work/': typeof WorkIndexRoute
+  '/articles/': typeof ArticlesIndexRoute
   '/api/public/newsletter': typeof ApiPublicNewsletterRoute
   '/api/public/press-kit': typeof ApiPublicPressKitRoute
   '/el/work/$slug': typeof ElWorkSlugRoute
+  '/el/articles/$slug': typeof ElArticlesSlugRoute
   '/el/work/': typeof ElWorkIndexRoute
+  '/el/articles/': typeof ElArticlesIndexRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
@@ -272,12 +300,16 @@ export interface FileRoutesByTo {
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
+  '/articles/$slug': typeof ArticlesSlugRoute
   '/el': typeof ElIndexRoute
   '/work': typeof WorkIndexRoute
+  '/articles': typeof ArticlesIndexRoute
   '/api/public/newsletter': typeof ApiPublicNewsletterRoute
   '/api/public/press-kit': typeof ApiPublicPressKitRoute
   '/el/work/$slug': typeof ElWorkSlugRoute
+  '/el/articles/$slug': typeof ElArticlesSlugRoute
   '/el/work': typeof ElWorkIndexRoute
+  '/el/articles': typeof ElArticlesIndexRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
@@ -308,12 +340,16 @@ export interface FileRoutesById {
   '/el/services': typeof ElServicesRoute
   '/el/solutions': typeof ElSolutionsRoute
   '/work/$slug': typeof WorkSlugRoute
+  '/articles/$slug': typeof ArticlesSlugRoute
   '/el/': typeof ElIndexRoute
   '/work/': typeof WorkIndexRoute
+  '/articles/': typeof ArticlesIndexRoute
   '/api/public/newsletter': typeof ApiPublicNewsletterRoute
   '/api/public/press-kit': typeof ApiPublicPressKitRoute
   '/el/work/$slug': typeof ElWorkSlugRoute
+  '/el/articles/$slug': typeof ElArticlesSlugRoute
   '/el/work/': typeof ElWorkIndexRoute
+  '/el/articles/': typeof ElArticlesIndexRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
@@ -345,12 +381,16 @@ export interface FileRouteTypes {
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
+    | '/articles/$slug'
     | '/el/'
     | '/work/'
+    | '/articles/'
     | '/api/public/newsletter'
     | '/api/public/press-kit'
     | '/el/work/$slug'
+    | '/el/articles/$slug'
     | '/el/work/'
+    | '/el/articles/'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -380,12 +420,16 @@ export interface FileRouteTypes {
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
+    | '/articles/$slug'
     | '/el'
     | '/work'
+    | '/articles'
     | '/api/public/newsletter'
     | '/api/public/press-kit'
     | '/el/work/$slug'
+    | '/el/articles/$slug'
     | '/el/work'
+    | '/el/articles'
     | '/lovable/email/transactional/preview'
   id:
     | '__root__'
@@ -415,12 +459,16 @@ export interface FileRouteTypes {
     | '/el/services'
     | '/el/solutions'
     | '/work/$slug'
+    | '/articles/$slug'
     | '/el/'
     | '/work/'
+    | '/articles/'
     | '/api/public/newsletter'
     | '/api/public/press-kit'
     | '/el/work/$slug'
+    | '/el/articles/$slug'
     | '/el/work/'
+    | '/el/articles/'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
@@ -451,12 +499,16 @@ export interface RootRouteChildren {
   ElServicesRoute: typeof ElServicesRoute
   ElSolutionsRoute: typeof ElSolutionsRoute
   WorkSlugRoute: typeof WorkSlugRoute
+  ArticlesSlugRoute: typeof ArticlesSlugRoute
   ElIndexRoute: typeof ElIndexRoute
   WorkIndexRoute: typeof WorkIndexRoute
+  ArticlesIndexRoute: typeof ArticlesIndexRoute
   ApiPublicNewsletterRoute: typeof ApiPublicNewsletterRoute
   ApiPublicPressKitRoute: typeof ApiPublicPressKitRoute
   ElWorkSlugRoute: typeof ElWorkSlugRoute
+  ElArticlesSlugRoute: typeof ElArticlesSlugRoute
   ElWorkIndexRoute: typeof ElWorkIndexRoute
+  ElArticlesIndexRoute: typeof ElArticlesIndexRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
@@ -651,11 +703,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/articles/': {
+      id: '/articles/'
+      path: '/articles'
+      fullPath: '/articles/'
+      preLoaderRoute: typeof ArticlesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/work/$slug': {
       id: '/work/$slug'
       path: '/work/$slug'
       fullPath: '/work/$slug'
       preLoaderRoute: typeof WorkSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/articles/$slug': {
+      id: '/articles/$slug'
+      path: '/articles/$slug'
+      fullPath: '/articles/$slug'
+      preLoaderRoute: typeof ArticlesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/newsletter': {
@@ -679,11 +745,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ElWorkIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/el/articles/': {
+      id: '/el/articles/'
+      path: '/el/articles'
+      fullPath: '/el/articles/'
+      preLoaderRoute: typeof ElArticlesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/el/work/$slug': {
       id: '/el/work/$slug'
       path: '/el/work/$slug'
       fullPath: '/el/work/$slug'
       preLoaderRoute: typeof ElWorkSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/el/articles/$slug': {
+      id: '/el/articles/$slug'
+      path: '/el/articles/$slug'
+      fullPath: '/el/articles/$slug'
+      preLoaderRoute: typeof ElArticlesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/transactional/preview': {
@@ -723,12 +803,16 @@ const rootRouteChildren: RootRouteChildren = {
   ElServicesRoute: ElServicesRoute,
   ElSolutionsRoute: ElSolutionsRoute,
   WorkSlugRoute: WorkSlugRoute,
+  ArticlesSlugRoute: ArticlesSlugRoute,
   ElIndexRoute: ElIndexRoute,
   WorkIndexRoute: WorkIndexRoute,
+  ArticlesIndexRoute: ArticlesIndexRoute,
   ApiPublicNewsletterRoute: ApiPublicNewsletterRoute,
   ApiPublicPressKitRoute: ApiPublicPressKitRoute,
   ElWorkSlugRoute: ElWorkSlugRoute,
+  ElArticlesSlugRoute: ElArticlesSlugRoute,
   ElWorkIndexRoute: ElWorkIndexRoute,
+  ElArticlesIndexRoute: ElArticlesIndexRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport

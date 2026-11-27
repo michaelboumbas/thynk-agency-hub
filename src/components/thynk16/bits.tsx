@@ -14,6 +14,18 @@ export function Mk({ children }: { children: ReactNode }) {
   );
 }
 
+/** a word circled by the orange marker (hero D, 27/11) */
+export function MkCircle({ children }: { children: ReactNode }) {
+  return (
+    <span className="t16-hlc">
+      {children}
+      <svg className="t16-mkc" viewBox="0 0 300 70" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M40 14 C 110 0, 262 6, 288 28 C 306 48, 212 68, 130 65 C 48 62, 4 50, 16 30 C 24 18, 46 12, 74 9" />
+      </svg>
+    </span>
+  );
+}
+
 /** page heading used by every inner page: eyebrow, big title ending in an orange-marked word, lead */
 export function Head16({ eyebrow, title, lead, children, back }: {
   eyebrow: string;
